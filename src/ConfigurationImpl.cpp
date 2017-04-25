@@ -2809,9 +2809,7 @@ ConfigurationImpl::popIncludedFilename(const char * fileName)
 {
     (void) fileName;
 
-	int	size;
-
-	size = m_fileNameStack.length();
+	int	size = m_fileNameStack.length();
 	assert(size > 0);
 	assert (strcmp(m_fileNameStack[size-1], fileName) == 0);
 	m_fileNameStack.removeLast();
