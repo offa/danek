@@ -10,7 +10,7 @@ option(BUILD_SCHEMA_TESTS "Build Schema tests." OFF)
 include(GNUInstallDirs)
 
 
-add_definitions(-Wall -Wextra -pedantic)
+add_definitions(-Wall -Wextra -pedantic -Werror -Wshadow)
 
 include_directories("include")
 
