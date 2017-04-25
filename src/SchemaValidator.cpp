@@ -10,7 +10,7 @@
 // the following conditions.
 //
 // The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.  
+// included in all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
@@ -467,7 +467,7 @@ SchemaValidator::validate(
 		typeName = idRule->m_typeName.c_str();
 		typeDef = findType(typeName);
 		assert(typeDef != 0);
-		try { 
+		try {
 			callValidate(typeDef, cfg, fullyScopedName.c_str(), iName,
 						 typeName, typeName, idRule->m_args, 1);
 		} catch (const ConfigurationException & ex) {
@@ -502,7 +502,7 @@ SchemaValidator::validateForceMode(
 	const char *			typeName;
 	const char *			nameInRule;
 	SchemaIdRuleInfo *		idRule;
-	
+
 
 	if (forceMode == FORCE_OPTIONAL) {
 		return;
@@ -596,7 +596,7 @@ SchemaValidator::shouldIgnore(
 	const char *			name;
 	const char *			nameAfterPrefix;
 	bool					hasDotAfterPrefix;
-	Configuration::Type		cfgType;
+	Configuration::Type		cfgType = Configuration::Type::CFG_NO_VALUE;
 
 	for (i = 0; i < m_ignoreRulesCurrSize; i++) {
 		//--------
