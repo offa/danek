@@ -10,7 +10,7 @@
 // the following conditions.
 //
 // The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.  
+// included in all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
@@ -197,7 +197,7 @@ ConfigurationImpl::getSecurityConfiguration(
 //----------------------------------------------------------------------
 // Function:	parse()
 //
-// Description:	
+// Description:
 //----------------------------------------------------------------------
 
 void
@@ -257,7 +257,7 @@ ConfigurationImpl::type(
 	ConfigItem *			item;
 	Configuration::Type		result;
 	StringBuffer			fullyScopedName;
-	
+
 	mergeNames(scope, localName, fullyScopedName);
 	item = lookup(fullyScopedName.c_str(), localName);
 	if (item == 0) {
@@ -317,7 +317,7 @@ ConfigurationImpl::listValue(
 		Configuration::Type &	type) const
 {
 	ConfigItem *				item;
-	
+
 	item = lookup(fullyScopedName, localName);
 	if (item == 0) {
 		type = Configuration::CFG_NO_VALUE;
@@ -350,7 +350,7 @@ ConfigurationImpl::listValue(
 {
 	ConfigItem *			item;
 	StringVector *			list;
-	
+
 	item = lookup(fullyScopedName, localName);
 	if (item == 0) {
 		type = Configuration::CFG_NO_VALUE;
@@ -389,7 +389,7 @@ ConfigurationImpl::insertString(
 	ConfigScope *			scopeObj;
 	StringBuffer			msg;
 	StringBuffer			fullyScopedName;
-	
+
 	mergeNames(scope, localName, fullyScopedName);
 	splitScopedNameIntoVector(fullyScopedName.c_str(), vec);
 	len = vec.length();
@@ -408,7 +408,7 @@ ConfigurationImpl::insertString(
 //----------------------------------------------------------------------
 // Function:	ensureScopeExists()
 //
-// Description:	
+// Description:
 //----------------------------------------------------------------------
 
 void
@@ -418,7 +418,7 @@ ConfigurationImpl::ensureScopeExists(
 {
 	StringBuffer			fullyScopedName;
 	ConfigScope *			dummyScope;
-	
+
 	mergeNames(scope, localName, fullyScopedName);
 	ensureScopeExists(fullyScopedName.c_str(), dummyScope);
 }
@@ -445,7 +445,7 @@ ConfigurationImpl::insertList(
 	ConfigScope *			scopeObj;
 	StringBuffer			msg;
 	StringBuffer			fullyScopedName;
-	
+
 	mergeNames(scope, localName, fullyScopedName);
 	splitScopedNameIntoVector(fullyScopedName.c_str(), vec);
 	len = vec.length();
@@ -474,7 +474,7 @@ ConfigurationImpl::insertList(
 	const char **		nullTerminatedArray) throw(ConfigurationException)
 {
 	int					size;
-	
+
 	size = 0;
 	while (nullTerminatedArray[size] != 0) {
 		size++;
@@ -492,7 +492,7 @@ ConfigurationImpl::insertList(
 // Notes:	Overwrites an existing entry of the same name.
 //----------------------------------------------------------------------
 
-void	
+void
 ConfigurationImpl::insertList(
 	const char *			scope,
 	const char *			localName,
@@ -524,7 +524,7 @@ ConfigurationImpl::insertList(
 	int							len;
 	ConfigScope *				scope;
 	StringBuffer				msg;
-	
+
 	splitScopedNameIntoVector(name, vec);
 	len = vec.length();
 	ensureScopeExists(vec, 0, len-2, scope);
@@ -554,7 +554,7 @@ ConfigurationImpl::remove(const char * scope, const char * localName)
 	StringVector			vec;
 	int						i;
 	int						len;
-	
+
 	scopeObj = m_currScope;
 	mergeNames(scope, localName, fullyScopedName);
 	splitScopedNameIntoVector(fullyScopedName.c_str(), vec);
@@ -599,7 +599,7 @@ ConfigurationImpl::empty()
 //----------------------------------------------------------------------
 // Function:	lookup()
 //
-// Description:	
+// Description:
 //----------------------------------------------------------------------
 
 ConfigItem *
@@ -875,7 +875,7 @@ ConfigurationImpl::lookupString(
 	StringBuffer			msg;
 	const char *			str;
 	StringBuffer			fullyScopedName;
-	
+
 	mergeNames(scope, localName, fullyScopedName);
 	stringValue(fullyScopedName.c_str(), localName, str, type);
 	switch (type) {
@@ -909,7 +909,7 @@ ConfigurationImpl::lookupString(
 	StringBuffer			msg;
 	const char *			str;
 	StringBuffer			fullyScopedName;
-	
+
 	mergeNames(scope, localName, fullyScopedName);
 	stringValue(fullyScopedName.c_str(), localName, str, type);
 	switch (type) {
@@ -949,7 +949,7 @@ ConfigurationImpl::lookupList(
 	StringBuffer			msg;
 	int						i;
 	StringBuffer			fullyScopedName;
-	
+
 	mergeNames(scope, localName, fullyScopedName);
 	listValue(fullyScopedName.c_str(), localName, array, arraySize, type);
 	switch (type) {
@@ -987,7 +987,7 @@ ConfigurationImpl::lookupList(
 	Configuration::Type	 	type;
 	StringBuffer			msg;
 	StringBuffer			fullyScopedName;
-	
+
 	mergeNames(scope, localName, fullyScopedName);
 	listValue(fullyScopedName.c_str(), localName, array, arraySize, type);
 	switch (type) {
@@ -1025,7 +1025,7 @@ ConfigurationImpl::lookupList(
 	StringBuffer			fullyScopedName;
 	const char **			array;
 	int						arraySize;
-	
+
 	mergeNames(scope, localName, fullyScopedName);
 	listValue(fullyScopedName.c_str(), localName, array, arraySize, type);
 	switch (type) {
@@ -1065,7 +1065,7 @@ ConfigurationImpl::lookupList(
 	StringBuffer			fullyScopedName;
 	const char **			array;
 	int						arraySize;
-	
+
 	mergeNames(scope, localName, fullyScopedName);
 	listValue(fullyScopedName.c_str(), localName, array, arraySize, type);
 	switch (type) {
@@ -1109,7 +1109,7 @@ ConfigurationImpl::lookupEnum(
 	int							result;
 	StringBuffer				fullyScopedName;
 	int							i;
-	
+
 	strValue = lookupString(scope, localName, defaultVal);
 
 	//--------
@@ -1148,7 +1148,7 @@ ConfigurationImpl::lookupEnum(
 	int							result;
 	int							i;
 	StringBuffer				fullyScopedName;
-	
+
 	if (type(scope, localName) == Configuration::CFG_NO_VALUE) {
 		return defaultVal;
 	}
@@ -1190,7 +1190,7 @@ ConfigurationImpl::lookupEnum(
 	int							result;
 	StringBuffer				fullyScopedName;
 	int							i;
-	
+
 	strValue = lookupString(scope, localName);
 
 	//--------
@@ -1267,7 +1267,7 @@ ConfigurationImpl::lookupBoolean(
 {
 	int						intVal;
 	const char *			defaultStrVal;
-	
+
 	if (defaultVal) {
 		defaultStrVal = "true";
 	} else {
@@ -1332,7 +1332,7 @@ ConfigurationImpl::isInt(const char * str) const
 	int				i;
 	int				intValue;
 	char			dummy;
-	
+
 	i = sscanf(str, "%d%c", &intValue, &dummy);
 	return i == 1;
 }
@@ -1350,7 +1350,7 @@ ConfigurationImpl::stringToInt(
 	int					i;
 	StringBuffer		msg;
 	StringBuffer		fullyScopedName;
-	
+
 	//--------
 	// Convert the string value into an int value.
 	//--------
@@ -1375,7 +1375,7 @@ ConfigurationImpl::isFloat(const char * str) const
 	int				i;
 	float			floatValue;
 	char			dummy;
-	
+
 	i = sscanf(str, "%f%c", &floatValue, &dummy);
 	return i == 1;
 }
@@ -1393,7 +1393,7 @@ ConfigurationImpl::stringToFloat(
 	int					i;
 	StringBuffer		msg;
 	StringBuffer		fullyScopedName;
-	
+
 	//--------
 	// Convert the string value into a float value.
 	//--------
@@ -1452,7 +1452,7 @@ ConfigurationImpl::stringToEnum(
 	StringBuffer				fullyScopedName;
 	int							result;
 	int							i;
-	
+
 	//--------
 	// Check if the value matches anything in the enumInfo list.
 	//--------
@@ -2771,7 +2771,7 @@ ConfigurationImpl::lookupScope(
 {
 	StringBuffer		msg;
 	StringBuffer		fullyScopedName;
-	
+
 	mergeNames(scope, localName, fullyScopedName);
 	switch (type(scope, localName)) {
 	case Configuration::CFG_SCOPE:
@@ -2807,6 +2807,8 @@ ConfigurationImpl::pushIncludedFilename(const char * fileName)
 void
 ConfigurationImpl::popIncludedFilename(const char * fileName)
 {
+    (void) fileName;
+
 	int	size;
 
 	size = m_fileNameStack.length();
@@ -2845,7 +2847,7 @@ ConfigurationImpl::uidEquals(const char * s1, const char * s2) const
 	const char *		us2;
 	StringBuffer		buf1;
 	StringBuffer		buf2;
-	
+
 	us1 = m_uidIdentifierProcessor.unexpand(s1, buf1);
 	us2 = m_uidIdentifierProcessor.unexpand(s2, buf2);
 	return strcmp(us1, us2) == 0;
