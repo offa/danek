@@ -596,7 +596,7 @@ SchemaValidator::shouldIgnore(
 	const char *			name;
 	const char *			nameAfterPrefix;
 	bool					hasDotAfterPrefix;
-	Configuration::Type		cfgType = Configuration::Type::CFG_NO_VALUE;
+	Configuration::Type		cfgType = Configuration::CFG_NO_VALUE;
 
 	for (i = 0; i < m_ignoreRulesCurrSize; i++) {
 		//--------
