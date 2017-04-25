@@ -2810,6 +2810,7 @@ ConfigurationImpl::popIncludedFilename(const char * fileName)
     (void) fileName;
 
 	int	size = m_fileNameStack.length();
+	(void) size; // Prevent build failure in release builds
 	assert(size > 0);
 	assert (strcmp(m_fileNameStack[size-1], fileName) == 0);
 	m_fileNameStack.removeLast();

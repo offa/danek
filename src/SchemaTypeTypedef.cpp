@@ -10,7 +10,7 @@
 // the following conditions.
 //
 // The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.  
+// included in all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
@@ -37,7 +37,7 @@ SchemaTypeTypedef::checkRule(
 {
     (void) sv;
     (void) cfg;
-    
+
 	StringBuffer msg;
 
 	if (typeArgs.length() != 0) {
@@ -62,10 +62,11 @@ SchemaTypeTypedef::validate(
 											throw(ConfigurationException)
 {
     (void) typeName;
-    
+
 	SchemaType *				baseTypeDef;
 	const char *				baseTypeName;
 
+    (void) typeArgs; // Prevent build failure in release build
 	assert(typeArgs.length() == 0);
 	baseTypeName = m_baseTypeName.c_str();
 	baseTypeDef = findType(sv, baseTypeName);
@@ -87,7 +88,8 @@ SchemaTypeTypedef::isA(
 {
     (void) value;
     (void) typeName;
-    
+    (void) typeArgs; // Prevent build failure in release build
+
 	assert(typeArgs.length() == 0);
 	const char* baseTypeName = m_baseTypeName.c_str();
 	SchemaType* baseTypeDef = findType(sv, baseTypeName);
