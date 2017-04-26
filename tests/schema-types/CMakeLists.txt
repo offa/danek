@@ -1,11 +1,9 @@
 
-set(TEST_SCHEMA_TYPES_SRC main.cpp)
 set(CFG_FILE "schema-type-tests.cfg")
 
 
-add_executable(test-schema-types ${TEST_SCHEMA_TYPES_SRC})
+add_executable(test-schema-types main.cpp)
 target_link_libraries(test-schema-types libconfig4cpp)
-
 
 add_custom_target(run-schema-test
                     test-schema-types
