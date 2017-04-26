@@ -25,9 +25,6 @@
 #include "SchemaTypeBoolean.h"
 #include "Common.h"
 
-#define BUG_MSG(OP) "bug in " OP " if an exception is thrown"
-
-
 namespace CONFIG4CPP_NAMESPACE {
 
 void
