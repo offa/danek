@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.2)
 
 project(danek VERSION 0.0.1)
-
 message(STATUS "~~~ ${PROJECT_NAME} ${PROJECT_VERSION} ~~~")
 
 option(BUILD_SCHEMA_TESTS "Build Schema tests." OFF)
