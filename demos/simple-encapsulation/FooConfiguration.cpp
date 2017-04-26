@@ -10,7 +10,7 @@
 // the following conditions.
 //
 // The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.  
+// included in all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
@@ -123,7 +123,7 @@ FooConfiguration::parse(
 		sv.validate(cfg, cfgScope, "");
 
 		//--------
-		// Cache configuration variables in instance variables for 
+		// Cache configuration variables in instance variables for
 		// faster access.
 		//--------
 		m_connectionTimeout = cfg->lookupDurationMilliseconds(cfgScope,

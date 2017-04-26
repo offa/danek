@@ -10,7 +10,7 @@
 // the following conditions.
 //
 // The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.  
+// included in all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
@@ -118,17 +118,17 @@ usage()
 {
 	fprintf(stderr,
 		"\n"
-	    "usage: demo <options>\n"
-		"\n"
-	    "The <options> can be:\n"
-	    "  -h             Print this usage statement\n"
-	    "  -cfg <source>  Parse the specified configuration file\n"
-	    "  -scope <name>  Application scope in the configuration source\n"
-	    "\n",
-	    "A configuration <source> can be one of the following:\n"
-	    "  file.cfg       A configuration file\n"
-	    "  file#file.cfg  A configuration file\n"
-	    "  exec#<command> Output from executing the specified command\n\n");
+        "usage: demo <options>\n"
+        "\n"
+        "The <options> can be:\n"
+        "  -h             Print this usage statement\n"
+        "  -cfg <source>  Parse the specified configuration file\n"
+        "  -scope <name>  Application scope in the configuration source\n"
+        "\n"
+        "A configuration <source> can be one of the following:\n"
+        "  file.cfg       A configuration file\n"
+        "  file#file.cfg  A configuration file\n"
+        "  exec#<command> Output from executing the specified command\n\n");
 	exit(1);
 }
 

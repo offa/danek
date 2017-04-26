@@ -1,0 +1,4 @@
+# Ignore generated files
+FallBackConfiguration.cpp
+FallBackConfiguration.h
+

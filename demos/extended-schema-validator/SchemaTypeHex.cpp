@@ -10,7 +10,7 @@
 // the following conditions.
 //
 // The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.  
+// included in all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
@@ -27,7 +27,9 @@
 #include <stdio.h>
 #include <ctype.h>
 
-
+SchemaTypeHex::~SchemaTypeHex()
+{
+}
 
 void
 SchemaTypeHex::checkRule(
@@ -37,6 +39,7 @@ SchemaTypeHex::checkRule(
 	const StringVector &		typeArgs,
 	const char *				rule) const throw(ConfigurationException)
 {
+    (void) sv;
 	StringBuffer				msg;
 	int							len;
 	int							maxDigits;
@@ -64,7 +67,25 @@ SchemaTypeHex::checkRule(
 	}
 }
 
-
+void SchemaTypeHex::validate(
+		const SchemaValidator *	sv,
+		const Configuration *	cfg,
+		const char *			scope,
+		const char *			name,
+		const char *			typeName,
+		const char *			origTypeName,
+		const StringVector &	typeArgs,
+		int						indentLevel) const throw(ConfigurationException)
+{
+    (void) sv;
+    (void) cfg;
+    (void) scope;
+    (void) name;
+    (void) typeName;
+    (void) origTypeName;
+    (void) typeArgs;
+    (void) indentLevel;
+}
 
 bool
 SchemaTypeHex::isA(
@@ -76,7 +97,9 @@ SchemaTypeHex::isA(
 	int							indentLevel,
 	StringBuffer &				errSuffix) const
 {
-	int							maxDigits;
+    (void) sv;
+    (void) typeName;
+    (void) indentLevel;
 
 	if (!isHex(value)) {
 		errSuffix << "the value is not a hexadecimal number";
@@ -86,10 +109,10 @@ SchemaTypeHex::isA(
 		//--------
 		// Check if there are too many hex digits in the value
 		//--------
-		maxDigits = cfg->stringToInt("", "", typeArgs[0]);
+		size_t maxDigits = cfg->stringToInt("", "", typeArgs[0]);
 		if (strlen(value) > maxDigits) {
 			errSuffix << "the value must not contain more than "
-                      << maxDigits << " digits";
+                      << static_cast<int>(maxDigits) << " digits";
 			return false;
 		}
 	}

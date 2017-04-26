@@ -10,7 +10,7 @@
 // the following conditions.
 //
 // The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.  
+// included in all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
@@ -40,7 +40,7 @@ public:
 	SchemaTypeHex()
 		: SchemaType("hex", "SchemaTypeHex", Configuration::CFG_STRING)
 	{ }
-	virtual ~SchemaTypeHex() { }
+	virtual ~SchemaTypeHex();
 
 	static int lookupHex(
 		const Configuration *	cfg,
@@ -68,6 +68,17 @@ protected:
 		const char *			typeName,
 		const StringVector &	typeArgs,
 		const char *			rule) const throw(ConfigurationException);
+
+	virtual void validate(
+		const SchemaValidator *	sv,
+		const Configuration *	cfg,
+		const char *			scope,
+		const char *			name,
+		const char *			typeName,
+		const char *			origTypeName,
+		const StringVector &	typeArgs,
+		int						indentLevel) const
+											throw(ConfigurationException);
 
 	virtual bool isA(
 		const SchemaValidator *	sv,
