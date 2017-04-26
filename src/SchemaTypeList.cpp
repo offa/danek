@@ -10,7 +10,7 @@
 // the following conditions.
 //
 // The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.  
+// included in all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
@@ -23,6 +23,7 @@
 //----------------------------------------------------------------------
 
 #include "SchemaTypeList.h"
+#include "Common.h"
 #include <config4cpp/SchemaValidator.h>
 
 
@@ -36,8 +37,8 @@ SchemaTypeList::checkRule(
 	const StringVector &		typeArgs,
 	const char *				rule) const throw(ConfigurationException)
 {
-    (void) cfg;
-    
+    unused(cfg);
+
 	StringBuffer				msg;
 	int							len;
 	const char *				listElementTypeName;
@@ -93,9 +94,9 @@ SchemaTypeList::validate(
 	int							indentLevel) const
 											throw(ConfigurationException)
 {
-    (void) typeName;
-    (void) origTypeName;
-    
+    unused(typeName);
+    unused(origTypeName);
+
 	StringBuffer				msg;
 	StringBuffer				fullyScopedName;
 	StringBuffer				errSuffix;

@@ -10,7 +10,7 @@
 // the following conditions.
 //
 // The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.  
+// included in all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
@@ -26,6 +26,7 @@
 // #include's
 //--------
 #include "ConfigScopeEntry.h"
+#include "Common.h"
 #include <string.h>
 #include <assert.h>
 
@@ -35,7 +36,7 @@ namespace CONFIG4CPP_NAMESPACE {
 //----------------------------------------------------------------------
 // Function:	Constructor (overloaded)
 //
-// Description:	
+// Description:
 //----------------------------------------------------------------------
 
 ConfigScopeEntry::ConfigScopeEntry()
@@ -50,8 +51,8 @@ ConfigScopeEntry::ConfigScopeEntry(
 		ConfigItem *		item,
 		ConfigScopeEntry *	next)
 {
-    (void) name;
-    
+    unused(name);
+
 	m_item	= item;
 	m_next	= next;
 }
@@ -61,7 +62,7 @@ ConfigScopeEntry::ConfigScopeEntry(
 //----------------------------------------------------------------------
 // Function:	Destructor
 //
-// Description:	
+// Description:
 //----------------------------------------------------------------------
 
 ConfigScopeEntry::~ConfigScopeEntry ()

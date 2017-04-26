@@ -10,7 +10,7 @@
 // the following conditions.
 //
 // The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.  
+// included in all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
@@ -23,7 +23,7 @@
 //----------------------------------------------------------------------
 
 #include "SchemaTypeTuple.h"
-
+#include "Common.h"
 
 namespace CONFIG4CPP_NAMESPACE {
 
@@ -35,8 +35,8 @@ SchemaTypeTuple::checkRule(
 	const StringVector &		typeArgs,
 	const char *				rule) const throw(ConfigurationException)
 {
-    (void) cfg;
-    
+    unused(cfg);
+
 	StringBuffer				msg;
 	int							i;
 	int							len;
@@ -94,8 +94,8 @@ SchemaTypeTuple::validate(
 	int							indentLevel) const
 											throw(ConfigurationException)
 {
-    (void) origTypeName;
-    
+    unused(origTypeName);
+
 	StringBuffer				msg;
 	StringBuffer				errSuffix;
 	StringBuffer				fullyScopedName;

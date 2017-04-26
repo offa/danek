@@ -31,6 +31,7 @@
 #include "platform.h"
 #include "DefaultSecurityConfiguration.h"
 #include "ConfigParser.h"
+#include "Common.h"
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
@@ -2807,10 +2808,10 @@ ConfigurationImpl::pushIncludedFilename(const char * fileName)
 void
 ConfigurationImpl::popIncludedFilename(const char * fileName)
 {
-    (void) fileName;
+    unused(fileName);
 
 	int	size = m_fileNameStack.length();
-	(void) size; // Prevent build failure in release builds
+    unused(size); // Prevent build failure in release builds
 	assert(size > 0);
 	assert (strcmp(m_fileNameStack[size-1], fileName) == 0);
 	m_fileNameStack.removeLast();

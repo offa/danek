@@ -10,7 +10,7 @@
 // the following conditions.
 //
 // The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.  
+// included in all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
@@ -23,7 +23,7 @@
 //----------------------------------------------------------------------
 
 #include "SchemaTypeEnum.h"
-
+#include "Common.h"
 
 namespace CONFIG4CPP_NAMESPACE {
 
@@ -35,9 +35,9 @@ SchemaTypeEnum::checkRule(
 	const StringVector &		typeArgs,
 	const char *				rule) const throw(ConfigurationException)
 {
-    (void) sv;
-    (void) cfg;
-    
+    unused(sv);
+    unused(cfg);
+
 	StringBuffer				msg;
 
 	if (typeArgs.length() == 0) {
@@ -59,11 +59,11 @@ SchemaTypeEnum::isA(
 	int							indentLevel,
 	StringBuffer &				errSuffix) const
 {
-    (void) sv;
-    (void) cfg;
-    (void) typeName;
-    (void) indentLevel;
-    
+    unused(sv);
+    unused(cfg);
+    unused(typeName);
+    unused(indentLevel);
+
 	int							i;
 	int							len;
 

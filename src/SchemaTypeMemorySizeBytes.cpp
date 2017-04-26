@@ -10,7 +10,7 @@
 // the following conditions.
 //
 // The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.  
+// included in all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
@@ -23,7 +23,7 @@
 //----------------------------------------------------------------------
 
 #include "SchemaTypeMemorySizeBytes.h"
-
+#include "Common.h"
 
 namespace CONFIG4CPP_NAMESPACE {
 
@@ -35,8 +35,8 @@ SchemaTypeMemorySizeBytes::checkRule(
 	const StringVector &		typeArgs,
 	const char *				rule) const throw(ConfigurationException)
 {
-    (void) sv;
-    
+    unused(sv);
+
 	StringBuffer				msg;
 	int							len;
 	int							min;
@@ -95,10 +95,10 @@ SchemaTypeMemorySizeBytes::isA(
 	int							indentLevel,
 	StringBuffer &				errSuffix) const
 {
-    (void) sv;
-    (void) typeName;
-    (void) indentLevel;
-    
+    unused(sv);
+    unused(typeName);
+    unused(indentLevel);
+
 	int							val;
 	int							min;
 	int							max;

@@ -10,7 +10,7 @@
 // the following conditions.
 //
 // The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.  
+// included in all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
@@ -23,7 +23,7 @@
 //----------------------------------------------------------------------
 
 #include "SchemaTypeScope.h"
-
+#include "Common.h"
 
 namespace CONFIG4CPP_NAMESPACE {
 
@@ -35,9 +35,9 @@ SchemaTypeScope::checkRule(
 	const StringVector &		typeArgs,
 	const char *				rule) const throw(ConfigurationException)
 {
-    (void) sv;
-    (void) cfg;
-    
+    unused(sv);
+    unused(cfg);
+
 	StringBuffer				msg;
 
 	if (typeArgs.length() != 0) {
@@ -61,12 +61,12 @@ SchemaTypeScope::validate(
 	int							indentLevel) const
 											throw(ConfigurationException)
 {
-    (void) sv;
-    (void) typeName;
-    (void) origTypeName;
-    (void) typeArgs;
-    (void) indentLevel;
-    
+    unused(sv);
+    unused(typeName);
+    unused(origTypeName);
+    unused(typeArgs);
+    unused(indentLevel);
+
 	cfg->lookupScope(scope, name);
 }
 

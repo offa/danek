@@ -10,7 +10,7 @@
 // the following conditions.
 //
 // The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.  
+// included in all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
@@ -24,7 +24,7 @@
 
 #include <config4cpp/SchemaType.h>
 #include <config4cpp/SchemaValidator.h>
-
+#include "Common.h"
 
 namespace CONFIG4CPP_NAMESPACE {
 
@@ -60,8 +60,8 @@ SchemaType::validate(
 	int							indentLevel) const
 											throw(ConfigurationException)
 {
-    (void) origTypeName;
-    
+    unused(origTypeName);
+
 	const char *				value;
 	const char *				sep;
 	StringBuffer				msg;
@@ -96,14 +96,14 @@ SchemaType::isA(
 	int							indentLevel,
 	StringBuffer &				errSuffix) const
 {
-    (void) sv;
-    (void) cfg;
-    (void) value;
-    (void) typeName;
-    (void) typeArgs;
-    (void) indentLevel;
-    (void) errSuffix;
-    
+    unused(sv);
+    unused(cfg);
+    unused(value);
+    unused(typeName);
+    unused(typeArgs);
+    unused(indentLevel);
+    unused(errSuffix);
+
 	return false;
 }
 

@@ -27,7 +27,7 @@
 
 
 #include <config4cpp/SchemaType.h>
-
+#include "Common.h"
 
 namespace CONFIG4CPP_NAMESPACE {
 
@@ -51,11 +51,11 @@ protected:
 		const StringVector &	typeArgs,
 		const char *			rule) const throw(ConfigurationException)
 	{
-        (void) sv;
-        (void) cfg;
-        (void) typeName;
-        (void) typeArgs;
-        (void) rule;
+        unused(sv);
+        unused(cfg);
+        unused(typeName);
+        unused(typeArgs);
+        unused(rule);
     }
 };
 

@@ -23,7 +23,7 @@
 //----------------------------------------------------------------------
 
 #include "SchemaTypeTypedef.h"
-
+#include "Common.h"
 
 namespace CONFIG4CPP_NAMESPACE {
 
@@ -35,8 +35,8 @@ SchemaTypeTypedef::checkRule(
 	const StringVector &		typeArgs,
 	const char *				rule) const throw(ConfigurationException)
 {
-    (void) sv;
-    (void) cfg;
+    unused(sv);
+    unused(cfg);
 
 	StringBuffer msg;
 
@@ -61,12 +61,12 @@ SchemaTypeTypedef::validate(
 	int							indentLevel) const
 											throw(ConfigurationException)
 {
-    (void) typeName;
+    unused(typeName);
 
 	SchemaType *				baseTypeDef;
 	const char *				baseTypeName;
 
-    (void) typeArgs; // Prevent build failure in release build
+    unused(typeArgs); // Prevent build failure in release build
 	assert(typeArgs.length() == 0);
 	baseTypeName = m_baseTypeName.c_str();
 	baseTypeDef = findType(sv, baseTypeName);
@@ -86,9 +86,9 @@ SchemaTypeTypedef::isA(
 	int							indentLevel,
 	StringBuffer &				errSuffix) const
 {
-    (void) value;
-    (void) typeName;
-    (void) typeArgs; // Prevent build failure in release build
+    unused(value);
+    unused(typeName);
+    unused(typeArgs); // Prevent build failure in release build
 
 	assert(typeArgs.length() == 0);
 	const char* baseTypeName = m_baseTypeName.c_str();
