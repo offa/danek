@@ -1,7 +1,6 @@
-cmake_minimum_required(VERSION 2.8.11)
+cmake_minimum_required(VERSION 3.2)
 
-project(config4cpp)
-set(PROJECT_VERSION 1.2-dev)
+project(danek VERSION 0.0.1)
 
 message(STATUS "~~~ ${PROJECT_NAME} ${PROJECT_VERSION} ~~~")
 
