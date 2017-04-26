@@ -1,4 +1,4 @@
-add_library(config4cpp SchemaLex.cpp
+add_library(danek SchemaLex.cpp
                         SchemaParser.cpp
                         MBChar.cpp
                         SchemaValidator.cpp
@@ -46,26 +46,26 @@ add_library(config4cpp SchemaLex.cpp
 add_executable(config2cpp config2cpp-main.cpp
                             Config2Cpp.cpp
                             )
-target_link_libraries(config2cpp config4cpp)
+target_link_libraries(config2cpp danek)
 
 
 add_executable(config2cpp-nocheck config2cpp-nocheck-main.cpp
                                     Config2Cpp.cpp
                                     )
-target_link_libraries(config2cpp-nocheck config4cpp)
+target_link_libraries(config2cpp-nocheck danek)
 
 
 add_executable(config4cpp-bin config4cpp.cpp)
-target_link_libraries(config4cpp-bin config4cpp)
+target_link_libraries(config4cpp-bin danek)
 
 
 
-install(TARGETS config4cpp
+install(TARGETS danek
                 LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
                 ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
                 RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
                 )
-install(DIRECTORY ../include/config4cpp
+install(DIRECTORY ../include/danek
                 DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
                 )
 
