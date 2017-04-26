@@ -6,7 +6,10 @@ message(STATUS "~~~ ${PROJECT_NAME} ${PROJECT_VERSION} ~~~")
 
 option(BUILD_SCHEMA_TESTS "Build Schema tests." OFF)
 
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 include(GNUInstallDirs)
+include(Compiler)
+include(CppStd)
 
 
 add_definitions(-Wall -Wextra -pedantic -Werror -Wshadow)
