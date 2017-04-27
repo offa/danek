@@ -59,4 +59,5 @@ script:
     - mkdir build && cd build
     - cmake -DCMAKE_BUILD_TYPE=Release -DDEMOS=ON ..
     - make
+    - make unittest
 
