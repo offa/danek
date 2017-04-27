@@ -10,7 +10,7 @@
 // the following conditions.
 //
 // The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.  
+// included in all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
@@ -33,7 +33,7 @@ public:
 	//--------
 	// Constructors and destructor
 	//--------
-	RecipeFileParserException(const char * str)
+	explicit RecipeFileParserException(const char * str)
 	{
 		m_str = new char[strlen(str) + 1];
 		strcpy(m_str, str);

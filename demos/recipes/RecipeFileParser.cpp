@@ -10,7 +10,7 @@
 // the following conditions.
 //
 // The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.  
+// included in all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
@@ -34,10 +34,8 @@ using CONFIG4CPP_NAMESPACE::SchemaValidator;
 
 
 
-RecipeFileParser::RecipeFileParser()
+RecipeFileParser::RecipeFileParser() : m_cfg(nullptr), m_parseCalled(false)
 {
-	m_cfg = 0;
-	m_parseCalled = false; // set to 'true' after a successful parse().
 }
 
 
@@ -56,19 +54,21 @@ RecipeFileParser::parse(
 {
 	SchemaValidator		sv;
 	StringBuffer		filter;
-	const char *		schema[] = {
-									"uid-recipe = scope",
-									"uid-recipe.ingredients = list[string]",
-									"uid-recipe.name = string",
-									"uid-recipe.uid-step = string",
-									0
-						};
 
 	assert(!m_parseCalled);
 	m_cfg = Configuration::create();
 	m_scope = scope;
 	Configuration::mergeNames(scope, "uid-recipe", filter);
+
 	try {
+        const char *		schema[] = {
+            "uid-recipe = scope",
+            "uid-recipe.ingredients = list[string]",
+            "uid-recipe.name = string",
+            "uid-recipe.uid-step = string",
+            0
+        };
+
 		m_cfg->parse(recipeFilename);
 		sv.parseSchema(schema);
 		sv.validate(m_cfg, m_scope.c_str(), "");
@@ -126,10 +126,8 @@ RecipeFileParser::getRecipeSteps(
 	const char *			recipeScope,
 	StringVector &			result) throw (RecipeFileParserException)
 {
-	int						i;
 	int						len;
 	StringVector			namesVec;
-	const char *			str;
 
 	assert(m_parseCalled);
 	try {
@@ -142,9 +140,9 @@ RecipeFileParser::getRecipeSteps(
 	result.empty();
 	len = namesVec.length();
 	try {
-		for (i = 0; i < len; i++) {
+		for (int i = 0; i < len; i++) {
 			assert(m_cfg->uidEquals("uid-step", namesVec[i]));
-			str = m_cfg->lookupString(recipeScope, namesVec[i]);
+			const char* str = m_cfg->lookupString(recipeScope, namesVec[i]);
 			result.add(str);
 		}
 	} catch(const ConfigurationException &) {

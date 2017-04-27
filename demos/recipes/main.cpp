@@ -53,11 +53,9 @@ main(int argc, char ** argv)
 	StringVector			recipeScopes;
 	StringVector			steps;
 	StringVector			ingredients;
-	const char *			name;
 	int						i;
 	int						len;
 	int						i2;
-	int						len2;
 
 	setlocale(LC_ALL, "");
 	parseCmdLineArgs(argc, argv, recipeFilename, scope);
@@ -81,11 +79,11 @@ main(int argc, char ** argv)
 	len = recipeScopes.length();
 	printf("There are %d recipes\n", len);
 	for (i = 0; i < len; i++) {
-		name = parser->getRecipeName(recipeScopes[i]);
+		const char* name = parser->getRecipeName(recipeScopes[i]);
 		parser->getRecipeIngredients(recipeScopes[i], ingredients);
 		parser->getRecipeSteps(recipeScopes[i], steps);
 		printf("\nRecipe \"%s\":\n", name);
-		len2 = ingredients.length();
+		int len2 = ingredients.length();
 		printf("\tThis recipe has %d ingredients:\n", len2);
 		for (i2 = 0; i2 < len2; i2++) {
 			printf("\t\t\"%s\"\n", ingredients[i2]);

@@ -10,7 +10,7 @@
 // the following conditions.
 //
 // The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.  
+// included in all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
@@ -76,9 +76,10 @@ FooConfigurationException::c_str() const
 // class FooConfiguration
 //----------------------------------------------------------------------
 
-FooConfiguration::FooConfiguration()
+FooConfiguration::FooConfiguration() : m_cfg(Configuration::create()),
+                                    m_logLevels(nullptr),
+                                    m_numLogLevels(0)
 {
-	m_cfg = Configuration::create();
 }
 
 
@@ -99,13 +100,14 @@ FooConfiguration::parse(
 {
 	SchemaValidator		sv;
 	Configuration *		cfg = (Configuration*)m_cfg;
-	const char *		schema[] = {
-		"@typedef logLevel = int[0, 4]",
-		"log_levels = table[string,operation-name, logLevel,log-level]",
-		0,
-	};
 
 	try {
+        const char *		schema[] = {
+            "@typedef logLevel = int[0, 4]",
+            "log_levels = table[string,operation-name, logLevel,log-level]",
+            0,
+        };
+
 		//--------
 		// Set non-default security, if supplied. Then parse the
 		// configuration input. Finally, perform schema validation.
@@ -118,7 +120,7 @@ FooConfiguration::parse(
 		sv.validate(cfg, cfgScope, "");
 
 		//--------
-		// Cache configuration variables in instance variables for 
+		// Cache configuration variables in instance variables for
 		// faster access.
 		//--------
 		cfg->lookupList(cfgScope, "log_levels", m_logLevels, m_numLogLevels);
@@ -134,12 +136,10 @@ FooConfiguration::getLogLevel(const char * opName) const
 {
 	int					i;
 	int					result;
-	const char *		pattern;
-	const char *		logLevelStr;
 
 	for (i = 0; i < m_numLogLevels; i += 2) {
-		pattern     = m_logLevels[i + 0];
-		logLevelStr = m_logLevels[i + 1];
+		const char* pattern     = m_logLevels[i + 0];
+		const char* logLevelStr = m_logLevels[i + 1];
 		if (Configuration::patternMatch(opName, pattern)) {
 			result = atoi(logLevelStr);
 			if (result > (int)Logger::DEBUG_LEVEL) {

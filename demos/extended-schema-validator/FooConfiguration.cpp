@@ -102,21 +102,21 @@ FooConfiguration::parse(
 	const char *		secInput,
 	const char *		secScope) throw (FooConfigurationException)
 {
-	int							i;
 	StringBuffer				localName;
 	StringVector				strList;
 	Configuration *				cfg = (Configuration*)m_cfg;
 	ExtendedSchemaValidator		sv;
-	const char *				schema[] = {
-									"host     = string",
-									"timeout  = durationMilliseconds",
-									"hex_byte = hex[2]",
-									"hex_word = hex[4]",
-									"hex_list = list[hex]",
-									0 // null-terminated array of strings
-								};
 
 	try {
+        const char *				schema[] = {
+            "host     = string",
+            "timeout  = durationMilliseconds",
+            "hex_byte = hex[2]",
+            "hex_word = hex[4]",
+            "hex_list = list[hex]",
+            0 // null-terminated array of strings
+        };
+
 		//--------
 		// Set non-default security, if supplied.
 		// Parse config input, if supplied.
@@ -148,7 +148,7 @@ FooConfiguration::parse(
 		cfg->lookupList(scope, "hex_list", strList);
 		m_hexListSize = strList.length();
 		m_hexList = new int[m_hexListSize];
-		for (i = 0; i < m_hexListSize; i++) {
+		for (int i = 0; i < m_hexListSize; i++) {
 			localName.empty();
 			localName << "hex_list[" << (i+1) << "]";
 			m_hexList[i] = SchemaTypeHex::stringToHex(cfg, scope,
