@@ -54,6 +54,8 @@ matrix:
             - libc++-dev
           sources: *sources
 
+before_install:
+    - script/travis_install.sh
 
 script:
     - mkdir build && cd build

@@ -12,7 +12,7 @@ macro(_add_test _name _src _lib)
                                 ${GTest_INCLUDE_DIR}
                                 ${GMock_INCLUDE_DIR}
                                 )
-    target_link_libraries(${_name} ${GTest_LIBRARIES}
+target_link_libraries(${_name} ${GTest_LIBRARIES}
                                     ${GMock_LIBRARY}
                                     ${CMAKE_THREAD_LIBS_INIT}
                                     ${_lib}
