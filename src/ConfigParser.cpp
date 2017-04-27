@@ -409,14 +409,13 @@ ConfigParser::parseIncludeStmt()
 //----------------------------------------------------------------------
 // Function:	parseIfStmt()
 //
-// Description:	
+// Description:
 //----------------------------------------------------------------------
 
 void
 ConfigParser::parseIfStmt()
 {
 	bool		condition;
-	bool		condition2;
 
 	//--------
 	// Parse the "if ( Condition ) { StmtList }" clause
@@ -439,7 +438,7 @@ ConfigParser::parseIfStmt()
 	while (m_token.type() == ConfigLex::LEX_ELSE_IF_SYM) {
 		m_lex->nextToken(m_token);
 		accept(ConfigLex::LEX_OPEN_PAREN_SYM, "expecting '('");
-		condition2 = parseCondition();
+		bool condition2 = parseCondition();
 		accept(ConfigLex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
 		accept(ConfigLex::LEX_OPEN_BRACE_SYM, "expecting '{'");
 		if (!condition && condition2) {
@@ -504,7 +503,7 @@ ConfigParser::skipToClosingBrace()
 //----------------------------------------------------------------------
 // Function:	parseCondition()
 //
-// Description:	
+// Description:
 //----------------------------------------------------------------------
 
 bool
@@ -518,19 +517,16 @@ ConfigParser::parseCondition()
 //----------------------------------------------------------------------
 // Function:	parseOrCondition()
 //
-// Description:	
+// Description:
 //----------------------------------------------------------------------
 
 bool
 ConfigParser::parseOrCondition()
 {
-	bool			result;
-	bool			result2;
-
-	result = parseAndCondition();
+	bool result = parseAndCondition();
 	while (m_token.type() == ConfigLex::LEX_OR_SYM) {
 		m_lex->nextToken(m_token);
-		result2 = parseAndCondition();
+		bool result2 = parseAndCondition();
 		result = result || result2;
 	}
 	return result;
@@ -541,19 +537,16 @@ ConfigParser::parseOrCondition()
 //----------------------------------------------------------------------
 // Function:	parseAndCondition()
 //
-// Description:	
+// Description:
 //----------------------------------------------------------------------
 
 bool
 ConfigParser::parseAndCondition()
 {
-	bool		result;
-	bool		result2;
-
-	result = parseTerminalCondition();
+	bool result = parseTerminalCondition();
 	while (m_token.type() == ConfigLex::LEX_AND_SYM) {
 		m_lex->nextToken(m_token);
-		result2 = parseTerminalCondition();
+		bool result2 = parseTerminalCondition();
 		result = result && result2;
 	}
 	return result;
@@ -576,7 +569,6 @@ ConfigParser::parseAndCondition()
 bool
 ConfigParser::parseTerminalCondition()
 {
-	FILE *				file;
 	StringBuffer		str1;
 	StringBuffer		str2;
 	StringVector		list;
@@ -602,7 +594,7 @@ ConfigParser::parseTerminalCondition()
 		m_lex->nextToken(m_token);
 		parseStringExpr(str1);
 		accept(ConfigLex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
-		file = fopen(str1.c_str(), "r");
+		FILE* file = fopen(str1.c_str(), "r");
 		if (file == 0) {
 			return false;
 		} else {
@@ -666,8 +658,6 @@ ConfigParser::parseCopyStmt()
 	ConfigItem *		item;
 	ConfigScope *		fromScope;
 	ConfigScope *		dummyScope;
-	const char *		newName;
-	int					i;
 	int					len;
 	int					fromScopeNameLen;
 	bool				ifExistsIsSpecified;
@@ -733,8 +723,8 @@ ConfigParser::parseCopyStmt()
 	// Copy all the items into the current scope
 	//--------
 	len = fromNamesVec.length();
-	for (i = 0; i < len; i++) {
-		newName = &fromNamesVec[i][fromScopeNameLen + 1];
+	for (int i = 0; i < len; i++) {
+		const char* newName = &fromNamesVec[i][fromScopeNameLen + 1];
 		item = m_config->lookup(fromNamesVec[i], fromNamesVec[i], true);
 		assert(item != 0);
 		switch (item->type()) {
@@ -1181,7 +1171,7 @@ ConfigParser::parseSiblingScope(StringBuffer & str)
 //----------------------------------------------------------------------
 // Function:	parseReadFile()
 //
-// Description:	
+// Description:
 //----------------------------------------------------------------------
 
 void
@@ -1257,8 +1247,6 @@ ConfigParser::parseReplace(StringBuffer & result)
 	StringBuffer			replacementStr;
 	const char *			p;
 	int						searchStrLen;
-	int						currStart;
-	int						currEnd;
 
 	accept(ConfigLex::LEX_FUNC_REPLACE_SYM, "expecting 'replace('");
 	parseStringExpr(origStr);
@@ -1270,10 +1258,10 @@ ConfigParser::parseReplace(StringBuffer & result)
 
 	result = "";
 	searchStrLen = searchStr.length();
-	currStart = 0;
+	int currStart = 0;
 	p = strstr(origStr.c_str(), searchStr.c_str());
 	while (p != 0) {
-		currEnd = p - origStr.c_str();
+		int currEnd = p - origStr.c_str();
 		origStr[currEnd] = '\0';
 		result << (origStr.c_str() + currStart);
 		result << replacementStr;
@@ -1298,8 +1286,6 @@ ConfigParser::parseSplit(StringVector & list)
 	StringBuffer		delim;
 	const char *		p;
 	int					delimLen;
-	int					currStart;
-	int					currEnd;
 
 	accept(ConfigLex::LEX_FUNC_SPLIT_SYM, "expecting 'split('");
 	parseStringExpr(str);
@@ -1309,10 +1295,10 @@ ConfigParser::parseSplit(StringVector & list)
 
 	list.empty();
 	delimLen = delim.length();
-	currStart = 0;
+	int currStart = 0;
 	p = strstr(str.c_str(), delim.c_str());
 	while (p != 0) {
-		currEnd = p - str.c_str();
+		int currEnd = p - str.c_str();
 		str[currEnd] = '\0';
 		list.add(str.c_str() + currStart);
 		currStart = currEnd + delimLen;

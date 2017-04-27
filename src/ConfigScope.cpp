@@ -10,7 +10,7 @@
 // the following conditions.
 //
 // The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.  
+// included in all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
@@ -38,7 +38,7 @@ namespace CONFIG4CPP_NAMESPACE {
 //----------------------------------------------------------------------
 // Function:	Constructor
 //
-// Description:	
+// Description:
 //----------------------------------------------------------------------
 
 ConfigScope::ConfigScope(ConfigScope * parentScope, const char * name)
@@ -66,7 +66,7 @@ ConfigScope::ConfigScope(ConfigScope * parentScope, const char * name)
 //----------------------------------------------------------------------
 // Function:	Destructor
 //
-// Description:	
+// Description:
 //----------------------------------------------------------------------
 
 ConfigScope::~ConfigScope()
@@ -79,7 +79,7 @@ ConfigScope::~ConfigScope()
 //----------------------------------------------------------------------
 // Function:	rootScope
 //
-// Description:	
+// Description:
 //----------------------------------------------------------------------
 
 ConfigScope *
@@ -250,7 +250,7 @@ ConfigScope::addOrReplaceList(
 //----------------------------------------------------------------------
 // Function:	ensureScopeExists()
 //
-// Description:	
+// Description:
 //----------------------------------------------------------------------
 
 bool
@@ -413,7 +413,7 @@ ConfigScope::is_in_table(const char *name) const
 //----------------------------------------------------------------------
 // Function:	listLocalNames()
 //
-// Description:	
+// Description:
 //----------------------------------------------------------------------
 
 void
@@ -454,7 +454,7 @@ ConfigScope::listLocalNames(
 //----------------------------------------------------------------------
 // Function:	listScopedNamesHelper()
 //
-// Description:	
+// Description:
 //----------------------------------------------------------------------
 
 void
@@ -502,7 +502,7 @@ ConfigScope::listScopedNamesHelper(
 //----------------------------------------------------------------------
 // Function:	listFilter()
 //
-// Description:	
+// Description:
 //----------------------------------------------------------------------
 
 bool
@@ -510,10 +510,8 @@ ConfigScope::listFilter(
 	const char *				name,
 	const StringVector &		filterPatterns) const
 {
-	int							i;
 	int							len;
 	const char *				unexpandedName;
-	const char *				pattern;
 	StringBuffer				buf;
 	UidIdentifierProcessor		uidProc;
 
@@ -523,8 +521,8 @@ ConfigScope::listFilter(
 	}
 
 	unexpandedName = uidProc.unexpand(name, buf);
-	for (i = 0; i < len; i++) {
-		pattern = filterPatterns[i];
+	for (int i = 0; i < len; i++) {
+		const char* pattern = filterPatterns[i];
 		if (Configuration::patternMatch(unexpandedName, pattern)) {
 			return true;
 		}
@@ -552,7 +550,7 @@ ConfigScope::dump(
 	int						len;
 	StringVector			nameVec;
 	ConfigItem *			item;
-	
+
 	//--------
 	// First pass. Dump the variables
 	//--------
@@ -606,7 +604,7 @@ ConfigScope::hash(const char *name) const
 //----------------------------------------------------------------------
 // Function:	growIfTooFull()
 //
-// Description:	
+// Description:
 //----------------------------------------------------------------------
 
 void

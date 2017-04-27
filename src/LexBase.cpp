@@ -10,7 +10,7 @@
 // the following conditions.
 //
 // The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.  
+// included in all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
@@ -272,14 +272,12 @@ LexBase::nextByte()
 void
 LexBase::nextChar() throw(ConfigurationException)
 {
-	char				ch;
-	int					status;
-	wchar_t				wChar;
 
 	m_ch.reset();
-	status = -1;
+	int status = -1;
 	while (status == -1) {
-		ch = nextByte();
+        wchar_t				wChar;
+		char ch = nextByte();
 		if (m_atEOF && !m_ch.isEmpty()) {
 			StringBuffer			msg;
 			msg << "Invalid multi-byte character on line " << m_lineNum;

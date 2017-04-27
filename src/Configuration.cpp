@@ -10,7 +10,7 @@
 // the following conditions.
 //
 // The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.  
+// included in all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
@@ -79,7 +79,6 @@ int
 Configuration::mbstrlen(const char * str)
 {
 	int					count;
-	int					status;
 	char				byte;
 	const char *		ptr;
 	wchar_t				wChar;
@@ -90,7 +89,7 @@ Configuration::mbstrlen(const char * str)
 	count = 0;
 	ptr = str;
 	while (*ptr != '\0') {
-		status = -1;
+		int status = -1;
 		while (status == -1) {
 			byte = *ptr;
 			ptr ++;

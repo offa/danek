@@ -10,7 +10,7 @@
 // the following conditions.
 //
 // The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.  
+// included in all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
@@ -48,7 +48,7 @@ inline char * stringCopy(const char * s1) { return stringConcat(s1, ""); }
 //----------------------------------------------------------------------
 // Function:	Constructor
 //
-// Description:	
+// Description:
 //----------------------------------------------------------------------
 
 Config2Cpp::Config2Cpp(const char * progName)
@@ -71,7 +71,7 @@ Config2Cpp::Config2Cpp(const char * progName)
 //----------------------------------------------------------------------
 // Function:	Destructor
 //
-// Description:	
+// Description:
 //----------------------------------------------------------------------
 
 Config2Cpp::~Config2Cpp()
@@ -96,7 +96,7 @@ Config2Cpp::~Config2Cpp()
 //----------------------------------------------------------------------
 // Function:	parseCmdLineArgs()
 //
-// Description:	
+// Description:
 //----------------------------------------------------------------------
 
 bool
@@ -184,7 +184,7 @@ Config2Cpp::parseCmdLineArgs(int argc, char ** argv)
 //----------------------------------------------------------------------
 // Function:	generateFiles()
 //
-// Description:	
+// Description:
 //----------------------------------------------------------------------
 
 bool
@@ -280,7 +280,6 @@ Config2Cpp::parseNamespace(const char * ns)
 	int						i;
 	int						count;
 	int						len;
-	int						componentLen;
 	const char *			str;
 	const char *			colonAddr;
 
@@ -330,7 +329,7 @@ Config2Cpp::parseNamespace(const char * ns)
 		if (colonAddr == 0) {
 			colonAddr = ns + len;
 		}
-		componentLen = colonAddr - str;
+		int componentLen = colonAddr - str;
 		m_namespaceArray[i] = new char[componentLen + 1];
 		strncpy(m_namespaceArray[i], str, componentLen);
 		m_namespaceArray[i][componentLen] = '\0';
