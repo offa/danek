@@ -22,6 +22,8 @@
 // SOFTWARE.
 //----------------------------------------------------------------------
 
+#pragma once
+
 #include <config4cpp/SchemaType.h>
 
 
@@ -56,6 +58,5 @@ protected:
 		int						indentLevel) const
 											throw(ConfigurationException);
 };
-
 
 } // namespace CONFIG4CPP_NAMESPACE

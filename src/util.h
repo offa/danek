@@ -10,7 +10,7 @@
 // the following conditions.
 //
 // The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.  
+// included in all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
@@ -22,6 +22,7 @@
 // SOFTWARE.
 //----------------------------------------------------------------------
 
+#pragma once
 
 //--------
 // #include's
@@ -31,6 +32,6 @@
 
 namespace CONFIG4CPP_NAMESPACE {
 
-extern void splitScopedNameIntoVector(const char * str, StringVector & vec); 
+extern void splitScopedNameIntoVector(const char * str, StringVector & vec);
 
 } // namespace CONFIG4CPP_NAMESPACE
