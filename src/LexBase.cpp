@@ -322,7 +322,6 @@ LexBase::nextToken(LexToken &token)
 {
 	StringBuffer		spelling;
 	bool				found;
-	short				funcType;
 	short				symbol;
 
 	//--------
@@ -516,6 +515,7 @@ LexBase::nextToken(LexToken &token)
 		// a function.
 		//--------
 		if (m_ch == '(') {
+            short funcType;
 			spelling.append(m_ch.c_str());
 			nextChar();
 			searchForFunction(spelling.c_str(), found, funcType, symbol);

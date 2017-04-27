@@ -63,7 +63,6 @@ SchemaType::validate(
     unused(origTypeName);
 
 	const char *				value;
-	const char *				sep;
 	StringBuffer				msg;
 	StringBuffer				fullyScopedName;
 	StringBuffer				errSuffix;
@@ -72,6 +71,7 @@ SchemaType::validate(
 	if (!sv->callIsA(this, cfg, value, typeName, typeArgs, indentLevel+1,
 					 errSuffix))
 	{
+        const char* sep;
 		cfg->mergeNames(scope, name, fullyScopedName);
 		if (errSuffix.length() == 0) {
 			sep = "";

@@ -103,24 +103,19 @@ SchemaTypeList::validate(
 	StringVector				emptyArgs;
 	const char **				array;
 	int							arraySize;
-	int							i;
-	SchemaType *				elemTypeDef;
-	const char *				elemTypeName;
-	const char *				elemValue;
-	bool						ok;
-	const char *				sep;
 
 	assert(typeArgs.length() == 1);
-	elemTypeName = typeArgs[0];
-	elemTypeDef = findType(sv, elemTypeName);
+	const char* elemTypeName = typeArgs[0];
+	SchemaType* elemTypeDef = findType(sv, elemTypeName);
 	assert(elemTypeDef->cfgType() == Configuration::CFG_STRING);
 
 	cfg->lookupList(scope, name, array, arraySize);
-	for (i = 0; i < arraySize; i++) {
-		elemValue = array[i];
-		ok = callIsA(elemTypeDef, sv, cfg, elemValue, elemTypeName, emptyArgs,
+	for (int i = 0; i < arraySize; i++) {
+		const char* elemValue = array[i];
+		bool ok = callIsA(elemTypeDef, sv, cfg, elemValue, elemTypeName, emptyArgs,
 					 indentLevel + 1, errSuffix);
 		if (!ok) {
+            const char* sep;
 			if (errSuffix.length() == 0) {
 				sep = "";
 			} else {

@@ -65,17 +65,14 @@ SchemaTypeUnitsWithInt::isA(
 
 	const char **				allowedUnits;
 	int							allowedUnitsSize;
-	int							i;
-	int							len;
-	bool						result;
 
 	typeArgs.c_array(allowedUnits, allowedUnitsSize);
-	result = cfg->isUnitsWithInt(value, allowedUnits, allowedUnitsSize);
+	bool result = cfg->isUnitsWithInt(value, allowedUnits, allowedUnitsSize);
 	if (result == false) {
 		errSuffix << "the value should be in the format '<units> <int>' where "
 			<< "<units> is one of:";
-		len = typeArgs.length();
-		for (i = 0; i < len; i++) {
+		int len = typeArgs.length();
+		for (int i = 0; i < len; i++) {
 			if (i < len-1) {
 				errSuffix << " '" << typeArgs[i] << "',";
 			} else {
