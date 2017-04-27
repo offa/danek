@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.2)
 project(danek VERSION 0.0.1)
 message(STATUS "~~~ ${PROJECT_NAME} ${PROJECT_VERSION} ~~~")
 
+option(UNIT_TESTS "Build Unit Tests" ON)
 option(SCHEMA_TESTS "Build Schema tests." OFF)
 option(BUILD_SHARED_LIBS "Build shared library" OFF)
 option(DEMOS "Build demos." OFF)
@@ -18,6 +19,11 @@ add_definitions(-Wall -Wextra -pedantic -Werror -Wshadow)
 include_directories("include")
 
 subdirs(src)
+
+
+if( UNIT_TESTS )
+    subdirs(test)
+endif()
 
 if( BUILD_SCHEMA_TESTS )
     subdirs(tests/schema-types)
