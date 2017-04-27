@@ -10,7 +10,7 @@
 // the following conditions.
 //
 // The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.  
+// included in all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
@@ -69,14 +69,6 @@ main(int argc, char ** argv)
 	int						passedCount = 0;
 	int						i;
 	int						len;
-	const char *			fileSchema[] = {
-									"testSchema = list[string]",
-									"good = scope",
-									"bad = scope",
-									"@ignoreScopesIn good",
-									"@ignoreScopesIn bad",
-									0 // null-terminated array
-	};
 
 	setlocale(LC_ALL, "");
 	parseCmdLineArgs(argc, argv, cfgFile, wantDiagnostics);
@@ -86,6 +78,14 @@ main(int argc, char ** argv)
 	// and lists of the names of good and bad sub-scopes.
 	//--------
 	try {
+        const char *			fileSchema[] = {
+            "testSchema = list[string]",
+            "good = scope",
+            "bad = scope",
+            "@ignoreScopesIn good",
+            "@ignoreScopesIn bad",
+            0 // null-terminated array
+        };
 		cfg->parse(cfgFile);
 		fileSv.parseSchema(fileSchema);
 		fileSv.validate(cfg, "", "");
