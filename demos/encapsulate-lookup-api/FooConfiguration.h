@@ -32,7 +32,7 @@ public:
 	//--------
 	// Constructors and destructor
 	//--------
-	FooConfigurationException(const char * str);
+	explicit FooConfigurationException(const char * str);
 	FooConfigurationException(const FooConfigurationException & other);
 	~FooConfigurationException();
 

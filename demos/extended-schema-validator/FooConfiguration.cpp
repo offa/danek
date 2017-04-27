@@ -10,7 +10,7 @@
 // the following conditions.
 //
 // The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.  
+// included in all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
@@ -74,12 +74,15 @@ FooConfigurationException::c_str() const
 // class FooConfiguration
 //----------------------------------------------------------------------
 
-FooConfiguration::FooConfiguration(bool wantDiagnostics)
+FooConfiguration::FooConfiguration(bool wantDiagnostics) : m_cfg(Configuration::create()),
+                                                        m_wantDiagnostics(wantDiagnostics),
+                                                        m_timeout(0),
+                                                        m_host(""),
+                                                        m_hexByte(0x00),
+                                                        m_hexWord(0x00),
+                                                        m_hexList(0),
+                                                        m_hexListSize(0)
 {
-	m_wantDiagnostics = wantDiagnostics;
-	m_cfg = Configuration::create();
-	m_hexList = 0;
-	m_hexListSize = 0;
 }
 
 
@@ -133,7 +136,7 @@ FooConfiguration::parse(
 		sv.validate(cfg, scope, "");
 
 		//--------
-		// Cache configuration variables in instance variables for 
+		// Cache configuration variables in instance variables for
 		// faster access. We use static utility operations on the
 		// SchemaTypeHex class to perform lookupHex() and convert
 		// list[hex] to int[].
