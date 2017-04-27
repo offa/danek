@@ -102,16 +102,15 @@ LexBase::searchForFunction(
 	short &				symbol)
 {
 	FuncInfo			searchItem;
-	FuncInfo *			result = 0;
 
 	if (m_funcInfoArraySize == 0) {
 		found = false;
 		return;
 	}
 	searchItem.m_spelling = spelling;
-	result = (FuncInfo *)bsearch(&searchItem, m_funcInfoArray,
+	FuncInfo* result = static_cast<FuncInfo*>(bsearch(&searchItem, m_funcInfoArray,
 	                             m_funcInfoArraySize, sizeof(searchItem),
-	                             CONFIG4CPP_C_PREFIX(funcInfoCmp_c));
+	                             CONFIG4CPP_C_PREFIX(funcInfoCmp_c)));
 	if (result == 0) {
 		found = false;
 	} else {
