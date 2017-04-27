@@ -94,14 +94,10 @@ SchemaTypeString::isA(
     unused(typeName);
     unused(indentLevel);
 
-	int							strLen;
-	int							minLength;
-	int							maxLength;
-
 	if (typeArgs.length() == 2) {
-		strLen = Configuration::mbstrlen(value);
-		minLength = cfg->stringToInt("", "", typeArgs[0]);
-		maxLength = cfg->stringToInt("", "", typeArgs[1]);
+		int strLen = Configuration::mbstrlen(value);
+		int minLength = cfg->stringToInt("", "", typeArgs[0]);
+		int maxLength = cfg->stringToInt("", "", typeArgs[1]);
 		if (strLen < minLength || strLen > maxLength) {
 			errSuffix << "its length is outside the permitted range ["
 					  << minLength << ", " << maxLength << "]";

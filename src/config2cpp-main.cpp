@@ -10,7 +10,7 @@
 // the following conditions.
 //
 // The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.  
+// included in all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
@@ -44,19 +44,12 @@ calculateRuleForName(
 	const StringVector &		wildcardedNamesAndTypes,
 	StringBuffer &				rule)
 {
-	int							i;
-	int							len;
-	const char *				str;
-	const char *				keyword;
-	const char *				wildcardedName;
-	const char *				type;
-
 	rule.empty();
-	len = wildcardedNamesAndTypes.length();
-	for (i = 0; i < len; i+=3) {
-		keyword        = wildcardedNamesAndTypes[i+0]; // @optional or @required
-		wildcardedName = wildcardedNamesAndTypes[i+1];
-		type           = wildcardedNamesAndTypes[i+2];
+	int len = wildcardedNamesAndTypes.length();
+	for (int i = 0; i < len; i+=3) {
+		const char* keyword        = wildcardedNamesAndTypes[i+0]; // @optional or @required
+		const char* wildcardedName = wildcardedNamesAndTypes[i+1];
+		const char* type           = wildcardedNamesAndTypes[i+2];
 		if (Configuration::patternMatch(uName, wildcardedName)) {
 			rule << keyword << " " << uName << " = " << type;
 			return;
@@ -64,7 +57,7 @@ calculateRuleForName(
 	}
 
 	//--------
-	// We couldn's determine the type from the wildcarded_names_and_types 
+	// We couldn's determine the type from the wildcarded_names_and_types
 	// table. So we fall back to using heuristics to guess a good type.
 	//--------
 	if (cfg->type("", name) == Configuration::CFG_SCOPE) {
@@ -72,7 +65,7 @@ calculateRuleForName(
 	} else if (cfg->type("", name) == Configuration::CFG_LIST) {
 		rule << uName << " = list[string]";
 	} else {
-		str = cfg->lookupString("", name);
+		const char* str = cfg->lookupString("", name);
 		if (cfg->isBoolean(str)) {
 			rule << uName << " = boolean";
 		} else if (cfg->isInt(str)) {
@@ -125,25 +118,21 @@ calculateSchema(
 	const StringVector &		recipeIgnoreRules,
 	StringVector &				schema) throw(ConfigurationException)
 {
-	int							i;
-	int							len;
 	StringBuffer				rule;
 	StringBuffer				buf;
-	const char *				name;
-	const char *				uName;
 	StringVector				uidNames;
 
 	schema.empty();
 	schema.add(recipeIgnoreRules);
 	schema.add(recipeUserTypes);
-	len = namesList.length();
-	for (i = 0; i < len; i++) {
-		name = namesList[i];
+	int len = namesList.length();
+	for (int i = 0; i < len; i++) {
+		const char* name = namesList[i];
 		if (strstr(name, "uid-") == 0) {
 			calculateRuleForName(cfg, name, name, wildcardedNamesAndTypes,rule);
 			schema.add(rule);
 		} else {
-			uName = cfg->unexpandUid(name, buf);
+			const char* uName = cfg->unexpandUid(name, buf);
 			if (!doesVectorcontainString(uidNames, uName)) {
 				uidNames.add(uName);
 				calculateRuleForName(cfg, name, uName,
@@ -162,14 +151,11 @@ doesPatternMatchAnyUnexpandedNameInList(
 	const char *				pattern,
 	const StringVector &		namesList)
 {
-	int							i;
-	int							len;
-	const char *				uName;
 	StringBuffer				buf;
 
-	len = namesList.length();
-	for (i = 0; i < len; i++) {
-		uName = cfg->unexpandUid(namesList[i], buf);
+	int len = namesList.length();
+	for (int i = 0; i < len; i++) {
+		const char* uName = cfg->unexpandUid(namesList[i], buf);
 		if (Configuration::patternMatch(uName, pattern)) {
 			return true;
 		}
