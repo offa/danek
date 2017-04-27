@@ -146,25 +146,6 @@ SchemaParser::parse(
 			throw ConfigurationException(msg.c_str());
 		}
 	}
-
-#if 0
-	//--------
-	// Diagnostics
-	//--------
-	printf("post qsort(): m_sv->m_idRulesCurrSize=%d; rules...\n",
-		m_sv->m_idRulesCurrSize);
-	for (i = 0; i < m_sv->m_idRulesCurrSize; i++) {
-		printf("m_sv->rule[%d] = '%s' has %d args:", i,
-			m_sv->m_idRules[i]->m_locallyScopedName.c_str(),
-			m_sv->m_idRules[i]->m_args.length());
-		for (int i2 = 0; i2 < m_sv->m_idRules[i]->m_args.length(); i2++)
-		{
-			printf(" '%s'", m_sv->m_idRules[i]->m_args[i2]);
-		}
-		printf("\n");
-	}
-#endif
-
 }
 
 
