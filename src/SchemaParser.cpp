@@ -10,7 +10,7 @@
 // the following conditions.
 //
 // The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.  
+// included in all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
@@ -72,8 +72,6 @@ SchemaParser::parse(
 	const char **		schema,
 	int					schemaSize) throw(ConfigurationException)
 {
-	int					i;
-	const char *		schemaItem;
 	const char *		s1;
 	const char *		s2;
 	StringBuffer		name;
@@ -86,19 +84,19 @@ SchemaParser::parse(
 	m_sv->m_idRulesMaxSize  = schemaSize;
 	m_sv->m_idRulesCurrSize = 0;
 	m_sv->m_idRules = new SchemaIdRuleInfo*[schemaSize];
-	for (i = 0; i < m_sv->m_idRulesMaxSize; i++) {
+	for (int i = 0; i < m_sv->m_idRulesMaxSize; i++) {
 		m_sv->m_idRules[i] = 0;
 	}
 	m_sv->m_ignoreRulesMaxSize  = schemaSize;
 	m_sv->m_ignoreRulesCurrSize = 0;
 	m_sv->m_ignoreRules = new SchemaIgnoreRuleInfo*[schemaSize];
-	for (i = 0; i < m_sv->m_ignoreRulesMaxSize; i++) {
+	for (int i = 0; i < m_sv->m_ignoreRulesMaxSize; i++) {
 		m_sv->m_ignoreRules[i] = 0;
 	}
 
 	m_sv->sortTypes();
-	for (i = 0; i < schemaSize; i++) {
-		schemaItem = schema[i];
+	for (int i = 0; i < schemaSize; i++) {
+		const char* schemaItem = schema[i];
 		delete m_lex;
 		m_lex = new SchemaLex(schemaItem);
 		m_lex->nextToken(m_token);
@@ -140,7 +138,7 @@ SchemaParser::parse(
 	//--------
 	// Check if multiple rules have the same name.
 	//--------
-	for (i = 0; i < m_sv->m_idRulesCurrSize-1; i++) {
+	for (int i = 0; i < m_sv->m_idRulesCurrSize-1; i++) {
 		s1 = m_sv->m_idRules[i]->m_locallyScopedName.c_str();
 		s2 = m_sv->m_idRules[i+1]->m_locallyScopedName.c_str();
 		if (strcmp(s1, s2) == 0) {
