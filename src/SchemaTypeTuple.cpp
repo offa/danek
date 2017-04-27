@@ -38,15 +38,11 @@ SchemaTypeTuple::checkRule(
     unused(cfg);
 
 	StringBuffer				msg;
-	int							i;
-	int							len;
-	const char *				elemType;
-	SchemaType *				typeDef;
 
 	//--------
 	// Check there is at least one pair of type and name arguments.
 	//--------
-	len = typeArgs.length();
+	int len = typeArgs.length();
 	if ((len == 0) || (len % 2 != 0)) {
 		msg << "the '" << typeName << "' type requires pairs of type and "
 			<< "name arguments in rule '" << rule << "'";
@@ -56,9 +52,9 @@ SchemaTypeTuple::checkRule(
 	//--------
 	// Check that all the type arguments are valid types.
 	//--------
-	for (i = 0; i < len; i+=2) {
-		elemType = typeArgs[i+0];
-		typeDef = findType(sv, elemType);
+	for (int i = 0; i < len; i+=2) {
+		const char* elemType = typeArgs[i+0];
+		SchemaType* typeDef = findType(sv, elemType);
 		if (typeDef == 0) {
 			msg << "unknown type '" << elemType << "' in rule '" << rule << "'";
 			throw ConfigurationException(msg.c_str());
