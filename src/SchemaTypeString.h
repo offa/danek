@@ -10,7 +10,7 @@
 // the following conditions.
 //
 // The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.  
+// included in all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
@@ -22,8 +22,7 @@
 // SOFTWARE.
 //----------------------------------------------------------------------
 
-#ifndef CONFIG4CPP_SCHEMA_TYPE_STRING_H_
-#define CONFIG4CPP_SCHEMA_TYPE_STRING_H_
+#pragma once
 
 #include <config4cpp/SchemaType.h>
 
@@ -60,4 +59,3 @@ protected:
 
 
 } // namespace CONFIG4CPP_NAMESPACE
-#endif

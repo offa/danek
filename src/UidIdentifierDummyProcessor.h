@@ -22,8 +22,7 @@
 // SOFTWARE.
 //----------------------------------------------------------------------
 
-#ifndef CONFIG4CPP_UID_IDENTIFIER_DUMMY_PROCESSOR_H_
-#define CONFIG4CPP_UID_IDENTIFIER_DUMMY_PROCESSOR_H_
+#pragma once
 
 
 //--------
@@ -68,4 +67,3 @@ private:
 
 
 } // namespace CONFIG4CPP_NAMESPACE
-#endif

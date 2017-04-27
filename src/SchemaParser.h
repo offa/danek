@@ -22,9 +22,7 @@
 // SOFTWARE.
 //----------------------------------------------------------------------
 
-#ifndef CONFIG4CPP_SCHEMA_PARSER_H_
-#define CONFIG4CPP_SCHEMA_PARSER_H_
-
+#pragma once
 
 //--------
 // #include's
@@ -92,4 +90,3 @@ private:
 
 
 } // namespace CONFIG4CPP_NAMESPACE
-#endif
