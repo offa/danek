@@ -172,17 +172,13 @@ checkForUnmatchedPatterns(
 	const StringVector &		wildcardedNamesAndTypes,
 	StringVector &				unmatchedPatterns) throw(ConfigurationException)
 {
-	int							i;
-	int							len;
-	const char *				wildcardedName;
-
 	unmatchedPatterns.empty();
 	//--------
 	// Check if there is a wildcarded name that does not match anything
 	//--------
-	len = wildcardedNamesAndTypes.length();
-	for (i = 0; i < len; i += 3) {
-		wildcardedName = wildcardedNamesAndTypes[i+1];
+	int len = wildcardedNamesAndTypes.length();
+	for (int i = 0; i < len; i += 3) {
+		const char* wildcardedName = wildcardedNamesAndTypes[i+1];
 		if (!doesPatternMatchAnyUnexpandedNameInList(cfg, wildcardedName,
 		                                             namesList))
 		{
@@ -202,9 +198,6 @@ checkForUnmatchedPatterns(
 int
 main(int argc, char ** argv)
 {
-	bool					ok;
-	Configuration *			cfg;
-	Configuration *			schemaCfg;
 	Config2Cpp				util("config2cpp");
 	StringVector			namesList;
 	StringVector			recipeUserTypes;
@@ -213,30 +206,28 @@ main(int argc, char ** argv)
 	StringVector			unmatchedPatterns;
 	StringVector			schema;
 	SchemaValidator			sv;
-	const char *			scope;
-	int						i;
-	int						len;
-	const char *			overrideSchema[] = {
-					"@typedef keyword = enum[\"@optional\", \"@required\"]",
-					"user_types = list[string]",
-					"wildcarded_names_and_types = table[keyword,keyword, "
-										"string,wildcarded-name, string,type]",
-					"ignore_rules = list[string]",
-					0 // null-terminated array
-							};
 
-	ok = util.parseCmdLineArgs(argc, argv);
+	bool ok = util.parseCmdLineArgs(argc, argv);
 
-	cfg       = Configuration::create();
-	schemaCfg = Configuration::create();
+	Configuration* cfg       = Configuration::create();
+	Configuration* schemaCfg = Configuration::create();
 	if (ok && util.wantSchema()) {
 		try {
 			cfg->parse(util.cfgFileName());
 			cfg->listFullyScopedNames("", "", Configuration::CFG_SCOPE_AND_VARS,
 									  true, namesList);
 			if (util.schemaOverrideCfg() != 0) {
+                const char *			overrideSchema[] = {
+                    "@typedef keyword = enum[\"@optional\", \"@required\"]",
+                    "user_types = list[string]",
+                    "wildcarded_names_and_types = table[keyword,keyword, "
+                        "string,wildcarded-name, string,type]",
+                    "ignore_rules = list[string]",
+                    0 // null-terminated array
+                };
+
 				schemaCfg->parse(util.schemaOverrideCfg());
-				scope = util.schemaOverrideScope();
+				const char* scope = util.schemaOverrideScope();
 				sv.parseSchema(overrideSchema);
 				sv.validate(schemaCfg, scope, "");
 				schemaCfg->lookupList(scope, "user_types", recipeUserTypes);
@@ -252,12 +243,12 @@ main(int argc, char ** argv)
 			fprintf(stderr, "%s\n", ex.c_str());
 			ok = false;
 		}
-		len = unmatchedPatterns.length();
+		int len = unmatchedPatterns.length();
 		if (len != 0) {
 			fprintf(stderr, "%s %s\n",
 				"Error: the following patterns in the schema",
 				"recipe did not match anything");
-			for (i = 0; i < len; i++) {
+			for (int i = 0; i < len; i++) {
 				fprintf(stderr, "\t'%s'\n", unmatchedPatterns[i]);
 			}
 			ok = false;
