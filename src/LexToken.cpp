@@ -40,11 +40,10 @@ namespace CONFIG4CPP_NAMESPACE {
 // Description:
 //----------------------------------------------------------------------
 
-LexToken::LexToken()
+LexToken::LexToken() : m_type(LexBase::LEX_UNKNOWN_SYM),
+                    m_lineNum(-1),
+                    m_funcType(LexBase::NOT_A_FUNC)
 {
-	m_type     = LexBase::LEX_UNKNOWN_SYM;
-	m_lineNum  = -1;
-	m_funcType = LexBase::NOT_A_FUNC;
 }
 
 LexToken::LexToken(const LexToken& other) : m_type(other.m_type),
@@ -61,12 +60,11 @@ LexToken::LexToken(const LexToken& other) : m_type(other.m_type),
 // Description:
 //----------------------------------------------------------------------
 
-LexToken::LexToken(short type, int lineNum, const char * spelling)
+LexToken::LexToken(short type, int lineNum, const char * spelling) : m_type(type),
+                                                                m_spelling(spelling),
+                                                                m_lineNum(lineNum),
+                                                                m_funcType(LexBase::LEX_UNKNOWN_SYM)
 {
-	m_type     = type;
-	m_lineNum  = lineNum;
-	m_spelling = spelling;
-	m_funcType = LexBase::NOT_A_FUNC;
 }
 
 
