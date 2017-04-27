@@ -146,7 +146,7 @@ protected:
 	//--------
 	ConfigScope();
 	ConfigScope(const ConfigScope&);
-	ConfigScope & operator=(const ConfigScope &);
+	ConfigScope& operator=(const ConfigScope&);
 };
 
 
