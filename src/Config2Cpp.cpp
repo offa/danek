@@ -336,17 +336,6 @@ Config2Cpp::parseNamespace(const char * ns)
 		str = colonAddr + 2;
 	}
 
-#if 0
-	//--------
-	// Debug diagnostics
-	//--------
-	printf("There are %d namespace components in '%s'\n",
-	       m_namespaceArraySize, ns);
-	for (i = 0; i < m_namespaceArraySize; i++) {
-		printf("component %d = '%s'\n", i, m_namespaceArray[i]);
-	}
-#endif
-
 	return true;
 }
 
