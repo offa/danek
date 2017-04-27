@@ -22,9 +22,7 @@
 // SOFTWARE.
 //----------------------------------------------------------------------
 
-#ifndef CONFIG4CPP_SCHEMA_TYPE_H_
-#define CONFIG4CPP_SCHEMA_TYPE_H_
-
+#pragma once
 
 #include <config4cpp/Configuration.h>
 
@@ -110,4 +108,3 @@ private:
 
 
 } // namespace CONFIG4CPP_NAMESPACE
-#endif

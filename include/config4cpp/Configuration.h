@@ -10,7 +10,7 @@
 // the following conditions.
 //
 // The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.  
+// included in all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
@@ -22,12 +22,7 @@
 // SOFTWARE.
 //----------------------------------------------------------------------
 
-#ifndef CONFIG4CPP_CONFIGURATION_H_
-#define CONFIG4CPP_CONFIGURATION_H_
-
-
-
-
+#pragma once
 
 //--------
 // #include's
@@ -97,12 +92,12 @@ public:
 					Configuration *		cfg,
 					bool				takeOwnership,
 					const char *		scope = "")
-											throw (ConfigurationException) = 0; 
+											throw (ConfigurationException) = 0;
 
 	virtual void setSecurityConfiguration(
 					const char *		cfgInput,
 					const char *		scope = "")
-											throw (ConfigurationException) = 0; 
+											throw (ConfigurationException) = 0;
 	virtual void getSecurityConfiguration(
 					const Configuration *&	cfg,
 					const char *&			scope) = 0;
@@ -636,4 +631,3 @@ Configuration::parse(const char * str)
 
 
 } // namespace CONFIG4CPP_NAMESPACE
-#endif

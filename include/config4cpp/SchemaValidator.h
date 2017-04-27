@@ -22,12 +22,7 @@
 // SOFTWARE.
 //----------------------------------------------------------------------
 
-#ifndef CONFIG4CPP_SCHEMA_VALIDATOR_H_
-#define CONFIG4CPP_SCHEMA_VALIDATOR_H_
-
-
-
-
+#pragma once
 
 //--------
 // #include's
@@ -226,5 +221,3 @@ SchemaValidator::wantDiagnostics()
 
 
 } // namespace CONFIG4CPP_NAMESPACE
-#endif
-

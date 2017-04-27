@@ -10,7 +10,7 @@
 // the following conditions.
 //
 // The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.  
+// included in all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
@@ -22,9 +22,7 @@
 // SOFTWARE.
 //----------------------------------------------------------------------
 
-#ifndef CONFIG4CPP_NAMESPACE_H_
-#define CONFIG4CPP_NAMESPACE_H_
-
+#pragma once
 
 //--------
 // By default, this library is compiled into the "config4cpp" namespace.
@@ -44,6 +42,4 @@
 #pragma warning( disable : 4512 )
 #endif
 
-
-#endif
 
