@@ -349,10 +349,7 @@ ConfigurationImpl::listValue(
 	int &					arraySize,
 	Configuration::Type &	type) const
 {
-	ConfigItem *			item;
-	StringVector *			list;
-
-	item = lookup(fullyScopedName, localName);
+	ConfigItem* item = lookup(fullyScopedName, localName);
 	if (item == 0) {
 		type = Configuration::CFG_NO_VALUE;
 		array = 0;
@@ -360,7 +357,7 @@ ConfigurationImpl::listValue(
 	} else {
 		type = item->type();
 		if (type == Configuration::CFG_LIST) {
-			list = &item->listVal();
+			StringVector* list = &item->listVal();
 			list->c_array(array, arraySize);
 		} else {
 			array = 0;
@@ -705,7 +702,6 @@ ConfigurationImpl::dump(
 	const char *			scope,
 	const char *			localName) const throw(ConfigurationException)
 {
-	ConfigItem *			item;
 	StringBuffer			msg;
 	StringBuffer			fullyScopedName;
 
@@ -714,7 +710,7 @@ ConfigurationImpl::dump(
 	if (strcmp(fullyScopedName.c_str(), "") == 0) {
 		m_rootScope->dump(buf, wantExpandedUidNames);
 	} else {
-		item = lookup(fullyScopedName.c_str(), localName, true);
+		ConfigItem* item = lookup(fullyScopedName.c_str(), localName, true);
 		if (item == 0) {
 			msg << fileName() << ": " << "'" << fullyScopedName
 				<< "' is not an entry";
@@ -1105,13 +1101,11 @@ ConfigurationImpl::lookupEnum(
 	int 						numEnums,
 	const char *				defaultVal) const throw(ConfigurationException)
 {
-	const char *				strValue;
 	StringBuffer				msg;
 	int							result;
 	StringBuffer				fullyScopedName;
-	int							i;
 
-	strValue = lookupString(scope, localName, defaultVal);
+	const char* strValue = lookupString(scope, localName, defaultVal);
 
 	//--------
 	// Check if the value matches anything in the enumInfo list.
@@ -1121,7 +1115,7 @@ ConfigurationImpl::lookupEnum(
 		msg << fileName() << ": bad " << typeName << " value ('" << strValue
 			<< "') specified for '" << fullyScopedName
 			<< "'; should be one of:";
-		for (i = 0; i < numEnums; i++) {
+		for (int i = 0; i < numEnums; i++) {
 			if (i < numEnums-1) {
 				msg << " '" << enumInfo[i].name << "',";
 			} else {
@@ -1144,17 +1138,15 @@ ConfigurationImpl::lookupEnum(
 	int 						numEnums,
 	int							defaultVal) const throw(ConfigurationException)
 {
-	const char *				strValue;
 	StringBuffer				msg;
 	int							result;
-	int							i;
 	StringBuffer				fullyScopedName;
 
 	if (type(scope, localName) == Configuration::CFG_NO_VALUE) {
 		return defaultVal;
 	}
 
-	strValue = lookupString(scope, localName);
+	const char* strValue = lookupString(scope, localName);
 
 	//--------
 	// Check if the value matches anything in the enumInfo list.
@@ -1164,7 +1156,7 @@ ConfigurationImpl::lookupEnum(
 		msg << fileName() << ": bad " << typeName << " value ('" << strValue
 			<< "') specified for '" << fullyScopedName
 			<< "'; should be one of:";
-		for (i = 0; i < numEnums; i++) {
+		for (int i = 0; i < numEnums; i++) {
 			if (i < numEnums-1) {
 				msg << " '" << enumInfo[i].name << "',";
 			} else {
@@ -1186,13 +1178,11 @@ ConfigurationImpl::lookupEnum(
 	const EnumNameAndValue *	enumInfo,
 	int 						numEnums) const throw(ConfigurationException)
 {
-	const char *				strValue;
 	StringBuffer				msg;
 	int							result;
 	StringBuffer				fullyScopedName;
-	int							i;
 
-	strValue = lookupString(scope, localName);
+	const char* strValue = lookupString(scope, localName);
 
 	//--------
 	// Check if the value matches anything in the enumInfo list.
@@ -1202,7 +1192,7 @@ ConfigurationImpl::lookupEnum(
 		msg << fileName() << ": bad " << typeName << " value ('" << strValue
 			<< "') specified for '" << fullyScopedName
 			<< "'; should be one of:";
-		for (i = 0; i < numEnums; i++) {
+		for (int i = 0; i < numEnums; i++) {
 			if (i < numEnums-1) {
 				msg << " '" << enumInfo[i].name << "',";
 			} else {
@@ -1452,7 +1442,6 @@ ConfigurationImpl::stringToEnum(
 	StringBuffer				msg;
 	StringBuffer				fullyScopedName;
 	int							result;
-	int							i;
 
 	//--------
 	// Check if the value matches anything in the enumInfo list.
@@ -1461,7 +1450,7 @@ ConfigurationImpl::stringToEnum(
 		mergeNames(scope, localName, fullyScopedName);
 		msg << fileName() << ": bad " << typeName << " value specified for '"
 			<< fullyScopedName << "'; should be one of:";
-		for (i = 0; i < numEnums; i++) {
+		for (int i = 0; i < numEnums; i++) {
 			if (i < numEnums-1) {
 				msg << " '" << enumInfo[i].name << "',";
 			} else {
@@ -1622,31 +1611,24 @@ ConfigurationImpl::isUnitsWithFloat(
 	const char **		allowedUnits,
 	int					allowedUnitsSize) const
 {
-	char *				formatStr;
-	char *				unitSpelling;
-	char				dummyCh;
-	int					i;
-	int					index;
-	int					maxUnitsLen;
-	int					len;
-	float				fVal;
-
-	maxUnitsLen = 0;
-	for (index = 0; index < allowedUnitsSize; index++) {
-		len = strlen(allowedUnits[index]);
+	int maxUnitsLen = 0;
+	for (int index = 0; index < allowedUnitsSize; index++) {
+		int len = strlen(allowedUnits[index]);
 		if (len > maxUnitsLen) {
 			maxUnitsLen = len;
 		}
 	}
-	formatStr = new char[maxUnitsLen + 7]; // big enough
-	unitSpelling = new char[strlen(str)+1]; // big enough
+	char* formatStr = new char[maxUnitsLen + 7]; // big enough
+	char* unitSpelling = new char[strlen(str)+1]; // big enough
 
 	//--------
 	// See if the string is in the form "allowedUnits[index] <float>"
 	//--------
-	for (index = 0; index < allowedUnitsSize; index++) {
+	for (int index = 0; index < allowedUnitsSize; index++) {
 		sprintf(formatStr, "%s %%f%%c", allowedUnits[index]);
-		i = sscanf(str, formatStr, &fVal, &dummyCh);
+        float fVal;
+        char dummyCh;
+		int i = sscanf(str, formatStr, &fVal, &dummyCh);
 		if (i == 1) {
 			delete [] formatStr;
 			delete [] unitSpelling;
@@ -1827,33 +1809,27 @@ ConfigurationImpl::stringToUnitsWithInt(
 	int &				intResult,
 	const char *&		unitsResult) const throw(ConfigurationException)
 {
-	char *				formatStr;
-	char *				unitSpelling;
-	char				dummyCh;
-	int					i;
-	int					index;
-	int					maxUnitsLen;
-	int					len;
-	int					intVal;
 	StringBuffer		msg;
 	StringBuffer		fullyScopedName;
+	int maxUnitsLen = 0;
 
-	maxUnitsLen = 0;
-	for (index = 0; index < allowedUnitsSize; index++) {
-		len = strlen(allowedUnits[index]);
+	for (int index = 0; index < allowedUnitsSize; index++) {
+		int len = strlen(allowedUnits[index]);
 		if (len > maxUnitsLen) {
 			maxUnitsLen = len;
 		}
 	}
-	formatStr = new char[maxUnitsLen + 7]; // big enough
-	unitSpelling = new char[strlen(str)+1]; // big enough
+	char* formatStr = new char[maxUnitsLen + 7]; // big enough
+	char* unitSpelling = new char[strlen(str)+1]; // big enough
 
 	//--------
 	// See if the string is in the form "allowedUnits[index] <int>"
 	//--------
-	for (index = 0; index < allowedUnitsSize; index++) {
+	for (int index = 0; index < allowedUnitsSize; index++) {
 		sprintf(formatStr, "%s %%d%%c", allowedUnits[index]);
-		i = sscanf(str, formatStr, &intVal, &dummyCh);
+        int intVal;
+        char dummyCh;
+		int i = sscanf(str, formatStr, &intVal, &dummyCh);
 		if (i == 1) {
 			unitsResult = allowedUnits[index];
 			intResult = intVal;
@@ -1872,7 +1848,7 @@ ConfigurationImpl::stringToUnitsWithInt(
 	msg << fileName() << ": invalid " << typeName << " ('" << str
 		<< "') specified for '" << fullyScopedName << "': should be"
 		<< " '<units> <int>' where <units> are";
-	for (i = 0; i < allowedUnitsSize; i++) {
+	for (int i = 0; i < allowedUnitsSize; i++) {
 		msg << " '" << allowedUnits[i] << "'";
 		if (i < allowedUnitsSize-1) {
 			msg << ",";
@@ -1932,31 +1908,25 @@ ConfigurationImpl::isUnitsWithInt(
 	const char **		allowedUnits,
 	int					allowedUnitsSize) const
 {
-	char *				formatStr;
-	char *				unitSpelling;
-	char				dummyCh;
-	int					i;
-	int					index;
-	int					maxUnitsLen;
-	int					len;
-	int					intVal;
+	int maxUnitsLen = 0;
 
-	maxUnitsLen = 0;
-	for (index = 0; index < allowedUnitsSize; index++) {
-		len = strlen(allowedUnits[index]);
+	for (int index = 0; index < allowedUnitsSize; index++) {
+		int len = strlen(allowedUnits[index]);
 		if (len > maxUnitsLen) {
 			maxUnitsLen = len;
 		}
 	}
-	formatStr = new char[maxUnitsLen + 7]; // big enough
-	unitSpelling = new char[strlen(str)+1]; // big enough
+	char* formatStr = new char[maxUnitsLen + 7]; // big enough
+	char* unitSpelling = new char[strlen(str)+1]; // big enough
 
 	//--------
 	// See if the string is in the form "allowedUnits[index] <int>"
 	//--------
-	for (index = 0; index < allowedUnitsSize; index++) {
+	for (int index = 0; index < allowedUnitsSize; index++) {
 		sprintf(formatStr, "%s %%d%%c", allowedUnits[index]);
-		i = sscanf(str, formatStr, &intVal, &dummyCh);
+        int intVal;
+        char dummyCh;
+		int i = sscanf(str, formatStr, &intVal, &dummyCh);
 		if (i == 1) {
 			delete [] formatStr;
 			delete [] unitSpelling;
@@ -2177,33 +2147,27 @@ ConfigurationImpl::stringToUnitsWithFloat(
 	float &				floatResult,
 	const char *&		unitsResult) const throw(ConfigurationException)
 {
-	char *				formatStr;
-	char *				unitSpelling;
-	char				dummyCh;
-	int					i;
-	int					index;
-	int					maxUnitsLen;
-	int					len;
-	float				fVal;
 	StringBuffer		msg;
 	StringBuffer		fullyScopedName;
 
-	maxUnitsLen = 0;
-	for (index = 0; index < allowedUnitsSize; index++) {
-		len = strlen(allowedUnits[index]);
+	int maxUnitsLen = 0;
+	for (int index = 0; index < allowedUnitsSize; index++) {
+		int len = strlen(allowedUnits[index]);
 		if (len > maxUnitsLen) {
 			maxUnitsLen = len;
 		}
 	}
-	formatStr = new char[maxUnitsLen + 7]; // big enough
-	unitSpelling = new char[strlen(str)+1]; // big enough
+	char* formatStr = new char[maxUnitsLen + 7]; // big enough
+	char* unitSpelling = new char[strlen(str)+1]; // big enough
 
 	//--------
 	// See if the string is in the form "allowedUnits[index] <float>"
 	//--------
-	for (index = 0; index < allowedUnitsSize; index++) {
+	for (int index = 0; index < allowedUnitsSize; index++) {
 		sprintf(formatStr, "%s %%f%%c", allowedUnits[index]);
-		i = sscanf(str, formatStr, &fVal, &dummyCh);
+        char dummyCh;
+        float fVal;
+		int i = sscanf(str, formatStr, &fVal, &dummyCh);
 		if (i == 1) {
 			unitsResult = allowedUnits[index];
 			floatResult = fVal;
@@ -2222,7 +2186,7 @@ ConfigurationImpl::stringToUnitsWithFloat(
 	msg << fileName() << ": invalid " << typeName << " ('" << str
 		<< "') specified for '" << fullyScopedName << "': should be"
 		<< " '<units> <float>' where <units> are";
-	for (i = 0; i < allowedUnitsSize; i++) {
+	for (int i = 0; i < allowedUnitsSize; i++) {
 		msg << " '" << allowedUnits[i] << "'";
 		if (i < allowedUnitsSize-1) {
 			msg << ",";
