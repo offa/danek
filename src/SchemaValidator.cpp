@@ -141,14 +141,10 @@ SchemaType *
 SchemaValidator::findType(const char * name) const
 {
 	SchemaTypeDummy		search(name);
-	SchemaType *		searchPtr;
-	SchemaType **		result;
-	int					i;
-	SchemaType *		typeDef;
 
 	if (m_areTypesSorted) {
-		searchPtr = &search;
-		result = (SchemaType **)
+		SchemaType* searchPtr = &search;
+		SchemaType** result = (SchemaType **)
 			bsearch(&searchPtr, m_types, m_typesCurrSize, sizeof(SchemaType*),
 					CONFIG4CPP_C_PREFIX(compareSchemaType_c));
 		if (result == 0) {
@@ -157,8 +153,8 @@ SchemaValidator::findType(const char * name) const
 		assert(*result != 0);
 		return *result;
 	} else {
-		for (i = 0; i < m_typesCurrSize; i++) {
-			typeDef = m_types[i];
+		for (int i = 0; i < m_typesCurrSize; i++) {
+			SchemaType* typeDef = m_types[i];
 			if (strcmp(typeDef->typeName(), name) == 0) {
 				assert(typeDef != 0);
 				return typeDef;
@@ -309,13 +305,10 @@ SchemaValidator::checkTypeDoesNotExist(const char * typeName)
 void
 SchemaValidator::ensureSpaceInTypesArray()
 {
-	SchemaType **		newArray;
-	int					i;
-
 	if (m_typesCurrSize == m_typesMaxSize) {
 		m_typesMaxSize = m_typesMaxSize * 2;
-		newArray = new SchemaType*[m_typesMaxSize];
-		for (i = 0; i < m_typesCurrSize; i++) {
+		SchemaType** newArray = new SchemaType*[m_typesMaxSize];
+		for (int i = 0; i < m_typesCurrSize; i++) {
 			newArray[i] = m_types[i];
 		}
 		delete [] m_types;
@@ -405,13 +398,6 @@ SchemaValidator::validate(
 	StringBuffer			unlistedName;
 	StringBuffer			msg;
 	StringBuffer			buf;
-	const char *			unexpandedName;
-	const char *			typeName;
-	const char *			iName;
-	int						i;
-	int						len;
-	SchemaIdRuleInfo *		idRule;
-	SchemaType *			typeDef;
 	const char *			prefix = "---- " CONFIG4CPP_NAMESPACE_STR
 									 "::SchemaValidator::validate()";
 
@@ -423,17 +409,17 @@ SchemaValidator::validate(
 	//--------
 	// Compare every name in itemNames with m_ignoreRules and m_idRules.
 	//--------
-	len = itemNames.length();
-	for (i = 0; i < len; i++) {
-		iName = itemNames[i];
-		unexpandedName = cfg->unexpandUid(iName, buf);
+	int len = itemNames.length();
+	for (int i = 0; i < len; i++) {
+		const char* iName = itemNames[i];
+		const char* unexpandedName = cfg->unexpandUid(iName, buf);
 		if (shouldIgnore(cfg, scope, iName, unexpandedName)) {
 			if (m_wantDiagnostics) {
 				printf("\n  ignoring '%s'\n", iName);
 			}
 			continue;
 		}
-		idRule = findIdRule(unexpandedName);
+		SchemaIdRuleInfo* idRule = findIdRule(unexpandedName);
 		if (idRule == 0) {
 			//--------
 			// Can't find an idRule for the entry
@@ -464,8 +450,8 @@ SchemaValidator::validate(
 		// There is an idRule for the entry. Look up the idRule's
 		// type, and invoke its validate() operation.
 		//--------
-		typeName = idRule->m_typeName.c_str();
-		typeDef = findType(typeName);
+		const char* typeName = idRule->m_typeName.c_str();
+		SchemaType* typeDef = findType(typeName);
 		assert(typeDef != 0);
 		try {
 			callValidate(typeDef, cfg, fullyScopedName.c_str(), iName,
@@ -494,27 +480,22 @@ SchemaValidator::validateForceMode(
 	const char *			localName,
 	ForceMode				forceMode) const throw(ConfigurationException)
 {
-	int						i;
-	bool					isOptional;
 	StringBuffer			fullyScopedName;
 	StringBuffer			nameOfMissingEntry;
 	StringBuffer			msg;
-	const char *			typeName;
-	const char *			nameInRule;
-	SchemaIdRuleInfo *		idRule;
 
 
 	if (forceMode == FORCE_OPTIONAL) {
 		return;
 	}
 	cfg->mergeNames(scope, localName, fullyScopedName);
-	for (i = 0; i < m_idRulesCurrSize; i++) {
-		idRule = m_idRules[i];
-		isOptional = idRule->m_isOptional;
+	for (int i = 0; i < m_idRulesCurrSize; i++) {
+		SchemaIdRuleInfo* idRule = m_idRules[i];
+		bool isOptional = idRule->m_isOptional;
 		if (forceMode == DO_NOT_FORCE && isOptional) {
 			continue;
 		}
-		nameInRule = idRule->m_locallyScopedName.c_str();
+		const char* nameInRule = idRule->m_locallyScopedName.c_str();
 		if (strstr(nameInRule, "uid-") != 0) {
 			validateRequiredUidEntry(cfg, fullyScopedName.c_str(),
 						  idRule);
@@ -524,7 +505,7 @@ SchemaValidator::validateForceMode(
 			{
 				cfg->mergeNames(fullyScopedName.c_str(),
 						nameInRule, nameOfMissingEntry);
-				typeName = idRule->m_typeName.c_str();
+				const char* typeName = idRule->m_typeName.c_str();
 				msg << cfg->fileName() << ": the " << typeName << " '"
 					<< nameOfMissingEntry << "' does not exist";
 				throw ConfigurationException(msg.c_str());
@@ -549,7 +530,6 @@ SchemaValidator::validateRequiredUidEntry(
 	StringVector			parentScopes;
 	const char *			typeName;
 	const char *			ptr;
-	int						i;
 	int						len;
 
 	nameInRule = idRule->m_locallyScopedName.c_str();
@@ -568,7 +548,7 @@ SchemaValidator::validateRequiredUidEntry(
 	cfg->listFullyScopedNames(fullScope, "", Configuration::CFG_SCOPE, true,
 							  parentScopePattern.c_str(), parentScopes);
 	len = parentScopes.length();
-	for (i = 0; i < len; i++) {
+	for (int i = 0; i < len; i++) {
 		if (cfg->type(parentScopes[i], lastDot+1)
 		   == Configuration::CFG_NO_VALUE)
 		{
@@ -590,21 +570,15 @@ SchemaValidator::shouldIgnore(
 	const char *			expandedName,
 	const char *			unexpandedName) const
 {
-	int						i;
-	int						len;
-	short					symbol;
-	const char *			name;
-	const char *			nameAfterPrefix;
-	bool					hasDotAfterPrefix;
 	Configuration::Type		cfgType = Configuration::CFG_NO_VALUE;
 
-	for (i = 0; i < m_ignoreRulesCurrSize; i++) {
+	for (int i = 0; i < m_ignoreRulesCurrSize; i++) {
 		//--------
 		// Does unexpandedName start with rule.m_locallyScopedName
 		// followed by "."?
 		//--------
-		name = m_ignoreRules[i]->m_locallyScopedName.c_str();
-		len = strlen(name);
+		const char* name = m_ignoreRules[i]->m_locallyScopedName.c_str();
+		int len = strlen(name);
 		if (strncmp(unexpandedName, name, len) != 0) {
 			continue;
 		}
@@ -616,7 +590,7 @@ SchemaValidator::shouldIgnore(
 		// It does. Whether we ignore the item depends on the
 		// "@ignore<something>" keyword used.
 		//--------
-		symbol = m_ignoreRules[i]->m_symbol;
+		short symbol = m_ignoreRules[i]->m_symbol;
 		switch (symbol) {
 		case SchemaLex::LEX_IGNORE_EVERYTHING_IN_SYM:
 			return true;
@@ -627,8 +601,8 @@ SchemaValidator::shouldIgnore(
 			assert(0); // Bug!
 			break;
 		}
-		nameAfterPrefix = unexpandedName + len + 1;
-		hasDotAfterPrefix = (strchr(nameAfterPrefix, '.') != 0);
+		const char* nameAfterPrefix = unexpandedName + len + 1;
+		bool hasDotAfterPrefix = (strchr(nameAfterPrefix, '.') != 0);
 		try {
 			cfgType = cfg->type(scope, expandedName);
 		} catch(const ConfigurationException & ex) {
