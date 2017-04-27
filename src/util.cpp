@@ -10,7 +10,7 @@
 // the following conditions.
 //
 // The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.  
+// included in all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
@@ -34,16 +34,13 @@ namespace CONFIG4CPP_NAMESPACE {
 void
 splitScopedNameIntoVector(const char * str, StringVector & vec)
 {
-	int				i;
-	int				len;
-	char *			startOfStr;
 	StringBuffer	tmpStr; // Mutable copy of str
 
 	vec.empty();
 	tmpStr = str;
-	len = tmpStr.length();
-	startOfStr = &tmpStr[0];
-	for (i = 0; i < len; i++) {
+	int len = tmpStr.length();
+	char* startOfStr = &tmpStr[0];
+	for (int i = 0; i < len; i++) {
 		if (tmpStr[i] == '.') {
 			tmpStr[i] = 0;
 			vec.add(startOfStr);
