@@ -23,7 +23,7 @@
  */
 
 #include "config4cpp/ConfigurationException.h"
-#include <gtest/gtest.h>
+#include <gmock/gmock.h>
 
 using CONFIG4CPP_NAMESPACE::ConfigurationException;
 
