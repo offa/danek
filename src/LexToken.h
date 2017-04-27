@@ -22,9 +22,7 @@
 // SOFTWARE.
 //----------------------------------------------------------------------
 
-#ifndef	CONFIG4CPP_LEX_TOKEN_H_
-#define	CONFIG4CPP_LEX_TOKEN_H_
-
+#pragma once
 
 //--------
 // #include's and #define's
@@ -101,4 +99,3 @@ inline const char * LexToken::spelling() { return m_spelling.c_str(); }
 inline int          LexToken::lineNum()  { return m_lineNum; }
 
 } // namespace CONFIG4CPP_NAMESPACE
-#endif

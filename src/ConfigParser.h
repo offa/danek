@@ -50,9 +50,7 @@
 //			| StringExpr { ',' StringExpr }*
 //----------------------------------------------------------------------
 
-#ifndef CONFIG4CPP_CONFIG_PARSER_H_
-#define CONFIG4CPP_CONFIG_PARSER_H_
-
+#pragma once
 
 //--------
 // #include's
@@ -134,4 +132,3 @@ protected:
 
 
 } // namespace CONFIG4CPP_NAMESPACE
-#endif

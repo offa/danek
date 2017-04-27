@@ -22,9 +22,7 @@
 // SOFTWARE.
 //----------------------------------------------------------------------
 
-#ifndef	CONFIG4CPP_SCHEMA_LEX_H_
-#define	CONFIG4CPP_SCHEMA_LEX_H_
-
+#pragma once
 
 //--------
 // #include's and #define's
@@ -70,4 +68,3 @@ private:
 
 
 } // namespace CONFIG4CPP_NAMESPACE
-#endif

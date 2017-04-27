@@ -10,7 +10,7 @@
 // the following conditions.
 //
 // The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.  
+// included in all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
@@ -22,8 +22,7 @@
 // SOFTWARE.
 //----------------------------------------------------------------------
 
-#ifndef DefaultSecurityConfiguration_h
-#define DefaultSecurityConfiguration_h
+#pragma once
 
 #include "ConfigurationImpl.h"
 #include "DefaultSecurity.h"
@@ -55,4 +54,3 @@ private:
 
 
 } // namespace CONFIG4CPP_NAMESPACE
-#endif

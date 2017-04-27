@@ -22,8 +22,7 @@
 // SOFTWARE.
 //----------------------------------------------------------------------
 
-#ifndef CONFIG4CPP_CONFIG2CPP_H_
-#define CONFIG4CPP_CONFIG2CPP_H_
+#pragma once
 
 //--------
 // #include's
@@ -86,4 +85,3 @@ private:
 
 
 } // namespace CONFIG4CPP_NAMESPACE
-#endif

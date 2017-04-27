@@ -10,7 +10,7 @@
 // the following conditions.
 //
 // The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.  
+// included in all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
@@ -22,8 +22,7 @@
 // SOFTWARE.
 //----------------------------------------------------------------------
 
-#ifndef CONFIG4CPP_PLATFORM_H_
-#define CONFIG4CPP_PLATFORM_H_
+#pragma once
 
 #ifdef WIN32
 #include <process.h>
@@ -33,9 +32,9 @@
 #	define CONFIG4CPP_POPEN(fileName, mode) _popen(fileName, mode)
 #	define CONFIG4CPP_PCLOSE(file) _pclose(file)
 #	define CONFIG4CPP_DISCARD_STDERR "2> nul"
-#else 
+#else
 #include <unistd.h>
-#	ifndef CONFIG4CPP_OS_TYPE 
+#	ifndef CONFIG4CPP_OS_TYPE
 #		define CONFIG4CPP_OS_TYPE "unix"
 #	endif
 #	ifndef CONFIG4CPP_DIR_SEP
@@ -108,9 +107,8 @@ private:
 	//--------
 	BufferedFileReader(const BufferedFileReader &);
 	BufferedFileReader& operator=(const BufferedFileReader &);
-	
+
 };
 
 
 } // namespace CONFIG4CPP_NAMESPACE
-#endif

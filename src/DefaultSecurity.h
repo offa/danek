@@ -4,11 +4,10 @@
 // Description: a class providing access to an embedded
 //              configuration string.
 //----------------------------------------------------------------------
-#ifndef DefaultSecurity_h
-#define DefaultSecurity_h
+
+#pragma once
 
 #include <config4cpp/Configuration.h>
-
 
 namespace CONFIG4CPP_NAMESPACE {
 
@@ -46,5 +45,3 @@ private:
 
 } // namespace CONFIG4CPP_NAMESPACE
 
-
-#endif
