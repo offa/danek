@@ -4,8 +4,8 @@
 // Description: a class providing access to an embedded
 //              configuration string.
 //----------------------------------------------------------------------
-#ifndef FallbackConfiguration_h
-#define FallbackConfiguration_h
+
+#pragma once
 
 #include <config4cpp/Configuration.h>
 
@@ -14,7 +14,7 @@ class FallbackConfiguration
 {
 public:
 	//--------
-	// Constructor and destructor. Ideally these would be private 
+	// Constructor and destructor. Ideally these would be private
 	// but they have to be public so we can initialize the singleton.
 	//--------
 	FallbackConfiguration();
@@ -56,5 +56,3 @@ private:
 	FallbackConfiguration(const FallbackConfiguration &);
 };
 
-
-#endif

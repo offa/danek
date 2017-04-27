@@ -22,9 +22,7 @@
 // SOFTWARE.
 //----------------------------------------------------------------------
 
-#ifndef FOO_CONFIGURATION_H_
-#define FOO_CONFIGURATION_H_
-
+#pragma once
 
 class FooConfigurationException
 {
@@ -98,4 +96,3 @@ private:
 	FooConfiguration(const FooConfiguration &);
 };
 
-#endif

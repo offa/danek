@@ -22,8 +22,7 @@
 // SOFTWARE.
 //----------------------------------------------------------------------
 
-#ifndef A_H_
-#define A_H_
+#pragma once
 
 #include "FooConfiguration.h"
 
@@ -55,5 +54,3 @@ private:
 	A operator=(const A &);
 };
 
-
-#endif

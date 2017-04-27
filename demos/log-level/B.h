@@ -22,11 +22,9 @@
 // SOFTWARE.
 //----------------------------------------------------------------------
 
-#ifndef B_H_
-#define B_H_
+#pragma once
 
 #include "FooConfiguration.h"
-
 
 class B
 {
@@ -55,5 +53,3 @@ private:
 	B operator=(const B &);
 };
 
-
-#endif

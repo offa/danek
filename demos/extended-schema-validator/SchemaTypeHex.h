@@ -22,8 +22,7 @@
 // SOFTWARE.
 //----------------------------------------------------------------------
 
-#ifndef SCHEMA_TYPE_HEX_H_
-#define SCHEMA_TYPE_HEX_H_
+#pragma once
 
 #include <config4cpp/SchemaValidator.h>
 using CONFIG4CPP_NAMESPACE::Configuration;
@@ -90,4 +89,3 @@ protected:
 		StringBuffer &			errSuffix) const;
 };
 
-#endif

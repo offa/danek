@@ -22,8 +22,7 @@
 // SOFTWARE.
 //----------------------------------------------------------------------
 
-#ifndef RECIPE_FILE_PARSER_EXCEPTION_H_
-#define RECIPE_FILE_PARSER_EXCEPTION_H_
+#pragma once
 
 #include <string.h>
 
@@ -65,4 +64,3 @@ private:
 	RecipeFileParserException operator=(const RecipeFileParserException &);
 };
 
-#endif
