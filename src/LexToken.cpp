@@ -10,7 +10,7 @@
 // the following conditions.
 //
 // The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.  
+// included in all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
@@ -47,6 +47,12 @@ LexToken::LexToken()
 	m_funcType = LexBase::NOT_A_FUNC;
 }
 
+LexToken::LexToken(const LexToken& other) : m_type(other.m_type),
+                                        m_spelling(other.m_spelling),
+                                        m_lineNum(other.m_lineNum),
+                                        m_funcType(other.m_funcType)
+{
+}
 
 
 //----------------------------------------------------------------------

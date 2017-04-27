@@ -10,7 +10,7 @@
 // the following conditions.
 //
 // The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.  
+// included in all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
@@ -42,13 +42,14 @@ public:
 	// Ctor, dtor and assignment operator
 	//--------
 	LexToken();
+	LexToken(const LexToken& other);
 	LexToken(short type, int lineNum, const char * spelling);
 	virtual ~LexToken();
 
 	//--------
 	// Assignment operators
 	//--------
-	LexToken& operator=(const LexToken&);
+	LexToken& operator=(const LexToken& other);
 
 	//--------
 	// Accessor functions
