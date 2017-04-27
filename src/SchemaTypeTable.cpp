@@ -38,9 +38,6 @@ SchemaTypeTable::checkRule(
     unused(cfg);
 
 	StringBuffer				msg;
-	int							i;
-	const char *				columnType;
-	SchemaType *				typeDef;
 
 	//--------
 	// Check there is at least one pair of column-type, column-name
@@ -56,9 +53,9 @@ SchemaTypeTable::checkRule(
 	//--------
 	// Check that all the column-type arguments are valid types.
 	//--------
-	for (i = 0; i < len; i+=2) {
-		columnType = typeArgs[i+0];
-		typeDef = findType(sv, columnType);
+	for (int i = 0; i < len; i+=2) {
+		const char* columnType = typeArgs[i+0];
+		SchemaType* typeDef = findType(sv, columnType);
 		if (typeDef == 0) {
 			msg << "unknown type '" << columnType << "' in rule '"
 				<< rule << "'";
@@ -101,28 +98,17 @@ SchemaTypeTable::validate(
 	StringBuffer				errSuffix;
 	StringBuffer				fullyScopedName;
 	const char **				list;
-	const char *				colValue;
-	const char *				colTypeName;
-	int							i;
 	int							listSize;
-	int							typeArgsSize;
-	int							colNameIndex;
-	int							typeIndex;
-	int							rowNum;
-	int							numColumns;
-	SchemaType *				colTypeDef;
 	StringVector				emptyArgs;
-	bool						ok;
-	const char *				sep;
 
 	//--------
 	// Check that the length of the list is a multiple of the number
 	// of columns in the table.
 	//--------
-	typeArgsSize = typeArgs.length();
+	int typeArgsSize = typeArgs.length();
 	assert(typeArgsSize != 0);
 	assert(typeArgsSize % 2 == 0);
-	numColumns = typeArgsSize / 2;
+	int numColumns = typeArgsSize / 2;
 	cfg->lookupList(scope, name, list, listSize);
 	if (listSize % numColumns != 0) {
 		cfg->mergeNames(scope, name, fullyScopedName);
@@ -135,16 +121,17 @@ SchemaTypeTable::validate(
 	//--------
 	// Check each item in the list is of the type specified for its column
 	//--------
-	for (i = 0; i < listSize; i++) {
-		typeIndex    = (i * 2 + 0) % typeArgsSize;
-		colNameIndex = (i * 2 + 1) % typeArgsSize;
-		rowNum = (i / numColumns) + 1;
-		colValue = list[i];
-		colTypeName = typeArgs[typeIndex];
-		colTypeDef = findType(sv, colTypeName);
-		ok = callIsA(colTypeDef, sv, cfg, colValue, colTypeName, emptyArgs,
+	for (int i = 0; i < listSize; i++) {
+		int typeIndex    = (i * 2 + 0) % typeArgsSize;
+		int colNameIndex = (i * 2 + 1) % typeArgsSize;
+		int rowNum = (i / numColumns) + 1;
+		const char* colValue = list[i];
+		const char* colTypeName = typeArgs[typeIndex];
+		SchemaType* colTypeDef = findType(sv, colTypeName);
+		bool ok = callIsA(colTypeDef, sv, cfg, colValue, colTypeName, emptyArgs,
 					 indentLevel + 1, errSuffix);
 		if (!ok) {
+            const char* sep;
 			if (errSuffix.length() == 0) {
 				sep = "";
 			} else {
