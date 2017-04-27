@@ -10,7 +10,7 @@
 // the following conditions.
 //
 // The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.  
+// included in all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
@@ -141,9 +141,8 @@ isCmdInDir(const char * cmd, const char * dir)
 
 #ifdef P_STDIO_HAS_LIMITED_FDS
 
-BufferedFileReader::BufferedFileReader()
+BufferedFileReader::BufferedFileReader() : m_fd(-1), m_buf(nullptr), m_bufIndex(0), m_bufLen(0)
 {
-	m_fd = -1;
 }
 
 BufferedFileReader::~BufferedFileReader()
@@ -179,12 +178,11 @@ BufferedFileReader::close()
 int
 BufferedFileReader::getChar()
 {
-	int				size;
 	int				result;
 
 	assert(m_fd != -1);
 	if (m_bufIndex == m_bufLen) {
-		size = ::read(m_fd, m_buf, BUFFERED_FILE_READER_BUF_SIZE);
+		int size = ::read(m_fd, m_buf, BUFFERED_FILE_READER_BUF_SIZE);
 		m_bufIndex = 0;
 		m_bufLen = size;
 		if (size <= 0) {
