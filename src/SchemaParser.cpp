@@ -72,8 +72,6 @@ SchemaParser::parse(
 	const char **		schema,
 	int					schemaSize) throw(ConfigurationException)
 {
-	const char *		s1;
-	const char *		s2;
 	StringBuffer		name;
 	StringBuffer		msg;
 
@@ -139,8 +137,8 @@ SchemaParser::parse(
 	// Check if multiple rules have the same name.
 	//--------
 	for (int i = 0; i < m_sv->m_idRulesCurrSize-1; i++) {
-		s1 = m_sv->m_idRules[i]->m_locallyScopedName.c_str();
-		s2 = m_sv->m_idRules[i+1]->m_locallyScopedName.c_str();
+		const char* s1 = m_sv->m_idRules[i]->m_locallyScopedName.c_str();
+		const char* s2 = m_sv->m_idRules[i+1]->m_locallyScopedName.c_str();
 		if (strcmp(s1, s2) == 0) {
 			msg << "There are multiple rules for '" << s1 << "'";
 			throw ConfigurationException(msg.c_str());
@@ -173,8 +171,6 @@ SchemaParser::parseIdRule(
 	StringBuffer			msg;
 	SchemaType *			typeDef;
 	bool					isOptional;
-	const char *			name;
-	const char *			ptr;
 
 	switch (m_token.type()) {
 	case SchemaLex::LEX_REQUIRED_SYM:
@@ -198,8 +194,8 @@ SchemaParser::parseIdRule(
 	// Complain if we have @required uid-<something>
 	//--------
 	if (!isOptional) {
-		name = ruleInfo->m_locallyScopedName.c_str();
-		ptr = strrchr(name, '.');
+		const char* name = ruleInfo->m_locallyScopedName.c_str();
+		const char* ptr = strrchr(name, '.');
 		if (ptr == 0) {
 			ptr = name;
 		} else {
