@@ -96,33 +96,23 @@ SchemaTypeTuple::validate(
 	StringBuffer				errSuffix;
 	StringBuffer				fullyScopedName;
 	const char **				list;
-	const char *				elemValue;
-	const char *				elemTypeName;
-	int							i;
 	int							listSize;
-	int							typeArgsSize;
-	int							elemNameIndex;
-	int							typeIndex;
-	int							numElems;
-	SchemaType *				elemTypeDef;
 	StringVector				emptyArgs;
-	bool						ok;
-	const char *				sep;
 
 	//--------
 	// Check the length of the list matches the size of the tuple
 	//--------
-	typeArgsSize = typeArgs.length();
+	int typeArgsSize = typeArgs.length();
 	assert(typeArgsSize != 0);
 	assert(typeArgsSize % 2 == 0);
-	numElems = typeArgsSize / 2;
+	int numElems = typeArgsSize / 2;
 	cfg->lookupList(scope, name, list, listSize);
 	if (listSize != numElems) {
 		cfg->mergeNames(scope, name, fullyScopedName);
 		msg << cfg->fileName() << ": there should be " << numElems
 			<< " entries in the '" << fullyScopedName << "' " << typeName
 		    << "; entries denote";
-		for (i = 0; i < numElems; i++) {
+		for (int i = 0; i < numElems; i++) {
 			msg << " '" << typeArgs[i*2+0] << "'";
 			if (i < numElems-1) {
 				msg << ",";
@@ -133,15 +123,16 @@ SchemaTypeTuple::validate(
 	//--------
 	// Check each item is of the type specified in the tuple
 	//--------
-	for (i = 0; i < listSize; i++) {
-		typeIndex     = (i * 2 + 0) % typeArgsSize;
-		elemNameIndex = (i * 2 + 1) % typeArgsSize;
-		elemValue = list[i];
-		elemTypeName = typeArgs[typeIndex];
-		elemTypeDef = findType(sv, elemTypeName);
-		ok = callIsA(elemTypeDef, sv, cfg, elemValue, elemTypeName, emptyArgs,
+	for (int i = 0; i < listSize; i++) {
+		int typeIndex     = (i * 2 + 0) % typeArgsSize;
+		int elemNameIndex = (i * 2 + 1) % typeArgsSize;
+		const char* elemValue = list[i];
+		const char* elemTypeName = typeArgs[typeIndex];
+		SchemaType* elemTypeDef = findType(sv, elemTypeName);
+		bool ok = callIsA(elemTypeDef, sv, cfg, elemValue, elemTypeName, emptyArgs,
 					 indentLevel + 1, errSuffix);
 		if (!ok) {
+            const char* sep;
 			if (errSuffix.length() == 0) {
 				sep = "";
 			} else {
