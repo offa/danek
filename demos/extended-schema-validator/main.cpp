@@ -10,7 +10,7 @@
 // the following conditions.
 //
 // The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.  
+// included in all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
@@ -58,10 +58,6 @@ main(int argc, char ** argv)
 	const char *			secScope;
 	bool					wantDiagnostics;
 	int						exitStatus = 0;
-	const int *				hexList;
-	int						hexListSize;
-	int						i;
-	const char *			sep;
 
 	setlocale(LC_ALL, "");
 	parseCmdLineArgs(argc, argv, cfgInput, cfgScope, secInput, secScope,
@@ -69,6 +65,8 @@ main(int argc, char ** argv)
 
 	cfg = new FooConfiguration(wantDiagnostics);
 	try {
+        const int *				hexList = nullptr;
+        int hexListSize = 0;
 		//--------
 		// Parse the configuration file.
 		//--------
@@ -83,8 +81,8 @@ main(int argc, char ** argv)
 		printf("hex_word = %d\n", cfg->getHexWord());
 		cfg->getHexList(hexList, hexListSize);
 		printf("hex_list = [");
-		sep = "";
-		for (i = 0; i < hexListSize; i++) {
+		const char* sep = "";
+		for (int i = 0; i < hexListSize; i++) {
 			printf("%s%d", sep, hexList[i]);
 			sep = ", ";
 		}

@@ -73,10 +73,16 @@ FooConfigurationException::c_str() const
 // class FooConfiguration
 //----------------------------------------------------------------------
 
-FooConfiguration::FooConfiguration(bool wantDiagnostics)
+FooConfiguration::FooConfiguration(bool wantDiagnostics) : m_cfg(Configuration::create()),
+                                                        m_wantDiagnostics(wantDiagnostics),
+                                                        m_connectionTimeout(0),
+                                                        m_rpcTimeout(0),
+                                                        m_idleTimeout(0),
+                                                        m_logFile(""),
+                                                        m_logLevel(0),
+                                                        m_host(0),
+                                                        m_port(0)
 {
-	m_wantDiagnostics = wantDiagnostics;
-	m_cfg = Configuration::create();
 }
 
 
