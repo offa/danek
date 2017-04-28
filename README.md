@@ -7,6 +7,13 @@
 
 
 
+## Requirements
+
+- [**CMake**](http://www.cmake.org/)
+- [**GTest**](https://github.com/google/googletest) (*Optional*)
+
+
+
 ## Building
 
 Build and execute Unit Tests:
