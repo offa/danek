@@ -14,7 +14,7 @@ Please see [Contributing](CONTRIBUTING.md) for how to contribute to this project
 - Port the Code to *Modern C++*
 - Improve code quality
 - Full Unit Test Suite
-- Port to CMake
+- CMake support
 - Maintain file compatible
 
 
