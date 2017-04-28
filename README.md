@@ -19,3 +19,11 @@ make unittest
 ```
 
 Alternatively execute CTest: `make test` or `ctest`.
+
+
+## License
+
+[**MIT License**](LICENSE)
+
+***Third party licenses*** are available in [*licenses*](licenses).
+
