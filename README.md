@@ -7,7 +7,7 @@
 
 A configuration library for C++. This is a fork of [**config4cpp**](https://github.com/config4star/config4cpp) which aims to modernization and quality improvements.
 
-For a ready to use version of **config4cpp** with CMake support, please see [here](https://github.com/offa/config4cpp).
+For a ready to use version of *config4cpp* with *CMake* support, please see [here](https://github.com/offa/config4cpp).
 
 
 ## Goals
