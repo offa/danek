@@ -37,6 +37,7 @@ The contributed code should match these criteria:
 
 - Pass all Unit Tests and CI Builds
 - Proper Test Cases
+- Merge cleanly, without conflicts
 - Follow the projects code style
 - Does not introduce external dependencies
 - 4 Spaces – no Tabs
