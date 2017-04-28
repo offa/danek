@@ -30,36 +30,34 @@
 #include <config4cpp/namespace.h>
 #include <string.h>
 
-
-namespace CONFIG4CPP_NAMESPACE {
-
-class ConfigurationException
+namespace CONFIG4CPP_NAMESPACE
 {
-public:
-	//--------
-	// Constructors and destructor
-	//--------
-	ConfigurationException(const char * str);
-	ConfigurationException(const ConfigurationException & o);
-	~ConfigurationException();
+    class ConfigurationException
+    {
+      public:
+        //--------
+        // Constructors and destructor
+        //--------
+        ConfigurationException(const char* str);
+        ConfigurationException(const ConfigurationException& o);
+        ~ConfigurationException();
 
-	//--------
-	// Accessor
-	//--------
-	const char * c_str() const;
+        //--------
+        // Accessor
+        //--------
+        const char* c_str() const;
 
-private:
-	//--------
-	// Instance variables
-	//--------
-	char *			m_str;
+      private:
+        //--------
+        // Instance variables
+        //--------
+        char* m_str;
 
-	//--------
-	// The following are unimplemented
-	//--------
-	ConfigurationException();
-	ConfigurationException operator=(const ConfigurationException &);
-};
-
+        //--------
+        // The following are unimplemented
+        //--------
+        ConfigurationException();
+        ConfigurationException operator=(const ConfigurationException&);
+    };
 
 } // namespace CONFIG4CPP_NAMESPACE

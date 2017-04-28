@@ -32,60 +32,34 @@ using CONFIG4CPP_NAMESPACE::SchemaType;
 using CONFIG4CPP_NAMESPACE::StringBuffer;
 using CONFIG4CPP_NAMESPACE::StringVector;
 
-
 class SchemaTypeHex : public SchemaType
 {
-public:
-	SchemaTypeHex()
-		: SchemaType("hex", "SchemaTypeHex", Configuration::CFG_STRING)
-	{ }
-	virtual ~SchemaTypeHex();
+  public:
+    SchemaTypeHex() : SchemaType("hex", "SchemaTypeHex", Configuration::CFG_STRING)
+    {
+    }
+    virtual ~SchemaTypeHex();
 
-	static int lookupHex(
-		const Configuration *	cfg,
-		const char *			scope,
-		const char *			localName) throw(ConfigurationException);
+    static int lookupHex(const Configuration* cfg, const char* scope, const char* localName) throw(
+        ConfigurationException);
 
-	static int lookupHex(
-		const Configuration *	cfg,
-		const char *			scope,
-		const char *			localName,
-		int						defaultVal) throw(ConfigurationException);
-	static int stringToHex(
-		const Configuration *	cfg,
-		const char *			scope,
-		const char *			localName,
-		const char *			str,
-		const char *			typeName = "hex") throw(ConfigurationException);
+    static int lookupHex(const Configuration* cfg, const char* scope, const char* localName,
+        int defaultVal) throw(ConfigurationException);
+    static int stringToHex(const Configuration* cfg, const char* scope, const char* localName,
+        const char* str, const char* typeName = "hex") throw(ConfigurationException);
 
-	static bool isHex(const char * str);
+    static bool isHex(const char* str);
 
-protected:
-	virtual void checkRule(
-		const SchemaValidator *	sv,
-		const Configuration *	cfg,
-		const char *			typeName,
-		const StringVector &	typeArgs,
-		const char *			rule) const throw(ConfigurationException);
+  protected:
+    virtual void checkRule(const SchemaValidator* sv, const Configuration* cfg,
+        const char* typeName, const StringVector& typeArgs, const char* rule) const
+        throw(ConfigurationException);
 
-	virtual void validate(
-		const SchemaValidator *	sv,
-		const Configuration *	cfg,
-		const char *			scope,
-		const char *			name,
-		const char *			typeName,
-		const char *			origTypeName,
-		const StringVector &	typeArgs,
-		int						indentLevel) const
-											throw(ConfigurationException);
+    virtual void validate(const SchemaValidator* sv, const Configuration* cfg, const char* scope,
+        const char* name, const char* typeName, const char* origTypeName,
+        const StringVector& typeArgs, int indentLevel) const throw(ConfigurationException);
 
-	virtual bool isA(
-		const SchemaValidator *	sv,
-		const Configuration *	cfg,
-		const char *			value,
-		const char *			typeName,
-		const StringVector &	typeArgs,
-		int						indentlevel,
-		StringBuffer &			errSuffix) const;
+    virtual bool isA(const SchemaValidator* sv, const Configuration* cfg, const char* value,
+        const char* typeName, const StringVector& typeArgs, int indentlevel,
+        StringBuffer& errSuffix) const;
 };
-

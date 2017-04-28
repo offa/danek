@@ -31,70 +31,58 @@
 #include "ConfigItem.h"
 #include <assert.h>
 
-
-namespace CONFIG4CPP_NAMESPACE {
-
-class ConfigScope;
-
-class ConfigScopeEntry
+namespace CONFIG4CPP_NAMESPACE
 {
-public:
-	//--------
-	// Ctors & dtor
-	//--------
-	ConfigScopeEntry();
-	ConfigScopeEntry(
-			const char *		name,
-			ConfigItem *		item,
-			ConfigScopeEntry *	next);
-	~ConfigScopeEntry ();
+    class ConfigScope;
 
-	inline const char * name();
-	inline const ConfigItem * item();
-	inline Configuration::Type type();
-	void setItem(ConfigItem * item);
+    class ConfigScopeEntry
+    {
+      public:
+        //--------
+        // Ctors & dtor
+        //--------
+        ConfigScopeEntry();
+        ConfigScopeEntry(const char* name, ConfigItem* item, ConfigScopeEntry* next);
+        ~ConfigScopeEntry();
 
-protected:
-	friend class ConfigScope;
+        inline const char* name();
+        inline const ConfigItem* item();
+        inline Configuration::Type type();
+        void setItem(ConfigItem* item);
 
-	//--------
-	// Instance variables
-	//--------
-	ConfigItem *			m_item;
-	ConfigScopeEntry *		m_next;
+      protected:
+        friend class ConfigScope;
 
-private:
-	//--------
-	// Constructors and operators that are not suported
-	//--------
-	ConfigScopeEntry & operator=(const ConfigScopeEntry &);
+        //--------
+        // Instance variables
+        //--------
+        ConfigItem* m_item;
+        ConfigScopeEntry* m_next;
 
-};
+      private:
+        //--------
+        // Constructors and operators that are not suported
+        //--------
+        ConfigScopeEntry& operator=(const ConfigScopeEntry&);
+    };
 
+    //--------
+    // Inline implementation of operations
+    //--------
 
-//--------
-// Inline implementation of operations
-//--------
+    inline const char* ConfigScopeEntry::name()
+    {
+        return m_item->name();
+    }
 
-inline const char *
-ConfigScopeEntry::name()
-{
-	return m_item->name();
-}
+    inline const ConfigItem* ConfigScopeEntry::item()
+    {
+        return m_item;
+    }
 
-
-inline const ConfigItem *
-ConfigScopeEntry::item()
-{
-	return m_item;
-}
-
-
-inline Configuration::Type
-ConfigScopeEntry::type()
-{
-	return m_item->type();
-}
-
+    inline Configuration::Type ConfigScopeEntry::type()
+    {
+        return m_item->type();
+    }
 
 } // namespace CONFIG4CPP_NAMESPACE

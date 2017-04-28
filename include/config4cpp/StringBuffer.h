@@ -30,171 +30,149 @@
 #include <config4cpp/namespace.h>
 #include <assert.h>
 
-#define	CONFIG4CPP_STRING_BUFFER_INTERNAL_BUF_SIZE    32
+#define CONFIG4CPP_STRING_BUFFER_INTERNAL_BUF_SIZE 32
 
-
-namespace CONFIG4CPP_NAMESPACE {
-
-class StringVector;
-class LexToken;
-class UidIdentifierProcessor;
-
-class StringBuffer {
-public:
-	StringBuffer();
-	StringBuffer(const char * str);
-	StringBuffer(const StringBuffer &);
-	~StringBuffer();
-
-	//--------
-	// Public API
-	//--------
-	inline const char *	c_str() const;
-	inline int			length() const;
-	inline char			lastChar() const;
-	inline char			operator[](int index) const;
-	inline char &		operator[](int index);
-
-	inline void			empty();
-	inline void			deleteLastChar();
-	StringBuffer &		append(const StringBuffer & other);
-	StringBuffer &		append(const char * str);
-	StringBuffer &		append(int val);
-	StringBuffer &		append(float val);
-	StringBuffer &		append(char ch);
-
-	inline StringBuffer & operator << (const StringBuffer & other);
-	inline StringBuffer & operator << (const char * str);
-	inline StringBuffer & operator << (int val);
-	inline StringBuffer & operator << (float val);
-	inline StringBuffer & operator << (char ch);
-
-	StringBuffer &		operator=(const char * str);
-	StringBuffer &		operator=(const StringBuffer & other);
-
-protected:
-	friend class StringVector;
-	friend class LexToken;
-	friend class UidIdentifierProcessor;
-	void				takeOwnershipOfStringIn(StringBuffer & other);
-	char *				c_strWithOwnership();
-
-	//--------
-	// Helper operations
-	//--------
-	void				growIfNeeded(int len);
-
-	//--------
-	// Instance variables
-	//--------
-	char	m_internalBuf[CONFIG4CPP_STRING_BUFFER_INTERNAL_BUF_SIZE];
-	char *	m_buf;
-	int		m_currSize;
-	int		m_maxSize;
-};
-
-
-//----------------------------------------------------------------------
-// Implementation of inline operations
-//----------------------------------------------------------------------
-
-inline const char *
-StringBuffer::c_str() const
+namespace CONFIG4CPP_NAMESPACE
 {
-	return m_buf;
-}
+    class StringVector;
+    class LexToken;
+    class UidIdentifierProcessor;
 
+    class StringBuffer
+    {
+      public:
+        StringBuffer();
+        StringBuffer(const char* str);
+        StringBuffer(const StringBuffer&);
+        ~StringBuffer();
 
-inline int
-StringBuffer::length() const
-{
-	return m_currSize - 1;
-}
+        //--------
+        // Public API
+        //--------
+        inline const char* c_str() const;
+        inline int length() const;
+        inline char lastChar() const;
+        inline char operator[](int index) const;
+        inline char& operator[](int index);
 
+        inline void empty();
+        inline void deleteLastChar();
+        StringBuffer& append(const StringBuffer& other);
+        StringBuffer& append(const char* str);
+        StringBuffer& append(int val);
+        StringBuffer& append(float val);
+        StringBuffer& append(char ch);
 
-inline char
-StringBuffer::lastChar() const
-{
-	char				result;
-	if (length() == 0) {
-		result = '\0';
-	} else {
-		result = m_buf[length() - 1];
-	}
-	return result;
-}
+        inline StringBuffer& operator<<(const StringBuffer& other);
+        inline StringBuffer& operator<<(const char* str);
+        inline StringBuffer& operator<<(int val);
+        inline StringBuffer& operator<<(float val);
+        inline StringBuffer& operator<<(char ch);
 
+        StringBuffer& operator=(const char* str);
+        StringBuffer& operator=(const StringBuffer& other);
 
-inline char
-StringBuffer::operator[](int index) const
-{
-	return m_buf[index];
-}
+      protected:
+        friend class StringVector;
+        friend class LexToken;
+        friend class UidIdentifierProcessor;
+        void takeOwnershipOfStringIn(StringBuffer& other);
+        char* c_strWithOwnership();
 
+        //--------
+        // Helper operations
+        //--------
+        void growIfNeeded(int len);
 
-inline char &
-StringBuffer::operator[](int index)
-{
-	return m_buf[index];
-}
+        //--------
+        // Instance variables
+        //--------
+        char m_internalBuf[CONFIG4CPP_STRING_BUFFER_INTERNAL_BUF_SIZE];
+        char* m_buf;
+        int m_currSize;
+        int m_maxSize;
+    };
 
+    //----------------------------------------------------------------------
+    // Implementation of inline operations
+    //----------------------------------------------------------------------
 
-inline void
-StringBuffer::empty()
-{
-	m_buf[0] = '\0';
-	m_maxSize = CONFIG4CPP_STRING_BUFFER_INTERNAL_BUF_SIZE;
-	m_currSize = 1;
-}
+    inline const char* StringBuffer::c_str() const
+    {
+        return m_buf;
+    }
 
+    inline int StringBuffer::length() const
+    {
+        return m_currSize - 1;
+    }
 
-inline void
-StringBuffer::deleteLastChar()
-{
-	assert(m_currSize > 1);
-	m_currSize--;
-	m_buf[m_currSize-1] = '\0';
-}
+    inline char StringBuffer::lastChar() const
+    {
+        char result;
+        if (length() == 0)
+        {
+            result = '\0';
+        }
+        else
+        {
+            result = m_buf[length() - 1];
+        }
+        return result;
+    }
 
+    inline char StringBuffer::operator[](int index) const
+    {
+        return m_buf[index];
+    }
 
-inline StringBuffer &
-StringBuffer::operator << (const StringBuffer & other)
-{
-	append(other.c_str());
-	return *this;
-}
+    inline char& StringBuffer::operator[](int index)
+    {
+        return m_buf[index];
+    }
 
+    inline void StringBuffer::empty()
+    {
+        m_buf[0] = '\0';
+        m_maxSize = CONFIG4CPP_STRING_BUFFER_INTERNAL_BUF_SIZE;
+        m_currSize = 1;
+    }
 
-inline StringBuffer &
-StringBuffer::operator << (const char * str)
-{
-	append(str);
-	return *this;
-}
+    inline void StringBuffer::deleteLastChar()
+    {
+        assert(m_currSize > 1);
+        m_currSize--;
+        m_buf[m_currSize - 1] = '\0';
+    }
 
+    inline StringBuffer& StringBuffer::operator<<(const StringBuffer& other)
+    {
+        append(other.c_str());
+        return *this;
+    }
 
-inline StringBuffer &
-StringBuffer::operator << (int val)
-{
-	append(val);
-	return *this;
-}
+    inline StringBuffer& StringBuffer::operator<<(const char* str)
+    {
+        append(str);
+        return *this;
+    }
 
+    inline StringBuffer& StringBuffer::operator<<(int val)
+    {
+        append(val);
+        return *this;
+    }
 
-inline StringBuffer &
-StringBuffer::operator << (float val)
-{
-	append(val);
-	return *this;
-}
+    inline StringBuffer& StringBuffer::operator<<(float val)
+    {
+        append(val);
+        return *this;
+    }
 
-
-inline StringBuffer &
-StringBuffer::operator << (char ch)
-{
-	append(ch);
-	return *this;
-}
-
+    inline StringBuffer& StringBuffer::operator<<(char ch)
+    {
+        append(ch);
+        return *this;
+    }
 
 } // namespace CONFIG4CPP_NAMESPACE

@@ -26,73 +26,80 @@
 
 class FooConfigurationException
 {
-public:
-	//--------
-	// Constructors and destructor
-	//--------
-	explicit FooConfigurationException(const char * str);
-	FooConfigurationException(const FooConfigurationException & other);
-	~FooConfigurationException();
+  public:
+    //--------
+    // Constructors and destructor
+    //--------
+    explicit FooConfigurationException(const char* str);
+    FooConfigurationException(const FooConfigurationException& other);
+    ~FooConfigurationException();
 
-	const char * c_str() const; // Accessor
+    const char* c_str() const; // Accessor
 
-private:
-	char *			m_str;
+  private:
+    char* m_str;
 
-	//--------
-	// The following are unimplemented
-	//--------
-	FooConfigurationException();
-	FooConfigurationException operator=(const FooConfigurationException &);
+    //--------
+    // The following are unimplemented
+    //--------
+    FooConfigurationException();
+    FooConfigurationException operator=(const FooConfigurationException&);
 };
-
 
 class FooConfiguration
 {
-public:
-	explicit FooConfiguration(bool wantDiagnostics = false);
-	~FooConfiguration();
+  public:
+    explicit FooConfiguration(bool wantDiagnostics = false);
+    ~FooConfiguration();
 
-	void parse(
-			const char *	cfgInput,
-			const char *	cfgScope = "",
-			const char *	secInput = "",
-			const char *	secScope = "") throw (FooConfigurationException);
+    void parse(const char* cfgInput, const char* cfgScope = "", const char* secInput = "",
+        const char* secScope = "") throw(FooConfigurationException);
 
-	//--------
-	// Acccessors for configuration variables.
-	//--------
-	int          getTimeout() const		{ return m_timeout;}
-	const char * getHost() const		{ return m_host; }
-	int          getHexByte() const		{ return m_hexByte; }
-	int          getHexWord() const		{ return m_hexWord; }
-	void getHexList(const int *& array, int & arraySize)
-	{
-		array = m_hexList;
-		arraySize = m_hexListSize;
-	}
+    //--------
+    // Acccessors for configuration variables.
+    //--------
+    int getTimeout() const
+    {
+        return m_timeout;
+    }
+    const char* getHost() const
+    {
+        return m_host;
+    }
+    int getHexByte() const
+    {
+        return m_hexByte;
+    }
+    int getHexWord() const
+    {
+        return m_hexWord;
+    }
+    void getHexList(const int*& array, int& arraySize)
+    {
+        array = m_hexList;
+        arraySize = m_hexListSize;
+    }
 
-private:
-	//--------
-	// Instance variables
-	//--------
-	void *          m_cfg; // opaque pointer to Config4Cpp config object
-	bool			m_wantDiagnostics;
+  private:
+    //--------
+    // Instance variables
+    //--------
+    void* m_cfg; // opaque pointer to Config4Cpp config object
+    bool m_wantDiagnostics;
 
-	//--------
-	// Instance variables to cache configuration variables.
-	//--------
-	int             m_timeout;
-	const char *    m_host;
-	int				m_hexByte;
-	int				m_hexWord;
-	int *			m_hexList;
-	int				m_hexListSize;
+    //--------
+    // Instance variables to cache configuration variables.
+    //--------
+    int m_timeout;
+    const char* m_host;
+    int m_hexByte;
+    int m_hexWord;
+    int* m_hexList;
+    int m_hexListSize;
 
-	//--------
-	// The following are not implemented
-	//--------
-	FooConfiguration & operator=(const FooConfiguration &);
-	FooConfiguration(const FooConfiguration &);
+    //--------
+    // The following are not implemented
+    //--------
+    FooConfiguration& operator=(const FooConfiguration&);
+    FooConfiguration(const FooConfiguration&);
 };
-

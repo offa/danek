@@ -26,10 +26,10 @@
 
 #include <config4cpp/namespace.h>
 
-namespace CONFIG4CPP_NAMESPACE {
-
+namespace CONFIG4CPP_NAMESPACE
+{
     template<class T>
-    void unused(T&&) { }
-
+    void unused(T&&)
+    {
+    }
 }
-

@@ -26,37 +26,28 @@
 
 #include <config4cpp/SchemaType.h>
 
-
-namespace CONFIG4CPP_NAMESPACE {
-
-class SchemaTypeScope
-	: public SchemaType
+namespace CONFIG4CPP_NAMESPACE
 {
-public:
-	SchemaTypeScope()
-		: SchemaType("scope", CONFIG4CPP_NAMESPACE_STR "::SchemaTypeScope",
-		             Configuration::CFG_STRING)
-	{ }
-	virtual ~SchemaTypeScope() { }
+    class SchemaTypeScope : public SchemaType
+    {
+      public:
+        SchemaTypeScope()
+            : SchemaType(
+                  "scope", CONFIG4CPP_NAMESPACE_STR "::SchemaTypeScope", Configuration::CFG_STRING)
+        {
+        }
+        virtual ~SchemaTypeScope()
+        {
+        }
 
-protected:
-	virtual void checkRule(
-		const SchemaValidator *	sv,
-		const Configuration *	cfg,
-		const char *			typeName,
-		const StringVector &	typeArgs,
-		const char *			rule) const throw(ConfigurationException);
+      protected:
+        virtual void checkRule(const SchemaValidator* sv, const Configuration* cfg,
+            const char* typeName, const StringVector& typeArgs, const char* rule) const
+            throw(ConfigurationException);
 
-	virtual void validate(
-		const SchemaValidator *	sv,
-		const Configuration *	cfg,
-		const char *			scope,
-		const char *			name,
-		const char *			typeName,
-		const char *			origTypeName,
-		const StringVector &	typeArgs,
-		int						indentLevel) const
-											throw(ConfigurationException);
-};
+        virtual void validate(const SchemaValidator* sv, const Configuration* cfg,
+            const char* scope, const char* name, const char* typeName, const char* origTypeName,
+            const StringVector& typeArgs, int indentLevel) const throw(ConfigurationException);
+    };
 
 } // namespace CONFIG4CPP_NAMESPACE

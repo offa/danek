@@ -33,177 +33,148 @@
 #include <wchar.h>
 #include <wctype.h>
 
-
-namespace CONFIG4CPP_NAMESPACE {
-
-class MBChar
+namespace CONFIG4CPP_NAMESPACE
 {
-public:
+    class MBChar
+    {
+      public:
+      public:
+        //--------
+        // Constructors and destructor
+        //--------
+        MBChar();
+        ~MBChar();
 
-public:
-	//--------
-	// Constructors and destructor
-	//--------
-	MBChar();
-	~MBChar();
+        //--------
+        // Public operations
+        //--------
+        inline bool add(char ch);
+        inline const char* c_str() const;
+        inline int length() const;
 
-	//--------
-	// Public operations
-	//--------
-	inline bool			add(char ch);
-	inline const char *	c_str() const;
-	inline int			length()   const;
+        inline void setWChar(wchar_t wChar);
+        inline wchar_t getWChar() const;
 
-	inline void			setWChar(wchar_t wChar);
-	inline wchar_t		getWChar() const;
+        inline bool isSpace() const;
+        inline bool isEmpty() const;
+        inline bool isFull() const;
 
-	inline bool			isSpace()  const;
-	inline bool			isEmpty()  const;
-	inline bool			isFull()   const;
+        inline void reset();
 
-	inline void			reset();
+        inline MBChar& operator=(const MBChar&);
+        inline MBChar& operator=(char ch);
+        bool operator==(const MBChar& other) const;
+        inline bool operator!=(const MBChar& other) const;
+        inline bool operator==(char ch) const;
+        inline bool operator!=(char ch) const;
 
-	inline MBChar &		operator=(const MBChar &);
-	inline MBChar &		operator=(char ch);
-	bool				operator==(const MBChar & other) const;
-	inline bool			operator!=(const MBChar & other) const;
-	inline bool			operator==(char ch) const;
-	inline bool			operator!=(char ch) const;
+      private:
+        //--------
+        // Instance variables
+        //--------
+        char m_mbChar[MB_LEN_MAX + 1];
+        short m_mbCharLen;
+        wchar_t m_wChar;
 
-private:
-	//--------
-	// Instance variables
-	//--------
-	char				m_mbChar[MB_LEN_MAX+1];
-	short				m_mbCharLen;
-	wchar_t				m_wChar;
+        //--------
+        // Unsupported constructors and assignment operators
+        //--------
+        MBChar(const MBChar&);
+    };
 
-	//--------
-	// Unsupported constructors and assignment operators
-	//--------
-	MBChar(const MBChar &);
-};
+    //--------
+    // Inline implementation of operations.
+    //--------
 
+    inline MBChar& MBChar::operator=(const MBChar& other)
+    {
+        int i;
 
-//--------
-// Inline implementation of operations.
-//--------
+        m_mbCharLen = other.m_mbCharLen;
+        m_wChar = other.m_wChar;
+        for (i = 0; i < MB_LEN_MAX + 1; i++)
+        {
+            m_mbChar[i] = other.m_mbChar[i];
+        }
+        return *this;
+    }
 
-inline MBChar &
-MBChar::operator=(const MBChar & other)
-{
-	int			i;
+    inline MBChar& MBChar::operator=(char ch)
+    {
+        m_mbCharLen = 1;
+        m_mbChar[0] = ch;
+        m_mbChar[1] = '\0';
+        m_wChar = 0;
+        return *this;
+    }
 
-	m_mbCharLen = other.m_mbCharLen;
-	m_wChar     = other.m_wChar;
-	for (i = 0; i < MB_LEN_MAX+1; i++) {
-		m_mbChar[i] = other.m_mbChar[i];
-	}
-	return *this;
-}
+    inline bool MBChar::add(char ch)
+    {
+        if (m_mbCharLen < MB_LEN_MAX)
+        {
+            m_mbChar[m_mbCharLen] = ch;
+            m_mbChar[m_mbCharLen + 1] = '\0';
+            m_mbCharLen++;
+            return true;
+        }
+        return false;
+    }
 
+    inline void MBChar::setWChar(wchar_t wChar)
+    {
+        m_wChar = wChar;
+    }
 
-inline MBChar &
-MBChar::operator=(char ch)
-{
-	m_mbCharLen = 1;
-	m_mbChar[0] = ch;
-	m_mbChar[1] = '\0';
-	m_wChar = 0;
-	return *this;
-}
+    inline wchar_t MBChar::getWChar() const
+    {
+        return m_wChar;
+    }
 
+    inline bool MBChar::isSpace() const
+    {
+        return ::iswspace(m_wChar) != 0;
+    }
 
-inline bool
-MBChar::add(char ch)
-{
-	if (m_mbCharLen < MB_LEN_MAX) {
-		m_mbChar[m_mbCharLen] = ch;
-		m_mbChar[m_mbCharLen+1] = '\0';
-		m_mbCharLen++;
-		return true;
-	}
-	return false;
-}
+    inline int MBChar::length() const
+    {
+        return m_mbCharLen;
+    }
 
+    inline bool MBChar::isEmpty() const
+    {
+        return m_mbCharLen == 0;
+    }
 
-inline void
-MBChar::setWChar(wchar_t wChar)
-{
-	m_wChar = wChar;
-}
+    inline bool MBChar::isFull() const
+    {
+        return m_mbCharLen == MB_LEN_MAX;
+    }
 
+    inline const char* MBChar::c_str() const
+    {
+        return m_mbChar;
+    }
 
-inline wchar_t
-MBChar::getWChar() const
-{
-	return m_wChar;
-}
+    inline void MBChar::reset()
+    {
+        m_mbCharLen = 0;
+        m_mbChar[0] = '\0';
+        m_wChar = 0;
+    }
 
+    inline bool MBChar::operator!=(const MBChar& other) const
+    {
+        return !(*this == other);
+    }
 
-inline bool
-MBChar::isSpace() const
-{
-	return ::iswspace(m_wChar) != 0;
-}
+    inline bool MBChar::operator==(char ch) const
+    {
+        return m_mbCharLen == 1 && m_mbChar[0] == ch;
+    }
 
-
-inline int
-MBChar::length() const
-{
-	return m_mbCharLen;
-}
-
-
-inline bool
-MBChar::isEmpty() const
-{
-	return m_mbCharLen == 0;
-}
-
-
-inline bool
-MBChar::isFull() const
-{
-	return m_mbCharLen == MB_LEN_MAX;
-}
-
-
-inline const char *
-MBChar::c_str() const
-{
-	return m_mbChar;
-}
-
-
-inline void
-MBChar::reset()
-{
-	m_mbCharLen = 0;
-	m_mbChar[0] = '\0';
-	m_wChar = 0;
-}
-
-
-inline bool
-MBChar::operator!=(const MBChar & other) const
-{
-	return !(*this == other);
-}
-
-
-inline bool
-MBChar::operator==(char ch) const
-{
-	return m_mbCharLen == 1 && m_mbChar[0] == ch;
-}
-
-
-inline bool
-MBChar::operator!=(char ch) const
-{
-	return !(m_mbCharLen == 1 && m_mbChar[0] == ch);
-}
-
+    inline bool MBChar::operator!=(char ch) const
+    {
+        return !(m_mbCharLen == 1 && m_mbChar[0] == ch);
+    }
 
 } // namespace CONFIG4CPP_NAMESPACE

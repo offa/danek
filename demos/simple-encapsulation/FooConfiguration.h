@@ -26,72 +26,88 @@
 
 class FooConfigurationException
 {
-public:
-	//--------
-	// Constructors and destructor
-	//--------
-	explicit FooConfigurationException(const char * str);
-	FooConfigurationException(const FooConfigurationException & other);
-	~FooConfigurationException();
+  public:
+    //--------
+    // Constructors and destructor
+    //--------
+    explicit FooConfigurationException(const char* str);
+    FooConfigurationException(const FooConfigurationException& other);
+    ~FooConfigurationException();
 
-	const char * c_str() const; // Accessor
+    const char* c_str() const; // Accessor
 
-private:
-	char *			m_str;
+  private:
+    char* m_str;
 
-	//--------
-	// The following are unimplemented
-	//--------
-	FooConfigurationException();
-	FooConfigurationException operator=(const FooConfigurationException &);
+    //--------
+    // The following are unimplemented
+    //--------
+    FooConfigurationException();
+    FooConfigurationException operator=(const FooConfigurationException&);
 };
-
 
 class FooConfiguration
 {
-public:
-	explicit FooConfiguration(bool wantDiagnostics = false);
-	~FooConfiguration();
+  public:
+    explicit FooConfiguration(bool wantDiagnostics = false);
+    ~FooConfiguration();
 
-	void parse(
-			const char *	cfgInput,
-			const char *	cfgScope = "",
-			const char *	secInput = "",
-			const char *	secScope = "") throw (FooConfigurationException);
+    void parse(const char* cfgInput, const char* cfgScope = "", const char* secInput = "",
+        const char* secScope = "") throw(FooConfigurationException);
 
-	//--------
-	// Acccessors for configuration variables.
-	//--------
-	int				getConnectionTimeout()	{ return m_connectionTimeout; }
-	int				getRpcTimeout()			{ return m_rpcTimeout; }
-	int				getIdleTimeout()		{ return m_idleTimeout; }
-	const char *	getLogFile()			{ return m_logFile; }
-	int				getLogLevel()			{ return m_logLevel; }
-	const char *	getHost()				{ return m_host; }
-	int				getPort()				{ return m_port; }
+    //--------
+    // Acccessors for configuration variables.
+    //--------
+    int getConnectionTimeout()
+    {
+        return m_connectionTimeout;
+    }
+    int getRpcTimeout()
+    {
+        return m_rpcTimeout;
+    }
+    int getIdleTimeout()
+    {
+        return m_idleTimeout;
+    }
+    const char* getLogFile()
+    {
+        return m_logFile;
+    }
+    int getLogLevel()
+    {
+        return m_logLevel;
+    }
+    const char* getHost()
+    {
+        return m_host;
+    }
+    int getPort()
+    {
+        return m_port;
+    }
 
-private:
-	//--------
-	// Instance variables
-	//--------
-	void *			m_cfg; // opaque pointer to Config4Cpp config object
-	bool			m_wantDiagnostics;
+  private:
+    //--------
+    // Instance variables
+    //--------
+    void* m_cfg; // opaque pointer to Config4Cpp config object
+    bool m_wantDiagnostics;
 
-	//--------
-	// Instance variables to cache configuration variables.
-	//--------
-	int             m_connectionTimeout;
-	int             m_rpcTimeout;
-	int             m_idleTimeout;
-	const char *    m_logFile;
-	int             m_logLevel;
-	const char *    m_host;
-	int             m_port;
+    //--------
+    // Instance variables to cache configuration variables.
+    //--------
+    int m_connectionTimeout;
+    int m_rpcTimeout;
+    int m_idleTimeout;
+    const char* m_logFile;
+    int m_logLevel;
+    const char* m_host;
+    int m_port;
 
-	//--------
-	// Not implemented
-	//--------
-	FooConfiguration & operator=(const FooConfiguration &);
-	FooConfiguration(const FooConfiguration &);
+    //--------
+    // Not implemented
+    //--------
+    FooConfiguration& operator=(const FooConfiguration&);
+    FooConfiguration(const FooConfiguration&);
 };
-

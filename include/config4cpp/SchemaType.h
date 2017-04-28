@@ -26,85 +26,60 @@
 
 #include <config4cpp/Configuration.h>
 
-
-namespace CONFIG4CPP_NAMESPACE {
-
-class SchemaValidator;
-class SchemaParser;
-
-
-class SchemaType
+namespace CONFIG4CPP_NAMESPACE
 {
-public:
-	SchemaType(
-		const char *			typeName,
-		const char *			className,
-		Configuration::Type		cfgType);
-	virtual ~SchemaType();
+    class SchemaValidator;
+    class SchemaParser;
 
-	const char *        typeName()  const { return m_typeName.c_str(); }
-	const char *        className() const { return m_className.c_str(); }
-	Configuration::Type cfgType()   const { return m_cfgType; }
+    class SchemaType
+    {
+      public:
+        SchemaType(const char* typeName, const char* className, Configuration::Type cfgType);
+        virtual ~SchemaType();
 
-protected:
-	virtual void checkRule(
-		const SchemaValidator *	sv,
-		const Configuration *	cfg,
-		const char *			typeName,
-		const StringVector &	typeArgs,
-		const char *			rule) const throw(ConfigurationException) = 0;
+        const char* typeName() const
+        {
+            return m_typeName.c_str();
+        }
+        const char* className() const
+        {
+            return m_className.c_str();
+        }
+        Configuration::Type cfgType() const
+        {
+            return m_cfgType;
+        }
 
-	virtual void validate(
-		const SchemaValidator *	sv,
-		const Configuration *	cfg,
-		const char *			scope,
-		const char *			name,
-		const char *			typeName,
-		const char *			origTypeName,
-		const StringVector &	typeArgs,
-		int						indentLevel) const
-											throw(ConfigurationException);
+      protected:
+        virtual void checkRule(const SchemaValidator* sv, const Configuration* cfg,
+            const char* typeName, const StringVector& typeArgs, const char* rule) const
+            throw(ConfigurationException) = 0;
 
-	virtual bool isA(
-		const SchemaValidator *	sv,
-		const Configuration *	cfg,
-		const char *			value,
-		const char *			typeName,
-		const StringVector &	typeArgs,
-		int						indentLevel,
-		StringBuffer &			errSuffix) const;
+        virtual void validate(const SchemaValidator* sv, const Configuration* cfg,
+            const char* scope, const char* name, const char* typeName, const char* origTypeName,
+            const StringVector& typeArgs, int indentLevel) const throw(ConfigurationException);
 
-	SchemaType * findType(const SchemaValidator * sv, const char * name) const;
+        virtual bool isA(const SchemaValidator* sv, const Configuration* cfg, const char* value,
+            const char* typeName, const StringVector& typeArgs, int indentLevel,
+            StringBuffer& errSuffix) const;
 
-	void callValidate(
-		const SchemaType *		target,
-		const SchemaValidator *	sv,
-		const Configuration *	cfg,
-		const char *			scope,
-		const char *			name,
-		const char *			typeName,
-		const char *			origTypeName,
-		const StringVector &	typeArgs,
-		int						indentLevel) const
-											throw(ConfigurationException);
+        SchemaType* findType(const SchemaValidator* sv, const char* name) const;
 
-	bool callIsA(
-		const SchemaType *		target,
-		const SchemaValidator *	sv,
-		const Configuration *	cfg,
-		const char *			value,
-		const char *			typeName,
-		const StringVector &	typeArgs,
-		int						indentLevel,
-		StringBuffer &			errSuffix) const;
+        void callValidate(const SchemaType* target, const SchemaValidator* sv,
+            const Configuration* cfg, const char* scope, const char* name, const char* typeName,
+            const char* origTypeName, const StringVector& typeArgs, int indentLevel) const
+            throw(ConfigurationException);
 
-private:
-	friend class SchemaValidator;
-	friend class SchemaParser;
-	StringBuffer				m_typeName;
-	StringBuffer				m_className;
-	Configuration::Type			m_cfgType;
-};
+        bool callIsA(const SchemaType* target, const SchemaValidator* sv, const Configuration* cfg,
+            const char* value, const char* typeName, const StringVector& typeArgs, int indentLevel,
+            StringBuffer& errSuffix) const;
 
+      private:
+        friend class SchemaValidator;
+        friend class SchemaParser;
+        StringBuffer m_typeName;
+        StringBuffer m_className;
+        Configuration::Type m_cfgType;
+    };
 
 } // namespace CONFIG4CPP_NAMESPACE

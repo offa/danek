@@ -28,28 +28,27 @@
 
 class B
 {
-public:
-	//--------
-	// Constructors and destructor
-	//--------
-	explicit B(const FooConfiguration * cfg);
+  public:
+    //--------
+    // Constructors and destructor
+    //--------
+    explicit B(const FooConfiguration* cfg);
 
-	void op1();
-	void op2();
-	void op3();
+    void op1();
+    void op2();
+    void op3();
 
-private:
-	//--------
-	// Instance variables.
-	//--------
-	Logger::LogLevel	m_logLevelOp1;
-	Logger::LogLevel	m_logLevelOp2;
-	Logger::LogLevel	m_logLevelOp3;
+  private:
+    //--------
+    // Instance variables.
+    //--------
+    Logger::LogLevel m_logLevelOp1;
+    Logger::LogLevel m_logLevelOp2;
+    Logger::LogLevel m_logLevelOp3;
 
-	//--------
-	// Not implemented
-	//--------
-	B(const B &);
-	B operator=(const B &);
+    //--------
+    // Not implemented
+    //--------
+    B(const B&);
+    B operator=(const B&);
 };
-

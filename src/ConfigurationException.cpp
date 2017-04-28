@@ -10,7 +10,7 @@
 // the following conditions.
 //
 // The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.  
+// included in all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
@@ -28,36 +28,28 @@
 #include <config4cpp/ConfigurationException.h>
 #include <string.h>
 
-
-namespace CONFIG4CPP_NAMESPACE {
-
-ConfigurationException::ConfigurationException(const char * str)
+namespace CONFIG4CPP_NAMESPACE
 {
-	m_str = new char[strlen(str) + 1];
-	strcpy(m_str, str);
-}
+    ConfigurationException::ConfigurationException(const char* str)
+    {
+        m_str = new char[strlen(str) + 1];
+        strcpy(m_str, str);
+    }
 
+    ConfigurationException::ConfigurationException(const ConfigurationException& o)
+    {
+        m_str = new char[strlen(o.m_str) + 1];
+        strcpy(m_str, o.m_str);
+    }
 
+    ConfigurationException::~ConfigurationException()
+    {
+        delete[] m_str;
+    }
 
-ConfigurationException::ConfigurationException(const ConfigurationException & o)
-{
-	m_str = new char[strlen(o.m_str) + 1];
-	strcpy(m_str, o.m_str);
-}
+    const char* ConfigurationException::c_str() const
+    {
+        return m_str;
+    }
 
-
-
-ConfigurationException::~ConfigurationException()
-{
-	delete [] m_str;
-}
-
-
-
-const char *
-ConfigurationException::c_str() const
-{
-	return m_str;
-}
-
-} // namespace CONFIG4CPP_NAMESPACE 
+} // namespace CONFIG4CPP_NAMESPACE

@@ -26,36 +26,28 @@
 
 #include <config4cpp/SchemaType.h>
 
-
-namespace CONFIG4CPP_NAMESPACE {
-
-class SchemaTypeMemorySizeMB
-	: public SchemaType
+namespace CONFIG4CPP_NAMESPACE
 {
-public:
-	SchemaTypeMemorySizeMB()
-		: SchemaType("memorySizeMB",
-		             CONFIG4CPP_NAMESPACE_STR "::SchemaTypeMemorySizeMB",
-		             Configuration::CFG_STRING)
-	{ }
-	virtual ~SchemaTypeMemorySizeMB() { }
+    class SchemaTypeMemorySizeMB : public SchemaType
+    {
+      public:
+        SchemaTypeMemorySizeMB()
+            : SchemaType("memorySizeMB", CONFIG4CPP_NAMESPACE_STR "::SchemaTypeMemorySizeMB",
+                  Configuration::CFG_STRING)
+        {
+        }
+        virtual ~SchemaTypeMemorySizeMB()
+        {
+        }
 
-protected:
-	virtual void checkRule(
-		const SchemaValidator *	sv,
-		const Configuration *	cfg,
-		const char *			typeName,
-		const StringVector &	typeArgs,
-		const char *			rule) const throw(ConfigurationException);
+      protected:
+        virtual void checkRule(const SchemaValidator* sv, const Configuration* cfg,
+            const char* typeName, const StringVector& typeArgs, const char* rule) const
+            throw(ConfigurationException);
 
-	virtual bool isA(
-		const SchemaValidator *	sv,
-		const Configuration *	cfg,
-		const char *			value,
-		const char *			typeName,
-		const StringVector &	typeArgs,
-		int						indentLevel,
-		StringBuffer &			errSuffix) const;
-};
+        virtual bool isA(const SchemaValidator* sv, const Configuration* cfg, const char* value,
+            const char* typeName, const StringVector& typeArgs, int indentLevel,
+            StringBuffer& errSuffix) const;
+    };
 
 } // namespace CONFIG4CPP_NAMESPACE

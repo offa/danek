@@ -30,42 +30,31 @@
 using CONFIG4CPP_NAMESPACE::Configuration;
 using CONFIG4CPP_NAMESPACE::ConfigurationException;
 
-
 //----------------------------------------------------------------------
 // class FooConfigurationException
 //----------------------------------------------------------------------
 
-FooConfigurationException::FooConfigurationException(const char * str)
+FooConfigurationException::FooConfigurationException(const char* str)
 {
-	m_str = new char[strlen(str) + 1];
-	strcpy(m_str, str);
+    m_str = new char[strlen(str) + 1];
+    strcpy(m_str, str);
 }
 
-
-
-FooConfigurationException::FooConfigurationException(
-	const FooConfigurationException & other)
+FooConfigurationException::FooConfigurationException(const FooConfigurationException& other)
 {
-	m_str = new char[strlen(other.m_str) + 1];
-	strcpy(m_str, other.m_str);
+    m_str = new char[strlen(other.m_str) + 1];
+    strcpy(m_str, other.m_str);
 }
-
-
 
 FooConfigurationException::~FooConfigurationException()
 {
-	delete [] m_str;
+    delete[] m_str;
 }
 
-
-
-const char *
-FooConfigurationException::c_str() const
+const char* FooConfigurationException::c_str() const
 {
-	return m_str;
+    return m_str;
 }
-
-
 
 //----------------------------------------------------------------------
 // class FooConfiguration
@@ -73,136 +62,127 @@ FooConfigurationException::c_str() const
 
 FooConfiguration::FooConfiguration()
 {
-	m_cfg = Configuration::create();
-	m_scope = 0;
+    m_cfg = Configuration::create();
+    m_scope = 0;
 }
-
-
 
 FooConfiguration::~FooConfiguration()
 {
-	delete [] m_scope;
-	((Configuration *)m_cfg)->destroy();
+    delete[] m_scope;
+    ((Configuration*) m_cfg)->destroy();
 }
 
-
-void
-FooConfiguration::parse(
-	const char *		cfgSource,
-	const char *		scope) throw (FooConfigurationException)
+void FooConfiguration::parse(const char* cfgSource, const char* scope) throw(
+    FooConfigurationException)
 {
-	Configuration * cfg = (Configuration *)m_cfg;
+    Configuration* cfg = (Configuration*) m_cfg;
 
-	m_scope = new char[strlen(scope) + 1];
-	strcpy(m_scope, scope);
-	try {
-		if (cfgSource != 0 && strcmp(cfgSource, "") != 0) {
-			cfg->parse(cfgSource);
-		}
-		cfg->setFallbackConfiguration(Configuration::INPUT_STRING,
-		                              FallbackConfiguration::getString());
-	} catch(const ConfigurationException & ex) {
-		throw FooConfigurationException(ex.c_str());
-	}
+    m_scope = new char[strlen(scope) + 1];
+    strcpy(m_scope, scope);
+    try
+    {
+        if (cfgSource != 0 && strcmp(cfgSource, "") != 0)
+        {
+            cfg->parse(cfgSource);
+        }
+        cfg->setFallbackConfiguration(
+            Configuration::INPUT_STRING, FallbackConfiguration::getString());
+    }
+    catch (const ConfigurationException& ex)
+    {
+        throw FooConfigurationException(ex.c_str());
+    }
 }
 
-
-
-const char *
-FooConfiguration::lookupString(const char * name) const
-											throw (FooConfigurationException)
+const char* FooConfiguration::lookupString(const char* name) const throw(FooConfigurationException)
 {
-	Configuration * cfg = (Configuration *)m_cfg;
-	try {
-		return cfg->lookupString(m_scope, name);
-	} catch(const ConfigurationException & ex) {
-		throw FooConfigurationException(ex.c_str());
-	}
+    Configuration* cfg = (Configuration*) m_cfg;
+    try
+    {
+        return cfg->lookupString(m_scope, name);
+    }
+    catch (const ConfigurationException& ex)
+    {
+        throw FooConfigurationException(ex.c_str());
+    }
 }
 
-
-
-void
-FooConfiguration::lookupList(
-	const char *			name,
-	const char **&			array,
-	int &					arraySize) const throw (FooConfigurationException)
+void FooConfiguration::lookupList(const char* name, const char**& array, int& arraySize) const
+    throw(FooConfigurationException)
 {
-	Configuration * cfg = (Configuration *)m_cfg;
-	try {
-		cfg->lookupList(m_scope, name, array, arraySize);
-	} catch(const ConfigurationException & ex) {
-		throw FooConfigurationException(ex.c_str());
-	}
+    Configuration* cfg = (Configuration*) m_cfg;
+    try
+    {
+        cfg->lookupList(m_scope, name, array, arraySize);
+    }
+    catch (const ConfigurationException& ex)
+    {
+        throw FooConfigurationException(ex.c_str());
+    }
 }
 
-
-
-int
-FooConfiguration::lookupInt(const char * name) const
-											throw (FooConfigurationException)
+int FooConfiguration::lookupInt(const char* name) const throw(FooConfigurationException)
 {
-	Configuration * cfg = (Configuration *)m_cfg;
-	try {
-		return cfg->lookupInt(m_scope, name);
-	} catch(const ConfigurationException & ex) {
-		throw FooConfigurationException(ex.c_str());
-	}
+    Configuration* cfg = (Configuration*) m_cfg;
+    try
+    {
+        return cfg->lookupInt(m_scope, name);
+    }
+    catch (const ConfigurationException& ex)
+    {
+        throw FooConfigurationException(ex.c_str());
+    }
 }
 
-
-
-float
-FooConfiguration::lookupFloat(const char * name) const
-											throw (FooConfigurationException)
+float FooConfiguration::lookupFloat(const char* name) const throw(FooConfigurationException)
 {
-	Configuration * cfg = (Configuration *)m_cfg;
-	try {
-		return cfg->lookupFloat(m_scope, name);
-	} catch(const ConfigurationException & ex) {
-		throw FooConfigurationException(ex.c_str());
-	}
+    Configuration* cfg = (Configuration*) m_cfg;
+    try
+    {
+        return cfg->lookupFloat(m_scope, name);
+    }
+    catch (const ConfigurationException& ex)
+    {
+        throw FooConfigurationException(ex.c_str());
+    }
 }
 
-
-
-bool
-FooConfiguration::lookupBoolean(const char * name) const
-											throw (FooConfigurationException)
+bool FooConfiguration::lookupBoolean(const char* name) const throw(FooConfigurationException)
 {
-	Configuration * cfg = (Configuration *)m_cfg;
-	try {
-		return cfg->lookupBoolean(m_scope, name);
-	} catch(const ConfigurationException & ex) {
-		throw FooConfigurationException(ex.c_str());
-	}
+    Configuration* cfg = (Configuration*) m_cfg;
+    try
+    {
+        return cfg->lookupBoolean(m_scope, name);
+    }
+    catch (const ConfigurationException& ex)
+    {
+        throw FooConfigurationException(ex.c_str());
+    }
 }
 
-
-
-int
-FooConfiguration::lookupDurationMilliseconds(const char * name) const
-											throw (FooConfigurationException)
+int FooConfiguration::lookupDurationMilliseconds(const char* name) const
+    throw(FooConfigurationException)
 {
-	Configuration * cfg = (Configuration *)m_cfg;
-	try {
-		return cfg->lookupDurationMilliseconds(m_scope, name);
-	} catch(const ConfigurationException & ex) {
-		throw FooConfigurationException(ex.c_str());
-	}
+    Configuration* cfg = (Configuration*) m_cfg;
+    try
+    {
+        return cfg->lookupDurationMilliseconds(m_scope, name);
+    }
+    catch (const ConfigurationException& ex)
+    {
+        throw FooConfigurationException(ex.c_str());
+    }
 }
 
-
-
-int
-FooConfiguration::lookupDurationSeconds(const char * name) const
-											throw (FooConfigurationException)
+int FooConfiguration::lookupDurationSeconds(const char* name) const throw(FooConfigurationException)
 {
-	Configuration * cfg = (Configuration *)m_cfg;
-	try {
-		return cfg->lookupDurationSeconds(m_scope, name);
-	} catch(const ConfigurationException & ex) {
-		throw FooConfigurationException(ex.c_str());
-	}
+    Configuration* cfg = (Configuration*) m_cfg;
+    try
+    {
+        return cfg->lookupDurationSeconds(m_scope, name);
+    }
+    catch (const ConfigurationException& ex)
+    {
+        throw FooConfigurationException(ex.c_str());
+    }
 }
-

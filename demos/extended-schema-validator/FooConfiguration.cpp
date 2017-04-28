@@ -32,83 +32,65 @@
 using CONFIG4CPP_NAMESPACE::Configuration;
 using CONFIG4CPP_NAMESPACE::ConfigurationException;
 
-
-
 //----------------------------------------------------------------------
 // class FooConfigurationException
 //----------------------------------------------------------------------
 
-FooConfigurationException::FooConfigurationException(const char * str)
+FooConfigurationException::FooConfigurationException(const char* str)
 {
-	m_str = new char[strlen(str) + 1];
-	strcpy(m_str, str);
+    m_str = new char[strlen(str) + 1];
+    strcpy(m_str, str);
 }
 
-
-
-FooConfigurationException::FooConfigurationException(
-	const FooConfigurationException & other)
+FooConfigurationException::FooConfigurationException(const FooConfigurationException& other)
 {
-	m_str = new char[strlen(other.m_str) + 1];
-	strcpy(m_str, other.m_str);
+    m_str = new char[strlen(other.m_str) + 1];
+    strcpy(m_str, other.m_str);
 }
-
-
 
 FooConfigurationException::~FooConfigurationException()
 {
-	delete [] m_str;
+    delete[] m_str;
 }
 
-
-
-const char *
-FooConfigurationException::c_str() const
+const char* FooConfigurationException::c_str() const
 {
-	return m_str;
+    return m_str;
 }
-
-
 
 //----------------------------------------------------------------------
 // class FooConfiguration
 //----------------------------------------------------------------------
 
-FooConfiguration::FooConfiguration(bool wantDiagnostics) : m_cfg(Configuration::create()),
-                                                        m_wantDiagnostics(wantDiagnostics),
-                                                        m_timeout(0),
-                                                        m_host(""),
-                                                        m_hexByte(0x00),
-                                                        m_hexWord(0x00),
-                                                        m_hexList(0),
-                                                        m_hexListSize(0)
+FooConfiguration::FooConfiguration(bool wantDiagnostics)
+    : m_cfg(Configuration::create()),
+      m_wantDiagnostics(wantDiagnostics),
+      m_timeout(0),
+      m_host(""),
+      m_hexByte(0x00),
+      m_hexWord(0x00),
+      m_hexList(0),
+      m_hexListSize(0)
 {
 }
-
-
 
 FooConfiguration::~FooConfiguration()
 {
-	((Configuration *)m_cfg)->destroy();
-	delete [] m_hexList;
+    ((Configuration*) m_cfg)->destroy();
+    delete[] m_hexList;
 }
 
-
-
-void
-FooConfiguration::parse(
-	const char *		cfgInput,
-	const char *		scope,
-	const char *		secInput,
-	const char *		secScope) throw (FooConfigurationException)
+void FooConfiguration::parse(const char* cfgInput, const char* scope, const char* secInput,
+    const char* secScope) throw(FooConfigurationException)
 {
-	StringBuffer				localName;
-	StringVector				strList;
-	Configuration *				cfg = (Configuration*)m_cfg;
-	ExtendedSchemaValidator		sv;
+    StringBuffer localName;
+    StringVector strList;
+    Configuration* cfg = (Configuration*) m_cfg;
+    ExtendedSchemaValidator sv;
 
-	try {
-        const char *				schema[] = {
+    try
+    {
+        const char* schema[] = {
             "host     = string",
             "timeout  = durationMilliseconds",
             "hex_byte = hex[2]",
@@ -117,45 +99,48 @@ FooConfiguration::parse(
             0 // null-terminated array of strings
         };
 
-		//--------
-		// Set non-default security, if supplied.
-		// Parse config input, if supplied.
-		//--------
-		if (strcmp(secInput, "") != 0) {
-			cfg->setSecurityConfiguration(secInput, secScope);
-		}
-		if (strcmp(cfgInput, "") != 0) {
-			cfg->parse(cfgInput);
-		}
+        //--------
+        // Set non-default security, if supplied.
+        // Parse config input, if supplied.
+        //--------
+        if (strcmp(secInput, "") != 0)
+        {
+            cfg->setSecurityConfiguration(secInput, secScope);
+        }
+        if (strcmp(cfgInput, "") != 0)
+        {
+            cfg->parse(cfgInput);
+        }
 
-		//--------
-		// Perform schema validation.
-		//--------
-		sv.wantDiagnostics(m_wantDiagnostics);
-		sv.parseSchema(schema);
-		sv.validate(cfg, scope, "");
+        //--------
+        // Perform schema validation.
+        //--------
+        sv.wantDiagnostics(m_wantDiagnostics);
+        sv.parseSchema(schema);
+        sv.validate(cfg, scope, "");
 
-		//--------
-		// Cache configuration variables in instance variables for
-		// faster access. We use static utility operations on the
-		// SchemaTypeHex class to perform lookupHex() and convert
-		// list[hex] to int[].
-		//--------
-		m_host = cfg->lookupString(scope, "host");
-		m_timeout = cfg->lookupDurationMilliseconds(scope, "timeout");
-		m_hexByte = SchemaTypeHex::lookupHex(cfg, scope, "hex_byte");
-		m_hexWord = SchemaTypeHex::lookupHex(cfg, scope, "hex_word");
-		cfg->lookupList(scope, "hex_list", strList);
-		m_hexListSize = strList.length();
-		m_hexList = new int[m_hexListSize];
-		for (int i = 0; i < m_hexListSize; i++) {
-			localName.empty();
-			localName << "hex_list[" << (i+1) << "]";
-			m_hexList[i] = SchemaTypeHex::stringToHex(cfg, scope,
-												localName.c_str(), strList[i]);
-		}
-	} catch(const ConfigurationException & ex) {
-		throw FooConfigurationException(ex.c_str());
-	}
+        //--------
+        // Cache configuration variables in instance variables for
+        // faster access. We use static utility operations on the
+        // SchemaTypeHex class to perform lookupHex() and convert
+        // list[hex] to int[].
+        //--------
+        m_host = cfg->lookupString(scope, "host");
+        m_timeout = cfg->lookupDurationMilliseconds(scope, "timeout");
+        m_hexByte = SchemaTypeHex::lookupHex(cfg, scope, "hex_byte");
+        m_hexWord = SchemaTypeHex::lookupHex(cfg, scope, "hex_word");
+        cfg->lookupList(scope, "hex_list", strList);
+        m_hexListSize = strList.length();
+        m_hexList = new int[m_hexListSize];
+        for (int i = 0; i < m_hexListSize; i++)
+        {
+            localName.empty();
+            localName << "hex_list[" << (i + 1) << "]";
+            m_hexList[i] = SchemaTypeHex::stringToHex(cfg, scope, localName.c_str(), strList[i]);
+        }
+    }
+    catch (const ConfigurationException& ex)
+    {
+        throw FooConfigurationException(ex.c_str());
+    }
 }
-

@@ -59,76 +59,70 @@
 #include "ConfigScope.h"
 #include "ConfigurationImpl.h"
 
+namespace CONFIG4CPP_NAMESPACE
+{
+    class ConfigParser
+    {
+      public:
+        //--------
+        // Constructor and destructor
+        //--------
+        ConfigParser(Configuration::SourceType sourceType, const char* source,
+            const char* trustedCmdLine, const char* sourceDescription, ConfigurationImpl* config,
+            bool ifExistsIsSpecified = false) throw(ConfigurationException);
+        ~ConfigParser();
 
-namespace CONFIG4CPP_NAMESPACE {
+        //--------
+        // Public operations: None. All the work is done in the ctor!
+        //--------
 
-class ConfigParser {
-public:
-	//--------
-	// Constructor and destructor
-	//--------
-	ConfigParser(
-		Configuration::SourceType	sourceType,
-		const char *				source,
-		const char *				trustedCmdLine,
-		const char *				sourceDescription,
-		ConfigurationImpl *			config,
-		bool						ifExistsIsSpecified = false)
-												throw(ConfigurationException);
-	~ConfigParser();
+      protected:
+        //--------
+        // Helper operations
+        //--------
+        void parseStmtList();
+        void parseStmt();
+        void parseIncludeStmt();
+        void parseCopyStmt();
+        void parseRemoveStmt();
+        void parseErrorStmt();
+        void parseIfStmt();
+        void skipToClosingBrace();
+        bool parseCondition();
+        bool parseOrCondition();
+        bool parseAndCondition();
+        bool parseTerminalCondition();
+        void parseScope(LexToken& scopeName);
+        void parseRhsAssignStmt(LexToken& varName, short assignmentType);
+        void parseStringExpr(StringBuffer& expr);
+        void parseString(StringBuffer& expr);
+        void parseReadFile(StringBuffer& str);
+        void parseEnv(StringBuffer& str);
+        void parseSiblingScope(StringBuffer& str);
+        void parseExec(StringBuffer& str);
+        void parseJoin(StringBuffer& str);
+        void parseReplace(StringBuffer& str);
+        void parseSplit(StringVector& str);
+        void parseListExpr(StringVector& expr);
+        void parseList(StringVector& expr);
+        void parseStringExprList(StringVector& list);
 
-	//--------
-	// Public operations: None. All the work is done in the ctor!
-	//--------
+        void getDirectoryOfFile(const char* filename, StringBuffer& str);
+        void accept(short, const char* errMsg);
+        void error(const char* errMsg, bool printNear = true);
 
-protected:
-	//--------
-	// Helper operations
-	//--------
-	void		parseStmtList();
-	void		parseStmt();
-	void		parseIncludeStmt();
-	void		parseCopyStmt();
-	void		parseRemoveStmt();
-	void		parseErrorStmt();
-	void		parseIfStmt();
-	void		skipToClosingBrace();
-	bool		parseCondition();
-	bool		parseOrCondition();
-	bool		parseAndCondition();
-	bool		parseTerminalCondition();
-	void		parseScope(LexToken & scopeName);
-	void		parseRhsAssignStmt(LexToken & varName, short assignmentType);
-	void		parseStringExpr(StringBuffer & expr);
-	void		parseString(StringBuffer & expr);
-	void		parseReadFile(StringBuffer & str);
-	void		parseEnv(StringBuffer & str);
-	void		parseSiblingScope(StringBuffer & str);
-	void		parseExec(StringBuffer & str);
-	void		parseJoin(StringBuffer & str);
-	void		parseReplace(StringBuffer & str);
-	void		parseSplit(StringVector & str);
-	void		parseListExpr(StringVector & expr);
-	void		parseList(StringVector & expr);
-	void		parseStringExprList(StringVector & list);
+        ConfigParser(const ConfigParser&);
+        ConfigParser& operator=(const ConfigParser&);
 
-	void		getDirectoryOfFile(const char * filename, StringBuffer & str);
-	void		accept(short, const char *errMsg);
-	void		error(const char *errMsg, bool printNear = true);
-
-    ConfigParser(const ConfigParser&);
-    ConfigParser& operator=(const ConfigParser&);
-
-protected:
-	//--------
-	// Instance variables
-	//--------
-	ConfigLex *				m_lex;
-	LexToken				m_token;
-	ConfigurationImpl *		m_config;
-	bool					m_errorInIncludedFile;
-	StringBuffer			m_fileName;
-};
-
+      protected:
+        //--------
+        // Instance variables
+        //--------
+        ConfigLex* m_lex;
+        LexToken m_token;
+        ConfigurationImpl* m_config;
+        bool m_errorInIncludedFile;
+        StringBuffer m_fileName;
+    };
 
 } // namespace CONFIG4CPP_NAMESPACE

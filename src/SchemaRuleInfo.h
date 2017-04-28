@@ -30,23 +30,22 @@
 #include <config4cpp/StringBuffer.h>
 #include <config4cpp/StringVector.h>
 
+namespace CONFIG4CPP_NAMESPACE
+{
+    class SchemaIdRuleInfo
+    {
+      public:
+        StringBuffer m_locallyScopedName;
+        StringBuffer m_typeName;
+        StringVector m_args;
+        bool m_isOptional;
+    };
 
-namespace CONFIG4CPP_NAMESPACE {
-
-class SchemaIdRuleInfo {
-public:
-	StringBuffer		m_locallyScopedName;
-	StringBuffer		m_typeName;
-	StringVector		m_args;
-	bool				m_isOptional;
-};
-
-
-class SchemaIgnoreRuleInfo {
-public:
-	short				m_symbol;
-	StringBuffer		m_locallyScopedName;
-};
-
+    class SchemaIgnoreRuleInfo
+    {
+      public:
+        short m_symbol;
+        StringBuffer m_locallyScopedName;
+    };
 
 } // namespace CONFIG4CPP_NAMESPACE

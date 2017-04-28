@@ -10,7 +10,7 @@
 // the following conditions.
 //
 // The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.  
+// included in all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
@@ -22,7 +22,6 @@
 // SOFTWARE.
 //----------------------------------------------------------------------
 
-
 //--------
 // #include's
 //--------
@@ -31,37 +30,34 @@
 #include <wchar.h>
 #include <wctype.h>
 
-
-namespace CONFIG4CPP_NAMESPACE {
-
-MBChar::MBChar()
+namespace CONFIG4CPP_NAMESPACE
 {
-	reset();
-}
+    MBChar::MBChar()
+    {
+        reset();
+    }
 
+    MBChar::~MBChar()
+    {
+        // Nothing to do
+    }
 
+    bool MBChar::operator==(const MBChar& other) const
+    {
+        int i;
 
-MBChar::~MBChar()
-{
-	// Nothing to do
-}
-
-
-
-bool
-MBChar::operator==(const MBChar & other) const
-{
-	int				i;
-
-	if (m_mbCharLen != other.m_mbCharLen) {
-		return false;
-	}
-	for (i = 0; i < m_mbCharLen; i++) {
-		if (m_mbChar[i] != other.m_mbChar[i]) {
-			return false;
-		}
-	}
-	return true;
-}
+        if (m_mbCharLen != other.m_mbCharLen)
+        {
+            return false;
+        }
+        for (i = 0; i < m_mbCharLen; i++)
+        {
+            if (m_mbChar[i] != other.m_mbChar[i])
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 
 } // namespace CONFIG4CPP_NAMESPACE

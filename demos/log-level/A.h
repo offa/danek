@@ -26,31 +26,29 @@
 
 #include "FooConfiguration.h"
 
-
 class A
 {
-public:
-	//--------
-	// Constructors and destructor
-	//--------
-	explicit A(const FooConfiguration * cfg);
+  public:
+    //--------
+    // Constructors and destructor
+    //--------
+    explicit A(const FooConfiguration* cfg);
 
-	void op1();
-	void op2();
-	void op3();
+    void op1();
+    void op2();
+    void op3();
 
-private:
-	//--------
-	// Instance variables
-	//--------
-	Logger::LogLevel		m_logLevelOp1;
-	Logger::LogLevel		m_logLevelOp2;
-	Logger::LogLevel		m_logLevelOp3;
+  private:
+    //--------
+    // Instance variables
+    //--------
+    Logger::LogLevel m_logLevelOp1;
+    Logger::LogLevel m_logLevelOp2;
+    Logger::LogLevel m_logLevelOp3;
 
-	//--------
-	// Not implemented
-	//--------
-	A(const A &);
-	A operator=(const A &);
+    //--------
+    // Not implemented
+    //--------
+    A(const A&);
+    A operator=(const A&);
 };
-

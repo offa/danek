@@ -29,15 +29,13 @@
 using CONFIG4CPP_NAMESPACE::ConfigurationException;
 using CONFIG4CPP_NAMESPACE::SchemaValidator;
 
-
 class ExtendedSchemaValidator : public SchemaValidator
 {
-public:
-	ExtendedSchemaValidator() throw(ConfigurationException)
-	{
-		registerType(new SchemaTypeHex());
-	}
+  public:
+    ExtendedSchemaValidator() throw(ConfigurationException)
+    {
+        registerType(new SchemaTypeHex());
+    }
 
-protected:
+  protected:
 };
-

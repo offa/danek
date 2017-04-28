@@ -22,7 +22,6 @@
 // SOFTWARE.
 //----------------------------------------------------------------------
 
-
 //--------
 // #include's
 //--------
@@ -31,132 +30,122 @@
 #include "LexBase.h"
 #include <assert.h>
 
-
-namespace CONFIG4CPP_NAMESPACE {
-
-//----------------------------------------------------------------------
-// Function:	Constructor
-//
-// Description:
-//----------------------------------------------------------------------
-
-LexToken::LexToken() : m_type(LexBase::LEX_UNKNOWN_SYM),
-                    m_lineNum(-1),
-                    m_funcType(LexBase::NOT_A_FUNC)
+namespace CONFIG4CPP_NAMESPACE
 {
-}
+    //----------------------------------------------------------------------
+    // Function:	Constructor
+    //
+    // Description:
+    //----------------------------------------------------------------------
 
-LexToken::LexToken(const LexToken& other) : m_type(other.m_type),
-                                        m_spelling(other.m_spelling),
-                                        m_lineNum(other.m_lineNum),
-                                        m_funcType(other.m_funcType)
-{
-}
+    LexToken::LexToken()
+        : m_type(LexBase::LEX_UNKNOWN_SYM), m_lineNum(-1), m_funcType(LexBase::NOT_A_FUNC)
+    {
+    }
 
+    LexToken::LexToken(const LexToken& other)
+        : m_type(other.m_type),
+          m_spelling(other.m_spelling),
+          m_lineNum(other.m_lineNum),
+          m_funcType(other.m_funcType)
+    {
+    }
 
-//----------------------------------------------------------------------
-// Function:	Constructor
-//
-// Description:
-//----------------------------------------------------------------------
+    //----------------------------------------------------------------------
+    // Function:	Constructor
+    //
+    // Description:
+    //----------------------------------------------------------------------
 
-LexToken::LexToken(short type, int lineNum, const char * spelling) : m_type(type),
-                                                                m_spelling(spelling),
-                                                                m_lineNum(lineNum),
-                                                                m_funcType(LexBase::LEX_UNKNOWN_SYM)
-{
-}
+    LexToken::LexToken(short type, int lineNum, const char* spelling)
+        : m_type(type),
+          m_spelling(spelling),
+          m_lineNum(lineNum),
+          m_funcType(LexBase::LEX_UNKNOWN_SYM)
+    {
+    }
 
+    //----------------------------------------------------------------------
+    // Function:	Destructor
+    //
+    // Description:
+    //----------------------------------------------------------------------
 
+    LexToken::~LexToken()
+    {
+    }
 
-//----------------------------------------------------------------------
-// Function:	Destructor
-//
-// Description:
-//----------------------------------------------------------------------
+    //----------------------------------------------------------------------
+    // Function:	operator=
+    //
+    // Description:
+    //----------------------------------------------------------------------
 
-LexToken::~LexToken()
-{
-}
+    LexToken& LexToken::operator=(const LexToken& other)
+    {
+        if (this != &other)
+        {
+            this->m_type = other.m_type;
+            this->m_lineNum = other.m_lineNum;
+            m_spelling = other.m_spelling;
+            m_funcType = other.m_funcType;
+        }
+        return *this;
+    }
 
+    //----------------------------------------------------------------------
+    // Function:	reset()
+    //
+    // Description:	Modifier function
+    //----------------------------------------------------------------------
 
+    void LexToken::reset(short type, int lineNum, const char* spelling)
+    {
+        m_type = type;
+        m_lineNum = lineNum;
+        m_spelling = spelling;
+        m_funcType = LexBase::NOT_A_FUNC;
+    }
 
-//----------------------------------------------------------------------
-// Function:	operator=
-//
-// Description:
-//----------------------------------------------------------------------
+    //----------------------------------------------------------------------
+    // Function:	reset()
+    //
+    // Description:	Modifier function
+    //----------------------------------------------------------------------
 
-LexToken&
-LexToken::operator=(const LexToken& other)
-{
-	if (this != &other) {
-		this->m_type	= other.m_type;
-		this->m_lineNum	= other.m_lineNum;
-		m_spelling      = other.m_spelling;
-		m_funcType      = other.m_funcType;
-	}
-	return *this;
-}
+    void LexToken::reset(short type, int lineNum, const char* spelling, short funcType)
+    {
+        m_type = type;
+        m_lineNum = lineNum;
+        m_spelling = spelling;
+        m_funcType = funcType;
+    }
 
+    //----------------------------------------------------------------------
+    // Function:	reset()
+    //
+    // Description:	Modifier function
+    //----------------------------------------------------------------------
 
+    void LexToken::resetWithOwnership(short type, int lineNum, StringBuffer& str)
+    {
+        m_type = type;
+        m_lineNum = lineNum;
+        m_funcType = LexBase::NOT_A_FUNC;
+        m_spelling.takeOwnershipOfStringIn(str);
+    }
 
-//----------------------------------------------------------------------
-// Function:	reset()
-//
-// Description:	Modifier function
-//----------------------------------------------------------------------
-
-void
-LexToken::reset(short type, int lineNum, const char * spelling)
-{
-	m_type     = type;
-	m_lineNum  = lineNum;
-	m_spelling = spelling;
-	m_funcType = LexBase::NOT_A_FUNC;
-}
-
-
-
-//----------------------------------------------------------------------
-// Function:	reset()
-//
-// Description:	Modifier function
-//----------------------------------------------------------------------
-
-void
-LexToken::reset(
-	short				type,
-	int					lineNum,
-	const char *		spelling,
-	short				funcType)
-{
-	m_type     = type;
-	m_lineNum  = lineNum;
-	m_spelling = spelling;
-	m_funcType = funcType;
-}
-
-
-
-//----------------------------------------------------------------------
-// Function:	reset()
-//
-// Description:	Modifier function
-//----------------------------------------------------------------------
-
-void
-LexToken::resetWithOwnership(short type, int lineNum, StringBuffer & str)
-{
-	m_type     = type;
-	m_lineNum  = lineNum;
-	m_funcType = LexBase::NOT_A_FUNC;
-	m_spelling.takeOwnershipOfStringIn(str);
-}
-
-bool LexToken::isStringFunc()  { return m_funcType == LexBase::STRING_FUNC;  }
-bool LexToken::isListFunc()    { return m_funcType == LexBase::LIST_FUNC; }
-bool LexToken::isBoolFunc()    { return m_funcType == LexBase::BOOL_FUNC; }
-
+    bool LexToken::isStringFunc()
+    {
+        return m_funcType == LexBase::STRING_FUNC;
+    }
+    bool LexToken::isListFunc()
+    {
+        return m_funcType == LexBase::LIST_FUNC;
+    }
+    bool LexToken::isBoolFunc()
+    {
+        return m_funcType == LexBase::BOOL_FUNC;
+    }
 
 } // namespace CONFIG4CPP_NAMESPACE

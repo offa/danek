@@ -25,52 +25,42 @@
 #include "SchemaTypeBoolean.h"
 #include "Common.h"
 
-namespace CONFIG4CPP_NAMESPACE {
-
-void
-SchemaTypeBoolean::checkRule(
-	const SchemaValidator *		sv,
-	const Configuration *		cfg,
-	const char *				typeName,
-	const StringVector &		typeArgs,
-	const char *				rule) const throw(ConfigurationException)
+namespace CONFIG4CPP_NAMESPACE
 {
-    unused(sv);
-    unused(cfg);
+    void SchemaTypeBoolean::checkRule(const SchemaValidator* sv, const Configuration* cfg,
+        const char* typeName, const StringVector& typeArgs, const char* rule) const
+        throw(ConfigurationException)
+    {
+        unused(sv);
+        unused(cfg);
 
-	StringBuffer				msg;
+        StringBuffer msg;
 
-	if (typeArgs.length() != 0) {
-		msg << "The '" << typeName << "' type should not take arguments in "
-		    << "rule '" << rule << "'";
-		throw ConfigurationException(msg.c_str());
-	}
-}
+        if (typeArgs.length() != 0)
+        {
+            msg << "The '" << typeName << "' type should not take arguments in "
+                << "rule '" << rule << "'";
+            throw ConfigurationException(msg.c_str());
+        }
+    }
 
+    bool SchemaTypeBoolean::isA(const SchemaValidator* sv, const Configuration* cfg,
+        const char* value, const char* typeName, const StringVector& typeArgs, int indentLevel,
+        StringBuffer& errSuffix) const
+    {
+        unused(sv);
+        unused(typeArgs);
+        unused(typeName);
+        unused(indentLevel);
 
+        bool result;
 
-bool
-SchemaTypeBoolean::isA(
-	const SchemaValidator *		sv,
-	const Configuration *		cfg,
-	const char *				value,
-	const char *				typeName,
-	const StringVector &		typeArgs,
-	int							indentLevel,
-	StringBuffer &				errSuffix) const
-{
-    unused(sv);
-    unused(typeArgs);
-    unused(typeName);
-    unused(indentLevel);
-
-	bool						result;
-
-	result = cfg->isBoolean(value);
-	if (result == false) {
-		errSuffix = "the value should be one of: 'false', 'true'";
-	}
-	return result;
-}
+        result = cfg->isBoolean(value);
+        if (result == false)
+        {
+            errSuffix = "the value should be one of: 'false', 'true'";
+        }
+        return result;
+    }
 
 } // namespace CONFIG4CPP_NAMESPACE

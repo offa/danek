@@ -28,39 +28,44 @@
 
 class RecipeFileParserException
 {
-public:
-	//--------
-	// Constructors and destructor
-	//--------
-	explicit RecipeFileParserException(const char * str)
-	{
-		m_str = new char[strlen(str) + 1];
-		strcpy(m_str, str);
-	}
+  public:
+    //--------
+    // Constructors and destructor
+    //--------
+    explicit RecipeFileParserException(const char* str)
+    {
+        m_str = new char[strlen(str) + 1];
+        strcpy(m_str, str);
+    }
 
-	RecipeFileParserException(const RecipeFileParserException & o)
-	{
-		m_str = new char[strlen(o.m_str) + 1];
-		strcpy(m_str, o.m_str);
-	}
+    RecipeFileParserException(const RecipeFileParserException& o)
+    {
+        m_str = new char[strlen(o.m_str) + 1];
+        strcpy(m_str, o.m_str);
+    }
 
-	~RecipeFileParserException() { delete [] m_str; }
+    ~RecipeFileParserException()
+    {
+        delete[] m_str;
+    }
 
-	//--------
-	// Accessor
-	//--------
-	const char * c_str() const { return m_str; }
+    //--------
+    // Accessor
+    //--------
+    const char* c_str() const
+    {
+        return m_str;
+    }
 
-private:
-	//--------
-	// Instance variables
-	//--------
-	char *			m_str;
+  private:
+    //--------
+    // Instance variables
+    //--------
+    char* m_str;
 
-	//--------
-	// The following are unimplemented
-	//--------
-	RecipeFileParserException();
-	RecipeFileParserException operator=(const RecipeFileParserException &);
+    //--------
+    // The following are unimplemented
+    //--------
+    RecipeFileParserException();
+    RecipeFileParserException operator=(const RecipeFileParserException&);
 };
-

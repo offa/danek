@@ -30,54 +30,44 @@
 #include <string.h>
 #include <assert.h>
 
-
-namespace CONFIG4CPP_NAMESPACE {
-
-//----------------------------------------------------------------------
-// Function:	Constructor (overloaded)
-//
-// Description:
-//----------------------------------------------------------------------
-
-ConfigScopeEntry::ConfigScopeEntry()
+namespace CONFIG4CPP_NAMESPACE
 {
-	m_item	= 0;
-	m_next	= 0;
-}
+    //----------------------------------------------------------------------
+    // Function:	Constructor (overloaded)
+    //
+    // Description:
+    //----------------------------------------------------------------------
 
+    ConfigScopeEntry::ConfigScopeEntry()
+    {
+        m_item = 0;
+        m_next = 0;
+    }
 
-ConfigScopeEntry::ConfigScopeEntry(
-		const char *		name,
-		ConfigItem *		item,
-		ConfigScopeEntry *	next)
-{
-    unused(name);
+    ConfigScopeEntry::ConfigScopeEntry(const char* name, ConfigItem* item, ConfigScopeEntry* next)
+    {
+        unused(name);
 
-	m_item	= item;
-	m_next	= next;
-}
+        m_item = item;
+        m_next = next;
+    }
 
+    //----------------------------------------------------------------------
+    // Function:	Destructor
+    //
+    // Description:
+    //----------------------------------------------------------------------
 
+    ConfigScopeEntry::~ConfigScopeEntry()
+    {
+        delete m_item;
+        delete m_next;
+    }
 
-//----------------------------------------------------------------------
-// Function:	Destructor
-//
-// Description:
-//----------------------------------------------------------------------
-
-ConfigScopeEntry::~ConfigScopeEntry ()
-{
-	delete m_item;
-	delete m_next;
-}
-
-
-
-void
-ConfigScopeEntry::setItem(ConfigItem * item)
-{
-	delete m_item;
-	m_item = item;
-}
+    void ConfigScopeEntry::setItem(ConfigItem* item)
+    {
+        delete m_item;
+        m_item = item;
+    }
 
 } // namespace CONFIG4CPP_NAMESPACE

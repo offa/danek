@@ -30,58 +30,75 @@
 #include <config4cpp/namespace.h>
 #include <stdio.h>
 
-namespace CONFIG4CPP_NAMESPACE {
-
-class Config2Cpp
+namespace CONFIG4CPP_NAMESPACE
 {
-public:
-	//--------
-	// Constructor and destructor
-	//--------
-	explicit Config2Cpp(const char * progName);
-	~Config2Cpp();
+    class Config2Cpp
+    {
+      public:
+        //--------
+        // Constructor and destructor
+        //--------
+        explicit Config2Cpp(const char* progName);
+        ~Config2Cpp();
 
-	bool parseCmdLineArgs(int argc, char ** argv);
-	bool generateFiles(const char * const *	schema, int schemaSize);
+        bool parseCmdLineArgs(int argc, char** argv);
+        bool generateFiles(const char* const* schema, int schemaSize);
 
-	const char * cfgFileName()			{ return m_cfgFileName; }
-	const char * schemaOverrideCfg()	{ return m_schemaOverrideCfg; }
-	const char * schemaOverrideScope()	{ return m_schemaOverrideScope; }
-	const char * className()			{ return m_className; }
-	const char * cppExt()				{ return m_cppExt; }
-	const char * hExt()					{ return m_hExt; }
-	bool         wantSchema()			{ return m_wantSchema; }
+        const char* cfgFileName()
+        {
+            return m_cfgFileName;
+        }
+        const char* schemaOverrideCfg()
+        {
+            return m_schemaOverrideCfg;
+        }
+        const char* schemaOverrideScope()
+        {
+            return m_schemaOverrideScope;
+        }
+        const char* className()
+        {
+            return m_className;
+        }
+        const char* cppExt()
+        {
+            return m_cppExt;
+        }
+        const char* hExt()
+        {
+            return m_hExt;
+        }
+        bool wantSchema()
+        {
+            return m_wantSchema;
+        }
 
-private:
-	//--------
-	// Helper functions
-	//--------
-	bool parseNamespace(const char * str);
-	void reportInvalidNamespace(const char * ns);
-	void printToHeaderFile(FILE * file, int namesArraySize);
-	void printToCppFile(
-				FILE *					cfgFile,
-				FILE *					file,
-				const char * const *	namesArray,
-				int						namesArraySize);
-	void output(FILE * file, int ch);
-	void usage(const char * unknownArg);
+      private:
+        //--------
+        // Helper functions
+        //--------
+        bool parseNamespace(const char* str);
+        void reportInvalidNamespace(const char* ns);
+        void printToHeaderFile(FILE* file, int namesArraySize);
+        void printToCppFile(
+            FILE* cfgFile, FILE* file, const char* const* namesArray, int namesArraySize);
+        void output(FILE* file, int ch);
+        void usage(const char* unknownArg);
 
-	//--------
-	// Instance variables
-	//--------
-	char *		m_progName;
-	char *		m_cfgFileName;
-	char *		m_schemaOverrideCfg;
-	char *		m_schemaOverrideScope;
-	char *		m_className;
-	char *		m_cppExt;
-	char *		m_hExt;
-	bool		m_wantSingleton;
-	bool		m_wantSchema;
-	int			m_namespaceArraySize;
-	char **		m_namespaceArray;
-};
-
+        //--------
+        // Instance variables
+        //--------
+        char* m_progName;
+        char* m_cfgFileName;
+        char* m_schemaOverrideCfg;
+        char* m_schemaOverrideScope;
+        char* m_className;
+        char* m_cppExt;
+        char* m_hExt;
+        bool m_wantSingleton;
+        bool m_wantSchema;
+        int m_namespaceArraySize;
+        char** m_namespaceArray;
+    };
 
 } // namespace CONFIG4CPP_NAMESPACE

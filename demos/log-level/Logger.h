@@ -26,24 +26,23 @@
 
 class Logger
 {
-public:
-	enum LogLevel {
-		NO_LOGS_LEVEL = 0,
-		ERROR_LEVEL   = 1,
-		WARN_LEVEL    = 2,
-		INFO_LEVEL    = 3,
-		DEBUG_LEVEL   = 4
-	};
+  public:
+    enum LogLevel
+    {
+        NO_LOGS_LEVEL = 0,
+        ERROR_LEVEL = 1,
+        WARN_LEVEL = 2,
+        INFO_LEVEL = 3,
+        DEBUG_LEVEL = 4
+    };
 
-	static void error(LogLevel logLevel, const char * msg);
-	static void warn(LogLevel logLevel, const char * msg);
-	static void info(LogLevel logLevel, const char * msg);
-	static void debug(LogLevel logLevel, const char * msg);
+    static void error(LogLevel logLevel, const char* msg);
+    static void warn(LogLevel logLevel, const char* msg);
+    static void info(LogLevel logLevel, const char* msg);
+    static void debug(LogLevel logLevel, const char* msg);
 };
-
 
 //--------
 // Singleton object
 //--------
 extern Logger log;
-

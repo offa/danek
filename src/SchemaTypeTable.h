@@ -26,38 +26,28 @@
 
 #include <config4cpp/SchemaType.h>
 
-
-namespace CONFIG4CPP_NAMESPACE {
-
-class SchemaTypeTable
-	: public SchemaType
+namespace CONFIG4CPP_NAMESPACE
 {
-public:
-	SchemaTypeTable()
-		: SchemaType("table", CONFIG4CPP_NAMESPACE_STR "::SchemaTypeTable",
-		             Configuration::CFG_STRING)
-	{ }
-	virtual ~SchemaTypeTable() { }
+    class SchemaTypeTable : public SchemaType
+    {
+      public:
+        SchemaTypeTable()
+            : SchemaType(
+                  "table", CONFIG4CPP_NAMESPACE_STR "::SchemaTypeTable", Configuration::CFG_STRING)
+        {
+        }
+        virtual ~SchemaTypeTable()
+        {
+        }
 
-protected:
-	virtual void checkRule(
-		const SchemaValidator *	sv,
-		const Configuration *	cfg,
-		const char *			typeName,
-		const StringVector &	typeArgs,
-		const char *			rule) const throw(ConfigurationException);
+      protected:
+        virtual void checkRule(const SchemaValidator* sv, const Configuration* cfg,
+            const char* typeName, const StringVector& typeArgs, const char* rule) const
+            throw(ConfigurationException);
 
-	virtual void validate(
-		const SchemaValidator *	sv,
-		const Configuration *	cfg,
-		const char *			scope,
-		const char *			name,
-		const char *			typeName,
-		const char *			origTypeName,
-		const StringVector &	typeArgs,
-		int						indentLevel) const
-											throw(ConfigurationException);
-};
-
+        virtual void validate(const SchemaValidator* sv, const Configuration* cfg,
+            const char* scope, const char* name, const char* typeName, const char* origTypeName,
+            const StringVector& typeArgs, int indentLevel) const throw(ConfigurationException);
+    };
 
 } // namespace CONFIG4CPP_NAMESPACE

@@ -29,9 +29,8 @@
 //--------
 #include <config4cpp/StringVector.h>
 
-
-namespace CONFIG4CPP_NAMESPACE {
-
-extern void splitScopedNameIntoVector(const char * str, StringVector & vec);
+namespace CONFIG4CPP_NAMESPACE
+{
+    extern void splitScopedNameIntoVector(const char* str, StringVector& vec);
 
 } // namespace CONFIG4CPP_NAMESPACE

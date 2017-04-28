@@ -31,114 +31,98 @@
 #include <stdio.h>
 #include <assert.h>
 
-
-namespace CONFIG4CPP_NAMESPACE {
-
-class ConfigScope;
-
-//--------------------------------------------------------------
-// Class:	ConfigItem
-//
-// Description:
-//		A config file contains "name = <value>" statements and
-//		"name <scope>" statements. This class is used to store
-//		name plus the the <value> part, (which can be a string
-//		or a sequence of string) or a <scope>.
-//--------------------------------------------------------------
-
-class ConfigItem
+namespace CONFIG4CPP_NAMESPACE
 {
-public:
+    class ConfigScope;
 
-	//--------
-	// Ctor and dtor
-	//--------
-	ConfigItem(const char * name, const char *         str);
-	ConfigItem(const char * name, const StringVector & list);
-	ConfigItem(const char * name, const char ** array, int size);
-	ConfigItem(const char * name, ConfigScope *        scope);
-	virtual ~ConfigItem();
+    //--------------------------------------------------------------
+    // Class:	ConfigItem
+    //
+    // Description:
+    //		A config file contains "name = <value>" statements and
+    //		"name <scope>" statements. This class is used to store
+    //		name plus the the <value> part, (which can be a string
+    //		or a sequence of string) or a <scope>.
+    //--------------------------------------------------------------
 
-	//--------
-	// Public operations
-	//--------
-	inline Configuration::Type type();
-	inline const char * name() const;
-	inline const char * stringVal() const;
-	inline StringVector & listVal() const;
-	inline ConfigScope * scopeVal() const;
+    class ConfigItem
+    {
+      public:
+        //--------
+        // Ctor and dtor
+        //--------
+        ConfigItem(const char* name, const char* str);
+        ConfigItem(const char* name, const StringVector& list);
+        ConfigItem(const char* name, const char** array, int size);
+        ConfigItem(const char* name, ConfigScope* scope);
+        virtual ~ConfigItem();
 
-	//--------
-	// Debugging aid
-	//--------
-	void dump(
-				StringBuffer &	buf,
-				 const char *	name,
-				 bool			wantExpandedUidNames,
-				 int			indentLevel = 0) const;
+        //--------
+        // Public operations
+        //--------
+        inline Configuration::Type type();
+        inline const char* name() const;
+        inline const char* stringVal() const;
+        inline StringVector& listVal() const;
+        inline ConfigScope* scopeVal() const;
 
-protected:
-	//--------
-	// Instance variables
-	//--------
-	Configuration::Type		m_type;
-	char *					m_name;
-	char *					m_stringVal;
-	StringVector *			m_listVal;
-	ConfigScope *			m_scope;
+        //--------
+        // Debugging aid
+        //--------
+        void dump(StringBuffer& buf, const char* name, bool wantExpandedUidNames,
+            int indentLevel = 0) const;
 
-private:
-	//--------
-	// Unsupported constructors and operator=
-	//--------
-	ConfigItem();
-	ConfigItem(const ConfigItem &);
-	ConfigItem & operator=(const ConfigItem &);
-};
+      protected:
+        //--------
+        // Instance variables
+        //--------
+        Configuration::Type m_type;
+        char* m_name;
+        char* m_stringVal;
+        StringVector* m_listVal;
+        ConfigScope* m_scope;
 
+      private:
+        //--------
+        // Unsupported constructors and operator=
+        //--------
+        ConfigItem();
+        ConfigItem(const ConfigItem&);
+        ConfigItem& operator=(const ConfigItem&);
+    };
 
-//--------
-// Inline implementation of operations
-//--------
+    //--------
+    // Inline implementation of operations
+    //--------
 
-inline Configuration::Type
-ConfigItem::type()
-{
-	return m_type;
-}
+    inline Configuration::Type ConfigItem::type()
+    {
+        return m_type;
+    }
 
+    inline const char* ConfigItem::name() const
+    {
+        return m_name;
+    }
 
-inline const char *
-ConfigItem::name() const
-{
-	return m_name;
-}
+    inline const char* ConfigItem::stringVal() const
+    {
+        assert(m_type == Configuration::CFG_STRING);
+        return m_stringVal;
+    }
 
+    inline StringVector& ConfigItem::listVal() const
+    {
+        assert(m_type == Configuration::CFG_LIST);
+        assert(m_listVal != 0);
+        return *m_listVal;
+    }
 
-inline const char *
-ConfigItem::stringVal() const
-{
-	assert(m_type == Configuration::CFG_STRING);
-	return m_stringVal;
-}
-
-
-inline StringVector &
-ConfigItem::listVal() const
-{
-	assert(m_type == Configuration::CFG_LIST);
-	assert(m_listVal != 0);
-	return *m_listVal;
-}
-
-
-inline ConfigScope *
-ConfigItem::scopeVal() const
-{
-	assert(m_type == Configuration::CFG_SCOPE);
-	assert(m_scope != 0);
-	return m_scope;
-}
-
+    inline ConfigScope* ConfigItem::scopeVal() const
+    {
+        assert(m_type == Configuration::CFG_SCOPE);
+        assert(m_scope != 0);
+        return m_scope;
+    }
 
 } // namespace CONFIG4CPP_NAMESPACE

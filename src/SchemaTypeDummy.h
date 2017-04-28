@@ -27,35 +27,31 @@
 #include <config4cpp/SchemaType.h>
 #include "Common.h"
 
-namespace CONFIG4CPP_NAMESPACE {
-
-class SchemaTypeDummy
-	: public SchemaType
+namespace CONFIG4CPP_NAMESPACE
 {
-public:
-	explicit SchemaTypeDummy(const char * name)
-		: SchemaType(
-			name,
-			CONFIG4CPP_NAMESPACE_STR "::SchemaTypeDummy",
-			Configuration::CFG_STRING)
-	{ }
-	virtual ~SchemaTypeDummy() { }
+    class SchemaTypeDummy : public SchemaType
+    {
+      public:
+        explicit SchemaTypeDummy(const char* name)
+            : SchemaType(
+                  name, CONFIG4CPP_NAMESPACE_STR "::SchemaTypeDummy", Configuration::CFG_STRING)
+        {
+        }
+        virtual ~SchemaTypeDummy()
+        {
+        }
 
-protected:
-	virtual void checkRule(
-		const SchemaValidator *	sv,
-		const Configuration *	cfg,
-		const char *			typeName,
-		const StringVector &	typeArgs,
-		const char *			rule) const throw(ConfigurationException)
-	{
-        unused(sv);
-        unused(cfg);
-        unused(typeName);
-        unused(typeArgs);
-        unused(rule);
-    }
-};
-
+      protected:
+        virtual void checkRule(const SchemaValidator* sv, const Configuration* cfg,
+            const char* typeName, const StringVector& typeArgs, const char* rule) const
+            throw(ConfigurationException)
+        {
+            unused(sv);
+            unused(cfg);
+            unused(typeName);
+            unused(typeArgs);
+            unused(rule);
+        }
+    };
 
 } // namespace CONFIG4CPP_NAMESPACE

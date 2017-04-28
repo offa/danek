@@ -26,36 +26,28 @@
 
 #include <config4cpp/SchemaType.h>
 
-
-namespace CONFIG4CPP_NAMESPACE {
-
-class SchemaTypeFloat
-	: public SchemaType
+namespace CONFIG4CPP_NAMESPACE
 {
-public:
-	SchemaTypeFloat()
-		: SchemaType("float", CONFIG4CPP_NAMESPACE_STR "::SchemaTypeFloat",
-		             Configuration::CFG_STRING)
-	{ }
-	virtual ~SchemaTypeFloat() { }
+    class SchemaTypeFloat : public SchemaType
+    {
+      public:
+        SchemaTypeFloat()
+            : SchemaType(
+                  "float", CONFIG4CPP_NAMESPACE_STR "::SchemaTypeFloat", Configuration::CFG_STRING)
+        {
+        }
+        virtual ~SchemaTypeFloat()
+        {
+        }
 
-protected:
-	virtual void checkRule(
-		const SchemaValidator *	sv,
-		const Configuration *	cfg,
-		const char *			typeName,
-		const StringVector &	typeArgs,
-		const char *			rule) const throw(ConfigurationException);
+      protected:
+        virtual void checkRule(const SchemaValidator* sv, const Configuration* cfg,
+            const char* typeName, const StringVector& typeArgs, const char* rule) const
+            throw(ConfigurationException);
 
-	virtual bool isA(
-		const SchemaValidator *	sv,
-		const Configuration *	cfg,
-		const char *			value,
-		const char *			typeName,
-		const StringVector &	typeArgs,
-		int						indentLevel,
-		StringBuffer &			errSuffix) const;
-};
-
+        virtual bool isA(const SchemaValidator* sv, const Configuration* cfg, const char* value,
+            const char* typeName, const StringVector& typeArgs, int indentLevel,
+            StringBuffer& errSuffix) const;
+    };
 
 } // namespace CONFIG4CPP_NAMESPACE

@@ -25,78 +25,64 @@
 #include "SchemaTypeTypedef.h"
 #include "Common.h"
 
-namespace CONFIG4CPP_NAMESPACE {
-
-void
-SchemaTypeTypedef::checkRule(
-	const SchemaValidator *		sv,
-	const Configuration *		cfg,
-	const char *				typeName,
-	const StringVector &		typeArgs,
-	const char *				rule) const throw(ConfigurationException)
+namespace CONFIG4CPP_NAMESPACE
 {
-    unused(sv);
-    unused(cfg);
+    void SchemaTypeTypedef::checkRule(const SchemaValidator* sv, const Configuration* cfg,
+        const char* typeName, const StringVector& typeArgs, const char* rule) const
+        throw(ConfigurationException)
+    {
+        unused(sv);
+        unused(cfg);
 
-	StringBuffer msg;
+        StringBuffer msg;
 
-	if (typeArgs.length() != 0) {
-		msg << "you cannot specify arguments when using user-defined type '"
-			<< typeName << "' in '" << rule << "'";
-		throw ConfigurationException(msg.c_str());
-	}
-}
+        if (typeArgs.length() != 0)
+        {
+            msg << "you cannot specify arguments when using user-defined type '" << typeName
+                << "' in '" << rule << "'";
+            throw ConfigurationException(msg.c_str());
+        }
+    }
 
+    void SchemaTypeTypedef::validate(const SchemaValidator* sv, const Configuration* cfg,
+        const char* scope, const char* name, const char* typeName, const char* origTypeName,
+        const StringVector& typeArgs, int indentLevel) const throw(ConfigurationException)
+    {
+        unused(typeName);
 
+        SchemaType* baseTypeDef;
+        const char* baseTypeName;
 
-void
-SchemaTypeTypedef::validate(
-	const SchemaValidator *		sv,
-	const Configuration *		cfg,
-	const char *				scope,
-	const char *				name,
-	const char *				typeName,
-	const char *				origTypeName,
-	const StringVector &		typeArgs,
-	int							indentLevel) const
-											throw(ConfigurationException)
-{
-    unused(typeName);
+        unused(typeArgs); // Prevent build failure in release build
+        assert(typeArgs.length() == 0);
+        baseTypeName = m_baseTypeName.c_str();
+        baseTypeDef = findType(sv, baseTypeName);
+        callValidate(baseTypeDef,
+            sv,
+            cfg,
+            scope,
+            name,
+            baseTypeName,
+            origTypeName,
+            m_baseTypeArgs,
+            indentLevel + 1);
+    }
 
-	SchemaType *				baseTypeDef;
-	const char *				baseTypeName;
+    bool SchemaTypeTypedef::isA(const SchemaValidator* sv, const Configuration* cfg,
+        const char* value, const char* typeName, const StringVector& typeArgs, int indentLevel,
+        StringBuffer& errSuffix) const
+    {
+        unused(value);
+        unused(typeName);
+        unused(typeArgs); // Prevent build failure in release build
 
-    unused(typeArgs); // Prevent build failure in release build
-	assert(typeArgs.length() == 0);
-	baseTypeName = m_baseTypeName.c_str();
-	baseTypeDef = findType(sv, baseTypeName);
-	callValidate(baseTypeDef, sv, cfg, scope, name, baseTypeName, origTypeName,
-				 m_baseTypeArgs, indentLevel + 1);
-}
-
-
-
-bool
-SchemaTypeTypedef::isA(
-	const SchemaValidator *		sv,
-	const Configuration *		cfg,
-	const char *				value,
-	const char *				typeName,
-	const StringVector &		typeArgs,
-	int							indentLevel,
-	StringBuffer &				errSuffix) const
-{
-    unused(value);
-    unused(typeName);
-    unused(typeArgs); // Prevent build failure in release build
-
-	assert(typeArgs.length() == 0);
-	const char* baseTypeName = m_baseTypeName.c_str();
-	SchemaType* baseTypeDef = findType(sv, baseTypeName);
-	assert(baseTypeDef != 0);
-	bool result = callIsA(baseTypeDef, sv, cfg, value, baseTypeName, m_baseTypeArgs,
-					 indentLevel + 1, errSuffix);
-	return result;
-}
+        assert(typeArgs.length() == 0);
+        const char* baseTypeName = m_baseTypeName.c_str();
+        SchemaType* baseTypeDef = findType(sv, baseTypeName);
+        assert(baseTypeDef != 0);
+        bool result = callIsA(
+            baseTypeDef, sv, cfg, value, baseTypeName, m_baseTypeArgs, indentLevel + 1, errSuffix);
+        return result;
+    }
 
 } // namespace CONFIG4CPP_NAMESPACE

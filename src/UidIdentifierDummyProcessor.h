@@ -24,46 +24,45 @@
 
 #pragma once
 
-
 //--------
 // #include's
 //--------
 #include "UidIdentifierProcessor.h"
 
-
-namespace CONFIG4CPP_NAMESPACE {
-
-class UidIdentifierDummyProcessor
-	: public UidIdentifierProcessor
+namespace CONFIG4CPP_NAMESPACE
 {
-public:
-	//--------
-	// Constructor and destructor
-	//--------
-	UidIdentifierDummyProcessor() { }
-	virtual ~UidIdentifierDummyProcessor() { }
+    class UidIdentifierDummyProcessor : public UidIdentifierProcessor
+    {
+      public:
+        //--------
+        // Constructor and destructor
+        //--------
+        UidIdentifierDummyProcessor()
+        {
+        }
+        virtual ~UidIdentifierDummyProcessor()
+        {
+        }
 
-	virtual void expand(StringBuffer & spelling) throw (ConfigurationException)
-	{
-		StringBuffer dummy = spelling;
-		UidIdentifierProcessor::expand(dummy);
-	}
-	virtual const char * unexpand(const char * spelling, StringBuffer &)
-										const throw (ConfigurationException)
-	{
-		StringBuffer dummyBuf = spelling;
-		(void)UidIdentifierProcessor::unexpand(spelling, dummyBuf);
-		return spelling;
-	}
+        virtual void expand(StringBuffer& spelling) throw(ConfigurationException)
+        {
+            StringBuffer dummy = spelling;
+            UidIdentifierProcessor::expand(dummy);
+        }
+        virtual const char* unexpand(const char* spelling, StringBuffer&) const
+            throw(ConfigurationException)
+        {
+            StringBuffer dummyBuf = spelling;
+            (void) UidIdentifierProcessor::unexpand(spelling, dummyBuf);
+            return spelling;
+        }
 
-private:
-	//--------
-	// The following are not implemented
-	//--------
-	UidIdentifierDummyProcessor(const UidIdentifierDummyProcessor &);
-	UidIdentifierDummyProcessor & operator=(
-					const UidIdentifierDummyProcessor &);
-};
-
+      private:
+        //--------
+        // The following are not implemented
+        //--------
+        UidIdentifierDummyProcessor(const UidIdentifierDummyProcessor&);
+        UidIdentifierDummyProcessor& operator=(const UidIdentifierDummyProcessor&);
+    };
 
 } // namespace CONFIG4CPP_NAMESPACE

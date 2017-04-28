@@ -29,49 +29,43 @@
 
 using namespace CONFIG4CPP_NAMESPACE;
 
-
 class RecipeFileParser
 {
-public:
-	RecipeFileParser();
-	~RecipeFileParser();
+  public:
+    RecipeFileParser();
+    ~RecipeFileParser();
 
-	//--------
-	// Parse a recipies file in Config4* format and check
-	// that all the recipes have their required details.
-	//--------
-	void parse(const char * recipeFilename, const char * scope)
-											throw (RecipeFileParserException);
+    //--------
+    // Parse a recipies file in Config4* format and check
+    // that all the recipes have their required details.
+    //--------
+    void parse(const char* recipeFilename, const char* scope) throw(RecipeFileParserException);
 
-	//--------
-	// Operations to query information about recipes
-	//--------
-	void		listRecipeScopes(StringVector & vec);
+    //--------
+    // Operations to query information about recipes
+    //--------
+    void listRecipeScopes(StringVector& vec);
 
-	const char * getRecipeName(const char * recipeScope)
-										throw (RecipeFileParserException);
+    const char* getRecipeName(const char* recipeScope) throw(RecipeFileParserException);
 
-	void		getRecipeIngredients(
-					const char *		recipeScope,
-					StringVector &		vec) throw (RecipeFileParserException);
+    void getRecipeIngredients(const char* recipeScope, StringVector& vec) throw(
+        RecipeFileParserException);
 
-	void		getRecipeSteps(
-					const char *		recipeScope,
-					StringVector &		vec) throw (RecipeFileParserException);
+    void getRecipeSteps(const char* recipeScope, StringVector& vec) throw(
+        RecipeFileParserException);
 
-private:
-	//--------
-	// Instance variables
-	//--------
-	CONFIG4CPP_NAMESPACE::Configuration *	m_cfg;
-	StringBuffer							m_scope;
-	bool									m_parseCalled;
-	StringVector							m_recipeScopeNames;
+  private:
+    //--------
+    // Instance variables
+    //--------
+    CONFIG4CPP_NAMESPACE::Configuration* m_cfg;
+    StringBuffer m_scope;
+    bool m_parseCalled;
+    StringVector m_recipeScopeNames;
 
-	//--------
-	// The following are not implemented
-	//--------
-	RecipeFileParser & operator=(const RecipeFileParser &);
-	RecipeFileParser(const RecipeFileParser &);
+    //--------
+    // The following are not implemented
+    //--------
+    RecipeFileParser& operator=(const RecipeFileParser&);
+    RecipeFileParser(const RecipeFileParser&);
 };
-

@@ -26,36 +26,28 @@
 
 #include <config4cpp/SchemaType.h>
 
-
-namespace CONFIG4CPP_NAMESPACE {
-
-class SchemaTypeBoolean
-	: public SchemaType
+namespace CONFIG4CPP_NAMESPACE
 {
-public:
-	SchemaTypeBoolean()
-		: SchemaType("boolean", CONFIG4CPP_NAMESPACE_STR "::SchemaTypeBoolan",
-		             Configuration::CFG_STRING)
-	{ }
-	virtual ~SchemaTypeBoolean() { }
+    class SchemaTypeBoolean : public SchemaType
+    {
+      public:
+        SchemaTypeBoolean()
+            : SchemaType("boolean", CONFIG4CPP_NAMESPACE_STR "::SchemaTypeBoolan",
+                  Configuration::CFG_STRING)
+        {
+        }
+        virtual ~SchemaTypeBoolean()
+        {
+        }
 
-protected:
-	virtual void checkRule(
-		const SchemaValidator *	sv,
-		const Configuration *	cfg,
-		const char *			typeName,
-		const StringVector &	typeArgs,
-		const char *			rule) const throw(ConfigurationException);
+      protected:
+        virtual void checkRule(const SchemaValidator* sv, const Configuration* cfg,
+            const char* typeName, const StringVector& typeArgs, const char* rule) const
+            throw(ConfigurationException);
 
-	virtual bool isA(
-		const SchemaValidator *	sv,
-		const Configuration *	cfg,
-		const char *			value,
-		const char *			typeName,
-		const StringVector &	typeArgs,
-		int						indentLevel,
-		StringBuffer &			errSuffix) const;
-};
-
+        virtual bool isA(const SchemaValidator* sv, const Configuration* cfg, const char* value,
+            const char* typeName, const StringVector& typeArgs, int indentLevel,
+            StringBuffer& errSuffix) const;
+    };
 
 } // namespace CONFIG4CPP_NAMESPACE

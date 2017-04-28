@@ -25,62 +25,56 @@
 #include "SchemaTypeUnitsWithInt.h"
 #include "Common.h"
 
-namespace CONFIG4CPP_NAMESPACE {
-
-void
-SchemaTypeUnitsWithInt::checkRule(
-	const SchemaValidator *		sv,
-	const Configuration *		cfg,
-	const char *				typeName,
-	const StringVector &		typeArgs,
-	const char *				rule) const throw(ConfigurationException)
+namespace CONFIG4CPP_NAMESPACE
 {
-    unused(sv);
-    unused(cfg);
+    void SchemaTypeUnitsWithInt::checkRule(const SchemaValidator* sv, const Configuration* cfg,
+        const char* typeName, const StringVector& typeArgs, const char* rule) const
+        throw(ConfigurationException)
+    {
+        unused(sv);
+        unused(cfg);
 
-	StringBuffer			msg;
+        StringBuffer msg;
 
-	if (typeArgs.length() == 0) {
-		msg << "The '" << typeName << "' type should take one or more "
-			<< "arguments (denoting units) in rule '" << rule << "'";
-		throw ConfigurationException(msg.c_str());
-	}
-}
+        if (typeArgs.length() == 0)
+        {
+            msg << "The '" << typeName << "' type should take one or more "
+                << "arguments (denoting units) in rule '" << rule << "'";
+            throw ConfigurationException(msg.c_str());
+        }
+    }
 
+    bool SchemaTypeUnitsWithInt::isA(const SchemaValidator* sv, const Configuration* cfg,
+        const char* value, const char* typeName, const StringVector& typeArgs, int indentLevel,
+        StringBuffer& errSuffix) const
+    {
+        unused(sv);
+        unused(typeName);
+        unused(indentLevel);
 
+        const char** allowedUnits;
+        int allowedUnitsSize;
 
-bool
-SchemaTypeUnitsWithInt::isA(
-	const SchemaValidator *		sv,
-	const Configuration *		cfg,
-	const char *				value,
-	const char *				typeName,
-	const StringVector &		typeArgs,
-	int							indentLevel,
-	StringBuffer &				errSuffix) const
-{
-    unused(sv);
-    unused(typeName);
-    unused(indentLevel);
-
-	const char **				allowedUnits;
-	int							allowedUnitsSize;
-
-	typeArgs.c_array(allowedUnits, allowedUnitsSize);
-	bool result = cfg->isUnitsWithInt(value, allowedUnits, allowedUnitsSize);
-	if (result == false) {
-		errSuffix << "the value should be in the format '<units> <int>' where "
-			<< "<units> is one of:";
-		int len = typeArgs.length();
-		for (int i = 0; i < len; i++) {
-			if (i < len-1) {
-				errSuffix << " '" << typeArgs[i] << "',";
-			} else {
-				errSuffix << " '" << typeArgs[i] << "'";
-			}
-		}
-	}
-	return result;
-}
+        typeArgs.c_array(allowedUnits, allowedUnitsSize);
+        bool result = cfg->isUnitsWithInt(value, allowedUnits, allowedUnitsSize);
+        if (result == false)
+        {
+            errSuffix << "the value should be in the format '<units> <int>' where "
+                      << "<units> is one of:";
+            int len = typeArgs.length();
+            for (int i = 0; i < len; i++)
+            {
+                if (i < len - 1)
+                {
+                    errSuffix << " '" << typeArgs[i] << "',";
+                }
+                else
+                {
+                    errSuffix << " '" << typeArgs[i] << "'";
+                }
+            }
+        }
+        return result;
+    }
 
 } // namespace CONFIG4CPP_NAMESPACE

@@ -9,39 +9,36 @@
 
 #include <config4cpp/Configuration.h>
 
-namespace CONFIG4CPP_NAMESPACE {
-
-
-class DefaultSecurity
+namespace CONFIG4CPP_NAMESPACE
 {
-public:
-	//--------
-	// Constructor and destructor.
-	//--------
-	DefaultSecurity();
-	~DefaultSecurity();
+    class DefaultSecurity
+    {
+      public:
+        //--------
+        // Constructor and destructor.
+        //--------
+        DefaultSecurity();
+        ~DefaultSecurity();
 
-	//--------
-	// Get the configuration string
-	//--------
-	const char * getString()
-	{
-		return m_str.c_str();
-	}
+        //--------
+        // Get the configuration string
+        //--------
+        const char* getString()
+        {
+            return m_str.c_str();
+        }
 
-private:
-	//--------
-	// Variables
-	//--------
-	CONFIG4CPP_NAMESPACE::StringBuffer m_str;
+      private:
+        //--------
+        // Variables
+        //--------
+        CONFIG4CPP_NAMESPACE::StringBuffer m_str;
 
-	//--------
-	// The following are not implemented
-	//--------
-	DefaultSecurity & operator=(const DefaultSecurity &);
-	DefaultSecurity(const DefaultSecurity &);
-};
-
+        //--------
+        // The following are not implemented
+        //--------
+        DefaultSecurity& operator=(const DefaultSecurity&);
+        DefaultSecurity(const DefaultSecurity&);
+    };
 
 } // namespace CONFIG4CPP_NAMESPACE
-

@@ -25,50 +25,36 @@
 #include "SchemaTypeScope.h"
 #include "Common.h"
 
-namespace CONFIG4CPP_NAMESPACE {
-
-void
-SchemaTypeScope::checkRule(
-	const SchemaValidator *		sv,
-	const Configuration *		cfg,
-	const char *				typeName,
-	const StringVector &		typeArgs,
-	const char *				rule) const throw(ConfigurationException)
+namespace CONFIG4CPP_NAMESPACE
 {
-    unused(sv);
-    unused(cfg);
+    void SchemaTypeScope::checkRule(const SchemaValidator* sv, const Configuration* cfg,
+        const char* typeName, const StringVector& typeArgs, const char* rule) const
+        throw(ConfigurationException)
+    {
+        unused(sv);
+        unused(cfg);
 
-	StringBuffer				msg;
+        StringBuffer msg;
 
-	if (typeArgs.length() != 0) {
-		msg << "the '" << typeName << "' type should not take arguments "
-			<< "in rule '" << rule << "'";
-		throw ConfigurationException(msg.c_str());
-	}
-}
+        if (typeArgs.length() != 0)
+        {
+            msg << "the '" << typeName << "' type should not take arguments "
+                << "in rule '" << rule << "'";
+            throw ConfigurationException(msg.c_str());
+        }
+    }
 
+    void SchemaTypeScope::validate(const SchemaValidator* sv, const Configuration* cfg,
+        const char* scope, const char* name, const char* typeName, const char* origTypeName,
+        const StringVector& typeArgs, int indentLevel) const throw(ConfigurationException)
+    {
+        unused(sv);
+        unused(typeName);
+        unused(origTypeName);
+        unused(typeArgs);
+        unused(indentLevel);
 
-
-void
-SchemaTypeScope::validate(
-	const SchemaValidator *		sv,
-	const Configuration *		cfg,
-	const char *				scope,
-	const char *				name,
-	const char *				typeName,
-	const char *				origTypeName,
-	const StringVector &		typeArgs,
-	int							indentLevel) const
-											throw(ConfigurationException)
-{
-    unused(sv);
-    unused(typeName);
-    unused(origTypeName);
-    unused(typeArgs);
-    unused(indentLevel);
-
-	cfg->lookupScope(scope, name);
-}
+        cfg->lookupScope(scope, name);
+    }
 
 } // namespace CONFIG4CPP_NAMESPACE
-

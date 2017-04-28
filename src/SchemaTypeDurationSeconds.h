@@ -26,37 +26,28 @@
 
 #include <config4cpp/SchemaType.h>
 
-
-namespace CONFIG4CPP_NAMESPACE {
-
-class SchemaTypeDurationSeconds
-	: public SchemaType
+namespace CONFIG4CPP_NAMESPACE
 {
-public:
-	SchemaTypeDurationSeconds()
-		: SchemaType("durationSeconds",
-		             CONFIG4CPP_NAMESPACE_STR "::SchemaTypeDurationSeconds",
-		             Configuration::CFG_STRING)
-	{ }
-	virtual ~SchemaTypeDurationSeconds() { }
+    class SchemaTypeDurationSeconds : public SchemaType
+    {
+      public:
+        SchemaTypeDurationSeconds()
+            : SchemaType("durationSeconds", CONFIG4CPP_NAMESPACE_STR "::SchemaTypeDurationSeconds",
+                  Configuration::CFG_STRING)
+        {
+        }
+        virtual ~SchemaTypeDurationSeconds()
+        {
+        }
 
-protected:
-	virtual void checkRule(
-		const SchemaValidator *	sv,
-		const Configuration *	cfg,
-		const char *			typeName,
-		const StringVector &	typeArgs,
-		const char *			rule) const throw(ConfigurationException);
+      protected:
+        virtual void checkRule(const SchemaValidator* sv, const Configuration* cfg,
+            const char* typeName, const StringVector& typeArgs, const char* rule) const
+            throw(ConfigurationException);
 
-	virtual bool isA(
-		const SchemaValidator *	sv,
-		const Configuration *	cfg,
-		const char *			value,
-		const char *			typeName,
-		const StringVector &	typeArgs,
-		int						indentLevel,
-		StringBuffer &			errSuffix) const;
-};
-
+        virtual bool isA(const SchemaValidator* sv, const Configuration* cfg, const char* value,
+            const char* typeName, const StringVector& typeArgs, int indentLevel,
+            StringBuffer& errSuffix) const;
+    };
 
 } // namespace CONFIG4CPP_NAMESPACE

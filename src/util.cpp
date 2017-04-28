@@ -28,26 +28,26 @@
 #include <config4cpp/StringBuffer.h>
 #include "util.h"
 
-
-namespace CONFIG4CPP_NAMESPACE {
-
-void
-splitScopedNameIntoVector(const char * str, StringVector & vec)
+namespace CONFIG4CPP_NAMESPACE
 {
-	StringBuffer	tmpStr; // Mutable copy of str
+    void splitScopedNameIntoVector(const char* str, StringVector& vec)
+    {
+        StringBuffer tmpStr; // Mutable copy of str
 
-	vec.empty();
-	tmpStr = str;
-	int len = tmpStr.length();
-	char* startOfStr = &tmpStr[0];
-	for (int i = 0; i < len; i++) {
-		if (tmpStr[i] == '.') {
-			tmpStr[i] = 0;
-			vec.add(startOfStr);
-			startOfStr = &tmpStr[i+1];
-		}
-	}
-	vec.add(startOfStr);
-}
+        vec.empty();
+        tmpStr = str;
+        int len = tmpStr.length();
+        char* startOfStr = &tmpStr[0];
+        for (int i = 0; i < len; i++)
+        {
+            if (tmpStr[i] == '.')
+            {
+                tmpStr[i] = 0;
+                vec.add(startOfStr);
+                startOfStr = &tmpStr[i + 1];
+            }
+        }
+        vec.add(startOfStr);
+    }
 
 } // namespace CONFIG4CPP_NAMESPACE

@@ -30,194 +30,138 @@
 #include <config4cpp/Configuration.h>
 #include <config4cpp/SchemaType.h>
 
-
-
-
-
-namespace CONFIG4CPP_NAMESPACE {
-
-class SchemaValidator;
-class SchemaParser;
-class SchemaIdRuleInfo;
-class SchemaIgnoreRuleInfo;
-
-
-class SchemaValidator
+namespace CONFIG4CPP_NAMESPACE
 {
-public:
-	enum ForceMode {DO_NOT_FORCE, FORCE_OPTIONAL, FORCE_REQUIRED};
+    class SchemaValidator;
+    class SchemaParser;
+    class SchemaIdRuleInfo;
+    class SchemaIgnoreRuleInfo;
 
-	//--------
-	// Constructors and destructor
-	//--------
-	SchemaValidator();
-	virtual ~SchemaValidator();
+    class SchemaValidator
+    {
+      public:
+        enum ForceMode
+        {
+            DO_NOT_FORCE,
+            FORCE_OPTIONAL,
+            FORCE_REQUIRED
+        };
 
-	//--------
-	// Public API
-	//--------
-	inline void wantDiagnostics(bool value);
-	inline bool wantDiagnostics();
-	void parseSchema(const char ** schema, int schemaSize)
-												throw(ConfigurationException);
-	void parseSchema(const char ** nullTerminatedSchema)
-												throw(ConfigurationException);
-	inline void validate(
-		const Configuration *	cfg,
-		const char *			scope,
-		const char *			localName,
-		ForceMode				forceMode = DO_NOT_FORCE) const
-												throw(ConfigurationException);
-	void validate(
-		const Configuration *	cfg,
-		const char *			scope,
-		const char *			localName,
-		bool					recurseIntoSubscopes,
-		Configuration::Type		typeMask,
-		ForceMode				forceMode = DO_NOT_FORCE) const
-												throw(ConfigurationException);
-protected:
-	//--------
-	// Operations that can be called by a subclass.
-	//--------
-	void registerType(SchemaType * type) throw(ConfigurationException);
+        //--------
+        // Constructors and destructor
+        //--------
+        SchemaValidator();
+        virtual ~SchemaValidator();
 
-private:
-	friend int compareSchemaIdRuleInfo(const void *, const void *);
-	friend int compareSchemaType(const void *, const void *);
-	friend class SchemaParser;
-	friend class SchemaType;
+        //--------
+        // Public API
+        //--------
+        inline void wantDiagnostics(bool value);
+        inline bool wantDiagnostics();
+        void parseSchema(const char** schema, int schemaSize) throw(ConfigurationException);
+        void parseSchema(const char** nullTerminatedSchema) throw(ConfigurationException);
+        inline void validate(const Configuration* cfg, const char* scope, const char* localName,
+            ForceMode forceMode = DO_NOT_FORCE) const throw(ConfigurationException);
+        void validate(const Configuration* cfg, const char* scope, const char* localName,
+            bool recurseIntoSubscopes, Configuration::Type typeMask,
+            ForceMode forceMode = DO_NOT_FORCE) const throw(ConfigurationException);
 
-	//--------
-	// Helper operations.
-	//--------
-	SchemaType * findType(const char * name) const;
+      protected:
+        //--------
+        // Operations that can be called by a subclass.
+        //--------
+        void registerType(SchemaType* type) throw(ConfigurationException);
 
-	void validate(
-		const Configuration *	cfg,
-		const char *			scope,
-		const char *			localName,
-		const StringVector &	itemNames,
-		ForceMode				forceMode) const
-												throw(ConfigurationException);
-	void validateForceMode(
-		const Configuration *	cfg,
-		const char *			scope,
-		const char *			localName,
-		ForceMode				forceMode) const
-												throw(ConfigurationException);
-	void validateRequiredUidEntry(
-		const Configuration *	cfg,
-		const char *			fullScope,
-		SchemaIdRuleInfo *		idRule) const
-												throw(ConfigurationException);
+      private:
+        friend int compareSchemaIdRuleInfo(const void*, const void*);
+        friend int compareSchemaType(const void*, const void*);
+        friend class SchemaParser;
+        friend class SchemaType;
 
-	void callCheckRule(
-		const SchemaType *		target,
-		const Configuration *	cfg,
-		const char *			typeName,
-		const StringVector &	typeArgs,
-		const char *			rule,
-		int						indentLevel) const;
+        //--------
+        // Helper operations.
+        //--------
+        SchemaType* findType(const char* name) const;
 
-	void callValidate(
-		const SchemaType *		target,
-		const Configuration *	cfg,
-		const char *			scope,
-		const char *			localName,
-		const char *			typeName,
-		const char *			origTypeName,
-		const StringVector &	typeArgs,
-		int						indentLevel) const;
+        void validate(const Configuration* cfg, const char* scope, const char* localName,
+            const StringVector& itemNames, ForceMode forceMode) const throw(ConfigurationException);
+        void validateForceMode(const Configuration* cfg, const char* scope, const char* localName,
+            ForceMode forceMode) const throw(ConfigurationException);
+        void validateRequiredUidEntry(const Configuration* cfg, const char* fullScope,
+            SchemaIdRuleInfo* idRule) const throw(ConfigurationException);
 
-	bool callIsA(
-		const SchemaType *		target,
-		const Configuration *	cfg,
-		const char *			value,
-		const char *			typeName,
-		const StringVector &	typeArgs,
-		int						indentLevel,
-		StringBuffer &			errSuffix) const;
+        void callCheckRule(const SchemaType* target, const Configuration* cfg, const char* typeName,
+            const StringVector& typeArgs, const char* rule, int indentLevel) const;
 
-	void printTypeArgs(
-		const StringVector &	typeArgs,
-		int						indentLevel) const;
-	void printTypeNameAndArgs(
-		const char *			typeName,
-		const StringVector &	typeArgs,
-		int						indentLevel) const;
+        void callValidate(const SchemaType* target, const Configuration* cfg, const char* scope,
+            const char* localName, const char* typeName, const char* origTypeName,
+            const StringVector& typeArgs, int indentLevel) const;
 
-	void indent(int indentLevel) const;
+        bool callIsA(const SchemaType* target, const Configuration* cfg, const char* value,
+            const char* typeName, const StringVector& typeArgs, int indentLevel,
+            StringBuffer& errSuffix) const;
 
-	void registerBuiltinTypes();
-	void sortTypes();
-	void checkTypeDoesNotExist(const char * typeName);
-	void ensureSpaceInTypesArray();
+        void printTypeArgs(const StringVector& typeArgs, int indentLevel) const;
+        void printTypeNameAndArgs(
+            const char* typeName, const StringVector& typeArgs, int indentLevel) const;
 
-	void registerTypedef( // called by the SchemaParser class
-		const char *			typeName,
-		Configuration::Type		cfgType,
-		const char *			baseTypeName,
-		const StringVector &	baseTypeArgs) throw(ConfigurationException);
+        void indent(int indentLevel) const;
 
-	SchemaIdRuleInfo * findIdRule(const char * name) const;
-	bool shouldIgnore(
-		const Configuration *	cfg,
-		const char *			scope,
-		const char *			expandedName,
-		const char *			unexpandedName) const;
+        void registerBuiltinTypes();
+        void sortTypes();
+        void checkTypeDoesNotExist(const char* typeName);
+        void ensureSpaceInTypesArray();
 
-	//--------
-	// Instance variables are NOT visible to subclasses.
-	//--------
-	SchemaIdRuleInfo **			m_idRules;
-	int							m_idRulesCurrSize;
-	int							m_idRulesMaxSize;
+        void registerTypedef( // called by the SchemaParser class
+            const char* typeName, Configuration::Type cfgType, const char* baseTypeName,
+            const StringVector& baseTypeArgs) throw(ConfigurationException);
 
-	SchemaIgnoreRuleInfo **		m_ignoreRules;
-	int							m_ignoreRulesCurrSize;
-	int							m_ignoreRulesMaxSize;
+        SchemaIdRuleInfo* findIdRule(const char* name) const;
+        bool shouldIgnore(const Configuration* cfg, const char* scope, const char* expandedName,
+            const char* unexpandedName) const;
 
-	SchemaType **				m_types;
-	int							m_typesCurrSize;
-	int							m_typesMaxSize;
-	bool						m_areTypesSorted;
-	bool						m_wantDiagnostics;
+        //--------
+        // Instance variables are NOT visible to subclasses.
+        //--------
+        SchemaIdRuleInfo** m_idRules;
+        int m_idRulesCurrSize;
+        int m_idRulesMaxSize;
 
-	//--------
-	// The following are unimplemented
-	//--------
-	SchemaValidator(const SchemaValidator &);
-	SchemaValidator & operator=(const SchemaValidator &);
-};
+        SchemaIgnoreRuleInfo** m_ignoreRules;
+        int m_ignoreRulesCurrSize;
+        int m_ignoreRulesMaxSize;
 
+        SchemaType** m_types;
+        int m_typesCurrSize;
+        int m_typesMaxSize;
+        bool m_areTypesSorted;
+        bool m_wantDiagnostics;
 
-//--------
-// Inline implementation of operations
-//--------
+        //--------
+        // The following are unimplemented
+        //--------
+        SchemaValidator(const SchemaValidator&);
+        SchemaValidator& operator=(const SchemaValidator&);
+    };
 
-inline void
-SchemaValidator::validate(
-	const Configuration *	cfg,
-	const char *			scope,
-	const char *			localName,
-	ForceMode				forceMode) const throw(ConfigurationException)
-{
-	validate(cfg, scope, localName, true, Configuration::CFG_SCOPE_AND_VARS,
-			 forceMode);
-}
+    //--------
+    // Inline implementation of operations
+    //--------
 
-inline void
-SchemaValidator::wantDiagnostics(bool value)
-{
-	m_wantDiagnostics = value;
-}
+    inline void SchemaValidator::validate(const Configuration* cfg, const char* scope,
+        const char* localName, ForceMode forceMode) const throw(ConfigurationException)
+    {
+        validate(cfg, scope, localName, true, Configuration::CFG_SCOPE_AND_VARS, forceMode);
+    }
 
-inline bool
-SchemaValidator::wantDiagnostics()
-{
-	return m_wantDiagnostics;
-}
+    inline void SchemaValidator::wantDiagnostics(bool value)
+    {
+        m_wantDiagnostics = value;
+    }
 
+    inline bool SchemaValidator::wantDiagnostics()
+    {
+        return m_wantDiagnostics;
+    }
 
 } // namespace CONFIG4CPP_NAMESPACE

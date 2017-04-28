@@ -26,36 +26,28 @@
 
 #include <config4cpp/SchemaType.h>
 
-
-namespace CONFIG4CPP_NAMESPACE {
-
-class SchemaTypeEnum
-	: public SchemaType
+namespace CONFIG4CPP_NAMESPACE
 {
-public:
-	SchemaTypeEnum()
-		: SchemaType("enum", CONFIG4CPP_NAMESPACE_STR "::SchemaTypeEnum",
-		             Configuration::CFG_STRING)
-	{ }
-	virtual ~SchemaTypeEnum() { }
+    class SchemaTypeEnum : public SchemaType
+    {
+      public:
+        SchemaTypeEnum()
+            : SchemaType(
+                  "enum", CONFIG4CPP_NAMESPACE_STR "::SchemaTypeEnum", Configuration::CFG_STRING)
+        {
+        }
+        virtual ~SchemaTypeEnum()
+        {
+        }
 
-protected:
-	virtual void checkRule(
-		const SchemaValidator *	sv,
-		const Configuration *	cfg,
-		const char *			typeName,
-		const StringVector &	typeArgs,
-		const char *			rule) const throw(ConfigurationException);
+      protected:
+        virtual void checkRule(const SchemaValidator* sv, const Configuration* cfg,
+            const char* typeName, const StringVector& typeArgs, const char* rule) const
+            throw(ConfigurationException);
 
-	virtual bool isA(
-		const SchemaValidator *	sv,
-		const Configuration *	cfg,
-		const char *			value,
-		const char *			typeName,
-		const StringVector &	typeArgs,
-		int						indentLevel,
-		StringBuffer &			errSuffix) const;
-};
-
+        virtual bool isA(const SchemaValidator* sv, const Configuration* cfg, const char* value,
+            const char* typeName, const StringVector& typeArgs, int indentLevel,
+            StringBuffer& errSuffix) const;
+    };
 
 } // namespace CONFIG4CPP_NAMESPACE

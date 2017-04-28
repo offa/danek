@@ -26,35 +26,28 @@
 
 #include <config4cpp/SchemaType.h>
 
-namespace CONFIG4CPP_NAMESPACE {
-
-class SchemaTypeInt
-	: public SchemaType
+namespace CONFIG4CPP_NAMESPACE
 {
-public:
-	SchemaTypeInt()
-		: SchemaType("int", CONFIG4CPP_NAMESPACE_STR "::SchemaTypeInt",
-		             Configuration::CFG_STRING)
-	{ }
-	virtual ~SchemaTypeInt() { }
+    class SchemaTypeInt : public SchemaType
+    {
+      public:
+        SchemaTypeInt()
+            : SchemaType(
+                  "int", CONFIG4CPP_NAMESPACE_STR "::SchemaTypeInt", Configuration::CFG_STRING)
+        {
+        }
+        virtual ~SchemaTypeInt()
+        {
+        }
 
-protected:
-	virtual void checkRule(
-		const SchemaValidator *	sv,
-		const Configuration *	cfg,
-		const char *			typeName,
-		const StringVector &	typeArgs,
-		const char *			rule) const throw(ConfigurationException);
+      protected:
+        virtual void checkRule(const SchemaValidator* sv, const Configuration* cfg,
+            const char* typeName, const StringVector& typeArgs, const char* rule) const
+            throw(ConfigurationException);
 
-	virtual bool isA(
-		const SchemaValidator *	sv,
-		const Configuration *	cfg,
-		const char *			value,
-		const char *			typeName,
-		const StringVector &	typeArgs,
-		int						indentLevel,
-		StringBuffer &			errSuffix) const;
-};
-
+        virtual bool isA(const SchemaValidator* sv, const Configuration* cfg, const char* value,
+            const char* typeName, const StringVector& typeArgs, int indentLevel,
+            StringBuffer& errSuffix) const;
+    };
 
 } // namespace CONFIG4CPP_NAMESPACE

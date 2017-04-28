@@ -31,47 +31,43 @@
 #include <config4cpp/StringBuffer.h>
 #include <config4cpp/ConfigurationException.h>
 
-
-namespace CONFIG4CPP_NAMESPACE {
-
-class UidIdentifierProcessor
+namespace CONFIG4CPP_NAMESPACE
 {
-public:
-	//--------
-	// Constructor and destructor
-	//--------
-	UidIdentifierProcessor();
-	virtual ~UidIdentifierProcessor();
+    class UidIdentifierProcessor
+    {
+      public:
+        //--------
+        // Constructor and destructor
+        //--------
+        UidIdentifierProcessor();
+        virtual ~UidIdentifierProcessor();
 
-	virtual void expand(StringBuffer & spelling) throw (ConfigurationException);
+        virtual void expand(StringBuffer& spelling) throw(ConfigurationException);
 
-	virtual const char * unexpand(
-				const char *		spelling,
-				StringBuffer &		buf) const throw (ConfigurationException);
+        virtual const char* unexpand(const char* spelling, StringBuffer& buf) const
+            throw(ConfigurationException);
 
-private:
-	//--------
-	// Instance variables
-	//
-	// An assert() statement in the constructor checks that
-	// the type of "m_count" is at least 32 bits wide.
-	//--------
-	long				m_count;
+      private:
+        //--------
+        // Instance variables
+        //
+        // An assert() statement in the constructor checks that
+        // the type of "m_count" is at least 32 bits wide.
+        //--------
+        long m_count;
 
-	//--------
-	// Helper functions
-	//--------
-	void expandOne(StringBuffer & spelling) throw (ConfigurationException);
-	const char * unexpandOne(
-				const char *		spelling,
-				StringBuffer &		buf) const throw (ConfigurationException);
+        //--------
+        // Helper functions
+        //--------
+        void expandOne(StringBuffer& spelling) throw(ConfigurationException);
+        const char* unexpandOne(const char* spelling, StringBuffer& buf) const
+            throw(ConfigurationException);
 
-	//--------
-	// The following are not implemented
-	//--------
-	UidIdentifierProcessor(const UidIdentifierProcessor &);
-	UidIdentifierProcessor & operator=(const UidIdentifierProcessor &);
-};
-
+        //--------
+        // The following are not implemented
+        //--------
+        UidIdentifierProcessor(const UidIdentifierProcessor&);
+        UidIdentifierProcessor& operator=(const UidIdentifierProcessor&);
+    };
 
 } // namespace CONFIG4CPP_NAMESPACE

@@ -25,102 +25,105 @@
 #include "SchemaTypeMemorySizeBytes.h"
 #include "Common.h"
 
-namespace CONFIG4CPP_NAMESPACE {
-
-void
-SchemaTypeMemorySizeBytes::checkRule(
-	const SchemaValidator *		sv,
-	const Configuration *		cfg,
-	const char *				typeName,
-	const StringVector &		typeArgs,
-	const char *				rule) const throw(ConfigurationException)
+namespace CONFIG4CPP_NAMESPACE
 {
-    unused(sv);
+    void SchemaTypeMemorySizeBytes::checkRule(const SchemaValidator* sv, const Configuration* cfg,
+        const char* typeName, const StringVector& typeArgs, const char* rule) const
+        throw(ConfigurationException)
+    {
+        unused(sv);
 
-	StringBuffer				msg;
-	int							len;
-	int							min;
-	int							max;
+        StringBuffer msg;
+        int len;
+        int min;
+        int max;
 
-	len = typeArgs.length();
-	if (len == 0) {
-		return;
-	}
-	if (len != 2) {
-		msg << "The '" << typeName << "' type should take "
-		    << "either no arguments or 2 arguments (denoting "
-		    << "min and max memory sizes) in rule '" << rule << "'";
-		throw ConfigurationException(msg.c_str());
-	}
-	try {
-		min = cfg->stringToMemorySizeBytes("", "", typeArgs[0]);
-	} catch (const ConfigurationException & ex) {
-		msg << "Bad " << typeName << " value for the first ('min') "
-			<< "argument in rule '" << rule << "'; should be in the format "
-			<< "'<float> <units>' where <units> is one of: "
-			<< "'byte', 'bytes', 'KB', 'MB', GB";
-		throw ConfigurationException(msg.c_str());
-	}
-	try {
-		max = cfg->stringToMemorySizeBytes("", "", typeArgs[1]);
-	} catch (const ConfigurationException & ex) {
-		msg << "Bad " << typeName << " value for the second ('max') "
-			<< "argument in rule '" << rule << "'; should be in the format "
-			<< "'<float> <units>' where <units> is one of: "
-			<< "'byte', 'bytes', 'KB', 'MB', GB";
-		throw ConfigurationException(msg.c_str());
-	}
-	if ((min < -1) || (max < -1)) {
-		msg << "The 'min' and 'max' of a " << typeName
-			<< " cannot be negative in rule '" << rule << "'"
-			<< "; min=" << min << "; max=" << max;
-		throw ConfigurationException(msg.c_str());
-	}
-	if ((max != -1) && (min == -1 || min > max)) {
-		msg << "The first ('min') argument is larger than the second "
-			<< "('max') argument in rule '" << rule << "'";
-		throw ConfigurationException(msg.c_str());
-	}
-}
+        len = typeArgs.length();
+        if (len == 0)
+        {
+            return;
+        }
+        if (len != 2)
+        {
+            msg << "The '" << typeName << "' type should take "
+                << "either no arguments or 2 arguments (denoting "
+                << "min and max memory sizes) in rule '" << rule << "'";
+            throw ConfigurationException(msg.c_str());
+        }
+        try
+        {
+            min = cfg->stringToMemorySizeBytes("", "", typeArgs[0]);
+        }
+        catch (const ConfigurationException& ex)
+        {
+            msg << "Bad " << typeName << " value for the first ('min') "
+                << "argument in rule '" << rule << "'; should be in the format "
+                << "'<float> <units>' where <units> is one of: "
+                << "'byte', 'bytes', 'KB', 'MB', GB";
+            throw ConfigurationException(msg.c_str());
+        }
+        try
+        {
+            max = cfg->stringToMemorySizeBytes("", "", typeArgs[1]);
+        }
+        catch (const ConfigurationException& ex)
+        {
+            msg << "Bad " << typeName << " value for the second ('max') "
+                << "argument in rule '" << rule << "'; should be in the format "
+                << "'<float> <units>' where <units> is one of: "
+                << "'byte', 'bytes', 'KB', 'MB', GB";
+            throw ConfigurationException(msg.c_str());
+        }
+        if ((min < -1) || (max < -1))
+        {
+            msg << "The 'min' and 'max' of a " << typeName << " cannot be negative in rule '"
+                << rule << "'"
+                << "; min=" << min << "; max=" << max;
+            throw ConfigurationException(msg.c_str());
+        }
+        if ((max != -1) && (min == -1 || min > max))
+        {
+            msg << "The first ('min') argument is larger than the second "
+                << "('max') argument in rule '" << rule << "'";
+            throw ConfigurationException(msg.c_str());
+        }
+    }
 
+    bool SchemaTypeMemorySizeBytes::isA(const SchemaValidator* sv, const Configuration* cfg,
+        const char* value, const char* typeName, const StringVector& typeArgs, int indentLevel,
+        StringBuffer& errSuffix) const
+    {
+        unused(sv);
+        unused(typeName);
+        unused(indentLevel);
 
+        int val;
+        int min;
+        int max;
 
-bool
-SchemaTypeMemorySizeBytes::isA(
-	const SchemaValidator *		sv,
-	const Configuration *		cfg,
-	const char *				value,
-	const char *				typeName,
-	const StringVector &		typeArgs,
-	int							indentLevel,
-	StringBuffer &				errSuffix) const
-{
-    unused(sv);
-    unused(typeName);
-    unused(indentLevel);
-
-	int							val;
-	int							min;
-	int							max;
-
-	try {
-		val = cfg->stringToMemorySizeBytes("", "", value);
-	} catch (const ConfigurationException & ex) {
-		errSuffix << "the value should be in the format '<units> <float>' "
-				  << "where <units> is one of: 'byte', 'bytes', 'KB', 'MB', GB";
-		return false;
-	}
-	if (typeArgs.length() == 0) {
-		return true;
-	}
-	min = cfg->stringToMemorySizeBytes("", "", typeArgs[0]);
-	max = cfg->stringToMemorySizeBytes("", "", typeArgs[1]);
-	if (val < min || val > max) {
-		errSuffix << "the value is outside the permitted range ["
-				  << typeArgs[0] << ", " << typeArgs[1] << "]";
-		return false;
-	}
-	return true;
-}
+        try
+        {
+            val = cfg->stringToMemorySizeBytes("", "", value);
+        }
+        catch (const ConfigurationException& ex)
+        {
+            errSuffix << "the value should be in the format '<units> <float>' "
+                      << "where <units> is one of: 'byte', 'bytes', 'KB', 'MB', GB";
+            return false;
+        }
+        if (typeArgs.length() == 0)
+        {
+            return true;
+        }
+        min = cfg->stringToMemorySizeBytes("", "", typeArgs[0]);
+        max = cfg->stringToMemorySizeBytes("", "", typeArgs[1]);
+        if (val < min || val > max)
+        {
+            errSuffix << "the value is outside the permitted range [" << typeArgs[0] << ", "
+                      << typeArgs[1] << "]";
+            return false;
+        }
+        return true;
+    }
 
 } // namespace CONFIG4CPP_NAMESPACE

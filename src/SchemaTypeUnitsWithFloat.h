@@ -26,37 +26,28 @@
 
 #include <config4cpp/SchemaType.h>
 
-
-namespace CONFIG4CPP_NAMESPACE {
-
-class SchemaTypeUnitsWithFloat
-	: public SchemaType
+namespace CONFIG4CPP_NAMESPACE
 {
-public:
-	SchemaTypeUnitsWithFloat()
-		: SchemaType("units_with_float",
-		             CONFIG4CPP_NAMESPACE_STR "::SchemaTypeUnitsWithFloat",
-		             Configuration::CFG_STRING)
-	{ }
-	virtual ~SchemaTypeUnitsWithFloat() { }
+    class SchemaTypeUnitsWithFloat : public SchemaType
+    {
+      public:
+        SchemaTypeUnitsWithFloat()
+            : SchemaType("units_with_float", CONFIG4CPP_NAMESPACE_STR "::SchemaTypeUnitsWithFloat",
+                  Configuration::CFG_STRING)
+        {
+        }
+        virtual ~SchemaTypeUnitsWithFloat()
+        {
+        }
 
-protected:
-	virtual void checkRule(
-		const SchemaValidator *	sv,
-		const Configuration *	cfg,
-		const char *			typeName,
-		const StringVector &	typeArgs,
-		const char *			rule) const throw(ConfigurationException);
+      protected:
+        virtual void checkRule(const SchemaValidator* sv, const Configuration* cfg,
+            const char* typeName, const StringVector& typeArgs, const char* rule) const
+            throw(ConfigurationException);
 
-	virtual bool isA(
-		const SchemaValidator *	sv,
-		const Configuration *	cfg,
-		const char *			value,
-		const char *			typeName,
-		const StringVector &	typeArgs,
-		int						indentLevel,
-		StringBuffer &			errSuffix) const;
-};
-
+        virtual bool isA(const SchemaValidator* sv, const Configuration* cfg, const char* value,
+            const char* typeName, const StringVector& typeArgs, int indentLevel,
+            StringBuffer& errSuffix) const;
+    };
 
 } // namespace CONFIG4CPP_NAMESPACE

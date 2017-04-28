@@ -25,64 +25,59 @@
 #include "SchemaTypeEnum.h"
 #include "Common.h"
 
-namespace CONFIG4CPP_NAMESPACE {
-
-void
-SchemaTypeEnum::checkRule(
-	const SchemaValidator *		sv,
-	const Configuration *		cfg,
-	const char *				typeName,
-	const StringVector &		typeArgs,
-	const char *				rule) const throw(ConfigurationException)
+namespace CONFIG4CPP_NAMESPACE
 {
-    unused(sv);
-    unused(cfg);
+    void SchemaTypeEnum::checkRule(const SchemaValidator* sv, const Configuration* cfg,
+        const char* typeName, const StringVector& typeArgs, const char* rule) const
+        throw(ConfigurationException)
+    {
+        unused(sv);
+        unused(cfg);
 
-	StringBuffer				msg;
+        StringBuffer msg;
 
-	if (typeArgs.length() == 0) {
-		msg << "The '" << typeName << "' type should take one or more "
-		    << "arguments (denoting enum values) in rule '" << rule << "'";
-		throw ConfigurationException(msg.c_str());
-	}
-}
+        if (typeArgs.length() == 0)
+        {
+            msg << "The '" << typeName << "' type should take one or more "
+                << "arguments (denoting enum values) in rule '" << rule << "'";
+            throw ConfigurationException(msg.c_str());
+        }
+    }
 
+    bool SchemaTypeEnum::isA(const SchemaValidator* sv, const Configuration* cfg, const char* value,
+        const char* typeName, const StringVector& typeArgs, int indentLevel,
+        StringBuffer& errSuffix) const
+    {
+        unused(sv);
+        unused(cfg);
+        unused(typeName);
+        unused(indentLevel);
 
+        int i;
+        int len;
 
-bool
-SchemaTypeEnum::isA(
-	const SchemaValidator *		sv,
-	const Configuration *		cfg,
-	const char *				value,
-	const char *				typeName,
-	const StringVector &		typeArgs,
-	int							indentLevel,
-	StringBuffer &				errSuffix) const
-{
-    unused(sv);
-    unused(cfg);
-    unused(typeName);
-    unused(indentLevel);
+        len = typeArgs.length();
+        for (i = 0; i < len; i++)
+        {
+            if (strcmp(value, typeArgs[i]) == 0)
+            {
+                return true;
+            }
+        }
 
-	int							i;
-	int							len;
-
-	len = typeArgs.length();
-	for (i = 0; i < len; i++) {
-		if (strcmp(value, typeArgs[i]) == 0) {
-			return true;
-		}
-	}
-
-	errSuffix << "the value should be one of:";
-	for (i = 0; i < len; i++) {
-		if (i < len-1) {
-			errSuffix << " '" << typeArgs[i] << "',";
-		} else {
-			errSuffix << " '" << typeArgs[i] << "'";
-		}
-	}
-	return false;
-}
+        errSuffix << "the value should be one of:";
+        for (i = 0; i < len; i++)
+        {
+            if (i < len - 1)
+            {
+                errSuffix << " '" << typeArgs[i] << "',";
+            }
+            else
+            {
+                errSuffix << " '" << typeArgs[i] << "'";
+            }
+        }
+        return false;
+    }
 
 } // namespace CONFIG4CPP_NAMESPACE

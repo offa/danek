@@ -27,30 +27,27 @@
 #include "ConfigurationImpl.h"
 #include "DefaultSecurity.h"
 
-
-namespace CONFIG4CPP_NAMESPACE {
-
-class DefaultSecurityConfiguration : public ConfigurationImpl
+namespace CONFIG4CPP_NAMESPACE
 {
-public:
-	DefaultSecurityConfiguration();
-	~DefaultSecurityConfiguration();
+    class DefaultSecurityConfiguration : public ConfigurationImpl
+    {
+      public:
+        DefaultSecurityConfiguration();
+        ~DefaultSecurityConfiguration();
 
-	static DefaultSecurityConfiguration singleton;
+        static DefaultSecurityConfiguration singleton;
 
-private:
-	//--------
-	// Instance variables
-	//--------
-	DefaultSecurity		m_cfgStr;
+      private:
+        //--------
+        // Instance variables
+        //--------
+        DefaultSecurity m_cfgStr;
 
-	//--------
-	// The following are not implemented
-	//--------
-	DefaultSecurityConfiguration & operator=(
-				const DefaultSecurityConfiguration &);
-	DefaultSecurityConfiguration(const DefaultSecurityConfiguration &);
-};
-
+        //--------
+        // The following are not implemented
+        //--------
+        DefaultSecurityConfiguration& operator=(const DefaultSecurityConfiguration&);
+        DefaultSecurityConfiguration(const DefaultSecurityConfiguration&);
+    };
 
 } // namespace CONFIG4CPP_NAMESPACE
