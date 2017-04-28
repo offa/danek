@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
 ![C++](https://img.shields.io/badge/c++-14-green.svg)
 
-A C++ configuration library for C++. This is a for of [**config4cpp**](https://github.com/config4star/config4cpp) which aims to modernization and quality improvement.
+A C++ configuration library for C++. This is a fork of [**config4cpp**](https://github.com/config4star/config4cpp) which aims to modernization and quality improvement.
 
 For a ready to use version of **config4cpp** with CMake support, please see [here](https://github.com/offa/config4cpp).
 
