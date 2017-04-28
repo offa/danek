@@ -43,9 +43,8 @@ namespace danek
         }
     }
 
-    bool SchemaTypeBoolean::isA(const SchemaValidator* sv, const Configuration* cfg,
-        const char* value, const char* typeName, const StringVector& typeArgs, int indentLevel,
-        StringBuffer& errSuffix) const
+    bool SchemaTypeBoolean::isA(const SchemaValidator* sv, const Configuration* cfg, const char* value,
+        const char* typeName, const StringVector& typeArgs, int indentLevel, StringBuffer& errSuffix) const
     {
         unused(sv);
         unused(typeArgs);

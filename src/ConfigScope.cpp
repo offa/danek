@@ -437,8 +437,8 @@ namespace danek
     // Description:
     //----------------------------------------------------------------------
 
-    void ConfigScope::listScopedNamesHelper(const char* prefix, Configuration::Type typeMask,
-        bool recursive, const StringVector& filterPatterns, StringVector& vec) const
+    void ConfigScope::listScopedNamesHelper(const char* prefix, Configuration::Type typeMask, bool recursive,
+        const StringVector& filterPatterns, StringVector& vec) const
     {
         int i;
         ConfigScopeEntry* entry;

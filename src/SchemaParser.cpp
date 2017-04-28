@@ -104,16 +104,14 @@ namespace danek
                 case SchemaLex::LEX_IGNORE_VARIABLES_IN_SYM:
                     m_sv->m_ignoreRules[m_sv->m_ignoreRulesCurrSize] = new SchemaIgnoreRuleInfo();
                     m_sv->m_ignoreRulesCurrSize++;
-                    parseIgnoreRule(
-                        schemaItem, m_sv->m_ignoreRules[m_sv->m_ignoreRulesCurrSize - 1]);
+                    parseIgnoreRule(schemaItem, m_sv->m_ignoreRules[m_sv->m_ignoreRulesCurrSize - 1]);
                     break;
                 case SchemaLex::LEX_TYPEDEF_SYM:
                     parseUserTypeDef(schemaItem);
                     m_sv->sortTypes();
                     break;
                 default:
-                    accept(
-                        SchemaLex::LEX_IDENT_SYM, schemaItem, "expecting an identifier or keyword");
+                    accept(SchemaLex::LEX_IDENT_SYM, schemaItem, "expecting an identifier or keyword");
                     break;
             }
         }
@@ -156,8 +154,7 @@ namespace danek
     //                    | STRING
     //----------------------------------------------------------------------
 
-    void SchemaParser::parseIdRule(const char* rule, SchemaIdRuleInfo* ruleInfo) throw(
-        ConfigurationException)
+    void SchemaParser::parseIdRule(const char* rule, SchemaIdRuleInfo* ruleInfo) throw(ConfigurationException)
     {
         StringBuffer msg;
         SchemaType* typeDef;
@@ -199,8 +196,8 @@ namespace danek
             }
             if (strncmp(ptr, "uid-", 4) == 0)
             {
-                msg << "Use of '@required' is incompatible with the uid- entry ('" << ptr
-                    << "') in rule '" << rule << "'";
+                msg << "Use of '@required' is incompatible with the uid- entry ('" << ptr << "') in rule '"
+                    << rule << "'";
                 throw ConfigurationException(msg.c_str());
             }
         }
@@ -218,14 +215,12 @@ namespace danek
         }
         if (m_token.type() == SchemaLex::LEX_EOF_SYM)
         {
-            m_sv->callCheckRule(
-                typeDef, m_cfg, ruleInfo->m_typeName.c_str(), ruleInfo->m_args, rule, 1);
+            m_sv->callCheckRule(typeDef, m_cfg, ruleInfo->m_typeName.c_str(), ruleInfo->m_args, rule, 1);
             return;
         }
 
         accept(SchemaLex::LEX_OPEN_BRACKET_SYM, rule, "expecting '['");
-        if (m_token.type() == SchemaLex::LEX_IDENT_SYM
-            || m_token.type() == SchemaLex::LEX_STRING_SYM)
+        if (m_token.type() == SchemaLex::LEX_IDENT_SYM || m_token.type() == SchemaLex::LEX_STRING_SYM)
         {
             ruleInfo->m_args.add(m_token.spelling());
             m_lex->nextToken(m_token);
@@ -238,8 +233,7 @@ namespace danek
         {
             accept(SchemaLex::LEX_COMMA_SYM, rule, "expecting ','");
             ruleInfo->m_args.add(m_token.spelling());
-            if (m_token.type() == SchemaLex::LEX_IDENT_SYM
-                || m_token.type() == SchemaLex::LEX_STRING_SYM)
+            if (m_token.type() == SchemaLex::LEX_IDENT_SYM || m_token.type() == SchemaLex::LEX_STRING_SYM)
             {
                 m_lex->nextToken(m_token);
             }
@@ -250,8 +244,7 @@ namespace danek
         }
         accept(SchemaLex::LEX_CLOSE_BRACKET_SYM, rule, "expecting ']'");
         accept(SchemaLex::LEX_EOF_SYM, rule, "expecting <end of string>");
-        m_sv->callCheckRule(
-            typeDef, m_cfg, ruleInfo->m_typeName.c_str(), ruleInfo->m_args, rule, 1);
+        m_sv->callCheckRule(typeDef, m_cfg, ruleInfo->m_typeName.c_str(), ruleInfo->m_args, rule, 1);
     }
 
     //----------------------------------------------------------------------
@@ -319,8 +312,7 @@ namespace danek
         }
 
         accept(SchemaLex::LEX_OPEN_BRACKET_SYM, str, "expecting '['");
-        if (m_token.type() == SchemaLex::LEX_IDENT_SYM
-            || m_token.type() == SchemaLex::LEX_STRING_SYM)
+        if (m_token.type() == SchemaLex::LEX_IDENT_SYM || m_token.type() == SchemaLex::LEX_STRING_SYM)
         {
             baseTypeArgs.add(m_token.spelling());
             m_lex->nextToken(m_token);
@@ -333,8 +325,7 @@ namespace danek
         {
             accept(SchemaLex::LEX_COMMA_SYM, str, "expecting ','");
             baseTypeArgs.add(m_token.spelling());
-            if (m_token.type() == SchemaLex::LEX_IDENT_SYM
-                || m_token.type() == SchemaLex::LEX_STRING_SYM)
+            if (m_token.type() == SchemaLex::LEX_IDENT_SYM || m_token.type() == SchemaLex::LEX_STRING_SYM)
             {
                 m_lex->nextToken(m_token);
             }
@@ -351,8 +342,7 @@ namespace danek
         // and then register the new command.
         //--------
         m_sv->callCheckRule(baseTypeDef, m_cfg, baseTypeName.c_str(), baseTypeArgs, str, 1);
-        m_sv->registerTypedef(
-            typeName.c_str(), baseTypeDef->cfgType(), baseTypeName.c_str(), baseTypeArgs);
+        m_sv->registerTypedef(typeName.c_str(), baseTypeDef->cfgType(), baseTypeName.c_str(), baseTypeArgs);
     }
 
     void SchemaParser::accept(short sym, const char* rule, const char* msgPrefix) throw(

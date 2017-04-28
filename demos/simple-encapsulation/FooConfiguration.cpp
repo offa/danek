@@ -100,8 +100,7 @@ void FooConfiguration::parse(const char* cfgInput, const char* cfgScope, const c
         {
             cfg->parse(cfgInput);
         }
-        cfg->setFallbackConfiguration(
-            Configuration::INPUT_STRING, FallbackConfiguration::getString());
+        cfg->setFallbackConfiguration(Configuration::INPUT_STRING, FallbackConfiguration::getString());
 
         //--------
         // Perform schema validation.

@@ -53,8 +53,7 @@ namespace danek
         //--------
         // Helper operations.
         //--------
-        void parseIdRule(const char* rule, SchemaIdRuleInfo* SchemaIdRuleInfo) throw(
-            ConfigurationException);
+        void parseIdRule(const char* rule, SchemaIdRuleInfo* SchemaIdRuleInfo) throw(ConfigurationException);
         void parseIgnoreRule(const char* rule, SchemaIgnoreRuleInfo* SchemaIgnoreRuleInfo) throw(
             ConfigurationException);
 

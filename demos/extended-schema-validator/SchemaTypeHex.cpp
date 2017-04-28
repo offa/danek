@@ -30,9 +30,8 @@ SchemaTypeHex::~SchemaTypeHex()
 {
 }
 
-void SchemaTypeHex::checkRule(const SchemaValidator* sv, const Configuration* cfg,
-    const char* typeName, const StringVector& typeArgs, const char* rule) const
-    throw(ConfigurationException)
+void SchemaTypeHex::checkRule(const SchemaValidator* sv, const Configuration* cfg, const char* typeName,
+    const StringVector& typeArgs, const char* rule) const throw(ConfigurationException)
 {
     (void) sv;
     StringBuffer msg;
@@ -84,8 +83,7 @@ void SchemaTypeHex::validate(const SchemaValidator* sv, const Configuration* cfg
 }
 
 bool SchemaTypeHex::isA(const SchemaValidator* sv, const Configuration* cfg, const char* value,
-    const char* typeName, const StringVector& typeArgs, int indentLevel,
-    StringBuffer& errSuffix) const
+    const char* typeName, const StringVector& typeArgs, int indentLevel, StringBuffer& errSuffix) const
 {
     (void) sv;
     (void) typeName;
@@ -104,16 +102,15 @@ bool SchemaTypeHex::isA(const SchemaValidator* sv, const Configuration* cfg, con
         size_t maxDigits = cfg->stringToInt("", "", typeArgs[0]);
         if (strlen(value) > maxDigits)
         {
-            errSuffix << "the value must not contain more than " << static_cast<int>(maxDigits)
-                      << " digits";
+            errSuffix << "the value must not contain more than " << static_cast<int>(maxDigits) << " digits";
             return false;
         }
     }
     return true;
 }
 
-int SchemaTypeHex::lookupHex(const Configuration* cfg, const char* scope,
-    const char* localName) throw(ConfigurationException)
+int SchemaTypeHex::lookupHex(const Configuration* cfg, const char* scope, const char* localName) throw(
+    ConfigurationException)
 {
     const char* str;
 

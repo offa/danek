@@ -47,11 +47,9 @@ public:
 
     const char* getRecipeName(const char* recipeScope) throw(RecipeFileParserException);
 
-    void getRecipeIngredients(const char* recipeScope, StringVector& vec) throw(
-        RecipeFileParserException);
+    void getRecipeIngredients(const char* recipeScope, StringVector& vec) throw(RecipeFileParserException);
 
-    void getRecipeSteps(const char* recipeScope, StringVector& vec) throw(
-        RecipeFileParserException);
+    void getRecipeSteps(const char* recipeScope, StringVector& vec) throw(RecipeFileParserException);
 
 private:
     //--------

@@ -224,8 +224,7 @@ namespace danek
 
     void ConfigParser::parseStmtList()
     {
-        while (m_token.type() == ConfigLex::LEX_IDENT_SYM
-               || m_token.type() == ConfigLex::LEX_INCLUDE_SYM
+        while (m_token.type() == ConfigLex::LEX_IDENT_SYM || m_token.type() == ConfigLex::LEX_INCLUDE_SYM
                || m_token.type() == ConfigLex::LEX_IF_SYM
                || m_token.type() == ConfigLex::LEX_REMOVE_SYM
                || m_token.type() == ConfigLex::LEX_ERROR_SYM
@@ -417,8 +416,7 @@ namespace danek
         catch (const ConfigurationException& ex)
         {
             m_errorInIncludedFile = true;
-            msg << ex.c_str() << "\n(included from " << m_fileName << ", line " << includeLineNum
-                << ")";
+            msg << ex.c_str() << "\n(included from " << m_fileName << ", line " << includeLineNum << ")";
             throw ConfigurationException(msg.c_str());
         }
 
@@ -1105,13 +1103,11 @@ namespace danek
                         error(msg.c_str(), false);
                         return;
                     case Configuration::CFG_SCOPE:
-                        msg << "identifier '" << m_token.spelling()
-                            << "' is a scope instead of a string";
+                        msg << "identifier '" << m_token.spelling() << "' is a scope instead of a string";
                         error(msg.c_str(), false);
                         return;
                     case Configuration::CFG_LIST:
-                        msg << "identifier '" << m_token.spelling()
-                            << "' is a list instead of a string";
+                        msg << "identifier '" << m_token.spelling() << "' is a list instead of a string";
                         error(msg.c_str(), false);
                         return;
                     default:
@@ -1525,8 +1521,7 @@ namespace danek
         {
             return; // empty list
         }
-        if (!m_token.isStringFunc() && type != ConfigLex::LEX_STRING_SYM
-            && type != ConfigLex::LEX_IDENT_SYM)
+        if (!m_token.isStringFunc() && type != ConfigLex::LEX_STRING_SYM && type != ConfigLex::LEX_IDENT_SYM)
         {
             error("expecting a string or ']'");
         }

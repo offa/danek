@@ -45,9 +45,9 @@ static void usage(const char* optMsg);
 
 static void parseCmdLineArgs(int argc, char** argv, const char*& cmd, bool& isRecursive,
     bool& wantExpandedUidNames, StringVector& filterPatterns, const char*& scope, const char*& name,
-    const char*& cfgSource, const char*& secSource, const char*& secScope,
-    const char*& schemaSource, const char*& schemaName, SchemaValidator::ForceMode& forceMode,
-    bool& wantDiagnostics, Configuration::Type& types, Configuration* cfg);
+    const char*& cfgSource, const char*& secSource, const char*& secScope, const char*& schemaSource,
+    const char*& schemaName, SchemaValidator::ForceMode& forceMode, bool& wantDiagnostics,
+    Configuration::Type& types, Configuration* cfg);
 
 static Configuration::Type stringToTypes(const char* str);
 
@@ -275,9 +275,9 @@ int main(int argc, char** argv)
 
 static void parseCmdLineArgs(int argc, char** argv, const char*& cmd, bool& isRecursive,
     bool& wantExpandedUidNames, StringVector& filterPatterns, const char*& scope, const char*& name,
-    const char*& cfgSource, const char*& secSource, const char*& secScope,
-    const char*& schemaSource, const char*& schemaName, SchemaValidator::ForceMode& forceMode,
-    bool& wantDiagnostics, Configuration::Type& types, Configuration* cfg)
+    const char*& cfgSource, const char*& secSource, const char*& secScope, const char*& schemaSource,
+    const char*& schemaName, SchemaValidator::ForceMode& forceMode, bool& wantDiagnostics,
+    Configuration::Type& types, Configuration* cfg)
 {
     int i;
     StringBuffer msg;

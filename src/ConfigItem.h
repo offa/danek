@@ -68,8 +68,7 @@ namespace danek
         //--------
         // Debugging aid
         //--------
-        void dump(StringBuffer& buf, const char* name, bool wantExpandedUidNames,
-            int indentLevel = 0) const;
+        void dump(StringBuffer& buf, const char* name, bool wantExpandedUidNames, int indentLevel = 0) const;
 
     protected:
         //--------

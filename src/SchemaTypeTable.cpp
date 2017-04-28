@@ -26,9 +26,8 @@
 
 namespace danek
 {
-    void SchemaTypeTable::checkRule(const SchemaValidator* sv, const Configuration* cfg,
-        const char* typeName, const StringVector& typeArgs, const char* rule) const
-        throw(ConfigurationException)
+    void SchemaTypeTable::checkRule(const SchemaValidator* sv, const Configuration* cfg, const char* typeName,
+        const StringVector& typeArgs, const char* rule) const throw(ConfigurationException)
     {
         unused(cfg);
 
@@ -64,12 +63,12 @@ namespace danek
                 case Configuration::CFG_STRING:
                     break;
                 case Configuration::CFG_LIST:
-                    msg << "you cannot embed a list type ('" << columnType
-                        << "') inside a table in rule '" << rule << "'";
+                    msg << "you cannot embed a list type ('" << columnType << "') inside a table in rule '"
+                        << rule << "'";
                     throw ConfigurationException(msg.c_str());
                 case Configuration::CFG_SCOPE:
-                    msg << "you cannot embed a scope type ('" << columnType
-                        << "') inside a table in rule '" << rule << "'";
+                    msg << "you cannot embed a scope type ('" << columnType << "') inside a table in rule '"
+                        << rule << "'";
                     throw ConfigurationException(msg.c_str());
                 default:
                     assert(0); // Bug!
@@ -77,9 +76,9 @@ namespace danek
         }
     }
 
-    void SchemaTypeTable::validate(const SchemaValidator* sv, const Configuration* cfg,
-        const char* scope, const char* name, const char* typeName, const char* origTypeName,
-        const StringVector& typeArgs, int indentLevel) const throw(ConfigurationException)
+    void SchemaTypeTable::validate(const SchemaValidator* sv, const Configuration* cfg, const char* scope,
+        const char* name, const char* typeName, const char* origTypeName, const StringVector& typeArgs,
+        int indentLevel) const throw(ConfigurationException)
     {
         unused(origTypeName);
 
@@ -118,8 +117,8 @@ namespace danek
             const char* colValue = list[i];
             const char* colTypeName = typeArgs[typeIndex];
             SchemaType* colTypeDef = findType(sv, colTypeName);
-            bool ok = callIsA(
-                colTypeDef, sv, cfg, colValue, colTypeName, emptyArgs, indentLevel + 1, errSuffix);
+            bool ok =
+                callIsA(colTypeDef, sv, cfg, colValue, colTypeName, emptyArgs, indentLevel + 1, errSuffix);
             if (!ok)
             {
                 const char* sep;
@@ -132,9 +131,9 @@ namespace danek
                     sep = "; ";
                 }
                 cfg->mergeNames(scope, name, fullyScopedName);
-                msg << cfg->fileName() << ": bad " << colTypeName << " value ('" << colValue
-                    << "') for the '" << typeArgs[colNameIndex] << "' column in row " << rowNum
-                    << " of the '" << fullyScopedName << "' " << typeName << sep << errSuffix;
+                msg << cfg->fileName() << ": bad " << colTypeName << " value ('" << colValue << "') for the '"
+                    << typeArgs[colNameIndex] << "' column in row " << rowNum << " of the '"
+                    << fullyScopedName << "' " << typeName << sep << errSuffix;
                 throw ConfigurationException(msg.c_str());
             }
         }

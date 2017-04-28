@@ -83,8 +83,8 @@ namespace danek
         m_amOwnerOfFallbackCfg = false;
     }
 
-    void ConfigurationImpl::setFallbackConfiguration(Configuration::SourceType sourceType,
-        const char* source, const char* sourceDescription) throw(ConfigurationException)
+    void ConfigurationImpl::setFallbackConfiguration(Configuration::SourceType sourceType, const char* source,
+        const char* sourceDescription) throw(ConfigurationException)
     {
         Configuration* cfg;
         StringBuffer msg;
@@ -257,8 +257,8 @@ namespace danek
     //		entry. Indicates success/failure via the "status" parameter.
     //----------------------------------------------------------------------
 
-    void ConfigurationImpl::stringValue(const char* fullyScopedName, const char* localName,
-        const char*& str, Configuration::Type& type) const
+    void ConfigurationImpl::stringValue(
+        const char* fullyScopedName, const char* localName, const char*& str, Configuration::Type& type) const
     {
         ConfigItem* item;
 
@@ -289,8 +289,8 @@ namespace danek
     //		entry.
     //----------------------------------------------------------------------
 
-    void ConfigurationImpl::listValue(const char* fullyScopedName, const char* localName,
-        StringVector& list, Configuration::Type& type) const
+    void ConfigurationImpl::listValue(const char* fullyScopedName, const char* localName, StringVector& list,
+        Configuration::Type& type) const
     {
         ConfigItem* item;
 
@@ -320,8 +320,8 @@ namespace danek
     // Description:	Return the list, if any, associated with the named entry.
     //----------------------------------------------------------------------
 
-    void ConfigurationImpl::listValue(const char* fullyScopedName, const char* localName,
-        const char**& array, int& arraySize, Configuration::Type& type) const
+    void ConfigurationImpl::listValue(const char* fullyScopedName, const char* localName, const char**& array,
+        int& arraySize, Configuration::Type& type) const
     {
         ConfigItem* item = lookup(fullyScopedName, localName);
         if (item == 0)
@@ -354,8 +354,8 @@ namespace danek
     // Notes:	Overwrites an existing entry of the same name.
     //----------------------------------------------------------------------
 
-    void ConfigurationImpl::insertString(
-        const char* scope, const char* localName, const char* str) throw(ConfigurationException)
+    void ConfigurationImpl::insertString(const char* scope, const char* localName, const char* str) throw(
+        ConfigurationException)
     {
         StringVector vec;
         int len;
@@ -449,8 +449,8 @@ namespace danek
     // Notes:	Overwrites an existing entry of the same name.
     //----------------------------------------------------------------------
 
-    void ConfigurationImpl::insertList(const char* scope, const char* localName,
-        const StringVector& vec) throw(ConfigurationException)
+    void ConfigurationImpl::insertList(
+        const char* scope, const char* localName, const StringVector& vec) throw(ConfigurationException)
     {
         const char** array;
         int size;
@@ -492,8 +492,7 @@ namespace danek
     // Description:	Remove the specified item.
     //----------------------------------------------------------------------
 
-    void ConfigurationImpl::remove(const char* scope, const char* localName) throw(
-        ConfigurationException)
+    void ConfigurationImpl::remove(const char* scope, const char* localName) throw(ConfigurationException)
     {
         StringBuffer fullyScopedName;
         StringBuffer msg;
@@ -671,17 +670,16 @@ namespace danek
     // Description:
     //----------------------------------------------------------------------
 
-    void ConfigurationImpl::listFullyScopedNames(const char* scope, const char* localName,
-        Type typeMask, bool recursive, StringVector& names) const throw(ConfigurationException)
+    void ConfigurationImpl::listFullyScopedNames(const char* scope, const char* localName, Type typeMask,
+        bool recursive, StringVector& names) const throw(ConfigurationException)
     {
         StringVector filterPatterns;
 
         listFullyScopedNames(scope, localName, typeMask, recursive, filterPatterns, names);
     }
 
-    void ConfigurationImpl::listFullyScopedNames(const char* scope, const char* localName,
-        Type typeMask, bool recursive, const char* filterPattern, StringVector& names) const
-        throw(ConfigurationException)
+    void ConfigurationImpl::listFullyScopedNames(const char* scope, const char* localName, Type typeMask,
+        bool recursive, const char* filterPattern, StringVector& names) const throw(ConfigurationException)
     {
         StringVector filterPatterns;
 
@@ -689,9 +687,9 @@ namespace danek
         listFullyScopedNames(scope, localName, typeMask, recursive, filterPatterns, names);
     }
 
-    void ConfigurationImpl::listFullyScopedNames(const char* scope, const char* localName,
-        Type typeMask, bool recursive, const StringVector& filterPatterns,
-        StringVector& names) const throw(ConfigurationException)
+    void ConfigurationImpl::listFullyScopedNames(const char* scope, const char* localName, Type typeMask,
+        bool recursive, const StringVector& filterPatterns, StringVector& names) const
+        throw(ConfigurationException)
     {
         StringBuffer fullyScopedName;
         StringBuffer msg;
@@ -724,9 +722,8 @@ namespace danek
     // Description:
     //----------------------------------------------------------------------
 
-    void ConfigurationImpl::listLocallyScopedNames(const char* scope, const char* localName,
-        Type typeMask, bool recursive, const char* filterPattern, StringVector& names) const
-        throw(ConfigurationException)
+    void ConfigurationImpl::listLocallyScopedNames(const char* scope, const char* localName, Type typeMask,
+        bool recursive, const char* filterPattern, StringVector& names) const throw(ConfigurationException)
     {
         StringVector filterPatterns;
 
@@ -734,17 +731,17 @@ namespace danek
         listLocallyScopedNames(scope, localName, typeMask, recursive, filterPatterns, names);
     }
 
-    void ConfigurationImpl::listLocallyScopedNames(const char* scope, const char* localName,
-        Type typeMask, bool recursive, StringVector& names) const throw(ConfigurationException)
+    void ConfigurationImpl::listLocallyScopedNames(const char* scope, const char* localName, Type typeMask,
+        bool recursive, StringVector& names) const throw(ConfigurationException)
     {
         StringVector filterPatterns;
 
         listLocallyScopedNames(scope, localName, typeMask, recursive, filterPatterns, names);
     }
 
-    void ConfigurationImpl::listLocallyScopedNames(const char* scope, const char* localName,
-        Type typeMask, bool recursive, const StringVector& filterPatterns,
-        StringVector& names) const throw(ConfigurationException)
+    void ConfigurationImpl::listLocallyScopedNames(const char* scope, const char* localName, Type typeMask,
+        bool recursive, const StringVector& filterPatterns, StringVector& names) const
+        throw(ConfigurationException)
     {
         StringBuffer fullyScopedName;
         StringBuffer msg;
@@ -771,8 +768,8 @@ namespace danek
         names.sort();
     }
 
-    const char* ConfigurationImpl::lookupString(const char* scope, const char* localName,
-        const char* defaultVal) const throw(ConfigurationException)
+    const char* ConfigurationImpl::lookupString(
+        const char* scope, const char* localName, const char* defaultVal) const throw(ConfigurationException)
     {
         Configuration::Type type;
         StringBuffer msg;
@@ -830,9 +827,8 @@ namespace danek
         return str;
     }
 
-    void ConfigurationImpl::lookupList(const char* scope, const char* localName,
-        const char**& array, int& arraySize, const char** defaultArray, int defaultArraySize) const
-        throw(ConfigurationException)
+    void ConfigurationImpl::lookupList(const char* scope, const char* localName, const char**& array,
+        int& arraySize, const char** defaultArray, int defaultArraySize) const throw(ConfigurationException)
     {
         Configuration::Type type;
         StringBuffer msg;
@@ -866,8 +862,8 @@ namespace danek
         }
     }
 
-    void ConfigurationImpl::lookupList(const char* scope, const char* localName,
-        const char**& array, int& arraySize) const throw(ConfigurationException)
+    void ConfigurationImpl::lookupList(const char* scope, const char* localName, const char**& array,
+        int& arraySize) const throw(ConfigurationException)
     {
         Configuration::Type type;
         StringBuffer msg;
@@ -929,8 +925,8 @@ namespace danek
         }
     }
 
-    void ConfigurationImpl::lookupList(const char* scope, const char* localName,
-        StringVector& list) const throw(ConfigurationException)
+    void ConfigurationImpl::lookupList(const char* scope, const char* localName, StringVector& list) const
+        throw(ConfigurationException)
     {
         Configuration::Type type;
         StringBuffer msg;
@@ -966,9 +962,9 @@ namespace danek
         }
     }
 
-    int ConfigurationImpl::lookupEnum(const char* scope, const char* localName,
-        const char* typeName, const EnumNameAndValue* enumInfo, int numEnums,
-        const char* defaultVal) const throw(ConfigurationException)
+    int ConfigurationImpl::lookupEnum(const char* scope, const char* localName, const char* typeName,
+        const EnumNameAndValue* enumInfo, int numEnums, const char* defaultVal) const
+        throw(ConfigurationException)
     {
         StringBuffer msg;
         int result;
@@ -982,8 +978,8 @@ namespace danek
         if (!enumVal(strValue, enumInfo, numEnums, result))
         {
             mergeNames(scope, localName, fullyScopedName);
-            msg << fileName() << ": bad " << typeName << " value ('" << strValue
-                << "') specified for '" << fullyScopedName << "'; should be one of:";
+            msg << fileName() << ": bad " << typeName << " value ('" << strValue << "') specified for '"
+                << fullyScopedName << "'; should be one of:";
             for (int i = 0; i < numEnums; i++)
             {
                 if (i < numEnums - 1)
@@ -1000,9 +996,8 @@ namespace danek
         return result;
     }
 
-    int ConfigurationImpl::lookupEnum(const char* scope, const char* localName,
-        const char* typeName, const EnumNameAndValue* enumInfo, int numEnums, int defaultVal) const
-        throw(ConfigurationException)
+    int ConfigurationImpl::lookupEnum(const char* scope, const char* localName, const char* typeName,
+        const EnumNameAndValue* enumInfo, int numEnums, int defaultVal) const throw(ConfigurationException)
     {
         StringBuffer msg;
         int result;
@@ -1021,8 +1016,8 @@ namespace danek
         if (!enumVal(strValue, enumInfo, numEnums, result))
         {
             mergeNames(scope, localName, fullyScopedName);
-            msg << fileName() << ": bad " << typeName << " value ('" << strValue
-                << "') specified for '" << fullyScopedName << "'; should be one of:";
+            msg << fileName() << ": bad " << typeName << " value ('" << strValue << "') specified for '"
+                << fullyScopedName << "'; should be one of:";
             for (int i = 0; i < numEnums; i++)
             {
                 if (i < numEnums - 1)
@@ -1039,9 +1034,8 @@ namespace danek
         return result;
     }
 
-    int ConfigurationImpl::lookupEnum(const char* scope, const char* localName,
-        const char* typeName, const EnumNameAndValue* enumInfo, int numEnums) const
-        throw(ConfigurationException)
+    int ConfigurationImpl::lookupEnum(const char* scope, const char* localName, const char* typeName,
+        const EnumNameAndValue* enumInfo, int numEnums) const throw(ConfigurationException)
     {
         StringBuffer msg;
         int result;
@@ -1055,8 +1049,8 @@ namespace danek
         if (!enumVal(strValue, enumInfo, numEnums, result))
         {
             mergeNames(scope, localName, fullyScopedName);
-            msg << fileName() << ": bad " << typeName << " value ('" << strValue
-                << "') specified for '" << fullyScopedName << "'; should be one of:";
+            msg << fileName() << ": bad " << typeName << " value ('" << strValue << "') specified for '"
+                << fullyScopedName << "'; should be one of:";
             for (int i = 0; i < numEnums; i++)
             {
                 if (i < numEnums - 1)
@@ -1109,8 +1103,8 @@ namespace danek
 
     int countBoolInfo = sizeof(boolInfo) / sizeof(boolInfo[0]);
 
-    bool ConfigurationImpl::lookupBoolean(const char* scope, const char* localName,
-        bool defaultVal) const throw(ConfigurationException)
+    bool ConfigurationImpl::lookupBoolean(const char* scope, const char* localName, bool defaultVal) const
+        throw(ConfigurationException)
     {
         int intVal;
         const char* defaultStrVal;
@@ -1170,8 +1164,8 @@ namespace danek
         return i == 1;
     }
 
-    int ConfigurationImpl::stringToInt(const char* scope, const char* localName,
-        const char* str) const throw(ConfigurationException)
+    int ConfigurationImpl::stringToInt(const char* scope, const char* localName, const char* str) const
+        throw(ConfigurationException)
     {
         int result;
         char dummy;
@@ -1205,8 +1199,8 @@ namespace danek
         return i == 1;
     }
 
-    float ConfigurationImpl::stringToFloat(const char* scope, const char* localName,
-        const char* str) const throw(ConfigurationException)
+    float ConfigurationImpl::stringToFloat(const char* scope, const char* localName, const char* str) const
+        throw(ConfigurationException)
     {
         float result;
         char dummy;
@@ -1230,8 +1224,7 @@ namespace danek
         return result;
     }
 
-    bool ConfigurationImpl::isEnum(
-        const char* str, const EnumNameAndValue* enumInfo, int numEnums) const
+    bool ConfigurationImpl::isEnum(const char* str, const EnumNameAndValue* enumInfo, int numEnums) const
     {
         int dummyValue;
         bool result;
@@ -1249,9 +1242,8 @@ namespace danek
         return result;
     }
 
-    int ConfigurationImpl::stringToEnum(const char* scope, const char* localName,
-        const char* typeName, const char* str, const EnumNameAndValue* enumInfo, int numEnums) const
-        throw(ConfigurationException)
+    int ConfigurationImpl::stringToEnum(const char* scope, const char* localName, const char* typeName,
+        const char* str, const EnumNameAndValue* enumInfo, int numEnums) const throw(ConfigurationException)
     {
         StringBuffer msg;
         StringBuffer fullyScopedName;
@@ -1281,8 +1273,8 @@ namespace danek
         return result;
     }
 
-    bool ConfigurationImpl::stringToBoolean(const char* scope, const char* localName,
-        const char* str) const throw(ConfigurationException)
+    bool ConfigurationImpl::stringToBoolean(const char* scope, const char* localName, const char* str) const
+        throw(ConfigurationException)
     {
         int result;
 
@@ -1297,14 +1289,8 @@ namespace danek
         const char* str;
 
         str = lookupString(scope, localName);
-        stringToFloatWithUnits(scope,
-            localName,
-            typeName,
-            str,
-            allowedUnits,
-            allowedUnitsSize,
-            floatResult,
-            unitsResult);
+        stringToFloatWithUnits(
+            scope, localName, typeName, str, allowedUnits, allowedUnitsSize, floatResult, unitsResult);
     }
 
     void ConfigurationImpl::lookupFloatWithUnits(const char* scope, const char* localName,
@@ -1376,14 +1362,8 @@ namespace danek
         const char* str;
 
         str = lookupString(scope, localName);
-        stringToUnitsWithFloat(scope,
-            localName,
-            typeName,
-            str,
-            allowedUnits,
-            allowedUnitsSize,
-            floatResult,
-            unitsResult);
+        stringToUnitsWithFloat(
+            scope, localName, typeName, str, allowedUnits, allowedUnitsSize, floatResult, unitsResult);
     }
 
     void ConfigurationImpl::lookupUnitsWithFloat(const char* scope, const char* localName,
@@ -1517,27 +1497,20 @@ namespace danek
         throw ConfigurationException(msg.c_str());
     }
 
-    void ConfigurationImpl::lookupIntWithUnits(const char* scope, const char* localName,
-        const char* typeName, const char** allowedUnits, int allowedUnitsSize, int& intResult,
-        const char*& unitsResult) const throw(ConfigurationException)
+    void ConfigurationImpl::lookupIntWithUnits(const char* scope, const char* localName, const char* typeName,
+        const char** allowedUnits, int allowedUnitsSize, int& intResult, const char*& unitsResult) const
+        throw(ConfigurationException)
     {
         const char* str;
 
         str = lookupString(scope, localName);
-        stringToIntWithUnits(scope,
-            localName,
-            typeName,
-            str,
-            allowedUnits,
-            allowedUnitsSize,
-            intResult,
-            unitsResult);
+        stringToIntWithUnits(
+            scope, localName, typeName, str, allowedUnits, allowedUnitsSize, intResult, unitsResult);
     }
 
-    void ConfigurationImpl::lookupIntWithUnits(const char* scope, const char* localName,
-        const char* typeName, const char** allowedUnits, int allowedUnitsSize, int& intResult,
-        const char*& unitsResult, int defaultInt, const char* defaultUnits) const
-        throw(ConfigurationException)
+    void ConfigurationImpl::lookupIntWithUnits(const char* scope, const char* localName, const char* typeName,
+        const char** allowedUnits, int allowedUnitsSize, int& intResult, const char*& unitsResult,
+        int defaultInt, const char* defaultUnits) const throw(ConfigurationException)
     {
         if (type(scope, localName) == CFG_NO_VALUE)
         {
@@ -1654,27 +1627,20 @@ namespace danek
         throw ConfigurationException(msg.c_str());
     }
 
-    void ConfigurationImpl::lookupUnitsWithInt(const char* scope, const char* localName,
-        const char* typeName, const char** allowedUnits, int allowedUnitsSize, int& intResult,
-        const char*& unitsResult) const throw(ConfigurationException)
+    void ConfigurationImpl::lookupUnitsWithInt(const char* scope, const char* localName, const char* typeName,
+        const char** allowedUnits, int allowedUnitsSize, int& intResult, const char*& unitsResult) const
+        throw(ConfigurationException)
     {
         const char* str;
 
         str = lookupString(scope, localName);
-        stringToUnitsWithInt(scope,
-            localName,
-            typeName,
-            str,
-            allowedUnits,
-            allowedUnitsSize,
-            intResult,
-            unitsResult);
+        stringToUnitsWithInt(
+            scope, localName, typeName, str, allowedUnits, allowedUnitsSize, intResult, unitsResult);
     }
 
-    void ConfigurationImpl::lookupUnitsWithInt(const char* scope, const char* localName,
-        const char* typeName, const char** allowedUnits, int allowedUnitsSize, int& intResult,
-        const char*& unitsResult, int defaultInt, const char* defaultUnits) const
-        throw(ConfigurationException)
+    void ConfigurationImpl::lookupUnitsWithInt(const char* scope, const char* localName, const char* typeName,
+        const char** allowedUnits, int allowedUnitsSize, int& intResult, const char*& unitsResult,
+        int defaultInt, const char* defaultUnits) const throw(ConfigurationException)
     {
         if (type(scope, localName) == CFG_NO_VALUE)
         {
@@ -1810,8 +1776,7 @@ namespace danek
         {
             return true;
         }
-        return isFloatWithUnits(
-            str, allowedDurationMicrosecondsUnits, countAllowedDurationMicrosecondsUnits);
+        return isFloatWithUnits(str, allowedDurationMicrosecondsUnits, countAllowedDurationMicrosecondsUnits);
     }
 
     bool ConfigurationImpl::isDurationMilliseconds(const char* str) const
@@ -1820,8 +1785,7 @@ namespace danek
         {
             return true;
         }
-        return isFloatWithUnits(
-            str, allowedDurationMillisecondsUnits, countAllowedDurationMillisecondsUnits);
+        return isFloatWithUnits(str, allowedDurationMillisecondsUnits, countAllowedDurationMillisecondsUnits);
     }
 
     bool ConfigurationImpl::isDurationSeconds(const char* str) const
@@ -1991,8 +1955,8 @@ namespace danek
         throw ConfigurationException(msg.c_str());
     }
 
-    int ConfigurationImpl::stringToDurationMicroseconds(const char* scope, const char* localName,
-        const char* str) const throw(ConfigurationException)
+    int ConfigurationImpl::stringToDurationMicroseconds(
+        const char* scope, const char* localName, const char* str) const throw(ConfigurationException)
     {
         float floatVal;
         const char* units;
@@ -2044,8 +2008,8 @@ namespace danek
         return result;
     }
 
-    int ConfigurationImpl::stringToDurationMilliseconds(const char* scope, const char* localName,
-        const char* str) const throw(ConfigurationException)
+    int ConfigurationImpl::stringToDurationMilliseconds(
+        const char* scope, const char* localName, const char* str) const throw(ConfigurationException)
     {
         float floatVal;
         const char* units;
@@ -2097,8 +2061,8 @@ namespace danek
         return result;
     }
 
-    int ConfigurationImpl::stringToDurationSeconds(const char* scope, const char* localName,
-        const char* str) const throw(ConfigurationException)
+    int ConfigurationImpl::stringToDurationSeconds(
+        const char* scope, const char* localName, const char* str) const throw(ConfigurationException)
     {
         float floatVal;
         const char* units;
@@ -2150,8 +2114,8 @@ namespace danek
         return result;
     }
 
-    int ConfigurationImpl::lookupDurationMicroseconds(const char* scope, const char* localName,
-        int defaultVal) const throw(ConfigurationException)
+    int ConfigurationImpl::lookupDurationMicroseconds(
+        const char* scope, const char* localName, int defaultVal) const throw(ConfigurationException)
     {
         char defaultStrValue[128]; // big enough
         const char* strValue;
@@ -2170,8 +2134,8 @@ namespace danek
         return result;
     }
 
-    int ConfigurationImpl::lookupDurationMicroseconds(
-        const char* scope, const char* localName) const throw(ConfigurationException)
+    int ConfigurationImpl::lookupDurationMicroseconds(const char* scope, const char* localName) const
+        throw(ConfigurationException)
     {
         const char* strValue;
         int result;
@@ -2181,8 +2145,8 @@ namespace danek
         return result;
     }
 
-    int ConfigurationImpl::lookupDurationMilliseconds(const char* scope, const char* localName,
-        int defaultVal) const throw(ConfigurationException)
+    int ConfigurationImpl::lookupDurationMilliseconds(
+        const char* scope, const char* localName, int defaultVal) const throw(ConfigurationException)
     {
         char defaultStrValue[128]; // big enough
         const char* strValue;
@@ -2201,8 +2165,8 @@ namespace danek
         return result;
     }
 
-    int ConfigurationImpl::lookupDurationMilliseconds(
-        const char* scope, const char* localName) const throw(ConfigurationException)
+    int ConfigurationImpl::lookupDurationMilliseconds(const char* scope, const char* localName) const
+        throw(ConfigurationException)
     {
         const char* strValue;
         int result;
@@ -2212,8 +2176,8 @@ namespace danek
         return result;
     }
 
-    int ConfigurationImpl::lookupDurationSeconds(const char* scope, const char* localName,
-        int defaultVal) const throw(ConfigurationException)
+    int ConfigurationImpl::lookupDurationSeconds(
+        const char* scope, const char* localName, int defaultVal) const throw(ConfigurationException)
     {
         char defaultStrValue[128]; // big enough
         const char* strValue;
@@ -2243,10 +2207,9 @@ namespace danek
         return result;
     }
 
-    int ConfigurationImpl::stringToMemorySizeGeneric(const char* typeName,
-        SpellingAndValue unitsInfo[], int unitsInfoSize, const char* allowedUnits[],
-        const char* scope, const char* localName, const char* str) const
-        throw(ConfigurationException)
+    int ConfigurationImpl::stringToMemorySizeGeneric(const char* typeName, SpellingAndValue unitsInfo[],
+        int unitsInfoSize, const char* allowedUnits[], const char* scope, const char* localName,
+        const char* str) const throw(ConfigurationException)
     {
         float floatVal;
         const char* units;
@@ -2255,8 +2218,7 @@ namespace danek
         int result;
         int unitsVal;
 
-        stringToFloatWithUnits(
-            scope, localName, typeName, str, allowedUnits, unitsInfoSize, floatVal, units);
+        stringToFloatWithUnits(scope, localName, typeName, str, allowedUnits, unitsInfoSize, floatVal, units);
         result = -1; // avoid compiler warning about an unitialized variable
         for (i = 0; i < unitsInfoSize; i++)
         {
@@ -2271,32 +2233,32 @@ namespace danek
         return result;
     }
 
-    int ConfigurationImpl::stringToMemorySizeBytes(const char* scope, const char* localName,
-        const char* str) const throw(ConfigurationException)
+    int ConfigurationImpl::stringToMemorySizeBytes(
+        const char* scope, const char* localName, const char* str) const throw(ConfigurationException)
     {
         static const char* allowedUnits[] = {"byte", "bytes", "KB", "MB", "GB"};
         return stringToMemorySizeGeneric(
             "memorySizeBytes", MemorySizeBytesUnitsInfo, 5, allowedUnits, scope, localName, str);
     }
 
-    int ConfigurationImpl::stringToMemorySizeKB(const char* scope, const char* localName,
-        const char* str) const throw(ConfigurationException)
+    int ConfigurationImpl::stringToMemorySizeKB(
+        const char* scope, const char* localName, const char* str) const throw(ConfigurationException)
     {
         static const char* allowedUnits[] = {"KB", "MB", "GB", "TB"};
         return stringToMemorySizeGeneric(
             "memorySizeKB", MemorySizeKBUnitsInfo, 4, allowedUnits, scope, localName, str);
     }
 
-    int ConfigurationImpl::stringToMemorySizeMB(const char* scope, const char* localName,
-        const char* str) const throw(ConfigurationException)
+    int ConfigurationImpl::stringToMemorySizeMB(
+        const char* scope, const char* localName, const char* str) const throw(ConfigurationException)
     {
         static const char* allowedUnits[] = {"MB", "GB", "TB", "PB"};
         return stringToMemorySizeGeneric(
             "memorySizeMB", MemorySizeMBUnitsInfo, 4, allowedUnits, scope, localName, str);
     }
 
-    int ConfigurationImpl::lookupMemorySizeBytes(const char* scope, const char* localName,
-        int defaultVal) const throw(ConfigurationException)
+    int ConfigurationImpl::lookupMemorySizeBytes(
+        const char* scope, const char* localName, int defaultVal) const throw(ConfigurationException)
     {
         char defaultStrValue[64]; // big enough
         const char* strValue;
@@ -2319,8 +2281,8 @@ namespace danek
         return result;
     }
 
-    int ConfigurationImpl::lookupMemorySizeKB(const char* scope, const char* localName,
-        int defaultVal) const throw(ConfigurationException)
+    int ConfigurationImpl::lookupMemorySizeKB(const char* scope, const char* localName, int defaultVal) const
+        throw(ConfigurationException)
     {
         char defaultStrValue[64]; // big enough
         const char* strValue;
@@ -2343,8 +2305,8 @@ namespace danek
         return result;
     }
 
-    int ConfigurationImpl::lookupMemorySizeMB(const char* scope, const char* localName,
-        int defaultVal) const throw(ConfigurationException)
+    int ConfigurationImpl::lookupMemorySizeMB(const char* scope, const char* localName, int defaultVal) const
+        throw(ConfigurationException)
     {
         char defaultStrValue[64]; // big enough
         const char* strValue;
@@ -2367,8 +2329,8 @@ namespace danek
         return result;
     }
 
-    float ConfigurationImpl::lookupFloat(const char* scope, const char* localName,
-        float defaultVal) const throw(ConfigurationException)
+    float ConfigurationImpl::lookupFloat(const char* scope, const char* localName, float defaultVal) const
+        throw(ConfigurationException)
     {
         const char* strValue;
         float result;
@@ -2445,8 +2407,7 @@ namespace danek
         {
             if (strcmp(m_fileNameStack[i], file) == 0)
             {
-                msg << fileName() << ": line " << includeLineNum << ", circular include of '"
-                    << file << "'";
+                msg << fileName() << ": line " << includeLineNum << ", circular include of '" << file << "'";
                 throw ConfigurationException(msg.c_str());
             }
         }
@@ -2483,8 +2444,8 @@ namespace danek
         ensureScopeExists(vec, 0, vec.length() - 1, scope);
     }
 
-    void ConfigurationImpl::ensureScopeExists(const StringVector& vec, int firstIndex,
-        int lastIndex, ConfigScope*& scope) throw(ConfigurationException)
+    void ConfigurationImpl::ensureScopeExists(const StringVector& vec, int firstIndex, int lastIndex,
+        ConfigScope*& scope) throw(ConfigurationException)
     {
         int i;
         int j;

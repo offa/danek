@@ -62,8 +62,8 @@ namespace danek
         inline void validate(const Configuration* cfg, const char* scope, const char* localName,
             ForceMode forceMode = DO_NOT_FORCE) const throw(ConfigurationException);
         void validate(const Configuration* cfg, const char* scope, const char* localName,
-            bool recurseIntoSubscopes, Configuration::Type typeMask,
-            ForceMode forceMode = DO_NOT_FORCE) const throw(ConfigurationException);
+            bool recurseIntoSubscopes, Configuration::Type typeMask, ForceMode forceMode = DO_NOT_FORCE) const
+            throw(ConfigurationException);
 
     protected:
         //--------
@@ -101,8 +101,7 @@ namespace danek
             StringBuffer& errSuffix) const;
 
         void printTypeArgs(const StringVector& typeArgs, int indentLevel) const;
-        void printTypeNameAndArgs(
-            const char* typeName, const StringVector& typeArgs, int indentLevel) const;
+        void printTypeNameAndArgs(const char* typeName, const StringVector& typeArgs, int indentLevel) const;
 
         void indent(int indentLevel) const;
 
@@ -147,8 +146,8 @@ namespace danek
     // Inline implementation of operations
     //--------
 
-    inline void SchemaValidator::validate(const Configuration* cfg, const char* scope,
-        const char* localName, ForceMode forceMode) const throw(ConfigurationException)
+    inline void SchemaValidator::validate(const Configuration* cfg, const char* scope, const char* localName,
+        ForceMode forceMode) const throw(ConfigurationException)
     {
         validate(cfg, scope, localName, true, Configuration::CFG_SCOPE_AND_VARS, forceMode);
     }

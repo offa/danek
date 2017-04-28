@@ -111,10 +111,7 @@ namespace danek
 
     void SchemaValidator::sortTypes()
     {
-        qsort(m_types,
-            m_typesCurrSize,
-            sizeof(SchemaType*),
-            CONFIG4CPP_C_PREFIX(compareSchemaType_c));
+        qsort(m_types, m_typesCurrSize, sizeof(SchemaType*), CONFIG4CPP_C_PREFIX(compareSchemaType_c));
         m_areTypesSorted = true;
     }
 
@@ -256,8 +253,7 @@ namespace danek
     {
         checkTypeDoesNotExist(typeName);
         ensureSpaceInTypesArray();
-        m_types[m_typesCurrSize] =
-            new SchemaTypeTypedef(typeName, cfgType, baseTypeName, baseTypeArgs);
+        m_types[m_typesCurrSize] = new SchemaTypeTypedef(typeName, cfgType, baseTypeName, baseTypeArgs);
         m_typesCurrSize++;
         m_areTypesSorted = false;
     }
@@ -292,8 +288,7 @@ namespace danek
         }
     }
 
-    void SchemaValidator::parseSchema(const char** nullTerminatedRulesArray) throw(
-        ConfigurationException)
+    void SchemaValidator::parseSchema(const char** nullTerminatedRulesArray) throw(ConfigurationException)
     {
         int size;
 
@@ -303,8 +298,7 @@ namespace danek
         parseSchema(nullTerminatedRulesArray, size);
     }
 
-    void SchemaValidator::parseSchema(const char** schema, int schemaSize) throw(
-        ConfigurationException)
+    void SchemaValidator::parseSchema(const char** schema, int schemaSize) throw(ConfigurationException)
     {
         SchemaParser schemaParser(this);
         const char* prefix = "---- danek::SchemaValidator::parseSchema()";
@@ -331,9 +325,9 @@ namespace danek
         }
     }
 
-    void SchemaValidator::validate(const Configuration* cfg, const char* scope,
-        const char* localName, bool recurseIntoSubscopes, Configuration::Type typeMask,
-        ForceMode forceMode) const throw(ConfigurationException)
+    void SchemaValidator::validate(const Configuration* cfg, const char* scope, const char* localName,
+        bool recurseIntoSubscopes, Configuration::Type typeMask, ForceMode forceMode) const
+        throw(ConfigurationException)
     {
         StringBuffer fullyScopedName;
         StringVector itemNames;
@@ -350,9 +344,8 @@ namespace danek
         validate(cfg, scope, localName, itemNames, forceMode);
     }
 
-    void SchemaValidator::validate(const Configuration* cfg, const char* scope,
-        const char* localName, const StringVector& itemNames, ForceMode forceMode) const
-        throw(ConfigurationException)
+    void SchemaValidator::validate(const Configuration* cfg, const char* scope, const char* localName,
+        const StringVector& itemNames, ForceMode forceMode) const throw(ConfigurationException)
     {
         StringBuffer fullyScopedName;
         StringBuffer unlistedName;
@@ -419,14 +412,8 @@ namespace danek
             assert(typeDef != 0);
             try
             {
-                callValidate(typeDef,
-                    cfg,
-                    fullyScopedName.c_str(),
-                    iName,
-                    typeName,
-                    typeName,
-                    idRule->m_args,
-                    1);
+                callValidate(
+                    typeDef, cfg, fullyScopedName.c_str(), iName, typeName, typeName, idRule->m_args, 1);
             }
             catch (const ConfigurationException& ex)
             {
@@ -514,12 +501,8 @@ namespace danek
         {
             parentScopePattern.append(*ptr);
         }
-        cfg->listFullyScopedNames(fullScope,
-            "",
-            Configuration::CFG_SCOPE,
-            true,
-            parentScopePattern.c_str(),
-            parentScopes);
+        cfg->listFullyScopedNames(
+            fullScope, "", Configuration::CFG_SCOPE, true, parentScopePattern.c_str(), parentScopes);
         len = parentScopes.length();
         for (int i = 0; i < len; i++)
         {
@@ -534,8 +517,8 @@ namespace danek
         }
     }
 
-    bool SchemaValidator::shouldIgnore(const Configuration* cfg, const char* scope,
-        const char* expandedName, const char* unexpandedName) const
+    bool SchemaValidator::shouldIgnore(const Configuration* cfg, const char* scope, const char* expandedName,
+        const char* unexpandedName) const
     {
         Configuration::Type cfgType = Configuration::CFG_NO_VALUE;
 
@@ -707,16 +690,15 @@ namespace danek
             {
                 printf("\n");
                 indent(indentLevel);
-                printf(
-                    "exception thrown from %s::checkRule(): %s\n", target->className(), ex.c_str());
+                printf("exception thrown from %s::checkRule(): %s\n", target->className(), ex.c_str());
             }
             throw;
         }
     }
 
-    void SchemaValidator::callValidate(const SchemaType* target, const Configuration* cfg,
-        const char* scope, const char* name, const char* typeName, const char* origTypeName,
-        const StringVector& typeArgs, int indentLevel) const
+    void SchemaValidator::callValidate(const SchemaType* target, const Configuration* cfg, const char* scope,
+        const char* name, const char* typeName, const char* origTypeName, const StringVector& typeArgs,
+        int indentLevel) const
     {
         try
         {
@@ -731,8 +713,7 @@ namespace danek
                 printf("typeName = \"%s\"; origTypeName = \"%s\"\n", typeName, origTypeName);
                 printTypeArgs(typeArgs, indentLevel + 1);
             }
-            target->validate(
-                this, cfg, scope, name, typeName, origTypeName, typeArgs, indentLevel + 1);
+            target->validate(this, cfg, scope, name, typeName, origTypeName, typeArgs, indentLevel + 1);
             if (m_wantDiagnostics)
             {
                 indent(indentLevel);
@@ -745,16 +726,14 @@ namespace danek
             {
                 printf("\n");
                 indent(indentLevel);
-                printf(
-                    "exception thrown from %s::validate(): %s\n", target->className(), ex.c_str());
+                printf("exception thrown from %s::validate(): %s\n", target->className(), ex.c_str());
             }
             throw;
         }
     }
 
-    bool SchemaValidator::callIsA(const SchemaType* target, const Configuration* cfg,
-        const char* value, const char* typeName, const StringVector& typeArgs, int indentLevel,
-        StringBuffer& errSuffix) const
+    bool SchemaValidator::callIsA(const SchemaType* target, const Configuration* cfg, const char* value,
+        const char* typeName, const StringVector& typeArgs, int indentLevel, StringBuffer& errSuffix) const
     {
         bool result;
 
@@ -775,9 +754,7 @@ namespace danek
                 indent(indentLevel);
                 printf("end %s::isA()\n", target->className());
                 indent(indentLevel + 1);
-                printf("result = %s; errSuffix = \"%s\"\n",
-                    (result ? "true" : "false"),
-                    errSuffix.c_str());
+                printf("result = %s; errSuffix = \"%s\"\n", (result ? "true" : "false"), errSuffix.c_str());
             }
         }
         catch (const ConfigurationException& ex)

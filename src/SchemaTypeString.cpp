@@ -84,9 +84,8 @@ namespace danek
         }
     }
 
-    bool SchemaTypeString::isA(const SchemaValidator* sv, const Configuration* cfg,
-        const char* value, const char* typeName, const StringVector& typeArgs, int indentLevel,
-        StringBuffer& errSuffix) const
+    bool SchemaTypeString::isA(const SchemaValidator* sv, const Configuration* cfg, const char* value,
+        const char* typeName, const StringVector& typeArgs, int indentLevel, StringBuffer& errSuffix) const
     {
         unused(sv);
         unused(typeName);
@@ -99,8 +98,8 @@ namespace danek
             int maxLength = cfg->stringToInt("", "", typeArgs[1]);
             if (strLen < minLength || strLen > maxLength)
             {
-                errSuffix << "its length is outside the permitted range [" << minLength << ", "
-                          << maxLength << "]";
+                errSuffix << "its length is outside the permitted range [" << minLength << ", " << maxLength
+                          << "]";
                 return false;
             }
         }

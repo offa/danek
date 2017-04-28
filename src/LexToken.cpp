@@ -37,8 +37,7 @@ namespace danek
     // Description:
     //----------------------------------------------------------------------
 
-    LexToken::LexToken()
-        : m_type(LexBase::LEX_UNKNOWN_SYM), m_lineNum(-1), m_funcType(LexBase::NOT_A_FUNC)
+    LexToken::LexToken() : m_type(LexBase::LEX_UNKNOWN_SYM), m_lineNum(-1), m_funcType(LexBase::NOT_A_FUNC)
     {
     }
 
@@ -57,10 +56,7 @@ namespace danek
     //----------------------------------------------------------------------
 
     LexToken::LexToken(short type, int lineNum, const char* spelling)
-        : m_type(type),
-          m_spelling(spelling),
-          m_lineNum(lineNum),
-          m_funcType(LexBase::LEX_UNKNOWN_SYM)
+        : m_type(type), m_spelling(spelling), m_lineNum(lineNum), m_funcType(LexBase::LEX_UNKNOWN_SYM)
     {
     }
 

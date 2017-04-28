@@ -30,9 +30,7 @@ namespace danek
     class SchemaTypeScope : public SchemaType
     {
     public:
-        SchemaTypeScope()
-            : SchemaType(
-                  "scope", "danek::SchemaTypeScope", Configuration::CFG_STRING)
+        SchemaTypeScope() : SchemaType("scope", "danek::SchemaTypeScope", Configuration::CFG_STRING)
         {
         }
         virtual ~SchemaTypeScope()
@@ -40,13 +38,12 @@ namespace danek
         }
 
     protected:
-        virtual void checkRule(const SchemaValidator* sv, const Configuration* cfg,
-            const char* typeName, const StringVector& typeArgs, const char* rule) const
-            throw(ConfigurationException);
+        virtual void checkRule(const SchemaValidator* sv, const Configuration* cfg, const char* typeName,
+            const StringVector& typeArgs, const char* rule) const throw(ConfigurationException);
 
-        virtual void validate(const SchemaValidator* sv, const Configuration* cfg,
-            const char* scope, const char* name, const char* typeName, const char* origTypeName,
-            const StringVector& typeArgs, int indentLevel) const throw(ConfigurationException);
+        virtual void validate(const SchemaValidator* sv, const Configuration* cfg, const char* scope,
+            const char* name, const char* typeName, const char* origTypeName, const StringVector& typeArgs,
+            int indentLevel) const throw(ConfigurationException);
     };
 
 } // namespace danek

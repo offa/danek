@@ -74,8 +74,7 @@ namespace danek
         }
         if ((min < -1) || (max < -1))
         {
-            msg << "The 'min' and 'max' of a " << typeName << " cannot be negative in rule '"
-                << rule << "'"
+            msg << "The 'min' and 'max' of a " << typeName << " cannot be negative in rule '" << rule << "'"
                 << "; min=" << min << "; max=" << max;
             throw ConfigurationException(msg.c_str());
         }
@@ -87,9 +86,8 @@ namespace danek
         }
     }
 
-    bool SchemaTypeMemorySizeMB::isA(const SchemaValidator* sv, const Configuration* cfg,
-        const char* value, const char* typeName, const StringVector& typeArgs, int indentLevel,
-        StringBuffer& errSuffix) const
+    bool SchemaTypeMemorySizeMB::isA(const SchemaValidator* sv, const Configuration* cfg, const char* value,
+        const char* typeName, const StringVector& typeArgs, int indentLevel, StringBuffer& errSuffix) const
     {
         unused(sv);
         unused(value);
@@ -119,8 +117,8 @@ namespace danek
         max = cfg->stringToMemorySizeMB("", "", typeArgs[1]);
         if (val < min || val > max)
         {
-            errSuffix << "the value is outside the permitted range [" << typeArgs[0] << ", "
-                      << typeArgs[1] << "]";
+            errSuffix << "the value is outside the permitted range [" << typeArgs[0] << ", " << typeArgs[1]
+                      << "]";
             return false;
         }
         return true;

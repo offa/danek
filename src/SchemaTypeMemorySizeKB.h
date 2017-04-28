@@ -31,8 +31,7 @@ namespace danek
     {
     public:
         SchemaTypeMemorySizeKB()
-            : SchemaType("memorySizeKB", "danek::SchemaTypeMemorySizeKB",
-                  Configuration::CFG_STRING)
+            : SchemaType("memorySizeKB", "danek::SchemaTypeMemorySizeKB", Configuration::CFG_STRING)
         {
         }
         virtual ~SchemaTypeMemorySizeKB()
@@ -40,9 +39,8 @@ namespace danek
         }
 
     protected:
-        virtual void checkRule(const SchemaValidator* sv, const Configuration* cfg,
-            const char* typeName, const StringVector& typeArgs, const char* rule) const
-            throw(ConfigurationException);
+        virtual void checkRule(const SchemaValidator* sv, const Configuration* cfg, const char* typeName,
+            const StringVector& typeArgs, const char* rule) const throw(ConfigurationException);
 
         virtual bool isA(const SchemaValidator* sv, const Configuration* cfg, const char* value,
             const char* typeName, const StringVector& typeArgs, int indentLevel,

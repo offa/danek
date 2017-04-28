@@ -59,8 +59,7 @@ namespace danek
         // Helper functions
         //--------
         void expandOne(StringBuffer& spelling) throw(ConfigurationException);
-        const char* unexpandOne(const char* spelling, StringBuffer& buf) const
-            throw(ConfigurationException);
+        const char* unexpandOne(const char* spelling, StringBuffer& buf) const throw(ConfigurationException);
 
         //--------
         // The following are not implemented

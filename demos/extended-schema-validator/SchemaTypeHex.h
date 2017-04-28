@@ -50,15 +50,13 @@ public:
     static bool isHex(const char* str);
 
 protected:
-    virtual void checkRule(const SchemaValidator* sv, const Configuration* cfg,
-        const char* typeName, const StringVector& typeArgs, const char* rule) const
-        throw(ConfigurationException);
+    virtual void checkRule(const SchemaValidator* sv, const Configuration* cfg, const char* typeName,
+        const StringVector& typeArgs, const char* rule) const throw(ConfigurationException);
 
     virtual void validate(const SchemaValidator* sv, const Configuration* cfg, const char* scope,
-        const char* name, const char* typeName, const char* origTypeName,
-        const StringVector& typeArgs, int indentLevel) const throw(ConfigurationException);
+        const char* name, const char* typeName, const char* origTypeName, const StringVector& typeArgs,
+        int indentLevel) const throw(ConfigurationException);
 
     virtual bool isA(const SchemaValidator* sv, const Configuration* cfg, const char* value,
-        const char* typeName, const StringVector& typeArgs, int indentlevel,
-        StringBuffer& errSuffix) const;
+        const char* typeName, const StringVector& typeArgs, int indentlevel, StringBuffer& errSuffix) const;
 };

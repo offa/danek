@@ -71,8 +71,7 @@ FooConfiguration::~FooConfiguration()
     ((Configuration*) m_cfg)->destroy();
 }
 
-void FooConfiguration::parse(const char* cfgSource, const char* scope) throw(
-    FooConfigurationException)
+void FooConfiguration::parse(const char* cfgSource, const char* scope) throw(FooConfigurationException)
 {
     Configuration* cfg = (Configuration*) m_cfg;
 
@@ -84,8 +83,7 @@ void FooConfiguration::parse(const char* cfgSource, const char* scope) throw(
         {
             cfg->parse(cfgSource);
         }
-        cfg->setFallbackConfiguration(
-            Configuration::INPUT_STRING, FallbackConfiguration::getString());
+        cfg->setFallbackConfiguration(Configuration::INPUT_STRING, FallbackConfiguration::getString());
     }
     catch (const ConfigurationException& ex)
     {
@@ -159,8 +157,7 @@ bool FooConfiguration::lookupBoolean(const char* name) const throw(FooConfigurat
     }
 }
 
-int FooConfiguration::lookupDurationMilliseconds(const char* name) const
-    throw(FooConfigurationException)
+int FooConfiguration::lookupDurationMilliseconds(const char* name) const throw(FooConfigurationException)
 {
     Configuration* cfg = (Configuration*) m_cfg;
     try

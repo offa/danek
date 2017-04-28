@@ -40,8 +40,7 @@ RecipeFileParser::~RecipeFileParser()
     m_cfg->destroy();
 }
 
-void RecipeFileParser::parse(const char* recipeFilename, const char* scope) throw(
-    RecipeFileParserException)
+void RecipeFileParser::parse(const char* recipeFilename, const char* scope) throw(RecipeFileParserException)
 {
     SchemaValidator sv;
     StringBuffer filter;
@@ -62,12 +61,8 @@ void RecipeFileParser::parse(const char* recipeFilename, const char* scope) thro
         m_cfg->parse(recipeFilename);
         sv.parseSchema(schema);
         sv.validate(m_cfg, m_scope.c_str(), "");
-        m_cfg->listFullyScopedNames(m_scope.c_str(),
-            "",
-            Configuration::CFG_SCOPE,
-            false,
-            filter.c_str(),
-            m_recipeScopeNames);
+        m_cfg->listFullyScopedNames(
+            m_scope.c_str(), "", Configuration::CFG_SCOPE, false, filter.c_str(), m_recipeScopeNames);
     }
     catch (const ConfigurationException& ex)
     {
@@ -82,8 +77,7 @@ void RecipeFileParser::listRecipeScopes(StringVector& vec)
     vec = m_recipeScopeNames;
 }
 
-const char* RecipeFileParser::getRecipeName(const char* recipeScope) throw(
-    RecipeFileParserException)
+const char* RecipeFileParser::getRecipeName(const char* recipeScope) throw(RecipeFileParserException)
 {
     assert(m_parseCalled);
     try

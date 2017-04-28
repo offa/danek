@@ -79,8 +79,7 @@ namespace danek
         bool parseNamespace(const char* str);
         void reportInvalidNamespace(const char* ns);
         void printToHeaderFile(FILE* file, int namesArraySize);
-        void printToCppFile(
-            FILE* cfgFile, FILE* file, const char* const* namesArray, int namesArraySize);
+        void printToCppFile(FILE* cfgFile, FILE* file, const char* const* namesArray, int namesArraySize);
         void output(FILE* file, int ch);
         void usage(const char* unknownArg);
 

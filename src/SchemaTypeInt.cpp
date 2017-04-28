@@ -26,9 +26,8 @@
 
 namespace danek
 {
-    void SchemaTypeInt::checkRule(const SchemaValidator* sv, const Configuration* cfg,
-        const char* typeName, const StringVector& typeArgs, const char* rule) const
-        throw(ConfigurationException)
+    void SchemaTypeInt::checkRule(const SchemaValidator* sv, const Configuration* cfg, const char* typeName,
+        const StringVector& typeArgs, const char* rule) const throw(ConfigurationException)
     {
         unused(sv);
 
@@ -77,8 +76,7 @@ namespace danek
     }
 
     bool SchemaTypeInt::isA(const SchemaValidator* sv, const Configuration* cfg, const char* value,
-        const char* typeName, const StringVector& typeArgs, int indentLevel,
-        StringBuffer& errSuffix) const
+        const char* typeName, const StringVector& typeArgs, int indentLevel, StringBuffer& errSuffix) const
     {
         unused(sv);
         unused(typeName);
@@ -104,8 +102,8 @@ namespace danek
         max = cfg->stringToInt("", "", typeArgs[1]);
         if (val < min || val > max)
         {
-            errSuffix << "the value is outside the permitted range [" << typeArgs[0] << ", "
-                      << typeArgs[1] << "]";
+            errSuffix << "the value is outside the permitted range [" << typeArgs[0] << ", " << typeArgs[1]
+                      << "]";
             return false;
         }
         return true;

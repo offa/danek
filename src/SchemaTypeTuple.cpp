@@ -26,9 +26,8 @@
 
 namespace danek
 {
-    void SchemaTypeTuple::checkRule(const SchemaValidator* sv, const Configuration* cfg,
-        const char* typeName, const StringVector& typeArgs, const char* rule) const
-        throw(ConfigurationException)
+    void SchemaTypeTuple::checkRule(const SchemaValidator* sv, const Configuration* cfg, const char* typeName,
+        const StringVector& typeArgs, const char* rule) const throw(ConfigurationException)
     {
         unused(cfg);
 
@@ -75,9 +74,9 @@ namespace danek
         }
     }
 
-    void SchemaTypeTuple::validate(const SchemaValidator* sv, const Configuration* cfg,
-        const char* scope, const char* name, const char* typeName, const char* origTypeName,
-        const StringVector& typeArgs, int indentLevel) const throw(ConfigurationException)
+    void SchemaTypeTuple::validate(const SchemaValidator* sv, const Configuration* cfg, const char* scope,
+        const char* name, const char* typeName, const char* origTypeName, const StringVector& typeArgs,
+        int indentLevel) const throw(ConfigurationException)
     {
         unused(origTypeName);
 
@@ -121,14 +120,8 @@ namespace danek
             const char* elemValue = list[i];
             const char* elemTypeName = typeArgs[typeIndex];
             SchemaType* elemTypeDef = findType(sv, elemTypeName);
-            bool ok = callIsA(elemTypeDef,
-                sv,
-                cfg,
-                elemValue,
-                elemTypeName,
-                emptyArgs,
-                indentLevel + 1,
-                errSuffix);
+            bool ok =
+                callIsA(elemTypeDef, sv, cfg, elemValue, elemTypeName, emptyArgs, indentLevel + 1, errSuffix);
             if (!ok)
             {
                 const char* sep;
@@ -142,8 +135,8 @@ namespace danek
                 }
                 cfg->mergeNames(scope, name, fullyScopedName);
                 msg << cfg->fileName() << ": bad " << elemTypeName << " value ('" << elemValue
-                    << "') for element " << i + 1 << " ('" << typeArgs[elemNameIndex]
-                    << "') of the '" << fullyScopedName << "' " << typeName << sep << errSuffix;
+                    << "') for element " << i + 1 << " ('" << typeArgs[elemNameIndex] << "') of the '"
+                    << fullyScopedName << "' " << typeName << sep << errSuffix;
                 throw ConfigurationException(msg.c_str());
             }
         }

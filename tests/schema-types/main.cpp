@@ -138,8 +138,7 @@ int main(int argc, char** argv)
                 assert(0); // Bug!
             }
             printf("\n\n--------\n");
-            printf(
-                "Validation succeeded for scope '%s'\n%s--------\n\n", badScopes[i], buf.c_str());
+            printf("Validation succeeded for scope '%s'\n%s--------\n\n", badScopes[i], buf.c_str());
         }
         catch (const ConfigurationException& ex)
         {

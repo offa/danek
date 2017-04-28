@@ -50,8 +50,7 @@ namespace danek
         delete this;
     }
 
-    void Configuration::mergeNames(
-        const char* scope, const char* localName, StringBuffer& fullyScopedName)
+    void Configuration::mergeNames(const char* scope, const char* localName, StringBuffer& fullyScopedName)
     {
         if (scope[0] == '\0')
         {
@@ -181,8 +180,7 @@ namespace danek
                 }
                 for (; wStrIndex < wStrLen; wStrIndex++)
                 {
-                    if (patternMatchInternal(
-                            wStr, wStrIndex, wStrLen, wPattern, wPatternIndex, wPatternLen))
+                    if (patternMatchInternal(wStr, wStrIndex, wStrLen, wPattern, wPatternIndex, wPatternLen))
                     {
                         return true;
                     }

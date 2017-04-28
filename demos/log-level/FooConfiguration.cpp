@@ -61,8 +61,7 @@ const char* FooConfigurationException::c_str() const
 // class FooConfiguration
 //----------------------------------------------------------------------
 
-FooConfiguration::FooConfiguration()
-    : m_cfg(Configuration::create()), m_logLevels(nullptr), m_numLogLevels(0)
+FooConfiguration::FooConfiguration() : m_cfg(Configuration::create()), m_logLevels(nullptr), m_numLogLevels(0)
 {
 }
 

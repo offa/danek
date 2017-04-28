@@ -50,13 +50,12 @@ namespace danek
         }
 
     protected:
-        virtual void checkRule(const SchemaValidator* sv, const Configuration* cfg,
-            const char* typeName, const StringVector& typeArgs, const char* rule) const
-            throw(ConfigurationException) = 0;
+        virtual void checkRule(const SchemaValidator* sv, const Configuration* cfg, const char* typeName,
+            const StringVector& typeArgs, const char* rule) const throw(ConfigurationException) = 0;
 
-        virtual void validate(const SchemaValidator* sv, const Configuration* cfg,
-            const char* scope, const char* name, const char* typeName, const char* origTypeName,
-            const StringVector& typeArgs, int indentLevel) const throw(ConfigurationException);
+        virtual void validate(const SchemaValidator* sv, const Configuration* cfg, const char* scope,
+            const char* name, const char* typeName, const char* origTypeName, const StringVector& typeArgs,
+            int indentLevel) const throw(ConfigurationException);
 
         virtual bool isA(const SchemaValidator* sv, const Configuration* cfg, const char* value,
             const char* typeName, const StringVector& typeArgs, int indentLevel,
@@ -64,10 +63,9 @@ namespace danek
 
         SchemaType* findType(const SchemaValidator* sv, const char* name) const;
 
-        void callValidate(const SchemaType* target, const SchemaValidator* sv,
-            const Configuration* cfg, const char* scope, const char* name, const char* typeName,
-            const char* origTypeName, const StringVector& typeArgs, int indentLevel) const
-            throw(ConfigurationException);
+        void callValidate(const SchemaType* target, const SchemaValidator* sv, const Configuration* cfg,
+            const char* scope, const char* name, const char* typeName, const char* origTypeName,
+            const StringVector& typeArgs, int indentLevel) const throw(ConfigurationException);
 
         bool callIsA(const SchemaType* target, const SchemaValidator* sv, const Configuration* cfg,
             const char* value, const char* typeName, const StringVector& typeArgs, int indentLevel,

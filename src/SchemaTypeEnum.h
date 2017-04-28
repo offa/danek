@@ -30,9 +30,7 @@ namespace danek
     class SchemaTypeEnum : public SchemaType
     {
     public:
-        SchemaTypeEnum()
-            : SchemaType(
-                  "enum", "danek::SchemaTypeEnum", Configuration::CFG_STRING)
+        SchemaTypeEnum() : SchemaType("enum", "danek::SchemaTypeEnum", Configuration::CFG_STRING)
         {
         }
         virtual ~SchemaTypeEnum()
@@ -40,9 +38,8 @@ namespace danek
         }
 
     protected:
-        virtual void checkRule(const SchemaValidator* sv, const Configuration* cfg,
-            const char* typeName, const StringVector& typeArgs, const char* rule) const
-            throw(ConfigurationException);
+        virtual void checkRule(const SchemaValidator* sv, const Configuration* cfg, const char* typeName,
+            const StringVector& typeArgs, const char* rule) const throw(ConfigurationException);
 
         virtual bool isA(const SchemaValidator* sv, const Configuration* cfg, const char* value,
             const char* typeName, const StringVector& typeArgs, int indentLevel,

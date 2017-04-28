@@ -83,8 +83,7 @@ namespace danek
         return strcmp(sas1->m_spelling, sas2->m_spelling);
     }
 
-    void LexBase::searchForFunction(
-        const char* spelling, bool& found, short& funcType, short& symbol)
+    void LexBase::searchForFunction(const char* spelling, bool& found, short& funcType, short& symbol)
     {
         FuncInfo searchItem;
 
@@ -693,8 +692,8 @@ namespace danek
                             spelling << '"';
                             break;
                         default:
-                            msg << "Invalid escape sequence (%" << m_ch.c_str()[0]
-                                << ") in string on line " << m_lineNum;
+                            msg << "Invalid escape sequence (%" << m_ch.c_str()[0] << ") in string on line "
+                                << m_lineNum;
                             throw ConfigurationException(msg.c_str());
                     }
                     break;

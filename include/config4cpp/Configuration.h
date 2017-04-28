@@ -67,19 +67,17 @@ namespace danek
         static Configuration* create();
         virtual void destroy();
 
-        static void mergeNames(
-            const char* scope, const char* localName, StringBuffer& fullyScopedName);
+        static void mergeNames(const char* scope, const char* localName, StringBuffer& fullyScopedName);
 
         static int mbstrlen(const char* str);
 
         virtual void setFallbackConfiguration(Configuration* cfg) = 0;
-        virtual void setFallbackConfiguration(Configuration::SourceType sourceType,
-            const char* source,
+        virtual void setFallbackConfiguration(Configuration::SourceType sourceType, const char* source,
             const char* sourceDescription = "") throw(ConfigurationException) = 0;
         virtual const Configuration* getFallbackConfiguration() = 0;
 
-        virtual void setSecurityConfiguration(Configuration* cfg, bool takeOwnership,
-            const char* scope = "") throw(ConfigurationException) = 0;
+        virtual void setSecurityConfiguration(
+            Configuration* cfg, bool takeOwnership, const char* scope = "") throw(ConfigurationException) = 0;
 
         virtual void setSecurityConfiguration(const char* cfgInput, const char* scope = "") throw(
             ConfigurationException) = 0;
@@ -134,8 +132,7 @@ namespace danek
         virtual bool isMemorySizeBytes(const char* str) const = 0;
         virtual bool isMemorySizeKB(const char* str) const = 0;
         virtual bool isMemorySizeMB(const char* str) const = 0;
-        virtual bool isEnum(
-            const char* str, const EnumNameAndValue* enumInfo, int numEnums) const = 0;
+        virtual bool isEnum(const char* str, const EnumNameAndValue* enumInfo, int numEnums) const = 0;
         virtual bool isFloatWithUnits(
             const char* str, const char** allowedUnits, int allowedUnitsSize) const = 0;
         virtual bool isIntWithUnits(
@@ -146,39 +143,39 @@ namespace danek
         virtual bool isUnitsWithInt(
             const char* str, const char** allowedUnits, int allowedUnitsSize) const = 0;
 
-        virtual bool stringToBoolean(const char* scope, const char* localName,
-            const char* str) const throw(ConfigurationException) = 0;
+        virtual bool stringToBoolean(const char* scope, const char* localName, const char* str) const
+            throw(ConfigurationException) = 0;
         virtual int stringToInt(const char* scope, const char* localName, const char* str) const
             throw(ConfigurationException) = 0;
         virtual float stringToFloat(const char* scope, const char* localName, const char* str) const
             throw(ConfigurationException) = 0;
-        virtual int stringToDurationSeconds(const char* scope, const char* localName,
-            const char* str) const throw(ConfigurationException) = 0;
+        virtual int stringToDurationSeconds(const char* scope, const char* localName, const char* str) const
+            throw(ConfigurationException) = 0;
         virtual int stringToDurationMilliseconds(const char* scope, const char* localName,
             const char* str) const throw(ConfigurationException) = 0;
         virtual int stringToDurationMicroseconds(const char* scope, const char* localName,
             const char* str) const throw(ConfigurationException) = 0;
-        virtual int stringToMemorySizeBytes(const char* scope, const char* localName,
-            const char* str) const throw(ConfigurationException) = 0;
-        virtual int stringToMemorySizeKB(const char* scope, const char* localName,
-            const char* str) const throw(ConfigurationException) = 0;
-        virtual int stringToMemorySizeMB(const char* scope, const char* localName,
-            const char* str) const throw(ConfigurationException) = 0;
+        virtual int stringToMemorySizeBytes(const char* scope, const char* localName, const char* str) const
+            throw(ConfigurationException) = 0;
+        virtual int stringToMemorySizeKB(const char* scope, const char* localName, const char* str) const
+            throw(ConfigurationException) = 0;
+        virtual int stringToMemorySizeMB(const char* scope, const char* localName, const char* str) const
+            throw(ConfigurationException) = 0;
         virtual int stringToEnum(const char* scope, const char* localName, const char* typeName,
             const char* str, const EnumNameAndValue* enumInfo, int numEnums) const
             throw(ConfigurationException) = 0;
-        virtual void stringToFloatWithUnits(const char* scope, const char* localName,
-            const char* typeName, const char* str, const char** allowedUnits, int allowedUnitsSize,
-            float& floatResult, const char*& unitsResult) const throw(ConfigurationException) = 0;
-        virtual void stringToUnitsWithFloat(const char* scope, const char* localName,
-            const char* typeName, const char* str, const char** allowedUnits, int allowedUnitsSize,
-            float& floatResult, const char*& unitsResult) const throw(ConfigurationException) = 0;
-        virtual void stringToIntWithUnits(const char* scope, const char* localName,
-            const char* typeName, const char* str, const char** allowedUnits, int allowedUnitsSize,
-            int& intResult, const char*& unitsResult) const throw(ConfigurationException) = 0;
-        virtual void stringToUnitsWithInt(const char* scope, const char* localName,
-            const char* typeName, const char* str, const char** allowedUnits, int allowedUnitsSize,
-            int& intResult, const char*& unitsResult) const throw(ConfigurationException) = 0;
+        virtual void stringToFloatWithUnits(const char* scope, const char* localName, const char* typeName,
+            const char* str, const char** allowedUnits, int allowedUnitsSize, float& floatResult,
+            const char*& unitsResult) const throw(ConfigurationException) = 0;
+        virtual void stringToUnitsWithFloat(const char* scope, const char* localName, const char* typeName,
+            const char* str, const char** allowedUnits, int allowedUnitsSize, float& floatResult,
+            const char*& unitsResult) const throw(ConfigurationException) = 0;
+        virtual void stringToIntWithUnits(const char* scope, const char* localName, const char* typeName,
+            const char* str, const char** allowedUnits, int allowedUnitsSize, int& intResult,
+            const char*& unitsResult) const throw(ConfigurationException) = 0;
+        virtual void stringToUnitsWithInt(const char* scope, const char* localName, const char* typeName,
+            const char* str, const char** allowedUnits, int allowedUnitsSize, int& intResult,
+            const char*& unitsResult) const throw(ConfigurationException) = 0;
 
         //--------
         // lookup<Type>() operations, with and without default values.
@@ -188,9 +185,8 @@ namespace danek
         virtual const char* lookupString(const char* scope, const char* localName) const
             throw(ConfigurationException) = 0;
 
-        virtual void lookupList(const char* scope, const char* localName, const char**& array,
-            int& arraySize, const char** defaultArray, int defaultArraySize) const
-            throw(ConfigurationException) = 0;
+        virtual void lookupList(const char* scope, const char* localName, const char**& array, int& arraySize,
+            const char** defaultArray, int defaultArraySize) const throw(ConfigurationException) = 0;
         virtual void lookupList(const char* scope, const char* localName, const char**& array,
             int& arraySize) const throw(ConfigurationException) = 0;
 
@@ -223,63 +219,59 @@ namespace danek
         virtual bool lookupBoolean(const char* scope, const char* localName) const
             throw(ConfigurationException) = 0;
 
-        virtual void lookupFloatWithUnits(const char* scope, const char* localName,
-            const char* typeName, const char** allowedUnits, int allowedUnitsSize,
-            float& floatResult, const char*& unitsResult) const throw(ConfigurationException) = 0;
-        virtual void lookupFloatWithUnits(const char* scope, const char* localName,
-            const char* typeName, const char** allowedUnits, int allowedUnitsSize,
-            float& floatResult, const char*& unitsResult, float defaultFloat,
-            const char* defaultUnits) const throw(ConfigurationException) = 0;
-
-        virtual void lookupUnitsWithFloat(const char* scope, const char* localName,
-            const char* typeName, const char** allowedUnits, int allowedUnitsSize,
-            float& floatResult, const char*& unitsResult) const throw(ConfigurationException) = 0;
-        virtual void lookupUnitsWithFloat(const char* scope, const char* localName,
-            const char* typeName, const char** allowedUnits, int allowedUnitsSize,
-            float& floatResult, const char*& unitsResult, float defaultFloat,
-            const char* defaultUnits) const throw(ConfigurationException) = 0;
-
-        virtual void lookupIntWithUnits(const char* scope, const char* localName,
-            const char* typeName, const char** allowedUnits, int allowedUnitsSize, int& intResult,
+        virtual void lookupFloatWithUnits(const char* scope, const char* localName, const char* typeName,
+            const char** allowedUnits, int allowedUnitsSize, float& floatResult,
             const char*& unitsResult) const throw(ConfigurationException) = 0;
-        virtual void lookupIntWithUnits(const char* scope, const char* localName,
-            const char* typeName, const char** allowedUnits, int allowedUnitsSize, int& intResult,
-            const char*& unitsResult, int defaultInt, const char* defaultUnits) const
-            throw(ConfigurationException) = 0;
+        virtual void lookupFloatWithUnits(const char* scope, const char* localName, const char* typeName,
+            const char** allowedUnits, int allowedUnitsSize, float& floatResult, const char*& unitsResult,
+            float defaultFloat, const char* defaultUnits) const throw(ConfigurationException) = 0;
 
-        virtual void lookupUnitsWithInt(const char* scope, const char* localName,
-            const char* typeName, const char** allowedUnits, int allowedUnitsSize, int& intResult,
+        virtual void lookupUnitsWithFloat(const char* scope, const char* localName, const char* typeName,
+            const char** allowedUnits, int allowedUnitsSize, float& floatResult,
             const char*& unitsResult) const throw(ConfigurationException) = 0;
-        virtual void lookupUnitsWithInt(const char* scope, const char* localName,
-            const char* typeName, const char** allowedUnits, int allowedUnitsSize, int& intResult,
-            const char*& unitsResult, int defaultInt, const char* defaultUnits) const
-            throw(ConfigurationException) = 0;
+        virtual void lookupUnitsWithFloat(const char* scope, const char* localName, const char* typeName,
+            const char** allowedUnits, int allowedUnitsSize, float& floatResult, const char*& unitsResult,
+            float defaultFloat, const char* defaultUnits) const throw(ConfigurationException) = 0;
 
-        virtual int lookupDurationMicroseconds(const char* scope, const char* localName,
-            int defaultVal) const throw(ConfigurationException) = 0;
+        virtual void lookupIntWithUnits(const char* scope, const char* localName, const char* typeName,
+            const char** allowedUnits, int allowedUnitsSize, int& intResult, const char*& unitsResult) const
+            throw(ConfigurationException) = 0;
+        virtual void lookupIntWithUnits(const char* scope, const char* localName, const char* typeName,
+            const char** allowedUnits, int allowedUnitsSize, int& intResult, const char*& unitsResult,
+            int defaultInt, const char* defaultUnits) const throw(ConfigurationException) = 0;
+
+        virtual void lookupUnitsWithInt(const char* scope, const char* localName, const char* typeName,
+            const char** allowedUnits, int allowedUnitsSize, int& intResult, const char*& unitsResult) const
+            throw(ConfigurationException) = 0;
+        virtual void lookupUnitsWithInt(const char* scope, const char* localName, const char* typeName,
+            const char** allowedUnits, int allowedUnitsSize, int& intResult, const char*& unitsResult,
+            int defaultInt, const char* defaultUnits) const throw(ConfigurationException) = 0;
+
+        virtual int lookupDurationMicroseconds(const char* scope, const char* localName, int defaultVal) const
+            throw(ConfigurationException) = 0;
         virtual int lookupDurationMicroseconds(const char* scope, const char* localName) const
             throw(ConfigurationException) = 0;
 
-        virtual int lookupDurationMilliseconds(const char* scope, const char* localName,
-            int defaultVal) const throw(ConfigurationException) = 0;
+        virtual int lookupDurationMilliseconds(const char* scope, const char* localName, int defaultVal) const
+            throw(ConfigurationException) = 0;
         virtual int lookupDurationMilliseconds(const char* scope, const char* localName) const
             throw(ConfigurationException) = 0;
 
-        virtual int lookupDurationSeconds(const char* scope, const char* localName,
-            int defaultVal) const throw(ConfigurationException) = 0;
+        virtual int lookupDurationSeconds(const char* scope, const char* localName, int defaultVal) const
+            throw(ConfigurationException) = 0;
         virtual int lookupDurationSeconds(const char* scope, const char* localName) const
             throw(ConfigurationException) = 0;
 
-        virtual int lookupMemorySizeBytes(const char* scope, const char* localName,
-            int defaultVal) const throw(ConfigurationException) = 0;
+        virtual int lookupMemorySizeBytes(const char* scope, const char* localName, int defaultVal) const
+            throw(ConfigurationException) = 0;
         virtual int lookupMemorySizeBytes(const char* scope, const char* localName) const
             throw(ConfigurationException) = 0;
-        virtual int lookupMemorySizeKB(const char* scope, const char* localName,
-            int defaultVal) const throw(ConfigurationException) = 0;
+        virtual int lookupMemorySizeKB(const char* scope, const char* localName, int defaultVal) const
+            throw(ConfigurationException) = 0;
         virtual int lookupMemorySizeKB(const char* scope, const char* localName) const
             throw(ConfigurationException) = 0;
-        virtual int lookupMemorySizeMB(const char* scope, const char* localName,
-            int defaultVal) const throw(ConfigurationException) = 0;
+        virtual int lookupMemorySizeMB(const char* scope, const char* localName, int defaultVal) const
+            throw(ConfigurationException) = 0;
         virtual int lookupMemorySizeMB(const char* scope, const char* localName) const
             throw(ConfigurationException) = 0;
 
@@ -289,8 +281,8 @@ namespace danek
         //--------
         // Update operations
         //--------
-        virtual void insertString(const char* scope, const char* localName,
-            const char* strValue) throw(ConfigurationException) = 0;
+        virtual void insertString(const char* scope, const char* localName, const char* strValue) throw(
+            ConfigurationException) = 0;
 
         virtual void insertList(const char* scope, const char* localName, const char** array,
             int arraySize) throw(ConfigurationException) = 0;
@@ -298,14 +290,13 @@ namespace danek
         virtual void insertList(const char* scope, const char* localName,
             const char** nullTerminatedArray) throw(ConfigurationException) = 0;
 
-        virtual void insertList(const char* scope, const char* localName,
-            const StringVector& vec) throw(ConfigurationException) = 0;
+        virtual void insertList(const char* scope, const char* localName, const StringVector& vec) throw(
+            ConfigurationException) = 0;
 
         virtual void ensureScopeExists(const char* scope, const char* localName) throw(
             ConfigurationException) = 0;
 
-        virtual void remove(const char* scope, const char* localName) throw(
-            ConfigurationException) = 0;
+        virtual void remove(const char* scope, const char* localName) throw(ConfigurationException) = 0;
 
         virtual void empty() = 0;
 

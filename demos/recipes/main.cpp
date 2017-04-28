@@ -32,8 +32,7 @@
 //--------
 // Forward declarations
 //--------
-static void parseCmdLineArgs(
-    int argc, char** argv, const char*& recipeFilename, const char*& scope);
+static void parseCmdLineArgs(int argc, char** argv, const char*& recipeFilename, const char*& scope);
 static void usage();
 
 int main(int argc, char** argv)

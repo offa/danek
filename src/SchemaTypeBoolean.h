@@ -30,9 +30,7 @@ namespace danek
     class SchemaTypeBoolean : public SchemaType
     {
     public:
-        SchemaTypeBoolean()
-            : SchemaType("boolean", "danek::SchemaTypeBoolan",
-                  Configuration::CFG_STRING)
+        SchemaTypeBoolean() : SchemaType("boolean", "danek::SchemaTypeBoolan", Configuration::CFG_STRING)
         {
         }
         virtual ~SchemaTypeBoolean()
@@ -40,9 +38,8 @@ namespace danek
         }
 
     protected:
-        virtual void checkRule(const SchemaValidator* sv, const Configuration* cfg,
-            const char* typeName, const StringVector& typeArgs, const char* rule) const
-            throw(ConfigurationException);
+        virtual void checkRule(const SchemaValidator* sv, const Configuration* cfg, const char* typeName,
+            const StringVector& typeArgs, const char* rule) const throw(ConfigurationException);
 
         virtual bool isA(const SchemaValidator* sv, const Configuration* cfg, const char* value,
             const char* typeName, const StringVector& typeArgs, int indentLevel,

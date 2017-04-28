@@ -239,12 +239,8 @@ int main(int argc, char** argv)
                 schemaCfg->lookupList(scope, "wildcarded_names_and_types", wildcardedNamesAndTypes);
                 schemaCfg->lookupList(scope, "ignore_rules", recipeIgnoreRules);
             }
-            calculateSchema(cfg,
-                namesList,
-                recipeUserTypes,
-                wildcardedNamesAndTypes,
-                recipeIgnoreRules,
-                schema);
+            calculateSchema(
+                cfg, namesList, recipeUserTypes, wildcardedNamesAndTypes, recipeIgnoreRules, schema);
             checkForUnmatchedPatterns(cfg, namesList, wildcardedNamesAndTypes, unmatchedPatterns);
         }
         catch (const ConfigurationException& ex)
