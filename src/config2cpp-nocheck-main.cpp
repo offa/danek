@@ -1,4 +1,4 @@
-//-----------------------------------------------------------------------
+// Copyright (c) 2017 offa
 // Copyright 2011 Ciaran McHale.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
@@ -10,7 +10,7 @@
 // the following conditions.
 //
 // The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.  
+// included in all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
@@ -20,7 +20,6 @@
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-//----------------------------------------------------------------------
 
 //--------
 // #include's
@@ -30,20 +29,19 @@
 #include <stdlib.h>
 #include "Config2Cpp.h"
 
+using namespace danek;
 
-using namespace CONFIG4CPP_NAMESPACE;
-
-int
-main(int argc, char ** argv)
+int main(int argc, char** argv)
 {
-	bool				ok;
-	int					exitStatus;
-	Config2Cpp			util("config2cpp-nocheck");
+    bool ok;
+    int exitStatus;
+    Config2Cpp util("config2cpp-nocheck");
 
-	ok = util.parseCmdLineArgs(argc, argv);
-	if (ok) {
-		ok = util.generateFiles(0, 0);
-	}
-	exitStatus = (ok == false);
-	return exitStatus;
+    ok = util.parseCmdLineArgs(argc, argv);
+    if (ok)
+    {
+        ok = util.generateFiles(0, 0);
+    }
+    exitStatus = (ok == false);
+    return exitStatus;
 }

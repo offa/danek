@@ -1,4 +1,4 @@
-//----------------------------------------------------------------------
+// Copyright (c) 2017 offa
 // Copyright 2011 Ciaran McHale.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
@@ -20,61 +20,54 @@
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-//----------------------------------------------------------------------
 
 #pragma once
 
 #include "Logger.h"
 
-
 class FooConfigurationException
 {
 public:
-	//--------
-	// Constructors and destructor
-	//--------
-	explicit FooConfigurationException(const char * str);
-	FooConfigurationException(const FooConfigurationException & other);
-	~FooConfigurationException();
+    //--------
+    // Constructors and destructor
+    //--------
+    explicit FooConfigurationException(const char* str);
+    FooConfigurationException(const FooConfigurationException& other);
+    ~FooConfigurationException();
 
-	const char * c_str() const; // Accessor
+    const char* c_str() const; // Accessor
 
 private:
-	char *			m_str;
+    char* m_str;
 
-	//--------
-	// Not implemented
-	//--------
-	FooConfigurationException();
-	FooConfigurationException operator=(const FooConfigurationException &);
+    //--------
+    // Not implemented
+    //--------
+    FooConfigurationException();
+    FooConfigurationException operator=(const FooConfigurationException&);
 };
-
 
 class FooConfiguration
 {
 public:
-	FooConfiguration();
-	~FooConfiguration();
+    FooConfiguration();
+    ~FooConfiguration();
 
-	void parse(
-			const char *	cfgInput,
-			const char *	cfgScope = "",
-			const char *	secInput = "",
-			const char *	secScope = "") throw (FooConfigurationException);
-	//--------
-	// Public operations
-	//--------
-	Logger::LogLevel getLogLevel(const char * opName) const;
+    void parse(const char* cfgInput, const char* cfgScope = "", const char* secInput = "",
+        const char* secScope = "") throw(FooConfigurationException);
+    //--------
+    // Public operations
+    //--------
+    Logger::LogLevel getLogLevel(const char* opName) const;
 
 private:
-	void *			m_cfg; // opaque pointer to Config4Cpp config object
-	const char **	m_logLevels;
-	int				m_numLogLevels;
+    void* m_cfg; // opaque pointer to Config4Cpp config object
+    const char** m_logLevels;
+    int m_numLogLevels;
 
-	//--------
-	// The following are not implemented
-	//--------
-	FooConfiguration & operator=(const FooConfiguration &);
-	FooConfiguration(const FooConfiguration &);
+    //--------
+    // The following are not implemented
+    //--------
+    FooConfiguration& operator=(const FooConfiguration&);
+    FooConfiguration(const FooConfiguration&);
 };
-

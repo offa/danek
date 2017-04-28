@@ -1,4 +1,4 @@
-//-----------------------------------------------------------------------
+// Copyright (c) 2017 offa
 // Copyright 2011 Ciaran McHale.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
@@ -20,72 +20,45 @@
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-//----------------------------------------------------------------------
 
 #pragma once
 
 #include <config4cpp/SchemaValidator.h>
-using CONFIG4CPP_NAMESPACE::Configuration;
-using CONFIG4CPP_NAMESPACE::ConfigurationException;
-using CONFIG4CPP_NAMESPACE::SchemaValidator;
-using CONFIG4CPP_NAMESPACE::SchemaType;
-using CONFIG4CPP_NAMESPACE::StringBuffer;
-using CONFIG4CPP_NAMESPACE::StringVector;
-
+using danek::Configuration;
+using danek::ConfigurationException;
+using danek::SchemaValidator;
+using danek::SchemaType;
+using danek::StringBuffer;
+using danek::StringVector;
 
 class SchemaTypeHex : public SchemaType
 {
 public:
-	SchemaTypeHex()
-		: SchemaType("hex", "SchemaTypeHex", Configuration::CFG_STRING)
-	{ }
-	virtual ~SchemaTypeHex();
+    SchemaTypeHex() : SchemaType("hex", "SchemaTypeHex", Configuration::CFG_STRING)
+    {
+    }
+    virtual ~SchemaTypeHex();
 
-	static int lookupHex(
-		const Configuration *	cfg,
-		const char *			scope,
-		const char *			localName) throw(ConfigurationException);
+    static int lookupHex(const Configuration* cfg, const char* scope, const char* localName) throw(
+        ConfigurationException);
 
-	static int lookupHex(
-		const Configuration *	cfg,
-		const char *			scope,
-		const char *			localName,
-		int						defaultVal) throw(ConfigurationException);
-	static int stringToHex(
-		const Configuration *	cfg,
-		const char *			scope,
-		const char *			localName,
-		const char *			str,
-		const char *			typeName = "hex") throw(ConfigurationException);
+    static int lookupHex(const Configuration* cfg, const char* scope, const char* localName,
+        int defaultVal) throw(ConfigurationException);
+    static int stringToHex(const Configuration* cfg, const char* scope, const char* localName,
+        const char* str, const char* typeName = "hex") throw(ConfigurationException);
 
-	static bool isHex(const char * str);
+    static bool isHex(const char* str);
 
 protected:
-	virtual void checkRule(
-		const SchemaValidator *	sv,
-		const Configuration *	cfg,
-		const char *			typeName,
-		const StringVector &	typeArgs,
-		const char *			rule) const throw(ConfigurationException);
+    virtual void checkRule(const SchemaValidator* sv, const Configuration* cfg,
+        const char* typeName, const StringVector& typeArgs, const char* rule) const
+        throw(ConfigurationException);
 
-	virtual void validate(
-		const SchemaValidator *	sv,
-		const Configuration *	cfg,
-		const char *			scope,
-		const char *			name,
-		const char *			typeName,
-		const char *			origTypeName,
-		const StringVector &	typeArgs,
-		int						indentLevel) const
-											throw(ConfigurationException);
+    virtual void validate(const SchemaValidator* sv, const Configuration* cfg, const char* scope,
+        const char* name, const char* typeName, const char* origTypeName,
+        const StringVector& typeArgs, int indentLevel) const throw(ConfigurationException);
 
-	virtual bool isA(
-		const SchemaValidator *	sv,
-		const Configuration *	cfg,
-		const char *			value,
-		const char *			typeName,
-		const StringVector &	typeArgs,
-		int						indentlevel,
-		StringBuffer &			errSuffix) const;
+    virtual bool isA(const SchemaValidator* sv, const Configuration* cfg, const char* value,
+        const char* typeName, const StringVector& typeArgs, int indentlevel,
+        StringBuffer& errSuffix) const;
 };
-

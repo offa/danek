@@ -1,4 +1,4 @@
-//----------------------------------------------------------------------
+// Copyright (c) 2017 offa
 // Copyright 2011 Ciaran McHale.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
@@ -20,37 +20,34 @@
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-//----------------------------------------------------------------------
 
 #pragma once
 
 #include "FooConfiguration.h"
 
-
 class A
 {
 public:
-	//--------
-	// Constructors and destructor
-	//--------
-	explicit A(const FooConfiguration * cfg);
+    //--------
+    // Constructors and destructor
+    //--------
+    explicit A(const FooConfiguration* cfg);
 
-	void op1();
-	void op2();
-	void op3();
+    void op1();
+    void op2();
+    void op3();
 
 private:
-	//--------
-	// Instance variables
-	//--------
-	Logger::LogLevel		m_logLevelOp1;
-	Logger::LogLevel		m_logLevelOp2;
-	Logger::LogLevel		m_logLevelOp3;
+    //--------
+    // Instance variables
+    //--------
+    Logger::LogLevel m_logLevelOp1;
+    Logger::LogLevel m_logLevelOp2;
+    Logger::LogLevel m_logLevelOp3;
 
-	//--------
-	// Not implemented
-	//--------
-	A(const A &);
-	A operator=(const A &);
+    //--------
+    // Not implemented
+    //--------
+    A(const A&);
+    A operator=(const A&);
 };
-

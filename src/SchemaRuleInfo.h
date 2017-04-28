@@ -1,4 +1,4 @@
-//-----------------------------------------------------------------------
+// Copyright (c) 2017 offa
 // Copyright 2011 Ciaran McHale.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
@@ -20,7 +20,6 @@
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-//----------------------------------------------------------------------
 
 #pragma once
 
@@ -30,23 +29,22 @@
 #include <config4cpp/StringBuffer.h>
 #include <config4cpp/StringVector.h>
 
+namespace danek
+{
+    class SchemaIdRuleInfo
+    {
+    public:
+        StringBuffer m_locallyScopedName;
+        StringBuffer m_typeName;
+        StringVector m_args;
+        bool m_isOptional;
+    };
 
-namespace CONFIG4CPP_NAMESPACE {
+    class SchemaIgnoreRuleInfo
+    {
+    public:
+        short m_symbol;
+        StringBuffer m_locallyScopedName;
+    };
 
-class SchemaIdRuleInfo {
-public:
-	StringBuffer		m_locallyScopedName;
-	StringBuffer		m_typeName;
-	StringVector		m_args;
-	bool				m_isOptional;
-};
-
-
-class SchemaIgnoreRuleInfo {
-public:
-	short				m_symbol;
-	StringBuffer		m_locallyScopedName;
-};
-
-
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

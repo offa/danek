@@ -1,4 +1,4 @@
-//----------------------------------------------------------------------
+// Copyright (c) 2017 offa
 // Copyright 2011 Ciaran McHale.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
@@ -10,7 +10,7 @@
 // the following conditions.
 //
 // The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.  
+// included in all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
@@ -20,8 +20,6 @@
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-//----------------------------------------------------------------------
-
 
 #include "Logger.h"
 #include <stdio.h>
@@ -31,35 +29,34 @@
 //--------
 Logger log;
 
-
-
-void
-Logger::error(LogLevel logLevel, const char * msg)
+void Logger::error(LogLevel logLevel, const char* msg)
 {
-	if (logLevel >= ERROR_LEVEL) { printf("%s\n", msg); }
+    if (logLevel >= ERROR_LEVEL)
+    {
+        printf("%s\n", msg);
+    }
 }
 
-
-
-void
-Logger::warn(LogLevel logLevel, const char * msg)
+void Logger::warn(LogLevel logLevel, const char* msg)
 {
-	if (logLevel >= WARN_LEVEL) { printf("%s\n", msg); }
+    if (logLevel >= WARN_LEVEL)
+    {
+        printf("%s\n", msg);
+    }
 }
 
-
-
-void
-Logger::info(LogLevel logLevel, const char * msg)
+void Logger::info(LogLevel logLevel, const char* msg)
 {
-	if (logLevel >= INFO_LEVEL) { printf("%s\n", msg); }
+    if (logLevel >= INFO_LEVEL)
+    {
+        printf("%s\n", msg);
+    }
 }
 
-
-
-void
-Logger::debug(LogLevel logLevel, const char * msg)
+void Logger::debug(LogLevel logLevel, const char* msg)
 {
-	if (logLevel >= DEBUG_LEVEL) { printf("%s\n", msg); }
+    if (logLevel >= DEBUG_LEVEL)
+    {
+        printf("%s\n", msg);
+    }
 }
-

@@ -1,4 +1,4 @@
-//-----------------------------------------------------------------------
+// Copyright (c) 2017 offa
 // Copyright 2011 Ciaran McHale.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
@@ -20,42 +20,37 @@
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-//----------------------------------------------------------------------
 
 #pragma once
 
 #include <config4cpp/SchemaType.h>
 #include "Common.h"
 
-namespace CONFIG4CPP_NAMESPACE {
-
-class SchemaTypeDummy
-	: public SchemaType
+namespace danek
 {
-public:
-	explicit SchemaTypeDummy(const char * name)
-		: SchemaType(
-			name,
-			CONFIG4CPP_NAMESPACE_STR "::SchemaTypeDummy",
-			Configuration::CFG_STRING)
-	{ }
-	virtual ~SchemaTypeDummy() { }
+    class SchemaTypeDummy : public SchemaType
+    {
+    public:
+        explicit SchemaTypeDummy(const char* name)
+            : SchemaType(
+                  name, "danek::SchemaTypeDummy", Configuration::CFG_STRING)
+        {
+        }
+        virtual ~SchemaTypeDummy()
+        {
+        }
 
-protected:
-	virtual void checkRule(
-		const SchemaValidator *	sv,
-		const Configuration *	cfg,
-		const char *			typeName,
-		const StringVector &	typeArgs,
-		const char *			rule) const throw(ConfigurationException)
-	{
-        unused(sv);
-        unused(cfg);
-        unused(typeName);
-        unused(typeArgs);
-        unused(rule);
-    }
-};
+    protected:
+        virtual void checkRule(const SchemaValidator* sv, const Configuration* cfg,
+            const char* typeName, const StringVector& typeArgs, const char* rule) const
+            throw(ConfigurationException)
+        {
+            unused(sv);
+            unused(cfg);
+            unused(typeName);
+            unused(typeArgs);
+            unused(rule);
+        }
+    };
 
-
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

@@ -1,4 +1,4 @@
-//-----------------------------------------------------------------------
+// Copyright (c) 2017 offa
 // Copyright 2011 Ciaran McHale.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
@@ -20,132 +20,133 @@
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-//----------------------------------------------------------------------
 
 #include "SchemaTypeTuple.h"
 #include "Common.h"
 
-namespace CONFIG4CPP_NAMESPACE {
-
-void
-SchemaTypeTuple::checkRule(
-	const SchemaValidator *		sv,
-	const Configuration *		cfg,
-	const char *				typeName,
-	const StringVector &		typeArgs,
-	const char *				rule) const throw(ConfigurationException)
+namespace danek
 {
-    unused(cfg);
+    void SchemaTypeTuple::checkRule(const SchemaValidator* sv, const Configuration* cfg,
+        const char* typeName, const StringVector& typeArgs, const char* rule) const
+        throw(ConfigurationException)
+    {
+        unused(cfg);
 
-	StringBuffer				msg;
+        StringBuffer msg;
 
-	//--------
-	// Check there is at least one pair of type and name arguments.
-	//--------
-	int len = typeArgs.length();
-	if ((len == 0) || (len % 2 != 0)) {
-		msg << "the '" << typeName << "' type requires pairs of type and "
-			<< "name arguments in rule '" << rule << "'";
-		throw ConfigurationException(msg.c_str());
-	}
+        //--------
+        // Check there is at least one pair of type and name arguments.
+        //--------
+        int len = typeArgs.length();
+        if ((len == 0) || (len % 2 != 0))
+        {
+            msg << "the '" << typeName << "' type requires pairs of type and "
+                << "name arguments in rule '" << rule << "'";
+            throw ConfigurationException(msg.c_str());
+        }
 
-	//--------
-	// Check that all the type arguments are valid types.
-	//--------
-	for (int i = 0; i < len; i+=2) {
-		const char* elemType = typeArgs[i+0];
-		SchemaType* typeDef = findType(sv, elemType);
-		if (typeDef == 0) {
-			msg << "unknown type '" << elemType << "' in rule '" << rule << "'";
-			throw ConfigurationException(msg.c_str());
-		}
-		switch (typeDef->cfgType()) {
-		case Configuration::CFG_STRING:
-			break;
-		case Configuration::CFG_LIST:
-			msg << "you cannot embed a list type ('" << elemType
-				<< "') inside a " << "tuple in rule '" << rule << "'";
-			throw ConfigurationException(msg.c_str());
-		case Configuration::CFG_SCOPE:
-			msg << "you cannot embed a scope type ('" << elemType
-				<< "') inside a " << "tuple in rule '" << rule << "'";
-			throw ConfigurationException(msg.c_str());
-		default:
-			assert(0); // Bug!
-		}
-	}
-}
+        //--------
+        // Check that all the type arguments are valid types.
+        //--------
+        for (int i = 0; i < len; i += 2)
+        {
+            const char* elemType = typeArgs[i + 0];
+            SchemaType* typeDef = findType(sv, elemType);
+            if (typeDef == 0)
+            {
+                msg << "unknown type '" << elemType << "' in rule '" << rule << "'";
+                throw ConfigurationException(msg.c_str());
+            }
+            switch (typeDef->cfgType())
+            {
+                case Configuration::CFG_STRING:
+                    break;
+                case Configuration::CFG_LIST:
+                    msg << "you cannot embed a list type ('" << elemType << "') inside a "
+                        << "tuple in rule '" << rule << "'";
+                    throw ConfigurationException(msg.c_str());
+                case Configuration::CFG_SCOPE:
+                    msg << "you cannot embed a scope type ('" << elemType << "') inside a "
+                        << "tuple in rule '" << rule << "'";
+                    throw ConfigurationException(msg.c_str());
+                default:
+                    assert(0); // Bug!
+            }
+        }
+    }
 
+    void SchemaTypeTuple::validate(const SchemaValidator* sv, const Configuration* cfg,
+        const char* scope, const char* name, const char* typeName, const char* origTypeName,
+        const StringVector& typeArgs, int indentLevel) const throw(ConfigurationException)
+    {
+        unused(origTypeName);
 
+        StringBuffer msg;
+        StringBuffer errSuffix;
+        StringBuffer fullyScopedName;
+        const char** list;
+        int listSize;
+        StringVector emptyArgs;
 
-void
-SchemaTypeTuple::validate(
-	const SchemaValidator *		sv,
-	const Configuration *		cfg,
-	const char *				scope,
-	const char *				name,
-	const char *				typeName,
-	const char *				origTypeName,
-	const StringVector &		typeArgs,
-	int							indentLevel) const
-											throw(ConfigurationException)
-{
-    unused(origTypeName);
+        //--------
+        // Check the length of the list matches the size of the tuple
+        //--------
+        int typeArgsSize = typeArgs.length();
+        assert(typeArgsSize != 0);
+        assert(typeArgsSize % 2 == 0);
+        int numElems = typeArgsSize / 2;
+        cfg->lookupList(scope, name, list, listSize);
+        if (listSize != numElems)
+        {
+            cfg->mergeNames(scope, name, fullyScopedName);
+            msg << cfg->fileName() << ": there should be " << numElems << " entries in the '"
+                << fullyScopedName << "' " << typeName << "; entries denote";
+            for (int i = 0; i < numElems; i++)
+            {
+                msg << " '" << typeArgs[i * 2 + 0] << "'";
+                if (i < numElems - 1)
+                {
+                    msg << ",";
+                }
+            }
+            throw ConfigurationException(msg.c_str());
+        }
+        //--------
+        // Check each item is of the type specified in the tuple
+        //--------
+        for (int i = 0; i < listSize; i++)
+        {
+            int typeIndex = (i * 2 + 0) % typeArgsSize;
+            int elemNameIndex = (i * 2 + 1) % typeArgsSize;
+            const char* elemValue = list[i];
+            const char* elemTypeName = typeArgs[typeIndex];
+            SchemaType* elemTypeDef = findType(sv, elemTypeName);
+            bool ok = callIsA(elemTypeDef,
+                sv,
+                cfg,
+                elemValue,
+                elemTypeName,
+                emptyArgs,
+                indentLevel + 1,
+                errSuffix);
+            if (!ok)
+            {
+                const char* sep;
+                if (errSuffix.length() == 0)
+                {
+                    sep = "";
+                }
+                else
+                {
+                    sep = "; ";
+                }
+                cfg->mergeNames(scope, name, fullyScopedName);
+                msg << cfg->fileName() << ": bad " << elemTypeName << " value ('" << elemValue
+                    << "') for element " << i + 1 << " ('" << typeArgs[elemNameIndex]
+                    << "') of the '" << fullyScopedName << "' " << typeName << sep << errSuffix;
+                throw ConfigurationException(msg.c_str());
+            }
+        }
+    }
 
-	StringBuffer				msg;
-	StringBuffer				errSuffix;
-	StringBuffer				fullyScopedName;
-	const char **				list;
-	int							listSize;
-	StringVector				emptyArgs;
-
-	//--------
-	// Check the length of the list matches the size of the tuple
-	//--------
-	int typeArgsSize = typeArgs.length();
-	assert(typeArgsSize != 0);
-	assert(typeArgsSize % 2 == 0);
-	int numElems = typeArgsSize / 2;
-	cfg->lookupList(scope, name, list, listSize);
-	if (listSize != numElems) {
-		cfg->mergeNames(scope, name, fullyScopedName);
-		msg << cfg->fileName() << ": there should be " << numElems
-			<< " entries in the '" << fullyScopedName << "' " << typeName
-		    << "; entries denote";
-		for (int i = 0; i < numElems; i++) {
-			msg << " '" << typeArgs[i*2+0] << "'";
-			if (i < numElems-1) {
-				msg << ",";
-			}
-		}
-		throw ConfigurationException(msg.c_str());
-	}
-	//--------
-	// Check each item is of the type specified in the tuple
-	//--------
-	for (int i = 0; i < listSize; i++) {
-		int typeIndex     = (i * 2 + 0) % typeArgsSize;
-		int elemNameIndex = (i * 2 + 1) % typeArgsSize;
-		const char* elemValue = list[i];
-		const char* elemTypeName = typeArgs[typeIndex];
-		SchemaType* elemTypeDef = findType(sv, elemTypeName);
-		bool ok = callIsA(elemTypeDef, sv, cfg, elemValue, elemTypeName, emptyArgs,
-					 indentLevel + 1, errSuffix);
-		if (!ok) {
-            const char* sep;
-			if (errSuffix.length() == 0) {
-				sep = "";
-			} else {
-				sep = "; ";
-			}
-			cfg->mergeNames(scope, name, fullyScopedName);
-			msg << cfg->fileName() << ": bad " << elemTypeName << " value ('"
-				<< elemValue << "') for element " << i+1 << " ('"
-			    << typeArgs[elemNameIndex] << "') of the '" << fullyScopedName
-				<< "' " << typeName << sep << errSuffix;
-			throw ConfigurationException(msg.c_str());
-		}
-	}
-}
-
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

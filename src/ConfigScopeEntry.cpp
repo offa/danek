@@ -1,4 +1,4 @@
-//-----------------------------------------------------------------------
+// Copyright (c) 2017 offa
 // Copyright 2011 Ciaran McHale.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
@@ -20,7 +20,6 @@
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-//----------------------------------------------------------------------
 
 //--------
 // #include's
@@ -30,54 +29,44 @@
 #include <string.h>
 #include <assert.h>
 
-
-namespace CONFIG4CPP_NAMESPACE {
-
-//----------------------------------------------------------------------
-// Function:	Constructor (overloaded)
-//
-// Description:
-//----------------------------------------------------------------------
-
-ConfigScopeEntry::ConfigScopeEntry()
+namespace danek
 {
-	m_item	= 0;
-	m_next	= 0;
-}
+    //----------------------------------------------------------------------
+    // Function:	Constructor (overloaded)
+    //
+    // Description:
+    //----------------------------------------------------------------------
 
+    ConfigScopeEntry::ConfigScopeEntry()
+    {
+        m_item = 0;
+        m_next = 0;
+    }
 
-ConfigScopeEntry::ConfigScopeEntry(
-		const char *		name,
-		ConfigItem *		item,
-		ConfigScopeEntry *	next)
-{
-    unused(name);
+    ConfigScopeEntry::ConfigScopeEntry(const char* name, ConfigItem* item, ConfigScopeEntry* next)
+    {
+        unused(name);
 
-	m_item	= item;
-	m_next	= next;
-}
+        m_item = item;
+        m_next = next;
+    }
 
+    //----------------------------------------------------------------------
+    // Function:	Destructor
+    //
+    // Description:
+    //----------------------------------------------------------------------
 
+    ConfigScopeEntry::~ConfigScopeEntry()
+    {
+        delete m_item;
+        delete m_next;
+    }
 
-//----------------------------------------------------------------------
-// Function:	Destructor
-//
-// Description:
-//----------------------------------------------------------------------
+    void ConfigScopeEntry::setItem(ConfigItem* item)
+    {
+        delete m_item;
+        m_item = item;
+    }
 
-ConfigScopeEntry::~ConfigScopeEntry ()
-{
-	delete m_item;
-	delete m_next;
-}
-
-
-
-void
-ConfigScopeEntry::setItem(ConfigItem * item)
-{
-	delete m_item;
-	m_item = item;
-}
-
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

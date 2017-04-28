@@ -1,4 +1,4 @@
-//----------------------------------------------------------------------
+// Copyright (c) 2017 offa
 // Copyright 2011 Ciaran McHale.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
@@ -20,7 +20,6 @@
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-//----------------------------------------------------------------------
 
 #pragma once
 
@@ -30,60 +29,59 @@
 #include <config4cpp/namespace.h>
 #include <config4cpp/StringBuffer.h>
 
+namespace danek
+{
+    class ConfigParser;
 
-namespace CONFIG4CPP_NAMESPACE {
+    class StringVector
+    {
+    public:
+        //--------
+        // Constructors and destructor
+        //--------
+        StringVector(int initialCapacity = 10);
+        StringVector(const StringVector&);
+        ~StringVector();
 
-class ConfigParser;
+        //--------
+        // Assignment operator.
+        //--------
+        StringVector& operator=(const StringVector& other);
 
-class StringVector {
-public:
-	//--------
-	// Constructors and destructor
-	//--------
-	StringVector(int initialCapacity = 10);
-	StringVector(const StringVector &);
-	~StringVector();
+        //--------
+        // Public API
+        //--------
+        void add(const char* str);
+        void add(const StringBuffer& strBuf);
+        void add(const StringVector& other);
+        void c_array(const char**& array, int& arraySize) const;
+        const char** c_array() const;
 
-	//--------
-	// Assignment operator.
-	//--------
-	StringVector & operator=(const StringVector & other);
+        void sort();
+        bool bSearchContains(const char* str) const;
 
-	//--------
-	// Public API
-	//--------
-	void			add(const char * str);
-	void			add(const StringBuffer & strBuf);
-	void			add(const StringVector & other);
-	void			c_array(const char**& array, int& arraySize)const;
-	const char **	c_array() const;
+        int length() const;
+        void ensureCapacity(int size);
 
-	void			sort();
-	bool			bSearchContains(const char * str) const;
+        void empty();
+        void removeLast();
 
-	int				length() const;
-	void			ensureCapacity(int size);
+        void replace(int index, const char* str);
 
-	void			empty();
-	void			removeLast();
+        const char* operator[](int index) const;
 
-	void			replace(int index, const char * str);
+    protected:
+        friend class ConfigParser;
+        void addWithOwnership(StringBuffer& strBuf);
+        void addWithOwnership(StringVector& other);
+        void replaceWithOwnership(int index, char* str);
 
-	const char *	operator[](int index) const;
+        //--------
+        // Instance variables
+        //--------
+        char** m_array;
+        int m_currSize;
+        int m_maxSize;
+    };
 
-protected:
-	friend class ConfigParser;
-	void			addWithOwnership(StringBuffer & strBuf);
-	void			addWithOwnership(StringVector & other);
-	void			replaceWithOwnership(int index, char * str);
-
-	//--------
-	// Instance variables
-	//--------
-	char **			m_array;
-	int				m_currSize;
-	int				m_maxSize;
-};
-
-
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

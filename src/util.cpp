@@ -1,4 +1,4 @@
-//-----------------------------------------------------------------------
+// Copyright (c) 2017 offa
 // Copyright 2011 Ciaran McHale.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
@@ -20,7 +20,6 @@
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-//----------------------------------------------------------------------
 
 //--------
 // #include's
@@ -28,26 +27,26 @@
 #include <config4cpp/StringBuffer.h>
 #include "util.h"
 
-
-namespace CONFIG4CPP_NAMESPACE {
-
-void
-splitScopedNameIntoVector(const char * str, StringVector & vec)
+namespace danek
 {
-	StringBuffer	tmpStr; // Mutable copy of str
+    void splitScopedNameIntoVector(const char* str, StringVector& vec)
+    {
+        StringBuffer tmpStr; // Mutable copy of str
 
-	vec.empty();
-	tmpStr = str;
-	int len = tmpStr.length();
-	char* startOfStr = &tmpStr[0];
-	for (int i = 0; i < len; i++) {
-		if (tmpStr[i] == '.') {
-			tmpStr[i] = 0;
-			vec.add(startOfStr);
-			startOfStr = &tmpStr[i+1];
-		}
-	}
-	vec.add(startOfStr);
-}
+        vec.empty();
+        tmpStr = str;
+        int len = tmpStr.length();
+        char* startOfStr = &tmpStr[0];
+        for (int i = 0; i < len; i++)
+        {
+            if (tmpStr[i] == '.')
+            {
+                tmpStr[i] = 0;
+                vec.add(startOfStr);
+                startOfStr = &tmpStr[i + 1];
+            }
+        }
+        vec.add(startOfStr);
+    }
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

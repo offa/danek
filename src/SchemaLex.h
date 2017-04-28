@@ -1,4 +1,4 @@
-//-----------------------------------------------------------------------
+// Copyright (c) 2017 offa
 // Copyright 2011 Ciaran McHale.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
@@ -20,7 +20,6 @@
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-//----------------------------------------------------------------------
 
 #pragma once
 
@@ -29,42 +28,41 @@
 //--------
 #include "LexBase.h"
 
-
-namespace CONFIG4CPP_NAMESPACE {
-
-class SchemaLex : public LexBase
+namespace danek
 {
-public:
-	enum SchemaLexSymbols {
-		//--------
-		// Constants for lexical symbols.
-		// Keywords
-		//--------
-		LEX_IGNORE_EVERYTHING_IN_SYM  = 101,
-		LEX_IGNORE_SCOPES_IN_SYM      = 102,
-		LEX_IGNORE_VARIABLES_IN_SYM   = 103,
-		LEX_TYPEDEF_SYM               = 104,
-		LEX_OPTIONAL_SYM              = 105,
-		LEX_REQUIRED_SYM              = 106
-		//--------
-		// There are no functions in the schema language
-		//--------
-	};
+    class SchemaLex : public LexBase
+    {
+    public:
+        enum SchemaLexSymbols
+        {
+            //--------
+            // Constants for lexical symbols.
+            // Keywords
+            //--------
+            LEX_IGNORE_EVERYTHING_IN_SYM = 101,
+            LEX_IGNORE_SCOPES_IN_SYM = 102,
+            LEX_IGNORE_VARIABLES_IN_SYM = 103,
+            LEX_TYPEDEF_SYM = 104,
+            LEX_OPTIONAL_SYM = 105,
+            LEX_REQUIRED_SYM = 106
+            //--------
+            // There are no functions in the schema language
+            //--------
+        };
 
-	//--------
-	// Constructors and destructor
-	//--------
-	explicit SchemaLex(const char * str) throw(ConfigurationException);
-	virtual ~SchemaLex();
+        //--------
+        // Constructors and destructor
+        //--------
+        explicit SchemaLex(const char* str) throw(ConfigurationException);
+        virtual ~SchemaLex();
 
-private:
-	//--------
-	// Unsupported constructors and assignment operators
-	//--------
-	SchemaLex();
-	SchemaLex(const SchemaLex &);
-	SchemaLex & operator=(const SchemaLex &);
-};
+    private:
+        //--------
+        // Unsupported constructors and assignment operators
+        //--------
+        SchemaLex();
+        SchemaLex(const SchemaLex&);
+        SchemaLex& operator=(const SchemaLex&);
+    };
 
-
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

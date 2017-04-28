@@ -1,4 +1,4 @@
-//-----------------------------------------------------------------------
+// Copyright (c) 2017 offa
 // Copyright 2011 Ciaran McHale.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
@@ -20,41 +20,33 @@
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-//----------------------------------------------------------------------
 
 #pragma once
 
 #include <config4cpp/SchemaType.h>
 
-namespace CONFIG4CPP_NAMESPACE {
-
-class SchemaTypeInt
-	: public SchemaType
+namespace danek
 {
-public:
-	SchemaTypeInt()
-		: SchemaType("int", CONFIG4CPP_NAMESPACE_STR "::SchemaTypeInt",
-		             Configuration::CFG_STRING)
-	{ }
-	virtual ~SchemaTypeInt() { }
+    class SchemaTypeInt : public SchemaType
+    {
+    public:
+        SchemaTypeInt()
+            : SchemaType(
+                  "int", "danek::SchemaTypeInt", Configuration::CFG_STRING)
+        {
+        }
+        virtual ~SchemaTypeInt()
+        {
+        }
 
-protected:
-	virtual void checkRule(
-		const SchemaValidator *	sv,
-		const Configuration *	cfg,
-		const char *			typeName,
-		const StringVector &	typeArgs,
-		const char *			rule) const throw(ConfigurationException);
+    protected:
+        virtual void checkRule(const SchemaValidator* sv, const Configuration* cfg,
+            const char* typeName, const StringVector& typeArgs, const char* rule) const
+            throw(ConfigurationException);
 
-	virtual bool isA(
-		const SchemaValidator *	sv,
-		const Configuration *	cfg,
-		const char *			value,
-		const char *			typeName,
-		const StringVector &	typeArgs,
-		int						indentLevel,
-		StringBuffer &			errSuffix) const;
-};
+        virtual bool isA(const SchemaValidator* sv, const Configuration* cfg, const char* value,
+            const char* typeName, const StringVector& typeArgs, int indentLevel,
+            StringBuffer& errSuffix) const;
+    };
 
-
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

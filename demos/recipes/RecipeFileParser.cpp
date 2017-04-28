@@ -1,4 +1,4 @@
-//----------------------------------------------------------------------
+// Copyright (c) 2017 offa
 // Copyright 2011 Ciaran McHale.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
@@ -20,7 +20,6 @@
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-//----------------------------------------------------------------------
 
 #include "RecipeFileParser.h"
 #include <config4cpp/SchemaValidator.h>
@@ -28,125 +27,118 @@
 #include <assert.h>
 #include <stdlib.h>
 
-using CONFIG4CPP_NAMESPACE::Configuration;
-using CONFIG4CPP_NAMESPACE::ConfigurationException;
-using CONFIG4CPP_NAMESPACE::SchemaValidator;
-
-
+using danek::Configuration;
+using danek::ConfigurationException;
+using danek::SchemaValidator;
 
 RecipeFileParser::RecipeFileParser() : m_cfg(nullptr), m_parseCalled(false)
 {
 }
 
-
-
 RecipeFileParser::~RecipeFileParser()
 {
-	m_cfg->destroy();
+    m_cfg->destroy();
 }
 
-
-
-void
-RecipeFileParser::parse(
-	const char *		recipeFilename,
-	const char *		scope) throw (RecipeFileParserException)
+void RecipeFileParser::parse(const char* recipeFilename, const char* scope) throw(
+    RecipeFileParserException)
 {
-	SchemaValidator		sv;
-	StringBuffer		filter;
+    SchemaValidator sv;
+    StringBuffer filter;
 
-	assert(!m_parseCalled);
-	m_cfg = Configuration::create();
-	m_scope = scope;
-	Configuration::mergeNames(scope, "uid-recipe", filter);
+    assert(!m_parseCalled);
+    m_cfg = Configuration::create();
+    m_scope = scope;
+    Configuration::mergeNames(scope, "uid-recipe", filter);
 
-	try {
-        const char *		schema[] = {
-            "uid-recipe = scope",
+    try
+    {
+        const char* schema[] = {"uid-recipe = scope",
             "uid-recipe.ingredients = list[string]",
             "uid-recipe.name = string",
             "uid-recipe.uid-step = string",
-            0
-        };
+            0};
 
-		m_cfg->parse(recipeFilename);
-		sv.parseSchema(schema);
-		sv.validate(m_cfg, m_scope.c_str(), "");
-		m_cfg->listFullyScopedNames(m_scope.c_str(), "",
-		                            Configuration::CFG_SCOPE, false,
-		                            filter.c_str(), m_recipeScopeNames);
-	} catch(const ConfigurationException & ex) {
-		throw RecipeFileParserException(ex.c_str());
-	}
-	m_parseCalled = true;
+        m_cfg->parse(recipeFilename);
+        sv.parseSchema(schema);
+        sv.validate(m_cfg, m_scope.c_str(), "");
+        m_cfg->listFullyScopedNames(m_scope.c_str(),
+            "",
+            Configuration::CFG_SCOPE,
+            false,
+            filter.c_str(),
+            m_recipeScopeNames);
+    }
+    catch (const ConfigurationException& ex)
+    {
+        throw RecipeFileParserException(ex.c_str());
+    }
+    m_parseCalled = true;
 }
 
-
-
-void
-RecipeFileParser::listRecipeScopes(StringVector & vec)
+void RecipeFileParser::listRecipeScopes(StringVector& vec)
 {
-	assert(m_parseCalled);
-	vec = m_recipeScopeNames;
+    assert(m_parseCalled);
+    vec = m_recipeScopeNames;
 }
 
-
-
-const char *
-RecipeFileParser::getRecipeName(const char * recipeScope)
-											throw (RecipeFileParserException)
+const char* RecipeFileParser::getRecipeName(const char* recipeScope) throw(
+    RecipeFileParserException)
 {
-	assert(m_parseCalled);
-	try {
-		return m_cfg->lookupString(recipeScope, "name");
-	} catch(const ConfigurationException & ex) {
-		throw RecipeFileParserException(ex.c_str());
-	}
+    assert(m_parseCalled);
+    try
+    {
+        return m_cfg->lookupString(recipeScope, "name");
+    }
+    catch (const ConfigurationException& ex)
+    {
+        throw RecipeFileParserException(ex.c_str());
+    }
 }
 
-
-
-void
-RecipeFileParser::getRecipeIngredients(
-	const char *			recipeScope,
-	StringVector &			result) throw (RecipeFileParserException)
+void RecipeFileParser::getRecipeIngredients(const char* recipeScope, StringVector& result) throw(
+    RecipeFileParserException)
 {
-	assert(m_parseCalled);
-	try {
-		m_cfg->lookupList(recipeScope, "ingredients", result);
-	} catch(const ConfigurationException & ex) {
-		throw RecipeFileParserException(ex.c_str());
-	}
+    assert(m_parseCalled);
+    try
+    {
+        m_cfg->lookupList(recipeScope, "ingredients", result);
+    }
+    catch (const ConfigurationException& ex)
+    {
+        throw RecipeFileParserException(ex.c_str());
+    }
 }
 
-
-
-void
-RecipeFileParser::getRecipeSteps(
-	const char *			recipeScope,
-	StringVector &			result) throw (RecipeFileParserException)
+void RecipeFileParser::getRecipeSteps(const char* recipeScope, StringVector& result) throw(
+    RecipeFileParserException)
 {
-	int						len;
-	StringVector			namesVec;
+    int len;
+    StringVector namesVec;
 
-	assert(m_parseCalled);
-	try {
-		m_cfg->listLocallyScopedNames(recipeScope, "",
-		                              Configuration::CFG_STRING, false,
-		                              "uid-step", namesVec);
-	} catch(const ConfigurationException & ex) {
-		throw RecipeFileParserException(ex.c_str());
-	}
-	result.empty();
-	len = namesVec.length();
-	try {
-		for (int i = 0; i < len; i++) {
-			assert(m_cfg->uidEquals("uid-step", namesVec[i]));
-			const char* str = m_cfg->lookupString(recipeScope, namesVec[i]);
-			result.add(str);
-		}
-	} catch(const ConfigurationException &) {
-		abort(); // Bug!
-	}
+    assert(m_parseCalled);
+    try
+    {
+        m_cfg->listLocallyScopedNames(
+            recipeScope, "", Configuration::CFG_STRING, false, "uid-step", namesVec);
+    }
+    catch (const ConfigurationException& ex)
+    {
+        throw RecipeFileParserException(ex.c_str());
+    }
+    result.empty();
+    len = namesVec.length();
+    try
+    {
+        for (int i = 0; i < len; i++)
+        {
+            assert(m_cfg->uidEquals("uid-step", namesVec[i]));
+            const char* str = m_cfg->lookupString(recipeScope, namesVec[i]);
+            result.add(str);
+        }
+    }
+    catch (const ConfigurationException&)
+    {
+        abort(); // Bug!
+    }
 }
-

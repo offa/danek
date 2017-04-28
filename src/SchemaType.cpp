@@ -1,4 +1,4 @@
-//-----------------------------------------------------------------------
+// Copyright (c) 2017 offa
 // Copyright 2011 Ciaran McHale.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
@@ -20,135 +20,89 @@
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-//----------------------------------------------------------------------
 
 #include <config4cpp/SchemaType.h>
 #include <config4cpp/SchemaValidator.h>
 #include "Common.h"
 
-namespace CONFIG4CPP_NAMESPACE {
-
-class SchemaValidator;
-
-SchemaType::SchemaType(
-	const char *			typeName,
-	const char *			className,
-	Configuration::Type		cfgType)
+namespace danek
 {
-	m_typeName  = typeName;
-	m_className = className;
-	m_cfgType   = cfgType;
-}
+    class SchemaValidator;
 
+    SchemaType::SchemaType(const char* typeName, const char* className, Configuration::Type cfgType)
+    {
+        m_typeName = typeName;
+        m_className = className;
+        m_cfgType = cfgType;
+    }
 
+    SchemaType::~SchemaType()
+    {
+    }
 
-SchemaType::~SchemaType()
-{
-}
+    void SchemaType::validate(const SchemaValidator* sv, const Configuration* cfg,
+        const char* scope, const char* name, const char* typeName, const char* origTypeName,
+        const StringVector& typeArgs, int indentLevel) const throw(ConfigurationException)
+    {
+        unused(origTypeName);
 
+        const char* value;
+        StringBuffer msg;
+        StringBuffer fullyScopedName;
+        StringBuffer errSuffix;
 
+        value = cfg->lookupString(scope, name);
+        if (!sv->callIsA(this, cfg, value, typeName, typeArgs, indentLevel + 1, errSuffix))
+        {
+            const char* sep;
+            cfg->mergeNames(scope, name, fullyScopedName);
+            if (errSuffix.length() == 0)
+            {
+                sep = "";
+            }
+            else
+            {
+                sep = "; ";
+            }
+            msg << cfg->fileName() << ": bad " << typeName << " value ('" << value << "') for '"
+                << fullyScopedName << "'" << sep << errSuffix;
+            throw ConfigurationException(msg.c_str());
+        }
+    }
 
-void
-SchemaType::validate(
-	const SchemaValidator *		sv,
-	const Configuration *		cfg,
-	const char *				scope,
-	const char *				name,
-	const char *				typeName,
-	const char *				origTypeName,
-	const StringVector &		typeArgs,
-	int							indentLevel) const
-											throw(ConfigurationException)
-{
-    unused(origTypeName);
+    bool SchemaType::isA(const SchemaValidator* sv, const Configuration* cfg, const char* value,
+        const char* typeName, const StringVector& typeArgs, int indentLevel,
+        StringBuffer& errSuffix) const
+    {
+        unused(sv);
+        unused(cfg);
+        unused(value);
+        unused(typeName);
+        unused(typeArgs);
+        unused(indentLevel);
+        unused(errSuffix);
 
-	const char *				value;
-	StringBuffer				msg;
-	StringBuffer				fullyScopedName;
-	StringBuffer				errSuffix;
+        return false;
+    }
 
-	value = cfg->lookupString(scope, name);
-	if (!sv->callIsA(this, cfg, value, typeName, typeArgs, indentLevel+1,
-					 errSuffix))
-	{
-        const char* sep;
-		cfg->mergeNames(scope, name, fullyScopedName);
-		if (errSuffix.length() == 0) {
-			sep = "";
-		} else {
-			sep = "; ";
-		}
-		msg << cfg->fileName() << ": bad " << typeName << " value ('" << value
-			<< "') for '" << fullyScopedName << "'" << sep << errSuffix;
-			throw ConfigurationException(msg.c_str());
-	}
-}
+    SchemaType* SchemaType::findType(const SchemaValidator* sv, const char* name) const
+    {
+        return sv->findType(name);
+    }
 
+    void SchemaType::callValidate(const SchemaType* target, const SchemaValidator* sv,
+        const Configuration* cfg, const char* scope, const char* name, const char* typeName,
+        const char* origTypeName, const StringVector& typeArgs, int indentLevel) const
+        throw(ConfigurationException)
+    {
+        sv->callValidate(target, cfg, scope, name, typeName, origTypeName, typeArgs, indentLevel);
+    }
 
+    bool SchemaType::callIsA(const SchemaType* target, const SchemaValidator* sv,
+        const Configuration* cfg, const char* value, const char* typeName,
+        const StringVector& typeArgs, int indentLevel, StringBuffer& errSuffix) const
+    {
+        return sv->callIsA(target, cfg, value, typeName, typeArgs, indentLevel, errSuffix);
+    }
 
-bool
-SchemaType::isA(
-	const SchemaValidator *		sv,
-	const Configuration *		cfg,
-	const char *				value,
-	const char *				typeName,
-	const StringVector &		typeArgs,
-	int							indentLevel,
-	StringBuffer &				errSuffix) const
-{
-    unused(sv);
-    unused(cfg);
-    unused(value);
-    unused(typeName);
-    unused(typeArgs);
-    unused(indentLevel);
-    unused(errSuffix);
-
-	return false;
-}
-
-
-
-SchemaType *
-SchemaType::findType(const SchemaValidator * sv, const char * name) const
-{
-	return sv->findType(name);
-}
-
-
-
-void
-SchemaType::callValidate(
-	const SchemaType *			target,
-	const SchemaValidator *		sv,
-	const Configuration *		cfg,
-	const char *				scope,
-	const char *				name,
-	const char *				typeName,
-	const char *				origTypeName,
-	const StringVector &		typeArgs,
-	int							indentLevel) const
-											throw(ConfigurationException)
-{
-	sv->callValidate(target, cfg, scope, name, typeName, origTypeName,
-					 typeArgs, indentLevel);
-}
-
-
-
-bool
-SchemaType::callIsA(
-	const SchemaType *			target,
-	const SchemaValidator *		sv,
-	const Configuration *		cfg,
-	const char *				value,
-	const char *				typeName,
-	const StringVector &		typeArgs,
-	int							indentLevel,
-	StringBuffer &				errSuffix) const
-{
-	return sv->callIsA(target, cfg, value, typeName, typeArgs, indentLevel,
-					   errSuffix);
-}
-
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

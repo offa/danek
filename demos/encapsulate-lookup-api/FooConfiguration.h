@@ -1,4 +1,4 @@
-//----------------------------------------------------------------------
+// Copyright (c) 2017 offa
 // Copyright 2011 Ciaran McHale.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
@@ -20,77 +20,65 @@
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-//----------------------------------------------------------------------
 
 #pragma once
 
 class FooConfigurationException
 {
 public:
-	//--------
-	// Constructors and destructor
-	//--------
-	explicit FooConfigurationException(const char * str);
-	FooConfigurationException(const FooConfigurationException & other);
-	~FooConfigurationException();
+    //--------
+    // Constructors and destructor
+    //--------
+    explicit FooConfigurationException(const char* str);
+    FooConfigurationException(const FooConfigurationException& other);
+    ~FooConfigurationException();
 
-	const char * c_str() const; // Accessor
+    const char* c_str() const; // Accessor
 
 private:
-	char *			m_str;
+    char* m_str;
 
-	//--------
-	// Not implemented
-	//--------
-	FooConfigurationException();
-	FooConfigurationException operator=(const FooConfigurationException &);
+    //--------
+    // Not implemented
+    //--------
+    FooConfigurationException();
+    FooConfigurationException operator=(const FooConfigurationException&);
 };
-
 
 class FooConfiguration
 {
 public:
-	//--------
-	// Constructor and destructor
-	//--------
-	FooConfiguration();
-	virtual ~FooConfiguration();
+    //--------
+    // Constructor and destructor
+    //--------
+    FooConfiguration();
+    virtual ~FooConfiguration();
 
-	void parse(const char * cfgSource, const char * scope = "")
-											throw (FooConfigurationException);
+    void parse(const char* cfgSource, const char* scope = "") throw(FooConfigurationException);
 
-	//--------
-	// Lookup-style functions.
-	//--------
-	const char * lookupString(const char * name) const
-											throw (FooConfigurationException);
-	void lookupList(
-			const char *	name,
-			const char **&	array,
-			int &			arraySize) const throw (FooConfigurationException);
+    //--------
+    // Lookup-style functions.
+    //--------
+    const char* lookupString(const char* name) const throw(FooConfigurationException);
+    void lookupList(const char* name, const char**& array, int& arraySize) const
+        throw(FooConfigurationException);
 
-	virtual int lookupInt(const char * name) const
-											throw(FooConfigurationException);
-	virtual float lookupFloat(const char * name) const
-											throw(FooConfigurationException);
-	virtual bool lookupBoolean(const char * name) const
-											throw(FooConfigurationException);
-	virtual int lookupDurationMilliseconds(const char * name) const
-											throw(FooConfigurationException);
-	virtual int lookupDurationSeconds(const char * name) const
-											throw(FooConfigurationException);
+    virtual int lookupInt(const char* name) const throw(FooConfigurationException);
+    virtual float lookupFloat(const char* name) const throw(FooConfigurationException);
+    virtual bool lookupBoolean(const char* name) const throw(FooConfigurationException);
+    virtual int lookupDurationMilliseconds(const char* name) const throw(FooConfigurationException);
+    virtual int lookupDurationSeconds(const char* name) const throw(FooConfigurationException);
 
 private:
-	//--------
-	// Instance variables
-	//--------
-	char *			m_scope;
-	void *			m_cfg;
+    //--------
+    // Instance variables
+    //--------
+    char* m_scope;
+    void* m_cfg;
 
-	//--------
-	// The following are not implemented
-	//--------
-	FooConfiguration(const FooConfiguration &);
-	FooConfiguration & operator=(const FooConfiguration &);
+    //--------
+    // The following are not implemented
+    //--------
+    FooConfiguration(const FooConfiguration&);
+    FooConfiguration& operator=(const FooConfiguration&);
 };
-

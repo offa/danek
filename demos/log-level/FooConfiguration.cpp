@@ -1,4 +1,4 @@
-//----------------------------------------------------------------------
+// Copyright (c) 2017 offa
 // Copyright 2011 Ciaran McHale.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
@@ -20,7 +20,6 @@
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-//----------------------------------------------------------------------
 
 #include "FooConfiguration.h"
 #include <config4cpp/Configuration.h>
@@ -28,128 +27,110 @@
 #include <string.h>
 #include <stdlib.h>
 
-using CONFIG4CPP_NAMESPACE::Configuration;
-using CONFIG4CPP_NAMESPACE::ConfigurationException;
-using CONFIG4CPP_NAMESPACE::SchemaValidator;
-
-
+using danek::Configuration;
+using danek::ConfigurationException;
+using danek::SchemaValidator;
 
 //----------------------------------------------------------------------
 // class FooConfigurationException
 //----------------------------------------------------------------------
 
-FooConfigurationException::FooConfigurationException(const char * str)
+FooConfigurationException::FooConfigurationException(const char* str)
 {
-	m_str = new char[strlen(str) + 1];
-	strcpy(m_str, str);
+    m_str = new char[strlen(str) + 1];
+    strcpy(m_str, str);
 }
 
-
-
-FooConfigurationException::FooConfigurationException(
-	const FooConfigurationException & other)
+FooConfigurationException::FooConfigurationException(const FooConfigurationException& other)
 {
-	m_str = new char[strlen(other.m_str) + 1];
-	strcpy(m_str, other.m_str);
+    m_str = new char[strlen(other.m_str) + 1];
+    strcpy(m_str, other.m_str);
 }
-
-
 
 FooConfigurationException::~FooConfigurationException()
 {
-	delete [] m_str;
+    delete[] m_str;
 }
 
-
-
-const char *
-FooConfigurationException::c_str() const
+const char* FooConfigurationException::c_str() const
 {
-	return m_str;
+    return m_str;
 }
-
-
-
-
 
 //----------------------------------------------------------------------
 // class FooConfiguration
 //----------------------------------------------------------------------
 
-FooConfiguration::FooConfiguration() : m_cfg(Configuration::create()),
-                                    m_logLevels(nullptr),
-                                    m_numLogLevels(0)
+FooConfiguration::FooConfiguration()
+    : m_cfg(Configuration::create()), m_logLevels(nullptr), m_numLogLevels(0)
 {
 }
-
-
 
 FooConfiguration::~FooConfiguration()
 {
-	((Configuration *)m_cfg)->destroy();
+    ((Configuration*) m_cfg)->destroy();
 }
 
-
-
-void
-FooConfiguration::parse(
-	const char *		cfgInput,
-	const char *		cfgScope,
-	const char *		secInput,
-	const char *		secScope) throw (FooConfigurationException)
+void FooConfiguration::parse(const char* cfgInput, const char* cfgScope, const char* secInput,
+    const char* secScope) throw(FooConfigurationException)
 {
-	SchemaValidator		sv;
-	Configuration *		cfg = (Configuration*)m_cfg;
+    SchemaValidator sv;
+    Configuration* cfg = (Configuration*) m_cfg;
 
-	try {
-        const char *		schema[] = {
+    try
+    {
+        const char* schema[] = {
             "@typedef logLevel = int[0, 4]",
             "log_levels = table[string,operation-name, logLevel,log-level]",
             0,
         };
 
-		//--------
-		// Set non-default security, if supplied. Then parse the
-		// configuration input. Finally, perform schema validation.
-		//--------
-		if (strcmp(secInput, "") != 0) {
-			cfg->setSecurityConfiguration(secInput, secScope);
-		}
-		cfg->parse(cfgInput);
-		sv.parseSchema(schema);
-		sv.validate(cfg, cfgScope, "");
+        //--------
+        // Set non-default security, if supplied. Then parse the
+        // configuration input. Finally, perform schema validation.
+        //--------
+        if (strcmp(secInput, "") != 0)
+        {
+            cfg->setSecurityConfiguration(secInput, secScope);
+        }
+        cfg->parse(cfgInput);
+        sv.parseSchema(schema);
+        sv.validate(cfg, cfgScope, "");
 
-		//--------
-		// Cache configuration variables in instance variables for
-		// faster access.
-		//--------
-		cfg->lookupList(cfgScope, "log_levels", m_logLevels, m_numLogLevels);
-	} catch(const ConfigurationException & ex) {
-		throw FooConfigurationException(ex.c_str());
-	}
+        //--------
+        // Cache configuration variables in instance variables for
+        // faster access.
+        //--------
+        cfg->lookupList(cfgScope, "log_levels", m_logLevels, m_numLogLevels);
+    }
+    catch (const ConfigurationException& ex)
+    {
+        throw FooConfigurationException(ex.c_str());
+    }
 }
 
-
-
-Logger::LogLevel
-FooConfiguration::getLogLevel(const char * opName) const
+Logger::LogLevel FooConfiguration::getLogLevel(const char* opName) const
 {
-	int					i;
-	int					result;
+    int i;
+    int result;
 
-	for (i = 0; i < m_numLogLevels; i += 2) {
-		const char* pattern     = m_logLevels[i + 0];
-		const char* logLevelStr = m_logLevels[i + 1];
-		if (Configuration::patternMatch(opName, pattern)) {
-			result = atoi(logLevelStr);
-			if (result > (int)Logger::DEBUG_LEVEL) {
-				result = (int)Logger::DEBUG_LEVEL;
-			} else if (result < 0) {
-				result = 0;
-			}
-			return (Logger::LogLevel)result;
-		}
-	}
-	return Logger::ERROR_LEVEL; // default log level
+    for (i = 0; i < m_numLogLevels; i += 2)
+    {
+        const char* pattern = m_logLevels[i + 0];
+        const char* logLevelStr = m_logLevels[i + 1];
+        if (Configuration::patternMatch(opName, pattern))
+        {
+            result = atoi(logLevelStr);
+            if (result > (int) Logger::DEBUG_LEVEL)
+            {
+                result = (int) Logger::DEBUG_LEVEL;
+            }
+            else if (result < 0)
+            {
+                result = 0;
+            }
+            return (Logger::LogLevel) result;
+        }
+    }
+    return Logger::ERROR_LEVEL; // default log level
 }
-

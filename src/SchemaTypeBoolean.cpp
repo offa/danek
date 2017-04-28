@@ -1,4 +1,4 @@
-//-----------------------------------------------------------------------
+// Copyright (c) 2017 offa
 // Copyright 2011 Ciaran McHale.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
@@ -20,57 +20,46 @@
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-//----------------------------------------------------------------------
 
 #include "SchemaTypeBoolean.h"
 #include "Common.h"
 
-namespace CONFIG4CPP_NAMESPACE {
-
-void
-SchemaTypeBoolean::checkRule(
-	const SchemaValidator *		sv,
-	const Configuration *		cfg,
-	const char *				typeName,
-	const StringVector &		typeArgs,
-	const char *				rule) const throw(ConfigurationException)
+namespace danek
 {
-    unused(sv);
-    unused(cfg);
+    void SchemaTypeBoolean::checkRule(const SchemaValidator* sv, const Configuration* cfg,
+        const char* typeName, const StringVector& typeArgs, const char* rule) const
+        throw(ConfigurationException)
+    {
+        unused(sv);
+        unused(cfg);
 
-	StringBuffer				msg;
+        StringBuffer msg;
 
-	if (typeArgs.length() != 0) {
-		msg << "The '" << typeName << "' type should not take arguments in "
-		    << "rule '" << rule << "'";
-		throw ConfigurationException(msg.c_str());
-	}
-}
+        if (typeArgs.length() != 0)
+        {
+            msg << "The '" << typeName << "' type should not take arguments in "
+                << "rule '" << rule << "'";
+            throw ConfigurationException(msg.c_str());
+        }
+    }
 
+    bool SchemaTypeBoolean::isA(const SchemaValidator* sv, const Configuration* cfg,
+        const char* value, const char* typeName, const StringVector& typeArgs, int indentLevel,
+        StringBuffer& errSuffix) const
+    {
+        unused(sv);
+        unused(typeArgs);
+        unused(typeName);
+        unused(indentLevel);
 
+        bool result;
 
-bool
-SchemaTypeBoolean::isA(
-	const SchemaValidator *		sv,
-	const Configuration *		cfg,
-	const char *				value,
-	const char *				typeName,
-	const StringVector &		typeArgs,
-	int							indentLevel,
-	StringBuffer &				errSuffix) const
-{
-    unused(sv);
-    unused(typeArgs);
-    unused(typeName);
-    unused(indentLevel);
+        result = cfg->isBoolean(value);
+        if (result == false)
+        {
+            errSuffix = "the value should be one of: 'false', 'true'";
+        }
+        return result;
+    }
 
-	bool						result;
-
-	result = cfg->isBoolean(value);
-	if (result == false) {
-		errSuffix = "the value should be one of: 'false', 'true'";
-	}
-	return result;
-}
-
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

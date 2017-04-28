@@ -1,4 +1,4 @@
-//-----------------------------------------------------------------------
+// Copyright (c) 2017 offa
 // Copyright 2011 Ciaran McHale.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
@@ -20,7 +20,6 @@
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-//----------------------------------------------------------------------
 
 #pragma once
 
@@ -32,61 +31,50 @@
 #include "SchemaRuleInfo.h"
 #include "SchemaLex.h"
 
-
-namespace CONFIG4CPP_NAMESPACE {
-
-class SchemaValidator;
-
-class SchemaParser
+namespace danek
 {
-public:
+    class SchemaValidator;
 
-	//--------
-	// Constructors and destructor
-	//--------
-	explicit SchemaParser(SchemaValidator * sv);
-	~SchemaParser();
+    class SchemaParser
+    {
+    public:
+        //--------
+        // Constructors and destructor
+        //--------
+        explicit SchemaParser(SchemaValidator* sv);
+        ~SchemaParser();
 
-	//--------
-	// Public API
-	//--------
-	void parse(const char ** schema, int schemaSize)
-												throw(ConfigurationException);
+        //--------
+        // Public API
+        //--------
+        void parse(const char** schema, int schemaSize) throw(ConfigurationException);
 
-private:
-	//--------
-	// Helper operations.
-	//--------
-	void parseIdRule(
-			const char *			rule,
-			SchemaIdRuleInfo *		SchemaIdRuleInfo)
-												throw(ConfigurationException);
-	void parseIgnoreRule(
-			const char *			rule,
-			SchemaIgnoreRuleInfo *	SchemaIgnoreRuleInfo)
-												throw(ConfigurationException);
+    private:
+        //--------
+        // Helper operations.
+        //--------
+        void parseIdRule(const char* rule, SchemaIdRuleInfo* SchemaIdRuleInfo) throw(
+            ConfigurationException);
+        void parseIgnoreRule(const char* rule, SchemaIgnoreRuleInfo* SchemaIgnoreRuleInfo) throw(
+            ConfigurationException);
 
-	void parseUserTypeDef(const char * str) throw(ConfigurationException);
+        void parseUserTypeDef(const char* str) throw(ConfigurationException);
 
-	void accept(
-			short					sym,
-			const char *			rule,
-			const char *			msg) throw(ConfigurationException);
+        void accept(short sym, const char* rule, const char* msg) throw(ConfigurationException);
 
-	//--------
-	// Instance variables
-	//--------
-	SchemaLex *			m_lex;
-	LexToken			m_token;
-	SchemaValidator *	m_sv;
-	Configuration *		m_cfg;
+        //--------
+        // Instance variables
+        //--------
+        SchemaLex* m_lex;
+        LexToken m_token;
+        SchemaValidator* m_sv;
+        Configuration* m_cfg;
 
-	//--------
-	// Not implemented.
-	//--------
-	SchemaParser(const SchemaParser &);
-	SchemaParser & operator=(const SchemaParser &);
-};
+        //--------
+        // Not implemented.
+        //--------
+        SchemaParser(const SchemaParser&);
+        SchemaParser& operator=(const SchemaParser&);
+    };
 
-
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

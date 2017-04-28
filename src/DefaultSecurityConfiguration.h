@@ -1,4 +1,4 @@
-//-----------------------------------------------------------------------
+// Copyright (c) 2017 offa
 // Copyright 2011 Ciaran McHale.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
@@ -20,37 +20,33 @@
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-//----------------------------------------------------------------------
 
 #pragma once
 
 #include "ConfigurationImpl.h"
 #include "DefaultSecurity.h"
 
-
-namespace CONFIG4CPP_NAMESPACE {
-
-class DefaultSecurityConfiguration : public ConfigurationImpl
+namespace danek
 {
-public:
-	DefaultSecurityConfiguration();
-	~DefaultSecurityConfiguration();
+    class DefaultSecurityConfiguration : public ConfigurationImpl
+    {
+    public:
+        DefaultSecurityConfiguration();
+        ~DefaultSecurityConfiguration();
 
-	static DefaultSecurityConfiguration singleton;
+        static DefaultSecurityConfiguration singleton;
 
-private:
-	//--------
-	// Instance variables
-	//--------
-	DefaultSecurity		m_cfgStr;
+    private:
+        //--------
+        // Instance variables
+        //--------
+        DefaultSecurity m_cfgStr;
 
-	//--------
-	// The following are not implemented
-	//--------
-	DefaultSecurityConfiguration & operator=(
-				const DefaultSecurityConfiguration &);
-	DefaultSecurityConfiguration(const DefaultSecurityConfiguration &);
-};
+        //--------
+        // The following are not implemented
+        //--------
+        DefaultSecurityConfiguration& operator=(const DefaultSecurityConfiguration&);
+        DefaultSecurityConfiguration(const DefaultSecurityConfiguration&);
+    };
 
-
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

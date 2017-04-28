@@ -1,4 +1,4 @@
-//-----------------------------------------------------------------------
+// Copyright (c) 2017 offa
 // Copyright 2011 Ciaran McHale.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
@@ -20,43 +20,34 @@
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-//----------------------------------------------------------------------
 
 #pragma once
 
 #include <config4cpp/SchemaType.h>
 
-
-namespace CONFIG4CPP_NAMESPACE {
-
-class SchemaTypeDurationMilliseconds
-	: public SchemaType
+namespace danek
 {
-public:
-	SchemaTypeDurationMilliseconds()
-	: SchemaType("durationMilliseconds",
-	             CONFIG4CPP_NAMESPACE_STR "::SchemaTypeDurationMilliseconds",
-	             Configuration::CFG_STRING)
-	{ }
-	virtual ~SchemaTypeDurationMilliseconds() { }
+    class SchemaTypeDurationMilliseconds : public SchemaType
+    {
+    public:
+        SchemaTypeDurationMilliseconds()
+            : SchemaType("durationMilliseconds",
+                  "danek::SchemaTypeDurationMilliseconds",
+                  Configuration::CFG_STRING)
+        {
+        }
+        virtual ~SchemaTypeDurationMilliseconds()
+        {
+        }
 
-protected:
-	virtual void checkRule(
-		const SchemaValidator *	sv,
-		const Configuration *	cfg,
-		const char *			typeName,
-		const StringVector &	typeArgs,
-		const char *			rule) const throw(ConfigurationException);
+    protected:
+        virtual void checkRule(const SchemaValidator* sv, const Configuration* cfg,
+            const char* typeName, const StringVector& typeArgs, const char* rule) const
+            throw(ConfigurationException);
 
-	virtual bool isA(
-		const SchemaValidator *	sv,
-		const Configuration *	cfg,
-		const char *			value,
-		const char *			typeName,
-		const StringVector &	typeArgs,
-		int						indentLevel,
-		StringBuffer &			errSuffix) const;
-};
+        virtual bool isA(const SchemaValidator* sv, const Configuration* cfg, const char* value,
+            const char* typeName, const StringVector& typeArgs, int indentLevel,
+            StringBuffer& errSuffix) const;
+    };
 
-
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

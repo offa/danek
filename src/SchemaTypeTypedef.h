@@ -1,4 +1,4 @@
-//-----------------------------------------------------------------------
+// Copyright (c) 2017 offa
 // Copyright 2011 Ciaran McHale.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
@@ -20,64 +20,43 @@
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-//----------------------------------------------------------------------
 
 #pragma once
 
 #include <config4cpp/SchemaType.h>
 
-
-namespace CONFIG4CPP_NAMESPACE {
-
-class SchemaTypeTypedef
-	: public SchemaType
+namespace danek
 {
-public:
-	SchemaTypeTypedef(
-		const char *			name,
-		Configuration::Type		cfgType,
-		const char *			baseTypeName,
-		const StringVector &	baseTypeArgs)
-		: SchemaType(name, CONFIG4CPP_NAMESPACE_STR "::SchemaTypeTypedef",
-		             cfgType)
-	{
-		m_baseTypeName = baseTypeName;
-		m_baseTypeArgs = baseTypeArgs;
-	}
-	virtual ~SchemaTypeTypedef() { }
+    class SchemaTypeTypedef : public SchemaType
+    {
+    public:
+        SchemaTypeTypedef(const char* name, Configuration::Type cfgType, const char* baseTypeName,
+            const StringVector& baseTypeArgs)
+            : SchemaType(name, "danek::SchemaTypeTypedef", cfgType)
+        {
+            m_baseTypeName = baseTypeName;
+            m_baseTypeArgs = baseTypeArgs;
+        }
+        virtual ~SchemaTypeTypedef()
+        {
+        }
 
-protected:
-	virtual void checkRule(
-		const SchemaValidator *	sv,
-		const Configuration *	cfg,
-		const char *			typeName,
-		const StringVector &	typeArgs,
-		const char *			rule) const throw(ConfigurationException);
+    protected:
+        virtual void checkRule(const SchemaValidator* sv, const Configuration* cfg,
+            const char* typeName, const StringVector& typeArgs, const char* rule) const
+            throw(ConfigurationException);
 
-	virtual void validate(
-		const SchemaValidator *	sv,
-		const Configuration *	cfg,
-		const char *			scope,
-		const char *			name,
-		const char *			typeName,
-		const char *			origTypeName,
-		const StringVector &	typeArgs,
-		int						indentLevel) const
-											throw(ConfigurationException);
+        virtual void validate(const SchemaValidator* sv, const Configuration* cfg,
+            const char* scope, const char* name, const char* typeName, const char* origTypeName,
+            const StringVector& typeArgs, int indentLevel) const throw(ConfigurationException);
 
-	virtual bool isA(
-		const SchemaValidator *	sv,
-		const Configuration *	cfg,
-		const char *			value,
-		const char *			typeName,
-		const StringVector &	typeArgs,
-		int						indentLevel,
-		StringBuffer &			errSuffix) const;
+        virtual bool isA(const SchemaValidator* sv, const Configuration* cfg, const char* value,
+            const char* typeName, const StringVector& typeArgs, int indentLevel,
+            StringBuffer& errSuffix) const;
 
-private:
-	StringBuffer				m_baseTypeName;
-	StringVector				m_baseTypeArgs;
-};
+    private:
+        StringBuffer m_baseTypeName;
+        StringVector m_baseTypeArgs;
+    };
 
-
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

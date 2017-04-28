@@ -1,4 +1,4 @@
-//----------------------------------------------------------------------
+// Copyright (c) 2017 offa
 // Copyright 2011 Ciaran McHale.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
@@ -20,8 +20,6 @@
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-//----------------------------------------------------------------------
-
 #pragma once
 
 //--------
@@ -30,16 +28,14 @@
 // all occurrances of "config4cpp" in the #ifndef...#endif block below.
 //--------
 #ifndef CONFIG4CPP_NAMESPACE
-#define CONFIG4CPP_NAMESPACE		config4cpp
-#define CONFIG4CPP_NAMESPACE_STR	"config4cpp"
-#define CONFIG4CPP_C_PREFIX(X)		config4cpp_##X
+#define CONFIG4CPP_NAMESPACE config4cpp
+#define CONFIG4CPP_NAMESPACE_STR "config4cpp"
+#define CONFIG4CPP_C_PREFIX(X) config4cpp_##X
 #endif
 
 #ifdef WIN32
-#pragma warning( disable : 4290 )
-#pragma warning( disable : 4514 )
-#pragma warning( disable : 4511 )
-#pragma warning( disable : 4512 )
+#pragma warning(disable : 4290)
+#pragma warning(disable : 4514)
+#pragma warning(disable : 4511)
+#pragma warning(disable : 4512)
 #endif
-
-

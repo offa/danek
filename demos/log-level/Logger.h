@@ -1,4 +1,4 @@
-//----------------------------------------------------------------------
+// Copyright (c) 2017 offa
 // Copyright 2011 Ciaran McHale.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
@@ -20,30 +20,28 @@
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-//----------------------------------------------------------------------
 
 #pragma once
 
 class Logger
 {
 public:
-	enum LogLevel {
-		NO_LOGS_LEVEL = 0,
-		ERROR_LEVEL   = 1,
-		WARN_LEVEL    = 2,
-		INFO_LEVEL    = 3,
-		DEBUG_LEVEL   = 4
-	};
+    enum LogLevel
+    {
+        NO_LOGS_LEVEL = 0,
+        ERROR_LEVEL = 1,
+        WARN_LEVEL = 2,
+        INFO_LEVEL = 3,
+        DEBUG_LEVEL = 4
+    };
 
-	static void error(LogLevel logLevel, const char * msg);
-	static void warn(LogLevel logLevel, const char * msg);
-	static void info(LogLevel logLevel, const char * msg);
-	static void debug(LogLevel logLevel, const char * msg);
+    static void error(LogLevel logLevel, const char* msg);
+    static void warn(LogLevel logLevel, const char* msg);
+    static void info(LogLevel logLevel, const char* msg);
+    static void debug(LogLevel logLevel, const char* msg);
 };
-
 
 //--------
 // Singleton object
 //--------
 extern Logger log;
-

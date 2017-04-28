@@ -1,4 +1,4 @@
-//----------------------------------------------------------------------
+// Copyright (c) 2017 offa
 // Copyright 2011 Ciaran McHale.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
@@ -20,7 +20,6 @@
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-//----------------------------------------------------------------------
 
 #pragma once
 
@@ -30,36 +29,34 @@
 #include <config4cpp/namespace.h>
 #include <string.h>
 
-
-namespace CONFIG4CPP_NAMESPACE {
-
-class ConfigurationException
+namespace danek
 {
-public:
-	//--------
-	// Constructors and destructor
-	//--------
-	ConfigurationException(const char * str);
-	ConfigurationException(const ConfigurationException & o);
-	~ConfigurationException();
+    class ConfigurationException
+    {
+    public:
+        //--------
+        // Constructors and destructor
+        //--------
+        ConfigurationException(const char* str);
+        ConfigurationException(const ConfigurationException& o);
+        ~ConfigurationException();
 
-	//--------
-	// Accessor
-	//--------
-	const char * c_str() const;
+        //--------
+        // Accessor
+        //--------
+        const char* c_str() const;
 
-private:
-	//--------
-	// Instance variables
-	//--------
-	char *			m_str;
+    private:
+        //--------
+        // Instance variables
+        //--------
+        char* m_str;
 
-	//--------
-	// The following are unimplemented
-	//--------
-	ConfigurationException();
-	ConfigurationException operator=(const ConfigurationException &);
-};
+        //--------
+        // The following are unimplemented
+        //--------
+        ConfigurationException();
+        ConfigurationException operator=(const ConfigurationException&);
+    };
 
-
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek
