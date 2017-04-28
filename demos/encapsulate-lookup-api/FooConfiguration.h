@@ -26,7 +26,7 @@
 
 class FooConfigurationException
 {
-  public:
+public:
     //--------
     // Constructors and destructor
     //--------
@@ -36,7 +36,7 @@ class FooConfigurationException
 
     const char* c_str() const; // Accessor
 
-  private:
+private:
     char* m_str;
 
     //--------
@@ -48,7 +48,7 @@ class FooConfigurationException
 
 class FooConfiguration
 {
-  public:
+public:
     //--------
     // Constructor and destructor
     //--------
@@ -70,7 +70,7 @@ class FooConfiguration
     virtual int lookupDurationMilliseconds(const char* name) const throw(FooConfigurationException);
     virtual int lookupDurationSeconds(const char* name) const throw(FooConfigurationException);
 
-  private:
+private:
     //--------
     // Instance variables
     //--------

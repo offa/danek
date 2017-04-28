@@ -26,7 +26,7 @@
 
 class Logger
 {
-  public:
+public:
     enum LogLevel
     {
         NO_LOGS_LEVEL = 0,

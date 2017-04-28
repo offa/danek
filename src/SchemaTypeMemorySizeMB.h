@@ -30,7 +30,7 @@ namespace CONFIG4CPP_NAMESPACE
 {
     class SchemaTypeMemorySizeMB : public SchemaType
     {
-      public:
+    public:
         SchemaTypeMemorySizeMB()
             : SchemaType("memorySizeMB", CONFIG4CPP_NAMESPACE_STR "::SchemaTypeMemorySizeMB",
                   Configuration::CFG_STRING)
@@ -40,7 +40,7 @@ namespace CONFIG4CPP_NAMESPACE
         {
         }
 
-      protected:
+    protected:
         virtual void checkRule(const SchemaValidator* sv, const Configuration* cfg,
             const char* typeName, const StringVector& typeArgs, const char* rule) const
             throw(ConfigurationException);

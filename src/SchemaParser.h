@@ -38,7 +38,7 @@ namespace CONFIG4CPP_NAMESPACE
 
     class SchemaParser
     {
-      public:
+    public:
         //--------
         // Constructors and destructor
         //--------
@@ -50,7 +50,7 @@ namespace CONFIG4CPP_NAMESPACE
         //--------
         void parse(const char** schema, int schemaSize) throw(ConfigurationException);
 
-      private:
+    private:
         //--------
         // Helper operations.
         //--------

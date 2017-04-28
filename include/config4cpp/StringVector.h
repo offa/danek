@@ -36,7 +36,7 @@ namespace CONFIG4CPP_NAMESPACE
 
     class StringVector
     {
-      public:
+    public:
         //--------
         // Constructors and destructor
         //--------
@@ -71,7 +71,7 @@ namespace CONFIG4CPP_NAMESPACE
 
         const char* operator[](int index) const;
 
-      protected:
+    protected:
         friend class ConfigParser;
         void addWithOwnership(StringBuffer& strBuf);
         void addWithOwnership(StringVector& other);

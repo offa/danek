@@ -40,7 +40,7 @@ namespace CONFIG4CPP_NAMESPACE
 
     class StringBuffer
     {
-      public:
+    public:
         StringBuffer();
         StringBuffer(const char* str);
         StringBuffer(const StringBuffer&);
@@ -72,7 +72,7 @@ namespace CONFIG4CPP_NAMESPACE
         StringBuffer& operator=(const char* str);
         StringBuffer& operator=(const StringBuffer& other);
 
-      protected:
+    protected:
         friend class StringVector;
         friend class LexToken;
         friend class UidIdentifierProcessor;

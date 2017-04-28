@@ -34,7 +34,7 @@ namespace CONFIG4CPP_NAMESPACE
 {
     class Config2Cpp
     {
-      public:
+    public:
         //--------
         // Constructor and destructor
         //--------
@@ -73,7 +73,7 @@ namespace CONFIG4CPP_NAMESPACE
             return m_wantSchema;
         }
 
-      private:
+    private:
         //--------
         // Helper functions
         //--------

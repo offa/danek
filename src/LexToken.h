@@ -34,7 +34,7 @@ namespace CONFIG4CPP_NAMESPACE
 {
     class LexToken
     {
-      public:
+    public:
         //--------
         // Ctor, dtor and assignment operator
         //--------
@@ -68,7 +68,7 @@ namespace CONFIG4CPP_NAMESPACE
 
         void resetWithOwnership(short type, int lineNum, StringBuffer& str);
 
-      protected:
+    protected:
         //--------
         // Instance variables
         //--------

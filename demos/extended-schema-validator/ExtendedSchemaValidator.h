@@ -31,11 +31,11 @@ using CONFIG4CPP_NAMESPACE::SchemaValidator;
 
 class ExtendedSchemaValidator : public SchemaValidator
 {
-  public:
+public:
     ExtendedSchemaValidator() throw(ConfigurationException)
     {
         registerType(new SchemaTypeHex());
     }
 
-  protected:
+protected:
 };

@@ -37,8 +37,8 @@ namespace CONFIG4CPP_NAMESPACE
 {
     class MBChar
     {
-      public:
-      public:
+    public:
+    public:
         //--------
         // Constructors and destructor
         //--------
@@ -68,7 +68,7 @@ namespace CONFIG4CPP_NAMESPACE
         inline bool operator==(char ch) const;
         inline bool operator!=(char ch) const;
 
-      private:
+    private:
         //--------
         // Instance variables
         //--------

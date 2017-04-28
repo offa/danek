@@ -38,7 +38,7 @@ namespace CONFIG4CPP_NAMESPACE
 {
     class LexBase
     {
-      public:
+    public:
         //--------
         // Public operations
         //--------
@@ -104,7 +104,7 @@ namespace CONFIG4CPP_NAMESPACE
             short m_symbol;
         };
 
-      protected:
+    protected:
         //--------
         // Constructors and destructor
         //--------
@@ -122,7 +122,7 @@ namespace CONFIG4CPP_NAMESPACE
         FuncInfo* m_funcInfoArray;
         int m_funcInfoArraySize;
 
-      private:
+    private:
         //--------
         // Implementation-specific operations
         //--------

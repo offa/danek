@@ -35,7 +35,7 @@ namespace CONFIG4CPP_NAMESPACE
 {
     class UidIdentifierProcessor
     {
-      public:
+    public:
         //--------
         // Constructor and destructor
         //--------
@@ -47,7 +47,7 @@ namespace CONFIG4CPP_NAMESPACE
         virtual const char* unexpand(const char* spelling, StringBuffer& buf) const
             throw(ConfigurationException);
 
-      private:
+    private:
         //--------
         // Instance variables
         //

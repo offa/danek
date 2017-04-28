@@ -50,7 +50,7 @@ namespace CONFIG4CPP_NAMESPACE
 
     class ConfigurationImpl : public Configuration
     {
-      public:
+    public:
         //--------
         // Constructor and destructor
         //--------
@@ -277,7 +277,7 @@ namespace CONFIG4CPP_NAMESPACE
         virtual void remove(const char* scope, const char* localName) throw(ConfigurationException);
         virtual void empty();
 
-      protected:
+    protected:
         friend class ConfigParser;
 
         //--------
@@ -320,7 +320,7 @@ namespace CONFIG4CPP_NAMESPACE
             int unitsInfoSize, const char* allowedSizes[], const char* scope, const char* localName,
             const char* str) const throw(ConfigurationException);
 
-      protected:
+    protected:
         //--------
         // Instance variables
         //--------
@@ -335,7 +335,7 @@ namespace CONFIG4CPP_NAMESPACE
         bool m_amOwnerOfSecurityCfg;
         bool m_amOwnerOfFallbackCfg;
 
-      private:
+    private:
         //--------
         // The following are not implemented
         //--------

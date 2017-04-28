@@ -28,7 +28,7 @@
 
 class B
 {
-  public:
+public:
     //--------
     // Constructors and destructor
     //--------
@@ -38,7 +38,7 @@ class B
     void op2();
     void op3();
 
-  private:
+private:
     //--------
     // Instance variables.
     //--------

@@ -31,7 +31,7 @@ using namespace CONFIG4CPP_NAMESPACE;
 
 class RecipeFileParser
 {
-  public:
+public:
     RecipeFileParser();
     ~RecipeFileParser();
 
@@ -54,7 +54,7 @@ class RecipeFileParser
     void getRecipeSteps(const char* recipeScope, StringVector& vec) throw(
         RecipeFileParserException);
 
-  private:
+private:
     //--------
     // Instance variables
     //--------

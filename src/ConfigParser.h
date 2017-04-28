@@ -63,7 +63,7 @@ namespace CONFIG4CPP_NAMESPACE
 {
     class ConfigParser
     {
-      public:
+    public:
         //--------
         // Constructor and destructor
         //--------
@@ -76,7 +76,7 @@ namespace CONFIG4CPP_NAMESPACE
         // Public operations: None. All the work is done in the ctor!
         //--------
 
-      protected:
+    protected:
         //--------
         // Helper operations
         //--------
@@ -114,7 +114,7 @@ namespace CONFIG4CPP_NAMESPACE
         ConfigParser(const ConfigParser&);
         ConfigParser& operator=(const ConfigParser&);
 
-      protected:
+    protected:
         //--------
         // Instance variables
         //--------

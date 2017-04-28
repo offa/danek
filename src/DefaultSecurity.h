@@ -13,7 +13,7 @@ namespace CONFIG4CPP_NAMESPACE
 {
     class DefaultSecurity
     {
-      public:
+    public:
         //--------
         // Constructor and destructor.
         //--------
@@ -28,7 +28,7 @@ namespace CONFIG4CPP_NAMESPACE
             return m_str.c_str();
         }
 
-      private:
+    private:
         //--------
         // Variables
         //--------

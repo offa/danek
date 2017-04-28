@@ -28,7 +28,7 @@
 
 class RecipeFileParserException
 {
-  public:
+public:
     //--------
     // Constructors and destructor
     //--------
@@ -57,7 +57,7 @@ class RecipeFileParserException
         return m_str;
     }
 
-  private:
+private:
     //--------
     // Instance variables
     //--------

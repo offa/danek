@@ -30,7 +30,7 @@ namespace CONFIG4CPP_NAMESPACE
 {
     class SchemaTypeUnitsWithInt : public SchemaType
     {
-      public:
+    public:
         SchemaTypeUnitsWithInt()
             : SchemaType("units_with_int", CONFIG4CPP_NAMESPACE_STR "::SchemaTypeUnitsWithInt",
                   Configuration::CFG_STRING)
@@ -40,7 +40,7 @@ namespace CONFIG4CPP_NAMESPACE
         {
         }
 
-      protected:
+    protected:
         virtual void checkRule(const SchemaValidator* sv, const Configuration* cfg,
             const char* typeName, const StringVector& typeArgs, const char* rule) const
             throw(ConfigurationException);

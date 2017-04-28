@@ -34,7 +34,7 @@ namespace CONFIG4CPP_NAMESPACE
 {
     class SchemaIdRuleInfo
     {
-      public:
+    public:
         StringBuffer m_locallyScopedName;
         StringBuffer m_typeName;
         StringVector m_args;
@@ -43,7 +43,7 @@ namespace CONFIG4CPP_NAMESPACE
 
     class SchemaIgnoreRuleInfo
     {
-      public:
+    public:
         short m_symbol;
         StringBuffer m_locallyScopedName;
     };

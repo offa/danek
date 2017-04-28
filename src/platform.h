@@ -78,7 +78,7 @@ namespace CONFIG4CPP_NAMESPACE
 
     class BufferedFileReader
     {
-      public:
+    public:
         //--------
         // Constructors and destructor
         //--------
@@ -89,7 +89,7 @@ namespace CONFIG4CPP_NAMESPACE
         int getChar(); // returns EOF on end-of-file
         bool close();
 
-      private:
+    private:
 //--------
 // Instance variables
 //--------

@@ -47,7 +47,7 @@ namespace CONFIG4CPP_NAMESPACE
 
     class ConfigItem
     {
-      public:
+    public:
         //--------
         // Ctor and dtor
         //--------
@@ -72,7 +72,7 @@ namespace CONFIG4CPP_NAMESPACE
         void dump(StringBuffer& buf, const char* name, bool wantExpandedUidNames,
             int indentLevel = 0) const;
 
-      protected:
+    protected:
         //--------
         // Instance variables
         //--------
@@ -82,7 +82,7 @@ namespace CONFIG4CPP_NAMESPACE
         StringVector* m_listVal;
         ConfigScope* m_scope;
 
-      private:
+    private:
         //--------
         // Unsupported constructors and operator=
         //--------

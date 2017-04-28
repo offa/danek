@@ -30,7 +30,7 @@ namespace CONFIG4CPP_NAMESPACE
 {
     class SchemaTypeTypedef : public SchemaType
     {
-      public:
+    public:
         SchemaTypeTypedef(const char* name, Configuration::Type cfgType, const char* baseTypeName,
             const StringVector& baseTypeArgs)
             : SchemaType(name, CONFIG4CPP_NAMESPACE_STR "::SchemaTypeTypedef", cfgType)
@@ -42,7 +42,7 @@ namespace CONFIG4CPP_NAMESPACE
         {
         }
 
-      protected:
+    protected:
         virtual void checkRule(const SchemaValidator* sv, const Configuration* cfg,
             const char* typeName, const StringVector& typeArgs, const char* rule) const
             throw(ConfigurationException);
@@ -55,7 +55,7 @@ namespace CONFIG4CPP_NAMESPACE
             const char* typeName, const StringVector& typeArgs, int indentLevel,
             StringBuffer& errSuffix) const;
 
-      private:
+    private:
         StringBuffer m_baseTypeName;
         StringVector m_baseTypeArgs;
     };

@@ -30,7 +30,7 @@ namespace CONFIG4CPP_NAMESPACE
 {
     class SchemaTypeEnum : public SchemaType
     {
-      public:
+    public:
         SchemaTypeEnum()
             : SchemaType(
                   "enum", CONFIG4CPP_NAMESPACE_STR "::SchemaTypeEnum", Configuration::CFG_STRING)
@@ -40,7 +40,7 @@ namespace CONFIG4CPP_NAMESPACE
         {
         }
 
-      protected:
+    protected:
         virtual void checkRule(const SchemaValidator* sv, const Configuration* cfg,
             const char* typeName, const StringVector& typeArgs, const char* rule) const
             throw(ConfigurationException);

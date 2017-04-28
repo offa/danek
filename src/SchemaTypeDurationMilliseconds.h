@@ -30,7 +30,7 @@ namespace CONFIG4CPP_NAMESPACE
 {
     class SchemaTypeDurationMilliseconds : public SchemaType
     {
-      public:
+    public:
         SchemaTypeDurationMilliseconds()
             : SchemaType("durationMilliseconds",
                   CONFIG4CPP_NAMESPACE_STR "::SchemaTypeDurationMilliseconds",
@@ -41,7 +41,7 @@ namespace CONFIG4CPP_NAMESPACE
         {
         }
 
-      protected:
+    protected:
         virtual void checkRule(const SchemaValidator* sv, const Configuration* cfg,
             const char* typeName, const StringVector& typeArgs, const char* rule) const
             throw(ConfigurationException);

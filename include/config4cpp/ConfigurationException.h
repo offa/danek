@@ -34,7 +34,7 @@ namespace CONFIG4CPP_NAMESPACE
 {
     class ConfigurationException
     {
-      public:
+    public:
         //--------
         // Constructors and destructor
         //--------
@@ -47,7 +47,7 @@ namespace CONFIG4CPP_NAMESPACE
         //--------
         const char* c_str() const;
 
-      private:
+    private:
         //--------
         // Instance variables
         //--------

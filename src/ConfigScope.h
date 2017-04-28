@@ -40,7 +40,7 @@ namespace CONFIG4CPP_NAMESPACE
 
     class ConfigScope
     {
-      public:
+    public:
         //--------
         // Ctors & dtor
         //--------
@@ -83,7 +83,7 @@ namespace CONFIG4CPP_NAMESPACE
         //--------
         void dump(StringBuffer& buf, bool wantExpandedUidNames, int indentLevel = 0) const;
 
-      protected:
+    protected:
         //--------
         // Helper operations
         //--------
@@ -98,7 +98,7 @@ namespace CONFIG4CPP_NAMESPACE
 
         bool listFilter(const char* name, const StringVector& filterPatterns) const;
 
-      protected:
+    protected:
         //--------
         // Instance variables
         //--------

@@ -30,7 +30,7 @@ namespace CONFIG4CPP_NAMESPACE
 {
     class SchemaTypeFloatWithUnits : public SchemaType
     {
-      public:
+    public:
         SchemaTypeFloatWithUnits()
             : SchemaType("float_with_units", CONFIG4CPP_NAMESPACE_STR "::SchemaTypeFloatWithUnits",
                   Configuration::CFG_STRING)
@@ -40,7 +40,7 @@ namespace CONFIG4CPP_NAMESPACE
         {
         }
 
-      protected:
+    protected:
         virtual void checkRule(const SchemaValidator* sv, const Configuration* cfg,
             const char* typeName, const StringVector& typeArgs, const char* rule) const
             throw(ConfigurationException);

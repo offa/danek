@@ -33,7 +33,7 @@ namespace CONFIG4CPP_NAMESPACE
 {
     class SchemaLex : public LexBase
     {
-      public:
+    public:
         enum SchemaLexSymbols
         {
             //--------
@@ -57,7 +57,7 @@ namespace CONFIG4CPP_NAMESPACE
         explicit SchemaLex(const char* str) throw(ConfigurationException);
         virtual ~SchemaLex();
 
-      private:
+    private:
         //--------
         // Unsupported constructors and assignment operators
         //--------

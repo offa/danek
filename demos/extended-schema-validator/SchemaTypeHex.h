@@ -34,7 +34,7 @@ using CONFIG4CPP_NAMESPACE::StringVector;
 
 class SchemaTypeHex : public SchemaType
 {
-  public:
+public:
     SchemaTypeHex() : SchemaType("hex", "SchemaTypeHex", Configuration::CFG_STRING)
     {
     }
@@ -50,7 +50,7 @@ class SchemaTypeHex : public SchemaType
 
     static bool isHex(const char* str);
 
-  protected:
+protected:
     virtual void checkRule(const SchemaValidator* sv, const Configuration* cfg,
         const char* typeName, const StringVector& typeArgs, const char* rule) const
         throw(ConfigurationException);

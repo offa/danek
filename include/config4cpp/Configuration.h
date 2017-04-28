@@ -47,7 +47,7 @@ namespace CONFIG4CPP_NAMESPACE
 
     class Configuration
     {
-      public:
+    public:
         enum Type
         { // bit masks
             CFG_NO_VALUE = 0,
@@ -310,14 +310,14 @@ namespace CONFIG4CPP_NAMESPACE
 
         virtual void empty() = 0;
 
-      protected:
+    protected:
         //--------
         // Available only to the implementation subclass
         //--------
         Configuration();
         virtual ~Configuration();
 
-      private:
+    private:
         static bool patternMatchInternal(const wchar_t* wStr, int wStrIndex, int wStrLen,
             const wchar_t* wPattern, int wPatternIndex, int wPatternLen);
         //--------

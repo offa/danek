@@ -28,7 +28,7 @@
 
 class FooConfigurationException
 {
-  public:
+public:
     //--------
     // Constructors and destructor
     //--------
@@ -38,7 +38,7 @@ class FooConfigurationException
 
     const char* c_str() const; // Accessor
 
-  private:
+private:
     char* m_str;
 
     //--------
@@ -50,7 +50,7 @@ class FooConfigurationException
 
 class FooConfiguration
 {
-  public:
+public:
     FooConfiguration();
     ~FooConfiguration();
 
@@ -61,7 +61,7 @@ class FooConfiguration
     //--------
     Logger::LogLevel getLogLevel(const char* opName) const;
 
-  private:
+private:
     void* m_cfg; // opaque pointer to Config4Cpp config object
     const char** m_logLevels;
     int m_numLogLevels;

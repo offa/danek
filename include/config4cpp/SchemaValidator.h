@@ -39,7 +39,7 @@ namespace CONFIG4CPP_NAMESPACE
 
     class SchemaValidator
     {
-      public:
+    public:
         enum ForceMode
         {
             DO_NOT_FORCE,
@@ -66,13 +66,13 @@ namespace CONFIG4CPP_NAMESPACE
             bool recurseIntoSubscopes, Configuration::Type typeMask,
             ForceMode forceMode = DO_NOT_FORCE) const throw(ConfigurationException);
 
-      protected:
+    protected:
         //--------
         // Operations that can be called by a subclass.
         //--------
         void registerType(SchemaType* type) throw(ConfigurationException);
 
-      private:
+    private:
         friend int compareSchemaIdRuleInfo(const void*, const void*);
         friend int compareSchemaType(const void*, const void*);
         friend class SchemaParser;

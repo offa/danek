@@ -33,7 +33,7 @@ namespace CONFIG4CPP_NAMESPACE
 {
     class ConfigLex : public LexBase
     {
-      public:
+    public:
         enum ConfigLexSymbols
         {
             //--------
@@ -76,7 +76,7 @@ namespace CONFIG4CPP_NAMESPACE
             UidIdentifierProcessor* uidIdentifierProcessor) throw(ConfigurationException);
         virtual ~ConfigLex();
 
-      private:
+    private:
         //--------
         // Not implemented.
         //--------

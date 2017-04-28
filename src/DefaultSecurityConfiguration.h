@@ -31,13 +31,13 @@ namespace CONFIG4CPP_NAMESPACE
 {
     class DefaultSecurityConfiguration : public ConfigurationImpl
     {
-      public:
+    public:
         DefaultSecurityConfiguration();
         ~DefaultSecurityConfiguration();
 
         static DefaultSecurityConfiguration singleton;
 
-      private:
+    private:
         //--------
         // Instance variables
         //--------

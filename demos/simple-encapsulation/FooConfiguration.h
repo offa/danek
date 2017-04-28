@@ -26,7 +26,7 @@
 
 class FooConfigurationException
 {
-  public:
+public:
     //--------
     // Constructors and destructor
     //--------
@@ -36,7 +36,7 @@ class FooConfigurationException
 
     const char* c_str() const; // Accessor
 
-  private:
+private:
     char* m_str;
 
     //--------
@@ -48,7 +48,7 @@ class FooConfigurationException
 
 class FooConfiguration
 {
-  public:
+public:
     explicit FooConfiguration(bool wantDiagnostics = false);
     ~FooConfiguration();
 
@@ -87,7 +87,7 @@ class FooConfiguration
         return m_port;
     }
 
-  private:
+private:
     //--------
     // Instance variables
     //--------

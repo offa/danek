@@ -33,7 +33,7 @@ namespace CONFIG4CPP_NAMESPACE
 {
     class UidIdentifierDummyProcessor : public UidIdentifierProcessor
     {
-      public:
+    public:
         //--------
         // Constructor and destructor
         //--------
@@ -57,7 +57,7 @@ namespace CONFIG4CPP_NAMESPACE
             return spelling;
         }
 
-      private:
+    private:
         //--------
         // The following are not implemented
         //--------

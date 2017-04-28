@@ -37,7 +37,7 @@ namespace CONFIG4CPP_NAMESPACE
 
     class ConfigScopeEntry
     {
-      public:
+    public:
         //--------
         // Ctors & dtor
         //--------
@@ -50,7 +50,7 @@ namespace CONFIG4CPP_NAMESPACE
         inline Configuration::Type type();
         void setItem(ConfigItem* item);
 
-      protected:
+    protected:
         friend class ConfigScope;
 
         //--------
@@ -59,7 +59,7 @@ namespace CONFIG4CPP_NAMESPACE
         ConfigItem* m_item;
         ConfigScopeEntry* m_next;
 
-      private:
+    private:
         //--------
         // Constructors and operators that are not suported
         //--------
