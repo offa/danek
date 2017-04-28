@@ -5,6 +5,13 @@
 [![License](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
 ![C++](https://img.shields.io/badge/c++-14-green.svg)
 
+## Goals
+
+- Port the Code to *Modern C++*
+- Improve code quality
+- Full Unit Test Suite
+- Port to CMake
+- Maintain file compatible
 
 
 ## Requirements
