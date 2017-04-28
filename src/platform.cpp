@@ -24,7 +24,7 @@
 #include "platform.h"
 #include <assert.h>
 #include <stdlib.h>
-#include <config4cpp/StringBuffer.h>
+#include "danek/StringBuffer.h"
 #ifdef P_STDIO_HAS_LIMITED_FDS
 #ifdef WIN32
 //--------

@@ -23,7 +23,7 @@
 
 #pragma once
 
-#include <config4cpp/SchemaType.h>
+#include "danek/SchemaType.h"
 
 namespace danek
 {

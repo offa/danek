@@ -26,8 +26,8 @@
 //--------
 // #include's
 //--------
-#include <config4cpp/StringBuffer.h>
-#include <config4cpp/StringVector.h>
+#include "danek/StringBuffer.h"
+#include "danek/StringVector.h"
 
 namespace danek
 {

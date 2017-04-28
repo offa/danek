@@ -23,7 +23,7 @@
 
 #include "SchemaTypeList.h"
 #include "Common.h"
-#include <config4cpp/SchemaValidator.h>
+#include "danek/SchemaValidator.h"
 
 namespace danek
 {

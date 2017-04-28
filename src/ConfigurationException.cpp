@@ -24,7 +24,7 @@
 //--------
 // #include's
 //--------
-#include <config4cpp/ConfigurationException.h>
+#include "danek/ConfigurationException.h"
 #include <string.h>
 
 namespace danek

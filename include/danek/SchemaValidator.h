@@ -26,8 +26,8 @@
 //--------
 // #include's
 //--------
-#include <config4cpp/Configuration.h>
-#include <config4cpp/SchemaType.h>
+#include "danek/Configuration.h"
+#include "danek/SchemaType.h"
 
 namespace danek
 {

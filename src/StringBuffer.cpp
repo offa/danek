@@ -24,7 +24,7 @@
 //--------
 // #include's
 //--------
-#include <config4cpp/StringBuffer.h>
+#include "danek/StringBuffer.h"
 #include <string.h>
 #include <stdio.h>
 #include <ctype.h>

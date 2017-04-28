@@ -23,7 +23,7 @@
 
 #pragma once
 
-#include <config4cpp/SchemaValidator.h>
+#include "danek/SchemaValidator.h"
 using danek::Configuration;
 using danek::ConfigurationException;
 using danek::SchemaValidator;

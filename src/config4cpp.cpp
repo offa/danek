@@ -24,9 +24,9 @@
 //--------
 // #include's
 //--------
-#include <config4cpp/Configuration.h>
-#include <config4cpp/StringBuffer.h>
-#include <config4cpp/SchemaValidator.h>
+#include "danek/Configuration.h"
+#include "danek/StringBuffer.h"
+#include "danek/SchemaValidator.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>

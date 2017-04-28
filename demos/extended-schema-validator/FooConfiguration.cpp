@@ -22,7 +22,7 @@
 // SOFTWARE.
 
 #include "FooConfiguration.h"
-#include <config4cpp/Configuration.h>
+#include "danek/Configuration.h"
 #include "ExtendedSchemaValidator.h"
 #include "SchemaTypeHex.h"
 #include <string.h>

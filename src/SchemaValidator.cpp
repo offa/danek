@@ -24,7 +24,7 @@
 //--------
 // #include's
 //--------
-#include <config4cpp/SchemaValidator.h>
+#include "danek/SchemaValidator.h"
 #include "SchemaParser.h"
 #include "SchemaRuleInfo.h"
 #include "SchemaTypeBoolean.h"
@@ -67,7 +67,7 @@ namespace danek
         return result;
     }
 
-    extern "C" int CONFIG4CPP_C_PREFIX(compareSchemaIdRuleInfo_c)(const void* p1, const void* p2)
+    extern "C" int danek_compareSchemaIdRuleInfo_c(const void* p1, const void* p2)
     {
         return compareSchemaIdRuleInfo(p1, p2);
     }
@@ -84,7 +84,7 @@ namespace danek
         return result;
     }
 
-    extern "C" int CONFIG4CPP_C_PREFIX(compareSchemaType_c)(const void* p1, const void* p2)
+    extern "C" int danek_compareSchemaType_c(const void* p1, const void* p2)
     {
         return compareSchemaType(p1, p2);
     }
@@ -101,7 +101,7 @@ namespace danek
             m_idRules,
             m_idRulesCurrSize,
             sizeof(SchemaIdRuleInfo*),
-            CONFIG4CPP_C_PREFIX(compareSchemaIdRuleInfo_c));
+            danek_compareSchemaIdRuleInfo_c);
         if (result == 0)
         {
             return 0;
@@ -111,7 +111,7 @@ namespace danek
 
     void SchemaValidator::sortTypes()
     {
-        qsort(m_types, m_typesCurrSize, sizeof(SchemaType*), CONFIG4CPP_C_PREFIX(compareSchemaType_c));
+        qsort(m_types, m_typesCurrSize, sizeof(SchemaType*), danek_compareSchemaType_c);
         m_areTypesSorted = true;
     }
 
@@ -126,7 +126,7 @@ namespace danek
                 m_types,
                 m_typesCurrSize,
                 sizeof(SchemaType*),
-                CONFIG4CPP_C_PREFIX(compareSchemaType_c));
+                danek_compareSchemaType_c);
             if (result == 0)
             {
                 return 0;

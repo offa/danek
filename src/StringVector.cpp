@@ -24,7 +24,7 @@
 //--------
 // #includes & #defines
 //--------
-#include <config4cpp/StringVector.h>
+#include "danek/StringVector.h"
 #include <string.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -134,7 +134,7 @@ namespace danek
         m_array[index] = str;
     }
 
-    extern "C" int CONFIG4CPP_C_PREFIX(compareFn)(const void* p1, const void* p2)
+    extern "C" int danek_compareFn(const void* p1, const void* p2)
     {
         const char* str1;
         const char* str2;
@@ -146,14 +146,14 @@ namespace danek
 
     void StringVector::sort()
     {
-        qsort(m_array, m_currSize, sizeof(char*), CONFIG4CPP_C_PREFIX(compareFn));
+        qsort(m_array, m_currSize, sizeof(char*), danek_compareFn);
     }
 
     bool StringVector::bSearchContains(const char* str) const
     {
         void* result;
 
-        result = bsearch(&str, m_array, m_currSize, sizeof(char*), CONFIG4CPP_C_PREFIX(compareFn));
+        result = bsearch(&str, m_array, m_currSize, sizeof(char*), danek_compareFn);
         return (result != 0);
     }
 

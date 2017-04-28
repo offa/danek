@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "config4cpp/ConfigurationException.h"
+#include "danek/ConfigurationException.h"
 #include <gmock/gmock.h>
 
 using danek::ConfigurationException;

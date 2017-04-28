@@ -21,8 +21,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <config4cpp/SchemaType.h>
-#include <config4cpp/SchemaValidator.h>
+#include "danek/SchemaType.h"
+#include "danek/SchemaValidator.h"
 #include "Common.h"
 
 namespace danek

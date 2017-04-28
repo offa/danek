@@ -22,7 +22,7 @@
 // SOFTWARE.
 
 #include "FooConfiguration.h"
-#include <config4cpp/Configuration.h>
+#include "danek/Configuration.h"
 #include "FallbackConfiguration.h"
 #include <stdio.h>
 #include <stdlib.h>

@@ -26,7 +26,7 @@
 //--------
 // #include's
 //--------
-#include <config4cpp/StringVector.h>
+#include "danek/StringVector.h"
 
 namespace danek
 {

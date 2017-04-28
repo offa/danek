@@ -26,7 +26,7 @@
 //--------
 // #includes & #defines
 //--------
-#include <config4cpp/namespace.h>
+
 #include <assert.h>
 
 #define CONFIG4CPP_STRING_BUFFER_INTERNAL_BUF_SIZE 32

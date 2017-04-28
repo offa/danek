@@ -22,8 +22,6 @@
 
 #pragma once
 
-#include <config4cpp/namespace.h>
-
 namespace danek
 {
     template<class T>

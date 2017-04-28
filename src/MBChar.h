@@ -26,7 +26,7 @@
 //--------
 // #include's and #define's
 //--------
-#include <config4cpp/namespace.h>
+
 #include <limits.h>
 #include <stdlib.h>
 #include <wchar.h>

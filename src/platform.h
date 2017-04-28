@@ -52,7 +52,7 @@
 #define CONFIG4CPP_DISCARD_STDERR "2> /dev/null"
 #endif
 #endif
-#include <config4cpp/StringBuffer.h>
+#include "danek/StringBuffer.h"
 #include <stdio.h>
 
 namespace danek

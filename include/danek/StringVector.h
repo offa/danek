@@ -26,8 +26,8 @@
 //--------
 // #includes & #defines
 //--------
-#include <config4cpp/namespace.h>
-#include <config4cpp/StringBuffer.h>
+
+#include "danek/StringBuffer.h"
 
 namespace danek
 {

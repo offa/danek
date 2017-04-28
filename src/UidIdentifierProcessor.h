@@ -26,9 +26,9 @@
 //--------
 // #include's
 //--------
-#include <config4cpp/namespace.h>
-#include <config4cpp/StringBuffer.h>
-#include <config4cpp/ConfigurationException.h>
+
+#include "danek/StringBuffer.h"
+#include "danek/ConfigurationException.h"
 
 namespace danek
 {

@@ -26,7 +26,7 @@
 //--------
 // #include's
 //--------
-#include <config4cpp/ConfigurationException.h>
+#include "danek/ConfigurationException.h"
 #include "ConfigScopeEntry.h"
 
 namespace danek

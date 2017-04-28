@@ -24,7 +24,7 @@
 //--------
 // #include's
 //--------
-#include <config4cpp/Configuration.h>
+#include "danek/Configuration.h"
 #include "ConfigurationImpl.h"
 #include "MBChar.h"
 #include <string.h>

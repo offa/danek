@@ -20,22 +20,43 @@
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
+
 #pragma once
 
 //--------
-// By default, this library is compiled into the "config4cpp" namespace.
-// If you want to compile it into a different namespace, then change
-// all occurrances of "config4cpp" in the #ifndef...#endif block below.
+// #include's
 //--------
-#ifndef CONFIG4CPP_NAMESPACE
-#define CONFIG4CPP_NAMESPACE config4cpp
-#define CONFIG4CPP_NAMESPACE_STR "config4cpp"
-#define CONFIG4CPP_C_PREFIX(X) config4cpp_##X
-#endif
 
-#ifdef WIN32
-#pragma warning(disable : 4290)
-#pragma warning(disable : 4514)
-#pragma warning(disable : 4511)
-#pragma warning(disable : 4512)
-#endif
+#include <string.h>
+
+namespace danek
+{
+    class ConfigurationException
+    {
+    public:
+        //--------
+        // Constructors and destructor
+        //--------
+        ConfigurationException(const char* str);
+        ConfigurationException(const ConfigurationException& o);
+        ~ConfigurationException();
+
+        //--------
+        // Accessor
+        //--------
+        const char* c_str() const;
+
+    private:
+        //--------
+        // Instance variables
+        //--------
+        char* m_str;
+
+        //--------
+        // The following are unimplemented
+        //--------
+        ConfigurationException();
+        ConfigurationException operator=(const ConfigurationException&);
+    };
+
+} // namespace danek

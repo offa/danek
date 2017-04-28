@@ -27,7 +27,7 @@
 // #include's and #define's
 //--------
 #include <wchar.h>
-#include <config4cpp/Configuration.h>
+#include "danek/Configuration.h"
 #include "LexToken.h"
 #include "MBChar.h"
 #include "UidIdentifierProcessor.h"

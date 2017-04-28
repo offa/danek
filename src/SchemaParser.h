@@ -26,8 +26,8 @@
 //--------
 // #include's
 //--------
-#include <config4cpp/SchemaValidator.h>
-#include <config4cpp/Configuration.h>
+#include "danek/SchemaValidator.h"
+#include "danek/Configuration.h"
 #include "SchemaRuleInfo.h"
 #include "SchemaLex.h"
 

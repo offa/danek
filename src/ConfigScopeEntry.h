@@ -26,7 +26,7 @@
 //--------
 // #include's
 //--------
-#include <config4cpp/namespace.h>
+
 #include "ConfigItem.h"
 #include <assert.h>
 

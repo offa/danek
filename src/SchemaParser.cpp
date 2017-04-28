@@ -32,7 +32,7 @@
 
 namespace danek
 {
-    extern "C" int CONFIG4CPP_C_PREFIX(compareSchemaIdRuleInfo_c)(const void* p1, const void* p2);
+    extern "C" int danek_compareSchemaIdRuleInfo_c(const void* p1, const void* p2);
 
     //----------------------------------------------------------------------
     // Function:	Constructor
@@ -122,7 +122,7 @@ namespace danek
         qsort(m_sv->m_idRules,
             m_sv->m_idRulesCurrSize,
             sizeof(SchemaIdRuleInfo*),
-            CONFIG4CPP_C_PREFIX(compareSchemaIdRuleInfo_c));
+            danek_compareSchemaIdRuleInfo_c);
 
         //--------
         // Check if multiple rules have the same name.

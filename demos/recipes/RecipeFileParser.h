@@ -23,7 +23,7 @@
 
 #pragma once
 
-#include <config4cpp/Configuration.h>
+#include "danek/Configuration.h"
 #include "RecipeFileParserException.h"
 
 using namespace danek;

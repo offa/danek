@@ -24,8 +24,8 @@
 //--------
 // #include's
 //--------
-#include <config4cpp/Configuration.h>
-#include <config4cpp/SchemaValidator.h>
+#include "danek/Configuration.h"
+#include "danek/SchemaValidator.h"
 using config4cpp::Configuration;
 using config4cpp::ConfigurationException;
 using config4cpp::SchemaValidator;

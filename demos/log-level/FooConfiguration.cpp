@@ -22,8 +22,8 @@
 // SOFTWARE.
 
 #include "FooConfiguration.h"
-#include <config4cpp/Configuration.h>
-#include <config4cpp/SchemaValidator.h>
+#include "danek/Configuration.h"
+#include "danek/SchemaValidator.h"
 #include <string.h>
 #include <stdlib.h>
 

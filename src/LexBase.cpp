@@ -36,7 +36,7 @@
 
 namespace danek
 {
-    extern "C" int CONFIG4CPP_C_PREFIX(keywordInfoCmp)(const void* ptr1, const void* ptr2)
+    extern "C" int danek_keywordInfoCmp(const void* ptr1, const void* ptr2)
     {
         const LexBase::KeywordInfo* sas1;
         const LexBase::KeywordInfo* sas2;
@@ -61,7 +61,7 @@ namespace danek
             m_keywordInfoArray,
             m_keywordInfoArraySize,
             sizeof(searchItem),
-            CONFIG4CPP_C_PREFIX(keywordInfoCmp));
+            danek_keywordInfoCmp);
         if (result == 0)
         {
             found = false;
@@ -73,7 +73,7 @@ namespace danek
         }
     }
 
-    extern "C" int CONFIG4CPP_C_PREFIX(funcInfoCmp_c)(const void* ptr1, const void* ptr2)
+    extern "C" int danek_funcInfoCmp_c(const void* ptr1, const void* ptr2)
     {
         const LexBase::FuncInfo* sas1;
         const LexBase::FuncInfo* sas2;
@@ -97,7 +97,7 @@ namespace danek
             m_funcInfoArray,
             m_funcInfoArraySize,
             sizeof(searchItem),
-            CONFIG4CPP_C_PREFIX(funcInfoCmp_c)));
+            danek_funcInfoCmp_c));
         if (result == 0)
         {
             found = false;

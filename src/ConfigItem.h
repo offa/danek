@@ -26,7 +26,7 @@
 //--------
 // #include's
 //--------
-#include <config4cpp/Configuration.h>
+#include "danek/Configuration.h"
 #include <stdio.h>
 #include <assert.h>
 
