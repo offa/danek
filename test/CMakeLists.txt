@@ -1,7 +1,6 @@
 
 find_package(Threads REQUIRED)
 find_package(GTest REQUIRED)
-find_package(GMock REQUIRED)
 
 
 macro(_add_test _name _src _lib)
@@ -10,10 +9,9 @@ macro(_add_test _name _src _lib)
 
     target_include_directories(${_name} SYSTEM PUBLIC
                                 ${GTest_INCLUDE_DIR}
-                                ${GMock_INCLUDE_DIR}
+                                ${GTest_Mock_INCLUDE_DIR}
                                 )
 target_link_libraries(${_name} ${GTest_LIBRARIES}
-                                    ${GMock_LIBRARY}
                                     ${CMAKE_THREAD_LIBS_INIT}
                                     ${_lib}
                                     )
