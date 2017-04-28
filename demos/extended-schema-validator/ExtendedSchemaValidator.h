@@ -26,8 +26,8 @@
 
 #include <config4cpp/SchemaValidator.h>
 #include "SchemaTypeHex.h"
-using CONFIG4CPP_NAMESPACE::ConfigurationException;
-using CONFIG4CPP_NAMESPACE::SchemaValidator;
+using danek::ConfigurationException;
+using danek::SchemaValidator;
 
 class ExtendedSchemaValidator : public SchemaValidator
 {

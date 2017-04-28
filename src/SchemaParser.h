@@ -32,7 +32,7 @@
 #include "SchemaRuleInfo.h"
 #include "SchemaLex.h"
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     class SchemaValidator;
 
@@ -78,4 +78,4 @@ namespace CONFIG4CPP_NAMESPACE
         SchemaParser& operator=(const SchemaParser&);
     };
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

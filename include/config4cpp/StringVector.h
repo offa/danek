@@ -30,7 +30,7 @@
 #include <config4cpp/namespace.h>
 #include <config4cpp/StringBuffer.h>
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     class ConfigParser;
 
@@ -85,4 +85,4 @@ namespace CONFIG4CPP_NAMESPACE
         int m_maxSize;
     };
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

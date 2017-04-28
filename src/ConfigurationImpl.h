@@ -31,7 +31,7 @@
 #include "ConfigScope.h"
 #include "UidIdentifierProcessor.h"
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     //--------
     // Forward class declarations.
@@ -367,4 +367,4 @@ namespace CONFIG4CPP_NAMESPACE
         m_currScope = scope;
     }
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

@@ -30,7 +30,7 @@
 #include <wchar.h>
 #include <wctype.h>
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     MBChar::MBChar()
     {
@@ -60,4 +60,4 @@ namespace CONFIG4CPP_NAMESPACE
         return true;
     }
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

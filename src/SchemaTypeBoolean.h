@@ -26,13 +26,13 @@
 
 #include <config4cpp/SchemaType.h>
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     class SchemaTypeBoolean : public SchemaType
     {
     public:
         SchemaTypeBoolean()
-            : SchemaType("boolean", CONFIG4CPP_NAMESPACE_STR "::SchemaTypeBoolan",
+            : SchemaType("boolean", "danek::SchemaTypeBoolan",
                   Configuration::CFG_STRING)
         {
         }
@@ -50,4 +50,4 @@ namespace CONFIG4CPP_NAMESPACE
             StringBuffer& errSuffix) const;
     };
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

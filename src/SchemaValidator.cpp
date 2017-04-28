@@ -54,7 +54,7 @@
 #include <stdlib.h>
 #include <assert.h>
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     int compareSchemaIdRuleInfo(const void* p1, const void* p2)
     {
@@ -308,7 +308,7 @@ namespace CONFIG4CPP_NAMESPACE
         ConfigurationException)
     {
         SchemaParser schemaParser(this);
-        const char* prefix = "---- " CONFIG4CPP_NAMESPACE_STR "::SchemaValidator::parseSchema()";
+        const char* prefix = "---- danek::SchemaValidator::parseSchema()";
 
         if (m_wantDiagnostics)
         {
@@ -359,7 +359,7 @@ namespace CONFIG4CPP_NAMESPACE
         StringBuffer unlistedName;
         StringBuffer msg;
         StringBuffer buf;
-        const char* prefix = "---- " CONFIG4CPP_NAMESPACE_STR "::SchemaValidator::validate()";
+        const char* prefix = "---- danek::SchemaValidator::validate()";
 
         cfg->mergeNames(scope, localName, fullyScopedName);
 
@@ -794,4 +794,4 @@ namespace CONFIG4CPP_NAMESPACE
         return result;
     }
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

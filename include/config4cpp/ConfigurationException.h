@@ -30,7 +30,7 @@
 #include <config4cpp/namespace.h>
 #include <string.h>
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     class ConfigurationException
     {
@@ -60,4 +60,4 @@ namespace CONFIG4CPP_NAMESPACE
         ConfigurationException operator=(const ConfigurationException&);
     };
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

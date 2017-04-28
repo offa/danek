@@ -30,7 +30,7 @@
 #include <config4cpp/StringBuffer.h>
 #include <config4cpp/StringVector.h>
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     class SchemaIdRuleInfo
     {
@@ -48,4 +48,4 @@ namespace CONFIG4CPP_NAMESPACE
         StringBuffer m_locallyScopedName;
     };
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

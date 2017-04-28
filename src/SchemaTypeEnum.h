@@ -26,14 +26,14 @@
 
 #include <config4cpp/SchemaType.h>
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     class SchemaTypeEnum : public SchemaType
     {
     public:
         SchemaTypeEnum()
             : SchemaType(
-                  "enum", CONFIG4CPP_NAMESPACE_STR "::SchemaTypeEnum", Configuration::CFG_STRING)
+                  "enum", "danek::SchemaTypeEnum", Configuration::CFG_STRING)
         {
         }
         virtual ~SchemaTypeEnum()
@@ -50,4 +50,4 @@ namespace CONFIG4CPP_NAMESPACE
             StringBuffer& errSuffix) const;
     };
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

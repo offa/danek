@@ -30,7 +30,7 @@
 #include <config4cpp/namespace.h>
 #include <stdio.h>
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     class Config2Cpp
     {
@@ -101,4 +101,4 @@ namespace CONFIG4CPP_NAMESPACE
         char** m_namespaceArray;
     };
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

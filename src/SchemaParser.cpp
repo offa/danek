@@ -31,7 +31,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     extern "C" int CONFIG4CPP_C_PREFIX(compareSchemaIdRuleInfo_c)(const void* p1, const void* p2);
 
@@ -373,4 +373,4 @@ namespace CONFIG4CPP_NAMESPACE
         }
     }
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

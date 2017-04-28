@@ -32,7 +32,7 @@
 
 #define CONFIG4CPP_STRING_BUFFER_INTERNAL_BUF_SIZE 32
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     class StringVector;
     class LexToken;
@@ -175,4 +175,4 @@ namespace CONFIG4CPP_NAMESPACE
         return *this;
     }
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

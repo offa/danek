@@ -29,7 +29,7 @@
 //--------
 #include "LexBase.h"
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     class SchemaLex : public LexBase
     {
@@ -66,4 +66,4 @@ namespace CONFIG4CPP_NAMESPACE
         SchemaLex& operator=(const SchemaLex&);
     };
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

@@ -26,14 +26,14 @@
 
 #include <config4cpp/SchemaType.h>
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     class SchemaTypeDurationMilliseconds : public SchemaType
     {
     public:
         SchemaTypeDurationMilliseconds()
             : SchemaType("durationMilliseconds",
-                  CONFIG4CPP_NAMESPACE_STR "::SchemaTypeDurationMilliseconds",
+                  "danek::SchemaTypeDurationMilliseconds",
                   Configuration::CFG_STRING)
         {
         }
@@ -51,4 +51,4 @@ namespace CONFIG4CPP_NAMESPACE
             StringBuffer& errSuffix) const;
     };
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

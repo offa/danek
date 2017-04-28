@@ -27,7 +27,7 @@
 #include <config4cpp/Configuration.h>
 #include "RecipeFileParserException.h"
 
-using namespace CONFIG4CPP_NAMESPACE;
+using namespace danek;
 
 class RecipeFileParser
 {
@@ -58,7 +58,7 @@ private:
     //--------
     // Instance variables
     //--------
-    CONFIG4CPP_NAMESPACE::Configuration* m_cfg;
+    danek::Configuration* m_cfg;
     StringBuffer m_scope;
     bool m_parseCalled;
     StringVector m_recipeScopeNames;

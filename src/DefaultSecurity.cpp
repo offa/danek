@@ -4,7 +4,7 @@
 
 #include "DefaultSecurity.h"
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     DefaultSecurity::DefaultSecurity()
     {
@@ -98,4 +98,4 @@ namespace CONFIG4CPP_NAMESPACE
         // Nothing to do
     }
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

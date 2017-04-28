@@ -26,13 +26,13 @@
 
 #include <config4cpp/SchemaType.h>
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     class SchemaTypeString : public SchemaType
     {
     public:
         SchemaTypeString()
-            : SchemaType("string", CONFIG4CPP_NAMESPACE_STR "::SchemaTypeString",
+            : SchemaType("string", "danek::SchemaTypeString",
                   Configuration::CFG_STRING)
         {
         }
@@ -50,4 +50,4 @@ namespace CONFIG4CPP_NAMESPACE
             StringBuffer& errSuffix) const;
     };
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

@@ -34,7 +34,7 @@
 #include "UidIdentifierProcessor.h"
 #include "platform.h"
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     class LexBase
     {
@@ -166,4 +166,4 @@ namespace CONFIG4CPP_NAMESPACE
         LexBase& operator=(const LexBase&);
     };
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

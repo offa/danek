@@ -26,14 +26,14 @@
 
 #include <config4cpp/SchemaType.h>
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     class SchemaTypeTypedef : public SchemaType
     {
     public:
         SchemaTypeTypedef(const char* name, Configuration::Type cfgType, const char* baseTypeName,
             const StringVector& baseTypeArgs)
-            : SchemaType(name, CONFIG4CPP_NAMESPACE_STR "::SchemaTypeTypedef", cfgType)
+            : SchemaType(name, "danek::SchemaTypeTypedef", cfgType)
         {
             m_baseTypeName = baseTypeName;
             m_baseTypeArgs = baseTypeArgs;
@@ -60,4 +60,4 @@ namespace CONFIG4CPP_NAMESPACE
         StringVector m_baseTypeArgs;
     };
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

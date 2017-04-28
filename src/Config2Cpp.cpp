@@ -28,7 +28,7 @@
 #include "Config2Cpp.h"
 #include <string.h>
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     //--------
     // Forward declarations of static functions
@@ -515,7 +515,7 @@ namespace CONFIG4CPP_NAMESPACE
         fprintf(file, "\t//--------\n");
         fprintf(file, "\t// Variables\n");
         fprintf(file, "\t//--------\n");
-        fprintf(file, "\tCONFIG4CPP_NAMESPACE::StringBuffer m_str;\n");
+        fprintf(file, "\tdanek::StringBuffer m_str;\n");
         if (schemaSize > 0)
         {
             fprintf(
@@ -685,4 +685,4 @@ namespace CONFIG4CPP_NAMESPACE
         return result;
     }
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

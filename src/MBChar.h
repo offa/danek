@@ -33,7 +33,7 @@
 #include <wchar.h>
 #include <wctype.h>
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     class MBChar
     {
@@ -177,4 +177,4 @@ namespace CONFIG4CPP_NAMESPACE
         return !(m_mbCharLen == 1 && m_mbChar[0] == ch);
     }
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

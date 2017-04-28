@@ -9,7 +9,7 @@
 
 #include <config4cpp/Configuration.h>
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     class DefaultSecurity
     {
@@ -32,7 +32,7 @@ namespace CONFIG4CPP_NAMESPACE
         //--------
         // Variables
         //--------
-        CONFIG4CPP_NAMESPACE::StringBuffer m_str;
+        danek::StringBuffer m_str;
 
         //--------
         // The following are not implemented
@@ -41,4 +41,4 @@ namespace CONFIG4CPP_NAMESPACE
         DefaultSecurity(const DefaultSecurity&);
     };
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

@@ -30,7 +30,7 @@
 #include "LexBase.h"
 #include <assert.h>
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     //----------------------------------------------------------------------
     // Function:	Constructor
@@ -148,4 +148,4 @@ namespace CONFIG4CPP_NAMESPACE
         return m_funcType == LexBase::BOOL_FUNC;
     }
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

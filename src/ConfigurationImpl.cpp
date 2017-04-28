@@ -36,7 +36,7 @@
 #include <assert.h>
 #include <ctype.h>
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     //----------------------------------------------------------------------
     // Function:	Constructor
@@ -2587,4 +2587,4 @@ namespace CONFIG4CPP_NAMESPACE
         return false;
     }
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

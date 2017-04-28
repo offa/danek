@@ -30,7 +30,7 @@
 #include <string.h>
 #include <assert.h>
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     //----------------------------------------------------------------------
     // Function:	Constructor (overloaded)
@@ -70,4 +70,4 @@ namespace CONFIG4CPP_NAMESPACE
         m_item = item;
     }
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

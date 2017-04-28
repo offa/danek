@@ -59,7 +59,7 @@
 #include "ConfigScope.h"
 #include "ConfigurationImpl.h"
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     class ConfigParser
     {
@@ -125,4 +125,4 @@ namespace CONFIG4CPP_NAMESPACE
         StringBuffer m_fileName;
     };
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

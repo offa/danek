@@ -29,7 +29,7 @@
 //--------
 #include "UidIdentifierProcessor.h"
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     class UidIdentifierDummyProcessor : public UidIdentifierProcessor
     {
@@ -65,4 +65,4 @@ namespace CONFIG4CPP_NAMESPACE
         UidIdentifierDummyProcessor& operator=(const UidIdentifierDummyProcessor&);
     };
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

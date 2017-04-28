@@ -32,7 +32,7 @@
 #include <config4cpp/Configuration.h>
 #include <config4cpp/SchemaValidator.h>
 
-using namespace CONFIG4CPP_NAMESPACE;
+using namespace danek;
 
 void calculateRuleForName(const Configuration* cfg, const char* name, const char* uName,
     const StringVector& wildcardedNamesAndTypes, StringBuffer& rule)

@@ -26,7 +26,7 @@
 
 #include <config4cpp/namespace.h>
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     template<class T>
     void unused(T&&)

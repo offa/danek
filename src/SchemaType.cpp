@@ -26,7 +26,7 @@
 #include <config4cpp/SchemaValidator.h>
 #include "Common.h"
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     class SchemaValidator;
 
@@ -106,4 +106,4 @@ namespace CONFIG4CPP_NAMESPACE
         return sv->callIsA(target, cfg, value, typeName, typeArgs, indentLevel, errSuffix);
     }
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

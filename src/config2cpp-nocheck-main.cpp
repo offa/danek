@@ -30,7 +30,7 @@
 #include <stdlib.h>
 #include "Config2Cpp.h"
 
-using namespace CONFIG4CPP_NAMESPACE;
+using namespace danek;
 
 int main(int argc, char** argv)
 {

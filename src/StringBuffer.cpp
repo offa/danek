@@ -30,7 +30,7 @@
 #include <stdio.h>
 #include <ctype.h>
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     StringBuffer::StringBuffer()
     {
@@ -212,4 +212,4 @@ namespace CONFIG4CPP_NAMESPACE
         m_buf = newBuf;
     }
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

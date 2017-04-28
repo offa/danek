@@ -42,7 +42,7 @@
 #endif
 #endif
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     bool execCmd(const char* cmd, StringBuffer& output)
     {
@@ -233,4 +233,4 @@ namespace CONFIG4CPP_NAMESPACE
     }
 
 #endif
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

@@ -32,7 +32,7 @@
 #include <stdio.h>
 #include <assert.h>
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     UidIdentifierProcessor::UidIdentifierProcessor() : m_count(0)
     {
@@ -271,4 +271,4 @@ namespace CONFIG4CPP_NAMESPACE
         return buf.c_str();
     }
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

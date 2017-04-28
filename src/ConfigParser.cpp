@@ -89,7 +89,7 @@
 #include <errno.h>
 #include <string.h>
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     static bool startsWith(const char* str, const char* prefix)
     {
@@ -1635,4 +1635,4 @@ namespace CONFIG4CPP_NAMESPACE
         }
     }
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

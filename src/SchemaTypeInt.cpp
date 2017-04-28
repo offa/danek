@@ -25,7 +25,7 @@
 #include "SchemaTypeInt.h"
 #include "Common.h"
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     void SchemaTypeInt::checkRule(const SchemaValidator* sv, const Configuration* cfg,
         const char* typeName, const StringVector& typeArgs, const char* rule) const
@@ -112,4 +112,4 @@ namespace CONFIG4CPP_NAMESPACE
         return true;
     }
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

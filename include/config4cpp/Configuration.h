@@ -33,7 +33,7 @@
 #include <config4cpp/StringVector.h>
 #include <stddef.h>
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     struct EnumNameAndValue
     {
@@ -343,4 +343,4 @@ namespace CONFIG4CPP_NAMESPACE
         }
     }
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

@@ -27,14 +27,14 @@
 #include <config4cpp/SchemaType.h>
 #include "Common.h"
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     class SchemaTypeDummy : public SchemaType
     {
     public:
         explicit SchemaTypeDummy(const char* name)
             : SchemaType(
-                  name, CONFIG4CPP_NAMESPACE_STR "::SchemaTypeDummy", Configuration::CFG_STRING)
+                  name, "danek::SchemaTypeDummy", Configuration::CFG_STRING)
         {
         }
         virtual ~SchemaTypeDummy()
@@ -54,4 +54,4 @@ namespace CONFIG4CPP_NAMESPACE
         }
     };
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

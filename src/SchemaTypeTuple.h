@@ -26,14 +26,14 @@
 
 #include <config4cpp/SchemaType.h>
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     class SchemaTypeTuple : public SchemaType
     {
     public:
         SchemaTypeTuple()
             : SchemaType(
-                  "tuple", CONFIG4CPP_NAMESPACE_STR "::SchemaTypeTuple", Configuration::CFG_STRING)
+                  "tuple", "danek::SchemaTypeTuple", Configuration::CFG_STRING)
         {
         }
         virtual ~SchemaTypeTuple()
@@ -50,4 +50,4 @@ namespace CONFIG4CPP_NAMESPACE
             const StringVector& typeArgs, int indentLevel) const throw(ConfigurationException);
     };
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

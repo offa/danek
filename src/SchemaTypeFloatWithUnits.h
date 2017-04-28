@@ -26,13 +26,13 @@
 
 #include <config4cpp/SchemaType.h>
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     class SchemaTypeFloatWithUnits : public SchemaType
     {
     public:
         SchemaTypeFloatWithUnits()
-            : SchemaType("float_with_units", CONFIG4CPP_NAMESPACE_STR "::SchemaTypeFloatWithUnits",
+            : SchemaType("float_with_units", "danek::SchemaTypeFloatWithUnits",
                   Configuration::CFG_STRING)
         {
         }
@@ -50,4 +50,4 @@ namespace CONFIG4CPP_NAMESPACE
             StringBuffer& errSuffix) const;
     };
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

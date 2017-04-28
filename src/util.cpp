@@ -28,7 +28,7 @@
 #include <config4cpp/StringBuffer.h>
 #include "util.h"
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     void splitScopedNameIntoVector(const char* str, StringVector& vec)
     {
@@ -50,4 +50,4 @@ namespace CONFIG4CPP_NAMESPACE
         vec.add(startOfStr);
     }
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

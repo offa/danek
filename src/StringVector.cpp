@@ -30,7 +30,7 @@
 #include <stdlib.h>
 #include <assert.h>
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     static char* copyString(const char* str)
     {
@@ -264,4 +264,4 @@ namespace CONFIG4CPP_NAMESPACE
         return m_array[index];
     }
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

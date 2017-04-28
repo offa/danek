@@ -30,7 +30,7 @@
 #include <config4cpp/ConfigurationException.h>
 #include "ConfigScopeEntry.h"
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     //----------------------------------------------------------------------
     // Class:	ConfigScope
@@ -149,4 +149,4 @@ namespace CONFIG4CPP_NAMESPACE
         listScopedNamesHelper("", typeMask, recursive, filterPatterns, vec);
     }
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

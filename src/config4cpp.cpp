@@ -33,11 +33,11 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <locale.h>
-using CONFIG4CPP_NAMESPACE::Configuration;
-using CONFIG4CPP_NAMESPACE::ConfigurationException;
-using CONFIG4CPP_NAMESPACE::SchemaValidator;
-using CONFIG4CPP_NAMESPACE::StringBuffer;
-using CONFIG4CPP_NAMESPACE::StringVector;
+using danek::Configuration;
+using danek::ConfigurationException;
+using danek::SchemaValidator;
+using danek::StringBuffer;
+using danek::StringVector;
 
 //--------
 // Forward declarations

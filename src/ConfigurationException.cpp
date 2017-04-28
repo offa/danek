@@ -28,7 +28,7 @@
 #include <config4cpp/ConfigurationException.h>
 #include <string.h>
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     ConfigurationException::ConfigurationException(const char* str)
     {
@@ -52,4 +52,4 @@ namespace CONFIG4CPP_NAMESPACE
         return m_str;
     }
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

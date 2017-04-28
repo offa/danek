@@ -27,7 +27,7 @@
 #include "ConfigurationImpl.h"
 #include "DefaultSecurity.h"
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     class DefaultSecurityConfiguration : public ConfigurationImpl
     {
@@ -50,4 +50,4 @@ namespace CONFIG4CPP_NAMESPACE
         DefaultSecurityConfiguration(const DefaultSecurityConfiguration&);
     };
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

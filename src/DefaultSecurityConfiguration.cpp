@@ -27,7 +27,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     //--------
     // Define the singleton object
@@ -58,4 +58,4 @@ namespace CONFIG4CPP_NAMESPACE
         // Nothing to do
     }
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

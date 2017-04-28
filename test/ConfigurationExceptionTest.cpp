@@ -25,7 +25,7 @@
 #include "config4cpp/ConfigurationException.h"
 #include <gmock/gmock.h>
 
-using CONFIG4CPP_NAMESPACE::ConfigurationException;
+using danek::ConfigurationException;
 
 class ConfigurationExceptionTest : public testing::Test
 {

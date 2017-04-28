@@ -30,7 +30,7 @@
 #include <config4cpp/Configuration.h>
 #include <config4cpp/SchemaType.h>
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     class SchemaValidator;
     class SchemaParser;
@@ -164,4 +164,4 @@ namespace CONFIG4CPP_NAMESPACE
         return m_wantDiagnostics;
     }
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

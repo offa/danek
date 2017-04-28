@@ -26,14 +26,14 @@
 
 #include <config4cpp/SchemaType.h>
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     class SchemaTypeInt : public SchemaType
     {
     public:
         SchemaTypeInt()
             : SchemaType(
-                  "int", CONFIG4CPP_NAMESPACE_STR "::SchemaTypeInt", Configuration::CFG_STRING)
+                  "int", "danek::SchemaTypeInt", Configuration::CFG_STRING)
         {
         }
         virtual ~SchemaTypeInt()
@@ -50,4 +50,4 @@ namespace CONFIG4CPP_NAMESPACE
             StringBuffer& errSuffix) const;
     };
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

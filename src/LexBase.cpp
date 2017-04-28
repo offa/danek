@@ -35,7 +35,7 @@
 #include <wchar.h>
 #include <stdio.h>
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     extern "C" int CONFIG4CPP_C_PREFIX(keywordInfoCmp)(const void* ptr1, const void* ptr2)
     {
@@ -767,4 +767,4 @@ namespace CONFIG4CPP_NAMESPACE
         return result;
     }
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

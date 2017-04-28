@@ -28,7 +28,7 @@
 
 #include "SchemaLex.h"
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     //--------
     // This array must be kept sorted becaue we do a binary search on it.
@@ -57,4 +57,4 @@ namespace CONFIG4CPP_NAMESPACE
     {
     }
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

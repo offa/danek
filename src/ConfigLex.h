@@ -29,7 +29,7 @@
 //--------
 #include "LexBase.h"
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     class ConfigLex : public LexBase
     {
@@ -85,4 +85,4 @@ namespace CONFIG4CPP_NAMESPACE
         ConfigLex& operator=(const ConfigLex&);
     };
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

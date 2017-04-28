@@ -32,7 +32,7 @@
 #include <assert.h>
 #include <stdlib.h>
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     Configuration::Configuration()
     {
@@ -197,4 +197,4 @@ namespace CONFIG4CPP_NAMESPACE
         return true;
     }
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

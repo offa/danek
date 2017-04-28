@@ -26,14 +26,14 @@
 
 #include <config4cpp/SchemaType.h>
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     class SchemaTypeTable : public SchemaType
     {
     public:
         SchemaTypeTable()
             : SchemaType(
-                  "table", CONFIG4CPP_NAMESPACE_STR "::SchemaTypeTable", Configuration::CFG_STRING)
+                  "table", "danek::SchemaTypeTable", Configuration::CFG_STRING)
         {
         }
         virtual ~SchemaTypeTable()
@@ -50,4 +50,4 @@ namespace CONFIG4CPP_NAMESPACE
             const StringVector& typeArgs, int indentLevel) const throw(ConfigurationException);
     };
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

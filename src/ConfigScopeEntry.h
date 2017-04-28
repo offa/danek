@@ -31,7 +31,7 @@
 #include "ConfigItem.h"
 #include <assert.h>
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     class ConfigScope;
 
@@ -85,4 +85,4 @@ namespace CONFIG4CPP_NAMESPACE
         return m_item->type();
     }
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

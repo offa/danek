@@ -28,9 +28,9 @@
 #include <assert.h>
 #include <stdlib.h>
 
-using CONFIG4CPP_NAMESPACE::Configuration;
-using CONFIG4CPP_NAMESPACE::ConfigurationException;
-using CONFIG4CPP_NAMESPACE::SchemaValidator;
+using danek::Configuration;
+using danek::ConfigurationException;
+using danek::SchemaValidator;
 
 RecipeFileParser::RecipeFileParser() : m_cfg(nullptr), m_parseCalled(false)
 {

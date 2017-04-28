@@ -26,7 +26,7 @@
 
 #include <config4cpp/Configuration.h>
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     class SchemaValidator;
     class SchemaParser;
@@ -82,4 +82,4 @@ namespace CONFIG4CPP_NAMESPACE
         Configuration::Type m_cfgType;
     };
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

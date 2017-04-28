@@ -26,13 +26,13 @@
 
 #include <config4cpp/SchemaType.h>
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     class SchemaTypeIntWithUnits : public SchemaType
     {
     public:
         SchemaTypeIntWithUnits()
-            : SchemaType("int_with_units", CONFIG4CPP_NAMESPACE_STR "::SchemaTypeIntWithUnits",
+            : SchemaType("int_with_units", "danek::SchemaTypeIntWithUnits",
                   Configuration::CFG_STRING)
         {
         }
@@ -50,4 +50,4 @@ namespace CONFIG4CPP_NAMESPACE
             StringBuffer& errSuffix) const;
     };
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

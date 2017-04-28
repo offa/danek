@@ -30,7 +30,7 @@
 #include <config4cpp/ConfigurationException.h>
 #include <config4cpp/StringBuffer.h>
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     class LexToken
     {
@@ -95,4 +95,4 @@ namespace CONFIG4CPP_NAMESPACE
         return m_lineNum;
     }
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

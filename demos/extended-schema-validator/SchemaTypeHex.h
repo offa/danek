@@ -25,12 +25,12 @@
 #pragma once
 
 #include <config4cpp/SchemaValidator.h>
-using CONFIG4CPP_NAMESPACE::Configuration;
-using CONFIG4CPP_NAMESPACE::ConfigurationException;
-using CONFIG4CPP_NAMESPACE::SchemaValidator;
-using CONFIG4CPP_NAMESPACE::SchemaType;
-using CONFIG4CPP_NAMESPACE::StringBuffer;
-using CONFIG4CPP_NAMESPACE::StringVector;
+using danek::Configuration;
+using danek::ConfigurationException;
+using danek::SchemaValidator;
+using danek::SchemaType;
+using danek::StringBuffer;
+using danek::StringVector;
 
 class SchemaTypeHex : public SchemaType
 {

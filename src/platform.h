@@ -56,7 +56,7 @@
 #include <config4cpp/StringBuffer.h>
 #include <stdio.h>
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     extern bool execCmd(const char* cmd, StringBuffer& output);
     extern bool isCmdInDir(const char* cmd, const char* dir);
@@ -109,4 +109,4 @@ namespace CONFIG4CPP_NAMESPACE
         BufferedFileReader& operator=(const BufferedFileReader&);
     };
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

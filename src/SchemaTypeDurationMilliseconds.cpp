@@ -25,7 +25,7 @@
 #include "SchemaTypeDurationMilliseconds.h"
 #include "Common.h"
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     void SchemaTypeDurationMilliseconds::checkRule(const SchemaValidator* sv,
         const Configuration* cfg, const char* typeName, const StringVector& typeArgs,
@@ -169,4 +169,4 @@ namespace CONFIG4CPP_NAMESPACE
         return true;
     }
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

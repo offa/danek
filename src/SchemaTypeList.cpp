@@ -26,7 +26,7 @@
 #include "Common.h"
 #include <config4cpp/SchemaValidator.h>
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     void SchemaTypeList::checkRule(const SchemaValidator* sv, const Configuration* cfg,
         const char* typeName, const StringVector& typeArgs, const char* rule) const
@@ -127,4 +127,4 @@ namespace CONFIG4CPP_NAMESPACE
         }
     }
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

@@ -27,8 +27,8 @@
 #include "FallbackConfiguration.h"
 #include <stdio.h>
 #include <stdlib.h>
-using CONFIG4CPP_NAMESPACE::Configuration;
-using CONFIG4CPP_NAMESPACE::ConfigurationException;
+using danek::Configuration;
+using danek::ConfigurationException;
 
 //----------------------------------------------------------------------
 // class FooConfigurationException

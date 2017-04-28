@@ -31,7 +31,7 @@
 #include <config4cpp/StringBuffer.h>
 #include <config4cpp/ConfigurationException.h>
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     class UidIdentifierProcessor
     {
@@ -70,4 +70,4 @@ namespace CONFIG4CPP_NAMESPACE
         UidIdentifierProcessor& operator=(const UidIdentifierProcessor&);
     };
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

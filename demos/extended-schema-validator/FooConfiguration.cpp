@@ -29,8 +29,8 @@
 #include <string.h>
 #include <stdio.h>
 
-using CONFIG4CPP_NAMESPACE::Configuration;
-using CONFIG4CPP_NAMESPACE::ConfigurationException;
+using danek::Configuration;
+using danek::ConfigurationException;
 
 //----------------------------------------------------------------------
 // class FooConfigurationException

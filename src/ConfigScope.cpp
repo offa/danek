@@ -31,7 +31,7 @@
 #include <assert.h>
 #include <stdlib.h>
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     //----------------------------------------------------------------------
     // Function:	Constructor
@@ -610,4 +610,4 @@ namespace CONFIG4CPP_NAMESPACE
         delete[] origTable;
     }
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek

@@ -26,13 +26,13 @@
 
 #include <config4cpp/SchemaType.h>
 
-namespace CONFIG4CPP_NAMESPACE
+namespace danek
 {
     class SchemaTypeMemorySizeKB : public SchemaType
     {
     public:
         SchemaTypeMemorySizeKB()
-            : SchemaType("memorySizeKB", CONFIG4CPP_NAMESPACE_STR "::SchemaTypeMemorySizeKB",
+            : SchemaType("memorySizeKB", "danek::SchemaTypeMemorySizeKB",
                   Configuration::CFG_STRING)
         {
         }
@@ -50,4 +50,4 @@ namespace CONFIG4CPP_NAMESPACE
             StringBuffer& errSuffix) const;
     };
 
-} // namespace CONFIG4CPP_NAMESPACE
+} // namespace danek
