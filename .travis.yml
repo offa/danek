@@ -59,7 +59,7 @@ before_install:
 
 script:
     - mkdir build && cd build
-    - cmake -DCMAKE_BUILD_TYPE=Release -DDEMOS=ON ..
+    - cmake -DCMAKE_BUILD_TYPE=Release ..
     - make
     - make unittest
 
