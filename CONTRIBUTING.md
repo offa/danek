@@ -4,7 +4,7 @@
 
 ## Issues
 
-**Issues** can be used to report bugs, problems, feature requests, problems or other kind of suggestions. An issue ***should include***:
+**Issues** are used to report bugs, problems, feature requests, ask questions or other kind of suggestions. An issue ***should include***:
 
 - Good and meaningful title
 - Detailed description
@@ -29,17 +29,19 @@ Problem and bug reports ***need also***:
 - Detailed description
 - Descriptive commit messages
 
-If the PR is related to an *Issue*, please reference to it in the description or title.
+If the PR is related to an *Issue*, please reference it in the description or title.
 
 ### Code
 
 The contributed code should match these criteria:
 
 - Pass all Unit Tests and CI Builds
-- Does not introduce external dependencies
 - Proper Test Cases
 - Follow the projects code style
+- Does not introduce external dependencies
+- 4 Spaces – no Tabs
 - UTF-8 encoding
+
 
 
 ## Further readings
