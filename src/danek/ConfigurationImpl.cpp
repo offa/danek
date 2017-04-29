@@ -24,12 +24,12 @@
 //--------
 // #include's
 //--------
-#include "ConfigurationImpl.h"
-#include "util.h"
-#include "platform.h"
-#include "DefaultSecurityConfiguration.h"
-#include "ConfigParser.h"
-#include "Common.h"
+#include "danek/internal/ConfigurationImpl.h"
+#include "danek/internal/util.h"
+#include "danek/internal/platform.h"
+#include "danek/internal/DefaultSecurityConfiguration.h"
+#include "danek/internal/ConfigParser.h"
+#include "danek/internal/Common.h"
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>

@@ -21,8 +21,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "SchemaTypeDurationMicroseconds.h"
-#include "Common.h"
+#include "danek/internal/SchemaTypeDurationMicroseconds.h"
+#include "danek/internal/Common.h"
 
 namespace danek
 {

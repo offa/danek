@@ -21,7 +21,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "platform.h"
+#include "danek/internal/platform.h"
 #include <assert.h>
 #include <stdlib.h>
 #include "danek/StringBuffer.h"

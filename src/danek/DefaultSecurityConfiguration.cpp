@@ -21,8 +21,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "DefaultSecurityConfiguration.h"
-#include "DefaultSecurity.h"
+#include "danek/internal/DefaultSecurityConfiguration.h"
+#include "danek/internal/DefaultSecurity.h"
 #include <stdio.h>
 #include <stdlib.h>
 

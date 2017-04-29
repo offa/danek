@@ -21,8 +21,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "SchemaTypeIntWithUnits.h"
-#include "Common.h"
+#include "danek/internal/SchemaTypeIntWithUnits.h"
+#include "danek/internal/Common.h"
 
 namespace danek
 {

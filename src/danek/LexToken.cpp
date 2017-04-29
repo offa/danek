@@ -25,8 +25,8 @@
 // #include's
 //--------
 
-#include "LexToken.h"
-#include "LexBase.h"
+#include "danek/internal/LexToken.h"
+#include "danek/internal/LexBase.h"
 #include <assert.h>
 
 namespace danek

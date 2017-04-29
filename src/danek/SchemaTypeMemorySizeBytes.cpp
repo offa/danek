@@ -21,8 +21,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "SchemaTypeMemorySizeBytes.h"
-#include "Common.h"
+#include "danek/internal/SchemaTypeMemorySizeBytes.h"
+#include "danek/internal/Common.h"
 
 namespace danek
 {

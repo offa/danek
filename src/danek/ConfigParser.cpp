@@ -78,9 +78,8 @@
 //--------
 // #include's
 //--------
-#include "ConfigParser.h"
-#include "platform.h"
-#include "platform.h"
+#include "danek/internal/ConfigParser.h"
+#include "danek/internal/platform.h"
 #include <assert.h>
 #include <stdlib.h>
 #include <ctype.h>

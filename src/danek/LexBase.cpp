@@ -24,8 +24,8 @@
 //--------
 // #include's
 //--------
-#include "LexBase.h"
-#include "UidIdentifierDummyProcessor.h"
+#include "danek/internal/LexBase.h"
+#include "danek/internal/UidIdentifierDummyProcessor.h"
 #include <assert.h>
 #include <stdlib.h>
 #include <errno.h>

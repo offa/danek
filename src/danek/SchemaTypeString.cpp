@@ -21,8 +21,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "SchemaTypeString.h"
-#include "Common.h"
+#include "danek/internal/SchemaTypeString.h"
+#include "danek/internal/Common.h"
 
 namespace danek
 {

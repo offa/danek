@@ -25,7 +25,7 @@
 // #include's
 //--------
 #include "danek/StringBuffer.h"
-#include "util.h"
+#include "danek/internal/util.h"
 
 namespace danek
 {

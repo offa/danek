@@ -24,8 +24,8 @@
 //--------
 // #include's
 //--------
-#include "ConfigScope.h"
-#include "UidIdentifierProcessor.h"
+#include "danek/internal/ConfigScope.h"
+#include "danek/internal/UidIdentifierProcessor.h"
 #include <string.h>
 #include <assert.h>
 #include <stdlib.h>

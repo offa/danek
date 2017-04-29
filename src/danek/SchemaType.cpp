@@ -23,7 +23,7 @@
 
 #include "danek/SchemaType.h"
 #include "danek/SchemaValidator.h"
-#include "Common.h"
+#include "danek/internal/Common.h"
 
 namespace danek
 {

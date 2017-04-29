@@ -25,7 +25,7 @@
 // #include's
 //--------
 
-#include "SchemaLex.h"
+#include "danek/internal/SchemaLex.h"
 
 namespace danek
 {

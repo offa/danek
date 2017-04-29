@@ -24,8 +24,8 @@
 //--------
 // #include's
 //--------
-#include "UidIdentifierProcessor.h"
-#include "util.h"
+#include "danek/internal/UidIdentifierProcessor.h"
+#include "danek/internal/util.h"
 #include <string.h>
 #include <ctype.h>
 #include <stdio.h>

@@ -21,8 +21,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "SchemaTypeList.h"
-#include "Common.h"
+#include "danek/internal/SchemaTypeList.h"
+#include "danek/internal/Common.h"
 #include "danek/SchemaValidator.h"
 
 namespace danek

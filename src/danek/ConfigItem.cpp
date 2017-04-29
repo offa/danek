@@ -25,9 +25,9 @@
 // #include's
 //--------
 #include "danek/Configuration.h"
-#include "ConfigItem.h"
-#include "ConfigScope.h"
-#include "UidIdentifierProcessor.h"
+#include "danek/internal/ConfigItem.h"
+#include "danek/internal/ConfigScope.h"
+#include "danek/internal/UidIdentifierProcessor.h"
 #include <string.h>
 #include <assert.h>
 

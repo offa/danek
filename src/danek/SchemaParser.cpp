@@ -24,8 +24,8 @@
 //--------
 // #include's
 //--------
-#include "SchemaParser.h"
-#include "ConfigItem.h"
+#include "danek/internal/SchemaParser.h"
+#include "danek/internal/ConfigItem.h"
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>

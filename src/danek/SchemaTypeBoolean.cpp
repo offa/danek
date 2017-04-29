@@ -21,8 +21,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "SchemaTypeBoolean.h"
-#include "Common.h"
+#include "danek/internal/SchemaTypeBoolean.h"
+#include "danek/internal/Common.h"
 
 namespace danek
 {

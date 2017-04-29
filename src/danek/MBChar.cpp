@@ -24,7 +24,7 @@
 //--------
 // #include's
 //--------
-#include "MBChar.h"
+#include "danek/internal/MBChar.h"
 #include <ctype.h>
 #include <wchar.h>
 #include <wctype.h>

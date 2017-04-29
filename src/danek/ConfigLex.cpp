@@ -24,7 +24,7 @@
 //--------
 // #include's
 //--------
-#include "ConfigLex.h"
+#include "danek/internal/ConfigLex.h"
 
 namespace danek
 {

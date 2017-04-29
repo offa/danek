@@ -25,8 +25,8 @@
 // #include's
 //--------
 #include "danek/Configuration.h"
-#include "ConfigurationImpl.h"
-#include "MBChar.h"
+#include "danek/internal/ConfigurationImpl.h"
+#include "danek/internal/MBChar.h"
 #include <string.h>
 #include <assert.h>
 #include <stdlib.h>
