@@ -411,7 +411,7 @@ namespace danek
         fprintf(file, "#ifndef %s_h\n", m_className);
         fprintf(file, "#define %s_h\n", m_className);
         fprintf(file, "\n");
-        fprintf(file, "#include \"danek /Configuration.h\"\n");
+        fprintf(file, "#include \"danek/Configuration.h\"\n");
         fprintf(file, "\n");
         fprintf(file, "\n");
         if (m_namespaceArraySize != 0)
