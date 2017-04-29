@@ -13,8 +13,10 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 include(GNUInstallDirs)
 include(Compiler)
 include(CppStd)
-include(Coverage)
 
+if( COVERAGE )
+    include(Coverage)
+endif()
 
 add_definitions(-Wall -Wextra -pedantic -Werror -Wshadow)
 
@@ -27,7 +29,7 @@ if( UNIT_TESTS )
     subdirs(test)
 endif()
 
-if( BUILD_SCHEMA_TESTS )
+if( SCHEMA_TESTS )
     subdirs(tests/schema-types)
 endif()
 
