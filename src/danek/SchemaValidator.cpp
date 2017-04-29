@@ -122,11 +122,8 @@ namespace danek
         if (m_areTypesSorted)
         {
             SchemaType* searchPtr = &search;
-            SchemaType** result = (SchemaType**) bsearch(&searchPtr,
-                m_types,
-                m_typesCurrSize,
-                sizeof(SchemaType*),
-                danek_compareSchemaType_c);
+            SchemaType** result = (SchemaType**) bsearch(
+                &searchPtr, m_types, m_typesCurrSize, sizeof(SchemaType*), danek_compareSchemaType_c);
             if (result == 0)
             {
                 return 0;

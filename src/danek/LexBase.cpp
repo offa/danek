@@ -93,11 +93,8 @@ namespace danek
             return;
         }
         searchItem.m_spelling = spelling;
-        FuncInfo* result = static_cast<FuncInfo*>(bsearch(&searchItem,
-            m_funcInfoArray,
-            m_funcInfoArraySize,
-            sizeof(searchItem),
-            danek_funcInfoCmp_c));
+        FuncInfo* result = static_cast<FuncInfo*>(bsearch(
+            &searchItem, m_funcInfoArray, m_funcInfoArraySize, sizeof(searchItem), danek_funcInfoCmp_c));
         if (result == 0)
         {
             found = false;
