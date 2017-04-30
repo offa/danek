@@ -30,18 +30,14 @@ namespace danek
     class DefaultSecurity
     {
     public:
-
         DefaultSecurity();
-
 
         const char* getString() const
         {
             return m_str.c_str();
         }
 
-
     private:
-
         const std::string m_str;
     };
 
