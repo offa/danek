@@ -103,5 +103,4 @@ namespace danek
     {
         return sv->callIsA(target, cfg, value, typeName, typeArgs, indentLevel, errSuffix);
     }
-
 }

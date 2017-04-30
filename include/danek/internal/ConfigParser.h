@@ -122,5 +122,4 @@ namespace danek
         bool m_errorInIncludedFile;
         StringBuffer m_fileName;
     };
-
 }

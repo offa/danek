@@ -123,5 +123,4 @@ namespace danek
         }
         return true;
     }
-
 }

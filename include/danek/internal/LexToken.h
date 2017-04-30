@@ -93,5 +93,4 @@ namespace danek
     {
         return m_lineNum;
     }
-
 }

@@ -57,5 +57,4 @@ namespace danek
         StringBuffer m_baseTypeName;
         StringVector m_baseTypeArgs;
     };
-
 }

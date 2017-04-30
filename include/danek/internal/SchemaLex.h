@@ -64,5 +64,4 @@ namespace danek
         SchemaLex(const SchemaLex&);
         SchemaLex& operator=(const SchemaLex&);
     };
-
 }

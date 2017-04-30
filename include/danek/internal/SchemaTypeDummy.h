@@ -50,5 +50,4 @@ namespace danek
             unused(rule);
         }
     };
-
 }

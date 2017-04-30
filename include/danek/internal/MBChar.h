@@ -175,5 +175,4 @@ namespace danek
     {
         return !(m_mbCharLen == 1 && m_mbChar[0] == ch);
     }
-
 }

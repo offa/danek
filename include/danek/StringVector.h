@@ -83,5 +83,4 @@ namespace danek
         int m_currSize;
         int m_maxSize;
     };
-
 }

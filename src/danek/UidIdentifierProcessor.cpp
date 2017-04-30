@@ -269,5 +269,4 @@ namespace danek
         buf << "uid-" << suffix;
         return buf.c_str();
     }
-
 }

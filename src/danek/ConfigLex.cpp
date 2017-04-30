@@ -88,5 +88,4 @@ namespace danek
     {
         // Nothing to do
     }
-
 }

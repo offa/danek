@@ -147,5 +147,4 @@ namespace danek
         vec.empty();
         listScopedNamesHelper("", typeMask, recursive, filterPatterns, vec);
     }
-
 }

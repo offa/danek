@@ -262,5 +262,4 @@ namespace danek
         assert(index < m_currSize);
         return m_array[index];
     }
-
 }

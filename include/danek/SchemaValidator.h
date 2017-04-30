@@ -161,5 +161,4 @@ namespace danek
     {
         return m_wantDiagnostics;
     }
-
 }

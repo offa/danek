@@ -201,5 +201,4 @@ namespace danek
                 break;
         };
     }
-
 }

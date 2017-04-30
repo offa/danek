@@ -83,5 +83,4 @@ namespace danek
         ConfigLex(const ConfigLex&);
         ConfigLex& operator=(const ConfigLex&);
     };
-
 }

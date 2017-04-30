@@ -58,5 +58,4 @@ namespace danek
         }
         return true;
     }
-
 }

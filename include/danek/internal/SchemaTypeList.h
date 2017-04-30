@@ -45,5 +45,4 @@ namespace danek
             const char* name, const char* typeName, const char* origTypeName, const StringVector& typeArgs,
             int indentLevel) const throw(ConfigurationException);
     };
-
 }

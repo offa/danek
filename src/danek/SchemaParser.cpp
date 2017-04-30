@@ -361,5 +361,4 @@ namespace danek
             throw ConfigurationException(msg.c_str());
         }
     }
-
 }

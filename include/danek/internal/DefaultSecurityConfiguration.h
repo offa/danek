@@ -48,5 +48,4 @@ namespace danek
         DefaultSecurityConfiguration& operator=(const DefaultSecurityConfiguration&);
         DefaultSecurityConfiguration(const DefaultSecurityConfiguration&);
     };
-
 }

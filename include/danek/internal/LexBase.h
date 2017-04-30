@@ -164,5 +164,4 @@ namespace danek
         LexBase(const LexBase&);
         LexBase& operator=(const LexBase&);
     };
-
 }

@@ -142,5 +142,4 @@ namespace danek
     {
         return m_funcType == LexBase::BOOL_FUNC;
     }
-
 }

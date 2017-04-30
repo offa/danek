@@ -332,5 +332,4 @@ namespace danek
             parse(Configuration::INPUT_FILE, str);
         }
     }
-
 }

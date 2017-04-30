@@ -55,5 +55,4 @@ namespace danek
     SchemaLex::~SchemaLex()
     {
     }
-
 }

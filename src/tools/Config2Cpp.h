@@ -98,5 +98,4 @@ namespace danek
         int m_namespaceArraySize;
         char** m_namespaceArray;
     };
-
 }

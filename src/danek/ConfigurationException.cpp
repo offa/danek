@@ -50,5 +50,4 @@ namespace danek
     {
         return m_str;
     }
-
 }

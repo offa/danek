@@ -107,5 +107,4 @@ namespace danek
         BufferedFileReader(const BufferedFileReader&);
         BufferedFileReader& operator=(const BufferedFileReader&);
     };
-
 }

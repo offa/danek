@@ -78,5 +78,4 @@ namespace danek
         StringBuffer m_className;
         Configuration::Type m_cfgType;
     };
-
 }

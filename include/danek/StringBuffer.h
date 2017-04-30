@@ -173,5 +173,4 @@ namespace danek
         append(ch);
         return *this;
     }
-
 }

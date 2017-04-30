@@ -46,5 +46,4 @@ namespace danek
             const char* typeName, const StringVector& typeArgs, int indentLevel,
             StringBuffer& errSuffix) const;
     };
-
 }

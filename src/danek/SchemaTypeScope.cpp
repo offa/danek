@@ -54,5 +54,4 @@ namespace danek
 
         cfg->lookupScope(scope, name);
     }
-
 }

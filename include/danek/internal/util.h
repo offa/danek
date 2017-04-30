@@ -31,5 +31,4 @@
 namespace danek
 {
     extern void splitScopedNameIntoVector(const char* str, StringVector& vec);
-
 }

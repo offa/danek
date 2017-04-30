@@ -46,5 +46,4 @@ namespace danek
         short m_symbol;
         StringBuffer m_locallyScopedName;
     };
-
 }

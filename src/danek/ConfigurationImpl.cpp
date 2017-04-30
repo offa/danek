@@ -2546,5 +2546,4 @@ namespace danek
         }
         return false;
     }
-
 }

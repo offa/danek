@@ -210,5 +210,4 @@ namespace danek
         }
         m_buf = newBuf;
     }
-
 }

@@ -75,5 +75,4 @@ namespace danek
             callIsA(baseTypeDef, sv, cfg, value, baseTypeName, m_baseTypeArgs, indentLevel + 1, errSuffix);
         return result;
     }
-
 }

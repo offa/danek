@@ -68,5 +68,4 @@ namespace danek
         delete m_item;
         m_item = item;
     }
-
 }

@@ -40,5 +40,4 @@ namespace danek
     private:
         const std::string m_str;
     };
-
 }

@@ -75,5 +75,4 @@ namespace danek
         SchemaParser(const SchemaParser&);
         SchemaParser& operator=(const SchemaParser&);
     };
-
 }

@@ -122,5 +122,4 @@ namespace danek
         assert(m_scope != 0);
         return m_scope;
     }
-
 }
