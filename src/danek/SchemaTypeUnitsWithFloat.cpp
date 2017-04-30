@@ -75,4 +75,4 @@ namespace danek
         return result;
     }
 
-} // namespace danek
+}

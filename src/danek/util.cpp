@@ -49,4 +49,4 @@ namespace danek
         vec.add(startOfStr);
     }
 
-} // namespace danek
+}

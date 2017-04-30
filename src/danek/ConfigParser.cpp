@@ -1627,4 +1627,4 @@ namespace danek
         }
     }
 
-} // namespace danek
+}

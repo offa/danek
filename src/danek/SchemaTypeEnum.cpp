@@ -77,4 +77,4 @@ namespace danek
         return false;
     }
 
-} // namespace danek
+}

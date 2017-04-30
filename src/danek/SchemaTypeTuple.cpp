@@ -142,4 +142,4 @@ namespace danek
         }
     }
 
-} // namespace danek
+}

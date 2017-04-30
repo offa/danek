@@ -69,4 +69,4 @@ namespace danek
         m_item = item;
     }
 
-} // namespace danek
+}

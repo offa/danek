@@ -609,4 +609,4 @@ namespace danek
         delete[] origTable;
     }
 
-} // namespace danek
+}

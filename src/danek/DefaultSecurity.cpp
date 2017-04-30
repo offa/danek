@@ -93,4 +93,4 @@ namespace danek
         m_str << "";
     }
 
-} // namespace danek
+}

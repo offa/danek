@@ -270,4 +270,4 @@ namespace danek
         return buf.c_str();
     }
 
-} // namespace danek
+}

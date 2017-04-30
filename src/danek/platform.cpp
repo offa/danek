@@ -232,4 +232,4 @@ namespace danek
     }
 
 #endif
-} // namespace danek
+}

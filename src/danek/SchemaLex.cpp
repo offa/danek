@@ -56,4 +56,4 @@ namespace danek
     {
     }
 
-} // namespace danek
+}

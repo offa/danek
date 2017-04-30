@@ -263,4 +263,4 @@ namespace danek
         return m_array[index];
     }
 
-} // namespace danek
+}

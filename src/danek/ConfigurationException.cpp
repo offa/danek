@@ -51,4 +51,4 @@ namespace danek
         return m_str;
     }
 
-} // namespace danek
+}
