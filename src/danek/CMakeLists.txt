@@ -47,8 +47,9 @@ install(TARGETS danek
                 ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
                 RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
                 )
-install(DIRECTORY ../../include/danek
+install(DIRECTORY "${PROJECT_SOURCE_DIR}/include/danek/"
                 DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+                PATTERN "danek/internal/*" EXCLUDE
                 )
 
 
