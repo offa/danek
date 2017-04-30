@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "danek/Configuration.h"
+#include <string>
 
 namespace danek
 {
@@ -16,7 +16,6 @@ namespace danek
     public:
 
         DefaultSecurity();
-        DefaultSecurity(const DefaultSecurity&) = delete;
 
 
         const char* getString() const
@@ -25,11 +24,9 @@ namespace danek
         }
 
 
-        DefaultSecurity& operator=(const DefaultSecurity&) = delete;
-
     private:
 
-        danek::StringBuffer m_str;
+        const std::string m_str;
     };
 
 } // namespace danek

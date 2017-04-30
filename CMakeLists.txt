@@ -13,6 +13,7 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 include(GNUInstallDirs)
 include(Compiler)
 include(CppStd)
+include(Templates)
 
 if( COVERAGE )
     include(Coverage)

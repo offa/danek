@@ -1,0 +1,23 @@
+/**
+ * This is a generated file
+ */
+
+#include "danek/internal/DefaultSecurity.h"
+
+namespace danek
+{
+    namespace
+    {
+        std::string init()
+        {
+            return R"(@DEFAULT_SECURITY_CONTENT@)";
+        }
+    }
+
+
+    DefaultSecurity::DefaultSecurity() : m_str(init())
+    {
+    }
+
+} // namespace danek
+

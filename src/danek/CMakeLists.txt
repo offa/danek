@@ -5,7 +5,6 @@ add_library(danek SchemaLex.cpp
                 platform.cpp
                 util.cpp
                 Configuration.cpp
-                DefaultSecurity.cpp
                 DefaultSecurityConfiguration.cpp
                 ConfigurationException.cpp
                 ConfigurationImpl.cpp
@@ -40,6 +39,8 @@ add_library(danek SchemaLex.cpp
                 SchemaTypeTable.cpp
                 SchemaTypeTuple.cpp
                 SchemaTypeTypedef.cpp
+
+                $<TARGET_OBJECTS:DefaultSecurity>
                 )
 
 install(TARGETS danek
