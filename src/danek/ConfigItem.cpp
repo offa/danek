@@ -78,11 +78,9 @@ namespace danek
 
     static void printIndent(StringBuffer& buf, int indentLevel)
     {
-        int i;
-
-        for (i = 0; i < indentLevel; i++)
+        for (int i = 0; i < indentLevel; ++i)
         {
-            buf.append("\t");
+            buf.append("    ");
         }
     }
 
@@ -167,7 +165,9 @@ namespace danek
         {
             name = uidIdProc.unexpand(name, nameBuf);
         }
+
         printIndent(buf, indentLevel);
+
         switch (m_type)
         {
             case Configuration::CFG_STRING:
