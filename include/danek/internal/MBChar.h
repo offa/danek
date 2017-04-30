@@ -37,7 +37,6 @@ namespace danek
     class MBChar
     {
     public:
-    public:
         //--------
         // Constructors and destructor
         //--------
