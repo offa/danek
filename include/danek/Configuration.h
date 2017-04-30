@@ -333,4 +333,4 @@ namespace danek
         }
     }
 
-} // namespace danek
+}

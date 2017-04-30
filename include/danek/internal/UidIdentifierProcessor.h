@@ -68,4 +68,4 @@ namespace danek
         UidIdentifierProcessor& operator=(const UidIdentifierProcessor&);
     };
 
-} // namespace danek
+}

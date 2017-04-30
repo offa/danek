@@ -47,4 +47,4 @@ namespace danek
         StringBuffer m_locallyScopedName;
     };
 
-} // namespace danek
+}

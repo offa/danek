@@ -84,4 +84,4 @@ namespace danek
         int m_maxSize;
     };
 
-} // namespace danek
+}

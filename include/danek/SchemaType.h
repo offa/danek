@@ -79,4 +79,4 @@ namespace danek
         Configuration::Type m_cfgType;
     };
 
-} // namespace danek
+}

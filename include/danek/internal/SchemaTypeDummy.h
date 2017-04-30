@@ -51,4 +51,4 @@ namespace danek
         }
     };
 
-} // namespace danek
+}

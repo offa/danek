@@ -46,4 +46,4 @@ namespace danek
             StringBuffer& errSuffix) const;
     };
 
-} // namespace danek
+}

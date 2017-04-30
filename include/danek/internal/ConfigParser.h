@@ -123,4 +123,4 @@ namespace danek
         StringBuffer m_fileName;
     };
 
-} // namespace danek
+}

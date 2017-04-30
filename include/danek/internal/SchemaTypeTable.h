@@ -46,4 +46,4 @@ namespace danek
             int indentLevel) const throw(ConfigurationException);
     };
 
-} // namespace danek
+}

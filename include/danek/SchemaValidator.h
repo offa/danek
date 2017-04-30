@@ -162,4 +162,4 @@ namespace danek
         return m_wantDiagnostics;
     }
 
-} // namespace danek
+}

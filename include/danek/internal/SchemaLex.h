@@ -65,4 +65,4 @@ namespace danek
         SchemaLex& operator=(const SchemaLex&);
     };
 
-} // namespace danek
+}

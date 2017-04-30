@@ -49,4 +49,4 @@ namespace danek
         DefaultSecurityConfiguration(const DefaultSecurityConfiguration&);
     };
 
-} // namespace danek
+}

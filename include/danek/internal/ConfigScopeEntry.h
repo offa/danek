@@ -84,4 +84,4 @@ namespace danek
         return m_item->type();
     }
 
-} // namespace danek
+}

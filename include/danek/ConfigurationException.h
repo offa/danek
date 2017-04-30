@@ -59,4 +59,4 @@ namespace danek
         ConfigurationException operator=(const ConfigurationException&);
     };
 
-} // namespace danek
+}

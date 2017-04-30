@@ -123,4 +123,4 @@ namespace danek
         return m_scope;
     }
 
-} // namespace danek
+}

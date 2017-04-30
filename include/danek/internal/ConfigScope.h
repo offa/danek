@@ -148,4 +148,4 @@ namespace danek
         listScopedNamesHelper("", typeMask, recursive, filterPatterns, vec);
     }
 
-} // namespace danek
+}

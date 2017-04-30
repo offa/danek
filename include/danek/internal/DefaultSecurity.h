@@ -41,4 +41,4 @@ namespace danek
         const std::string m_str;
     };
 
-} // namespace danek
+}

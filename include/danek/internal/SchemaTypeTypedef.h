@@ -58,4 +58,4 @@ namespace danek
         StringVector m_baseTypeArgs;
     };
 
-} // namespace danek
+}

@@ -354,4 +354,4 @@ namespace danek
         m_currScope = scope;
     }
 
-} // namespace danek
+}

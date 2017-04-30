@@ -174,4 +174,4 @@ namespace danek
         return *this;
     }
 
-} // namespace danek
+}

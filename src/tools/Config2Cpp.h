@@ -99,4 +99,4 @@ namespace danek
         char** m_namespaceArray;
     };
 
-} // namespace danek
+}
