@@ -14,31 +14,22 @@ namespace danek
     class DefaultSecurity
     {
     public:
-        //--------
-        // Constructor and destructor.
-        //--------
-        DefaultSecurity();
-        ~DefaultSecurity();
 
-        //--------
-        // Get the configuration string
-        //--------
-        const char* getString()
+        DefaultSecurity();
+        DefaultSecurity(const DefaultSecurity&) = delete;
+
+
+        const char* getString() const
         {
             return m_str.c_str();
         }
 
-    private:
-        //--------
-        // Variables
-        //--------
-        danek::StringBuffer m_str;
 
-        //--------
-        // The following are not implemented
-        //--------
-        DefaultSecurity& operator=(const DefaultSecurity&);
-        DefaultSecurity(const DefaultSecurity&);
+        DefaultSecurity& operator=(const DefaultSecurity&) = delete;
+
+    private:
+
+        danek::StringBuffer m_str;
     };
 
 } // namespace danek

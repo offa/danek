@@ -93,9 +93,4 @@ namespace danek
         m_str << "";
     }
 
-    DefaultSecurity::~DefaultSecurity()
-    {
-        // Nothing to do
-    }
-
 } // namespace danek
