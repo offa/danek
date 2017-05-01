@@ -128,25 +128,13 @@ TEST_F(StringVectorTest, elementAccessByIndex)
     EXPECT_STREQ("def", v[1]);
 }
 
-TEST_F(StringVectorTest, rawArrayAccess)
-{
-    StringVector v;
-    v.add("1");
-    v.add("2");
-    const char** ptr = v.c_array();
-    EXPECT_STREQ("1", ptr[0]);
-    EXPECT_STREQ("2", ptr[1]);
-}
-
-TEST_F(StringVectorTest, rawArrayOutputAccess)
+TEST_F(StringVectorTest, getCopyOfData)
 {
     StringVector v;
     v.add("3");
-    const char** ptr;
-    int size;
-    v.c_array(ptr, size);
-    EXPECT_EQ(1, size);
-    EXPECT_STREQ("3", ptr[0]);
+    const auto data = v.get();
+    EXPECT_EQ(v.length(), data.size());
+    EXPECT_EQ(std::string{"3"}, data[0]);
 }
 
 TEST_F(StringVectorTest, sortSortsElements)

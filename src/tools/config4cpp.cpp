@@ -71,12 +71,9 @@ int main(int argc, char** argv)
     Configuration* schemaCfg;
     const Configuration* secDumpCfg;
     const char* secDumpScope;
-    const char** vec;
-    int len;
-    const char** schemaVec;
-    int schemaLen;
+    std::size_t len;
     SchemaValidator::ForceMode forceMode;
-    int i;
+    std::size_t i;
     StringBuffer buf;
     StringVector names;
     StringBuffer fullyScopedName;
@@ -133,10 +130,20 @@ int main(int argc, char** argv)
     {
         try
         {
+
             schemaCfg->parse(schemaSource);
-            schemaCfg->lookupList(schemaName, "", schemaVec, schemaLen);
+            std::vector<std::string> outputData;
+            schemaCfg->lookupList(schemaName, "", outputData);
             sv.wantDiagnostics(wantDiagnostics);
-            sv.parseSchema(schemaVec, schemaLen);
+
+            std::vector<const char*> schemaVec; // Deprecated conversion; kept for compatibility
+
+            for( const auto& s : outputData )
+            {
+                schemaVec.push_back(&s.front());
+            }
+
+            sv.parseSchema(schemaVec.data(), schemaVec.size());
             sv.validate(cfg, scope, name, isRecursive, types, forceMode);
         }
         catch (ConfigurationException& ex)
@@ -208,10 +215,13 @@ int main(int argc, char** argv)
                     printf("%s\n", str);
                     break;
                 case Configuration::CFG_LIST:
-                    cfg->lookupList(scope, name, vec, len);
-                    for (i = 0; i < len; i++)
                     {
-                        printf("%s\n", vec[i]);
+                        std::vector<std::string> vec;
+                        cfg->lookupList(scope, name, vec);
+                        for (i = 0; i < vec.size(); i++)
+                        {
+                            printf("%s\n", vec[i].c_str());
+                        }
                     }
                     break;
                 case Configuration::CFG_SCOPE:

@@ -265,7 +265,15 @@ int main(int argc, char** argv)
 
     if (ok)
     {
-        ok = util.generateFiles(schema.c_array(), schema.length());
+        const auto data = schema.get();
+        std::vector<const char*> buffer; // Deprecated conversion; kept for compatibility
+
+        for( const auto& str : data )
+        {
+            buffer.push_back(&str.front());
+        }
+
+        ok = util.generateFiles(buffer.data(), buffer.size());
     }
 
     cfg->destroy();

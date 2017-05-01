@@ -50,12 +50,16 @@ namespace danek
         unused(typeName);
         unused(indentLevel);
 
-        const char** allowedUnits;
-        int allowedUnitsSize;
+        const auto data = typeArgs.get();
+        std::vector<const char*> buffer; // Deprecated conversion; kept for compatibility
+
+        for( const auto& str : data )
+        {
+            buffer.push_back(&str.front());
+        }
         bool result;
 
-        typeArgs.c_array(allowedUnits, allowedUnitsSize);
-        result = cfg->isIntWithUnits(value, allowedUnits, allowedUnitsSize);
+        result = cfg->isIntWithUnits(value, buffer.data(), buffer.size());
         if (result == false)
         {
             errSuffix << "the value should be in the format '<int> <units>' where "

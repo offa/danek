@@ -83,8 +83,6 @@ namespace danek
         StringBuffer msg;
         StringBuffer errSuffix;
         StringBuffer fullyScopedName;
-        const char** list;
-        int listSize;
         StringVector emptyArgs;
 
         //--------
@@ -93,14 +91,15 @@ namespace danek
         int typeArgsSize = typeArgs.length();
         assert(typeArgsSize != 0);
         assert(typeArgsSize % 2 == 0);
-        int numElems = typeArgsSize / 2;
-        cfg->lookupList(scope, name, list, listSize);
-        if (listSize != numElems)
+        std::size_t numElems = typeArgsSize / 2;
+        std::vector<std::string> data;
+        cfg->lookupList(scope, name, data);
+        if (data.size() != numElems)
         {
             cfg->mergeNames(scope, name, fullyScopedName);
-            msg << cfg->fileName() << ": there should be " << numElems << " entries in the '"
-                << fullyScopedName << "' " << typeName << "; entries denote";
-            for (int i = 0; i < numElems; i++)
+            msg << cfg->fileName() << ": there should be " << static_cast<int>(numElems)
+                << " entries in the '" << fullyScopedName << "' " << typeName << "; entries denote";
+            for (std::size_t i = 0; i < numElems; i++)
             {
                 msg << " '" << typeArgs[i * 2 + 0] << "'";
                 if (i < numElems - 1)
@@ -113,11 +112,11 @@ namespace danek
         //--------
         // Check each item is of the type specified in the tuple
         //--------
-        for (int i = 0; i < listSize; i++)
+        for (std::size_t i = 0; i < data.size(); i++)
         {
             int typeIndex = (i * 2 + 0) % typeArgsSize;
             int elemNameIndex = (i * 2 + 1) % typeArgsSize;
-            const char* elemValue = list[i];
+            const char* elemValue = data[i].c_str();
             const char* elemTypeName = typeArgs[typeIndex];
             SchemaType* elemTypeDef = findType(sv, elemTypeName);
             bool ok =
@@ -135,8 +134,8 @@ namespace danek
                 }
                 cfg->mergeNames(scope, name, fullyScopedName);
                 msg << cfg->fileName() << ": bad " << elemTypeName << " value ('" << elemValue
-                    << "') for element " << i + 1 << " ('" << typeArgs[elemNameIndex] << "') of the '"
-                    << fullyScopedName << "' " << typeName << sep << errSuffix;
+                    << "') for element " << static_cast<int>(i + 1) << " ('" << typeArgs[elemNameIndex]
+                    << "') of the '" << fullyScopedName << "' " << typeName << sep << errSuffix;
                 throw ConfigurationException(msg.c_str());
             }
         }

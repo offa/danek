@@ -23,64 +23,49 @@
 
 #pragma once
 
-//--------
-// #includes & #defines
-//--------
-
 #include "danek/StringBuffer.h"
+#include <vector>
+#include <string>
 
 namespace danek
 {
-    class ConfigParser;
-
+    /**
+     * @deprecated Will be replaced; it's kept for compatibility reasons. Once the new API
+     * is in place, this class should get a [[deprecated]]; atm. this would fail the build though.
+     */
     class StringVector
     {
     public:
-        //--------
-        // Constructors and destructor
-        //--------
-        StringVector(int initialCapacity = 10);
-        StringVector(const StringVector&);
-        ~StringVector();
+        explicit StringVector(std::size_t initialCapacity = 10);
+        explicit StringVector(const std::vector<std::string>& data); // For compatibility reasons only
 
-        //--------
-        // Assignment operator.
-        //--------
-        StringVector& operator=(const StringVector& other);
 
-        //--------
-        // Public API
-        //--------
         void add(const char* str);
         void add(const StringBuffer& strBuf);
         void add(const StringVector& other);
-        void c_array(const char**& array, int& arraySize) const;
-        const char** c_array() const;
 
         void sort();
         bool bSearchContains(const char* str) const;
 
-        int length() const;
-        void ensureCapacity(int size);
+        std::size_t length() const;
+        void ensureCapacity(std::size_t size);
 
         void empty();
         void removeLast();
 
-        void replace(int index, const char* str);
+        void replace(std::size_t index, const char* str);
 
-        const char* operator[](int index) const;
+        std::vector<std::string> get() const;
+
+        const char* operator[](std::size_t index) const;
 
         /** @deprecated These methods will be replaced with a proper API. */
         void addWithOwnership(StringBuffer& strBuf);
         void addWithOwnership(StringVector& other);
-        void replaceWithOwnership(int index, char* str);
+        void replaceWithOwnership(std::size_t index, char* str);
 
     private:
-        //--------
-        // Instance variables
-        //--------
-        char** m_array;
-        int m_currSize;
-        int m_maxSize;
+        std::vector<std::string> m_data;
     };
+
 }

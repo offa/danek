@@ -289,8 +289,7 @@ namespace danek
     //		entry.
     //----------------------------------------------------------------------
 
-    void ConfigurationImpl::listValue(const char* fullyScopedName, const char* localName, StringVector& list,
-        Configuration::Type& type) const
+    void ConfigurationImpl::listValue(const char* fullyScopedName, const char* localName, StringVector& list, Configuration::Type& type) const
     {
         ConfigItem* item;
 
@@ -320,15 +319,13 @@ namespace danek
     // Description:	Return the list, if any, associated with the named entry.
     //----------------------------------------------------------------------
 
-    void ConfigurationImpl::listValue(const char* fullyScopedName, const char* localName, const char**& array,
-        int& arraySize, Configuration::Type& type) const
+    void ConfigurationImpl::listValue(const char* fullyScopedName, const char* localName, std::vector<std::string>& data, Configuration::Type& type) const
     {
         ConfigItem* item = lookup(fullyScopedName, localName);
         if (item == 0)
         {
             type = Configuration::CFG_NO_VALUE;
-            array = 0;
-            arraySize = 0;
+            data = std::vector<std::string>{};
         }
         else
         {
@@ -336,12 +333,11 @@ namespace danek
             if (type == Configuration::CFG_LIST)
             {
                 StringVector* list = &item->listVal();
-                list->c_array(array, arraySize);
+                data = list->get();
             }
             else
             {
-                array = 0;
-                arraySize = 0;
+                data = std::vector<std::string>{};
             }
         }
     }
@@ -399,8 +395,7 @@ namespace danek
     // Notes:	Overwrites an existing entry of the same name.
     //----------------------------------------------------------------------
 
-    void ConfigurationImpl::insertList(const char* scope, const char* localName, const char** array,
-        int arraySize) throw(ConfigurationException)
+    void ConfigurationImpl::insertList(const char* scope, const char* localName, std::vector<std::string> data) throw(ConfigurationException)
     {
         StringVector vec;
         int len;
@@ -412,7 +407,7 @@ namespace danek
         splitScopedNameIntoVector(fullyScopedName.c_str(), vec);
         len = vec.length();
         ensureScopeExists(vec, 0, len - 2, scopeObj);
-        if (!scopeObj->addOrReplaceList(vec[len - 1], array, arraySize))
+        if (!scopeObj->addOrReplaceList(vec[len - 1], StringVector{data}))
         {
             msg << fileName() << ": "
                 << "variable '" << fullyScopedName << "' was previously used as a scope";
@@ -428,35 +423,9 @@ namespace danek
     // Notes:	Overwrites an existing entry of the same name.
     //----------------------------------------------------------------------
 
-    void ConfigurationImpl::insertList(const char* scope, const char* localName,
-        const char** nullTerminatedArray) throw(ConfigurationException)
+    void ConfigurationImpl::insertList(const char* scope, const char* localName, const StringVector& vec) throw(ConfigurationException)
     {
-        int size;
-
-        size = 0;
-        while (nullTerminatedArray[size] != 0)
-        {
-            size++;
-        }
-        insertList(scope, localName, nullTerminatedArray, size);
-    }
-
-    //----------------------------------------------------------------------
-    // Function:	insertList()
-    //
-    // Description:	Insert a named list into the symbol table.
-    //
-    // Notes:	Overwrites an existing entry of the same name.
-    //----------------------------------------------------------------------
-
-    void ConfigurationImpl::insertList(
-        const char* scope, const char* localName, const StringVector& vec) throw(ConfigurationException)
-    {
-        const char** array;
-        int size;
-
-        vec.c_array(array, size);
-        insertList(scope, localName, array, size);
+        insertList(scope, localName, vec.get());
     }
 
     //----------------------------------------------------------------------
@@ -827,26 +796,24 @@ namespace danek
         return str;
     }
 
-    void ConfigurationImpl::lookupList(const char* scope, const char* localName, const char**& array,
-        int& arraySize, const char** defaultArray, int defaultArraySize) const throw(ConfigurationException)
+    void ConfigurationImpl::lookupList(const char* scope, const char* localName, std::vector<std::string>& data, const char** defaultArray, int defaultArraySize) const
+        throw(ConfigurationException)
     {
         Configuration::Type type;
         StringBuffer msg;
-        int i;
         StringBuffer fullyScopedName;
 
         mergeNames(scope, localName, fullyScopedName);
-        listValue(fullyScopedName.c_str(), localName, array, arraySize, type);
+        listValue(fullyScopedName.c_str(), localName, data, type);
         switch (type)
         {
             case Configuration::CFG_LIST:
                 break;
             case Configuration::CFG_NO_VALUE:
-                arraySize = defaultArraySize;
-                array = new const char*[arraySize];
-                for (i = 0; i < arraySize; i++)
+                std::vector<std::string>(defaultArraySize).swap(data);
+                for (std::size_t i = 0; i < static_cast<std::size_t>(defaultArraySize); i++)
                 {
-                    array[i] = defaultArray[i];
+                    data[i] = defaultArray[i];
                 }
                 break;
             case Configuration::CFG_SCOPE:
@@ -862,15 +829,14 @@ namespace danek
         }
     }
 
-    void ConfigurationImpl::lookupList(const char* scope, const char* localName, const char**& array,
-        int& arraySize) const throw(ConfigurationException)
+    void ConfigurationImpl::lookupList(const char* scope, const char* localName, std::vector<std::string>& data) const throw(ConfigurationException)
     {
         Configuration::Type type;
         StringBuffer msg;
         StringBuffer fullyScopedName;
 
         mergeNames(scope, localName, fullyScopedName);
-        listValue(fullyScopedName.c_str(), localName, array, arraySize, type);
+        listValue(fullyScopedName.c_str(), localName, data, type);
         switch (type)
         {
             case Configuration::CFG_LIST:
@@ -895,21 +861,15 @@ namespace danek
     {
         Configuration::Type type;
         StringBuffer msg;
-        int i;
         StringBuffer fullyScopedName;
-        const char** array;
-        int arraySize;
+        std::vector<std::string> data;
 
         mergeNames(scope, localName, fullyScopedName);
-        listValue(fullyScopedName.c_str(), localName, array, arraySize, type);
+        listValue(fullyScopedName.c_str(), localName, data, type);
         switch (type)
         {
             case Configuration::CFG_LIST:
-                list.empty();
-                for (i = 0; i < arraySize; i++)
-                {
-                    list.add(array[i]);
-                }
+                list = StringVector{data};
                 break;
             case Configuration::CFG_NO_VALUE:
                 list = defaultList;
@@ -930,21 +890,15 @@ namespace danek
     {
         Configuration::Type type;
         StringBuffer msg;
-        int i;
         StringBuffer fullyScopedName;
-        const char** array;
-        int arraySize;
+        std::vector<std::string> data;
 
         mergeNames(scope, localName, fullyScopedName);
-        listValue(fullyScopedName.c_str(), localName, array, arraySize, type);
+        listValue(fullyScopedName.c_str(), localName, data, type);
         switch (type)
         {
             case Configuration::CFG_LIST:
-                list.empty();
-                for (i = 0; i < arraySize; i++)
-                {
-                    list.add(array[i]);
-                }
+                list = StringVector{data};
                 break;
             case Configuration::CFG_NO_VALUE:
                 msg << fileName() << ": no value specified for '" << fullyScopedName << "'";
@@ -2480,9 +2434,9 @@ namespace danek
         StringBuffer cmd;
         const char* ptr;
         const char* scope;
-        int i;
-        int j;
-        int len;
+        std::size_t i;
+        std::size_t j;
+        std::size_t len;
 
         if (this == &DefaultSecurityConfiguration::singleton || m_securityCfg == 0)
         {

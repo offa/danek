@@ -21,87 +21,24 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//--------
-// #includes & #defines
-//--------
 #include "danek/StringVector.h"
-#include <string.h>
-#include <stdlib.h>
-#include <assert.h>
+#include <algorithm>
 
 namespace danek
 {
-    static char* copyString(const char* str)
-    {
-        char* result;
 
-        result = new char[strlen(str) + 1];
-        strcpy(result, str);
-        return result;
+    StringVector::StringVector(std::size_t initialCapacity)
+    {
+        m_data.reserve(initialCapacity);
     }
 
-    StringVector::StringVector(int initialCapacity)
+    StringVector::StringVector(const std::vector<std::string>& data) : m_data(data)
     {
-        assert(initialCapacity > 0);
-        m_currSize = 0;
-        m_maxSize = initialCapacity;
-        m_array = new char*[m_maxSize + 1];
-        m_array[0] = 0;
-    }
-
-    StringVector::StringVector(const StringVector& o)
-    {
-        int i;
-
-        m_currSize = o.m_currSize;
-        m_maxSize = o.m_maxSize;
-        m_array = new char*[m_maxSize + 1];
-        for (i = 0; i < m_currSize; i++)
-        {
-            m_array[i] = copyString(o[i]);
-        }
-        m_array[m_currSize] = 0;
-    }
-
-    StringVector& StringVector::operator=(const StringVector& o)
-    {
-        int i;
-
-        ensureCapacity(o.m_currSize);
-        for (i = 0; i < m_currSize; i++)
-        {
-            delete m_array[i];
-            m_array[i] = 0;
-        }
-
-        m_currSize = o.m_currSize;
-        for (i = 0; i < m_currSize; i++)
-        {
-            m_array[i] = copyString(o[i]);
-        }
-        return *this;
-    }
-
-    StringVector::~StringVector()
-    {
-        int i;
-
-        for (i = 0; i < m_currSize; i++)
-        {
-            delete[] m_array[i];
-        }
-        delete[] m_array;
     }
 
     void StringVector::add(const char* str)
     {
-        if (m_currSize == m_maxSize)
-        {
-            ensureCapacity(m_maxSize * 2);
-        }
-        m_array[m_currSize] = copyString(str);
-        m_array[m_currSize + 1] = 0;
-        m_currSize++;
+        m_data.emplace_back(str);
     }
 
     void StringVector::add(const StringBuffer& strBuf)
@@ -111,91 +48,53 @@ namespace danek
 
     void StringVector::addWithOwnership(StringBuffer& strBuf)
     {
-        if (m_currSize == m_maxSize)
-        {
-            ensureCapacity(m_maxSize * 2);
-        }
-        m_array[m_currSize] = strBuf.c_strWithOwnership();
-        m_array[m_currSize + 1] = 0;
-        m_currSize++;
+        // TODO: Deprecate and replace
+        add(strBuf);
     }
 
-    void StringVector::replace(int index, const char* str)
+    void StringVector::replace(std::size_t index, const char* str)
     {
-        assert(index < m_currSize);
-        delete[] m_array[index];
-        m_array[index] = copyString(str);
+        m_data.at(index) = str;
     }
 
-    void StringVector::replaceWithOwnership(int index, char* str)
+    std::vector<std::string> StringVector::get() const
     {
-        assert(index < m_currSize);
-        delete[] m_array[index];
-        m_array[index] = str;
+        return m_data;
     }
 
-    extern "C" int danek_compareFn(const void* p1, const void* p2)
+    void StringVector::replaceWithOwnership(std::size_t index, char* str)
     {
-        const char* str1;
-        const char* str2;
-
-        str1 = *((const char**) p1);
-        str2 = *((const char**) p2);
-        return strcmp(str1, str2);
+        // TODO: Deprecate and replace
+        replace(index, str);
     }
 
     void StringVector::sort()
     {
-        qsort(m_array, m_currSize, sizeof(char*), danek_compareFn);
+        std::sort(m_data.begin(), m_data.end());
     }
 
     bool StringVector::bSearchContains(const char* str) const
     {
-        void* result;
-
-        result = bsearch(&str, m_array, m_currSize, sizeof(char*), danek_compareFn);
-        return (result != 0);
+        return std::find(m_data.cbegin(), m_data.cend(), str) != m_data.cend();
     }
 
-    int StringVector::length() const
+    std::size_t StringVector::length() const
     {
-        return m_currSize;
+        return m_data.size();
     }
 
-    void StringVector::ensureCapacity(int size)
+    void StringVector::ensureCapacity(std::size_t size)
     {
-        char** oldArray;
-        int i;
-
-        if (size <= m_maxSize)
-        {
-            return;
-        }
-
-        oldArray = m_array;
-        m_maxSize = size;
-        m_array = new char*[m_maxSize + 1];
-
-        for (i = 0; i < m_currSize; i++)
-        {
-            m_array[i] = oldArray[i];
-        }
-        m_array[m_currSize + 1] = 0;
-        delete[] oldArray;
+        (void) size;
+        // TODO: Deprecate & Remove
     }
 
     void StringVector::add(const StringVector& other)
     {
-        int i;
-        int otherLen;
+        const auto otherLen = other.length();
+        m_data.reserve(m_data.size() + otherLen);
 
-        otherLen = other.length();
-        if (m_currSize + otherLen >= m_maxSize)
-        {
-            ensureCapacity((m_currSize + otherLen) * 2);
-        }
-
-        for (i = 0; i < otherLen; i++)
+        for (std::size_t i = 0; i < otherLen; i++)
         {
             add(other[i]);
         }
@@ -203,63 +102,22 @@ namespace danek
 
     void StringVector::addWithOwnership(StringVector& other)
     {
-        int i;
-        int otherLen;
-
-        otherLen = other.length();
-        if (m_currSize + otherLen >= m_maxSize)
-        {
-            ensureCapacity((m_currSize + otherLen) * 2);
-        }
-
-        for (i = 0; i < otherLen; i++)
-        {
-            m_array[m_currSize] = other.m_array[i];
-            other.m_array[i] = 0;
-            m_currSize++;
-        }
-        m_array[m_currSize + 1] = 0;
-        other.m_currSize = 0;
-        other.m_array[0] = 0;
-    }
-
-    void StringVector::c_array(const char**& array, int& arraySize) const
-    {
-        assert(m_array[m_currSize] == 0);
-        array = (const char**) m_array;
-        arraySize = m_currSize;
-    }
-
-    const char** StringVector::c_array() const
-    {
-        assert(m_array[m_currSize] == 0);
-        return (const char**) m_array;
+        // TODO: Deprecate & Remove
+        add(other);
     }
 
     void StringVector::empty()
     {
-        int i;
-
-        for (i = 0; i < m_currSize; i++)
-        {
-            delete[] m_array[i];
-        }
-        m_currSize = 0;
-        m_array[0] = 0;
+        std::vector<std::string>().swap(m_data);
     }
 
     void StringVector::removeLast()
     {
-        assert(m_currSize > 0);
-
-        delete[] m_array[m_currSize - 1];
-        m_array[m_currSize - 1] = 0;
-        m_currSize--;
+        m_data.erase(m_data.end() - 1);
     }
 
-    const char* StringVector::operator[](int index) const
+    const char* StringVector::operator[](std::size_t index) const
     {
-        assert(index < m_currSize);
-        return m_array[index];
+        return m_data[index].data();
     }
 }

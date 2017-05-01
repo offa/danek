@@ -185,10 +185,8 @@ namespace danek
         virtual const char* lookupString(const char* scope, const char* localName) const
             throw(ConfigurationException) = 0;
 
-        virtual void lookupList(const char* scope, const char* localName, const char**& array, int& arraySize,
-            const char** defaultArray, int defaultArraySize) const throw(ConfigurationException) = 0;
-        virtual void lookupList(const char* scope, const char* localName, const char**& array,
-            int& arraySize) const throw(ConfigurationException) = 0;
+        virtual void lookupList(const char* scope, const char* localName, std::vector<std::string>& data, const char** defaultArray, int defaultArraySize) const throw(ConfigurationException) = 0;
+        virtual void lookupList(const char* scope, const char* localName, std::vector<std::string>& data) const throw(ConfigurationException) = 0;
 
         virtual void lookupList(const char* scope, const char* localName, StringVector& list,
             const StringVector& defaultList) const throw(ConfigurationException) = 0;
@@ -284,11 +282,7 @@ namespace danek
         virtual void insertString(const char* scope, const char* localName, const char* strValue) throw(
             ConfigurationException) = 0;
 
-        virtual void insertList(const char* scope, const char* localName, const char** array,
-            int arraySize) throw(ConfigurationException) = 0;
-
-        virtual void insertList(const char* scope, const char* localName,
-            const char** nullTerminatedArray) throw(ConfigurationException) = 0;
+        virtual void insertList(const char* scope, const char* localName, std::vector<std::string> data) throw(ConfigurationException) = 0;
 
         virtual void insertList(const char* scope, const char* localName, const StringVector& vec) throw(
             ConfigurationException) = 0;

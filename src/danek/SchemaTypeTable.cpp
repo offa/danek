@@ -85,8 +85,6 @@ namespace danek
         StringBuffer msg;
         StringBuffer errSuffix;
         StringBuffer fullyScopedName;
-        const char** list;
-        int listSize;
         StringVector emptyArgs;
 
         //--------
@@ -97,8 +95,9 @@ namespace danek
         assert(typeArgsSize != 0);
         assert(typeArgsSize % 2 == 0);
         int numColumns = typeArgsSize / 2;
-        cfg->lookupList(scope, name, list, listSize);
-        if (listSize % numColumns != 0)
+        std::vector<std::string> data;
+        cfg->lookupList(scope, name, data);
+        if (data.size() % numColumns != 0)
         {
             cfg->mergeNames(scope, name, fullyScopedName);
             msg << cfg->fileName() << ": the number of entries in the '" << fullyScopedName << "' "
@@ -109,12 +108,12 @@ namespace danek
         //--------
         // Check each item in the list is of the type specified for its column
         //--------
-        for (int i = 0; i < listSize; i++)
+        for (std::size_t i = 0; i < data.size(); i++)
         {
             int typeIndex = (i * 2 + 0) % typeArgsSize;
             int colNameIndex = (i * 2 + 1) % typeArgsSize;
             int rowNum = (i / numColumns) + 1;
-            const char* colValue = list[i];
+            const char* colValue = data[i].c_str();
             const char* colTypeName = typeArgs[typeIndex];
             SchemaType* colTypeDef = findType(sv, colTypeName);
             bool ok =

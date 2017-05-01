@@ -86,18 +86,17 @@ namespace danek
         StringBuffer fullyScopedName;
         StringBuffer errSuffix;
         StringVector emptyArgs;
-        const char** array;
-        int arraySize;
+        std::vector<std::string> data;
 
         assert(typeArgs.length() == 1);
         const char* elemTypeName = typeArgs[0];
         SchemaType* elemTypeDef = findType(sv, elemTypeName);
         assert(elemTypeDef->cfgType() == Configuration::CFG_STRING);
 
-        cfg->lookupList(scope, name, array, arraySize);
-        for (int i = 0; i < arraySize; i++)
+        cfg->lookupList(scope, name, data);
+        for (std::size_t i = 0; i < data.size(); i++)
         {
-            const char* elemValue = array[i];
+            const char* elemValue = data[i].c_str();
             bool ok =
                 callIsA(elemTypeDef, sv, cfg, elemValue, elemTypeName, emptyArgs, indentLevel + 1, errSuffix);
             if (!ok)
@@ -113,7 +112,7 @@ namespace danek
                 }
                 cfg->mergeNames(scope, name, fullyScopedName);
                 msg << cfg->fileName() << ": bad " << elemTypeName << " value ('" << elemValue << "') for '"
-                    << fullyScopedName << "[" << i << "]'" << sep << errSuffix;
+                    << fullyScopedName << "[" << static_cast<int>(i) << "]'" << sep << errSuffix;
                 throw ConfigurationException(msg.c_str());
             }
         }

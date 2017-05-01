@@ -157,10 +157,8 @@ namespace danek
         virtual const char* lookupString(const char* scope, const char* localName) const
             throw(ConfigurationException);
 
-        virtual void lookupList(const char* scope, const char* localName, const char**& array, int& arraySize,
-            const char** defaultArray, int defaultArraySize) const throw(ConfigurationException);
-        virtual void lookupList(const char* scope, const char* localName, const char**& array,
-            int& arraySize) const throw(ConfigurationException);
+        virtual void lookupList(const char* scope, const char* localName, std::vector<std::string>& data, const char** defaultArray, int defaultArraySize) const throw(ConfigurationException);
+        virtual void lookupList(const char* scope, const char* localName, std::vector<std::string>& data) const throw(ConfigurationException);
 
         virtual void lookupList(const char* scope, const char* localName, StringVector& list,
             const StringVector& defaultList) const throw(ConfigurationException);
@@ -252,11 +250,7 @@ namespace danek
         //--------
         virtual void insertString(const char* scope, const char* localName, const char* strValue) throw(
             ConfigurationException);
-        virtual void insertList(const char* scope, const char* localName, const char** array,
-            int arraySize) throw(ConfigurationException);
-
-        virtual void insertList(const char* scope, const char* localName,
-            const char** nullTerminatedArray) throw(ConfigurationException);
+        virtual void insertList(const char* scope, const char* localName, std::vector<std::string> data) throw(ConfigurationException);
 
         virtual void insertList(const char* scope, const char* localName, const StringVector& vec) throw(
             ConfigurationException);
@@ -292,10 +286,8 @@ namespace danek
         ConfigItem* lookupHelper(ConfigScope* scope, const StringVector& vec) const;
         void stringValue(
             const char* fullyScopedName, const char* localName, const char*& str, Type& type) const;
-        void listValue(
-            const char* fullyScopedName, const char* localName, StringVector& list, Type& type) const;
-        void listValue(const char* fullyScopedName, const char* localName, const char**& array,
-            int& arraySize, Type& type) const;
+        void listValue(const char* fullyScopedName, const char* localName, StringVector& list, Type& type) const;
+        void listValue(const char* fullyScopedName, const char* localName, std::vector<std::string>& list, Type& type) const;
         virtual bool enumVal(
             const char* description, const EnumNameAndValue* enumInfo, int numEnums, int& val) const;
 
