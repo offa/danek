@@ -60,8 +60,6 @@ namespace danek
         void empty();
         void removeLast();
 
-        void replace(std::size_t index, const std::string& str);
-
         std::vector<std::string> get() const;
 
         const std::string& operator[](std::size_t index) const;

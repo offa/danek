@@ -165,12 +165,3 @@ TEST_F(StringVectorTest, removeLastRemovesLastElement)
     EXPECT_EQ(std::string{"x"}, v[v.length() - 1]);
 }
 
-TEST_F(StringVectorTest, replaceReplacesElementAtIndex)
-{
-    StringVector v;
-    v.add("3");
-    v.add("3");
-    v.replace(1, "abc");
-    EXPECT_EQ(2, v.length());
-    EXPECT_EQ(std::string{"abc"}, v[1]);
-}

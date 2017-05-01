@@ -46,11 +46,6 @@ namespace danek
         add(strBuf.c_str());
     }
 
-    void StringVector::replace(std::size_t index, const std::string& str)
-    {
-        m_data.at(index) = str;
-    }
-
     std::vector<std::string> StringVector::get() const
     {
         return m_data;
