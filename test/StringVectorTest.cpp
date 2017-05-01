@@ -155,24 +155,6 @@ TEST_F(StringVectorTest, sortSortsElements)
     EXPECT_EQ(std::string{"8"}, v[5]);
 }
 
-TEST_F(StringVectorTest, containsIfElementIsFound)
-{
-    StringVector v;
-    v.add("3");
-    v.add("1");
-
-    EXPECT_TRUE(v.bSearchContains("1"));
-}
-
-TEST_F(StringVectorTest, containsIfElementIsNotFound)
-{
-    StringVector v;
-    v.add("3");
-    v.add("1");
-
-    EXPECT_FALSE(v.bSearchContains("2"));
-}
-
 TEST_F(StringVectorTest, lengthMatchesElements)
 {
     StringVector v;

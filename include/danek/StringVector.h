@@ -45,7 +45,6 @@ namespace danek
         void add(const StringVector& other);
 
         void sort();
-        bool bSearchContains(const std::string& str) const;
 
         std::size_t length() const;
         void ensureCapacity(std::size_t size);
