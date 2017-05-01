@@ -23,6 +23,9 @@
 
 #pragma once
 
+#include <string>
+#include <vector>
+
 class FooConfigurationException
 {
 public:
@@ -60,8 +63,7 @@ public:
     // Lookup-style functions.
     //--------
     const char* lookupString(const char* name) const throw(FooConfigurationException);
-    void lookupList(const char* name, const char**& array, int& arraySize) const
-        throw(FooConfigurationException);
+    void lookupList(const char* name, std::vector<std::string>& data) const throw(FooConfigurationException);
 
     virtual int lookupInt(const char* name) const throw(FooConfigurationException);
     virtual float lookupFloat(const char* name) const throw(FooConfigurationException);

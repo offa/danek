@@ -61,7 +61,7 @@ const char* FooConfigurationException::c_str() const
 // class FooConfiguration
 //----------------------------------------------------------------------
 
-FooConfiguration::FooConfiguration() : m_cfg(Configuration::create()), m_logLevels(nullptr), m_numLogLevels(0)
+FooConfiguration::FooConfiguration() : m_cfg(Configuration::create()), m_logLevels()
 {
 }
 
@@ -100,7 +100,7 @@ void FooConfiguration::parse(const char* cfgInput, const char* cfgScope, const c
         // Cache configuration variables in instance variables for
         // faster access.
         //--------
-        cfg->lookupList(cfgScope, "log_levels", m_logLevels, m_numLogLevels);
+        cfg->lookupList(cfgScope, "log_levels", m_logLevels);
     }
     catch (const ConfigurationException& ex)
     {
@@ -110,13 +110,12 @@ void FooConfiguration::parse(const char* cfgInput, const char* cfgScope, const c
 
 Logger::LogLevel FooConfiguration::getLogLevel(const char* opName) const
 {
-    int i;
     int result;
 
-    for (i = 0; i < m_numLogLevels; i += 2)
+    for ( std::size_t i = 0; i < m_logLevels.size(); i += 2)
     {
-        const char* pattern = m_logLevels[i + 0];
-        const char* logLevelStr = m_logLevels[i + 1];
+        const char* pattern = m_logLevels[i + 0].c_str();
+        const char* logLevelStr = m_logLevels[i + 1].c_str();
         if (Configuration::patternMatch(opName, pattern))
         {
             result = atoi(logLevelStr);

@@ -104,13 +104,13 @@ const char* FooConfiguration::lookupString(const char* name) const throw(FooConf
     }
 }
 
-void FooConfiguration::lookupList(const char* name, const char**& array, int& arraySize) const
+void FooConfiguration::lookupList(const char* name, std::vector<std::string>& data) const
     throw(FooConfigurationException)
 {
     Configuration* cfg = (Configuration*) m_cfg;
     try
     {
-        cfg->lookupList(m_scope, name, array, arraySize);
+        cfg->lookupList(m_scope, name, data);
     }
     catch (const ConfigurationException& ex)
     {

@@ -24,6 +24,8 @@
 #pragma once
 
 #include "Logger.h"
+#include <vector>
+#include <string>
 
 class FooConfigurationException
 {
@@ -62,8 +64,7 @@ public:
 
 private:
     void* m_cfg; // opaque pointer to Config4Cpp config object
-    const char** m_logLevels;
-    int m_numLogLevels;
+    std::vector<std::string> m_logLevels;
 
     //--------
     // The following are not implemented
