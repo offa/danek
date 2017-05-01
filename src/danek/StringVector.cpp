@@ -79,8 +79,7 @@ namespace danek
 
     void StringVector::ensureCapacity(std::size_t size)
     {
-        (void) size;
-        // TODO: Deprecate & Remove
+        m_data.reserve(size);
     }
 
     void StringVector::add(const StringVector& other)
