@@ -56,11 +56,6 @@ namespace danek
         return m_data;
     }
 
-    void StringVector::sort()
-    {
-        std::sort(m_data.begin(), m_data.end());
-    }
-
     std::size_t StringVector::length() const
     {
         return m_data.size();

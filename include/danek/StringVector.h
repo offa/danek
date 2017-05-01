@@ -44,7 +44,15 @@ namespace danek
         void add(const StringBuffer& strBuf);
         void add(const StringVector& other);
 
-        void sort();
+        auto begin()
+        {
+            return m_data.begin();
+        }
+
+        auto end()
+        {
+            return m_data.end();
+        }
 
         std::size_t length() const;
         void ensureCapacity(std::size_t size);

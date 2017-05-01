@@ -26,6 +26,7 @@
 //--------
 #include "danek/internal/ConfigScope.h"
 #include "danek/internal/UidIdentifierProcessor.h"
+#include <algorithm>
 #include <string.h>
 #include <assert.h>
 #include <stdlib.h>
@@ -524,7 +525,8 @@ namespace danek
         // First pass. Dump the variables
         //--------
         listLocalNames(Configuration::CFG_VARIABLES, nameVec);
-        nameVec.sort();
+        std::sort(nameVec.begin(), nameVec.end());
+
         len = nameVec.length();
         for (i = 0; i < len; i++)
         {
@@ -537,7 +539,8 @@ namespace danek
         // Second pass. Dump the nested scopes
         //--------
         listLocalNames(Configuration::CFG_SCOPE, nameVec);
-        nameVec.sort();
+        std::sort(nameVec.begin(), nameVec.end());
+
         len = nameVec.length();
         for (i = 0; i < len; i++)
         {

@@ -30,6 +30,7 @@
 #include "danek/internal/DefaultSecurityConfiguration.h"
 #include "danek/internal/ConfigParser.h"
 #include "danek/internal/Common.h"
+#include <algorithm>
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
@@ -682,7 +683,8 @@ namespace danek
             scopeObj = item->scopeVal();
         }
         scopeObj->listFullyScopedNames(typeMask, recursive, filterPatterns, names);
-        names.sort();
+
+        std::sort(names.begin(), names.end());
     }
 
     //----------------------------------------------------------------------
@@ -734,7 +736,7 @@ namespace danek
             scopeObj = item->scopeVal();
         }
         scopeObj->listLocallyScopedNames(typeMask, recursive, filterPatterns, names);
-        names.sort();
+        std::sort(names.begin(), names.end());
     }
 
     const char* ConfigurationImpl::lookupString(

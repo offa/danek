@@ -137,24 +137,6 @@ TEST_F(StringVectorTest, getCopyOfData)
     EXPECT_EQ(std::string{"3"}, data[0]);
 }
 
-TEST_F(StringVectorTest, sortSortsElements)
-{
-    StringVector v;
-    v.add("3");
-    v.add("1");
-    v.add("0");
-    v.add("8");
-    v.add("3");
-    v.add("4");
-    v.sort();
-    EXPECT_EQ(std::string{"0"}, v[0]);
-    EXPECT_EQ(std::string{"1"}, v[1]);
-    EXPECT_EQ(std::string{"3"}, v[2]);
-    EXPECT_EQ(std::string{"3"}, v[3]);
-    EXPECT_EQ(std::string{"4"}, v[4]);
-    EXPECT_EQ(std::string{"8"}, v[5]);
-}
-
 TEST_F(StringVectorTest, lengthMatchesElements)
 {
     StringVector v;
