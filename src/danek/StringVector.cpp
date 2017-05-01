@@ -36,9 +36,9 @@ namespace danek
     {
     }
 
-    void StringVector::add(const char* str)
+    void StringVector::add(const std::string& str)
     {
-        m_data.emplace_back(str);
+        m_data.push_back(str);
     }
 
     void StringVector::add(const StringBuffer& strBuf)

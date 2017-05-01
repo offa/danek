@@ -41,7 +41,7 @@ namespace danek
     {
     public:
         StringBuffer();
-        StringBuffer(const char* str);
+        explicit StringBuffer(const char* str);
         StringBuffer(const StringBuffer&);
         ~StringBuffer();
 

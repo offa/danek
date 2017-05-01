@@ -50,7 +50,7 @@ namespace danek
         }
         virtual const char* unexpand(const char* spelling, StringBuffer&) const throw(ConfigurationException)
         {
-            StringBuffer dummyBuf = spelling;
+            StringBuffer dummyBuf{spelling};
             (void) UidIdentifierProcessor::unexpand(spelling, dummyBuf);
             return spelling;
         }
