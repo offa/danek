@@ -211,7 +211,7 @@ TEST_F(StringVectorTest, removeLastRemovesLastElement)
     v.add("y");
     v.removeLast();
     EXPECT_EQ(1, v.length());
-    EXPECT_STREQ("x", v[v.length()-1]);
+    EXPECT_STREQ("x", v[v.length() - 1]);
 }
 
 TEST_F(StringVectorTest, replaceReplacesElementAtIndex)
@@ -223,4 +223,3 @@ TEST_F(StringVectorTest, replaceReplacesElementAtIndex)
     EXPECT_EQ(2, v.length());
     EXPECT_STREQ("abc", v[1]);
 }
-

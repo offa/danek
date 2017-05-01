@@ -70,7 +70,7 @@ namespace danek
 
         const char* operator[](int index) const;
 
-    protected:
+    private:
         friend class ConfigParser;
         void addWithOwnership(StringBuffer& strBuf);
         void addWithOwnership(StringVector& other);
