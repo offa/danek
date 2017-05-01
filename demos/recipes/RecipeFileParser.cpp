@@ -127,7 +127,7 @@ void RecipeFileParser::getRecipeSteps(const char* recipeScope, StringVector& res
         for (int i = 0; i < len; i++)
         {
             assert(m_cfg->uidEquals("uid-step", namesVec[i]));
-            const char* str = m_cfg->lookupString(recipeScope, namesVec[i]);
+            const char* str = m_cfg->lookupString(recipeScope, namesVec[i].c_str());
             result.add(str);
         }
     }

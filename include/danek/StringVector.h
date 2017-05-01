@@ -45,7 +45,7 @@ namespace danek
         void add(const StringVector& other);
 
         void sort();
-        bool bSearchContains(const char* str) const;
+        bool bSearchContains(const std::string& str) const;
 
         std::size_t length() const;
         void ensureCapacity(std::size_t size);
@@ -53,11 +53,11 @@ namespace danek
         void empty();
         void removeLast();
 
-        void replace(std::size_t index, const char* str);
+        void replace(std::size_t index, const std::string& str);
 
         std::vector<std::string> get() const;
 
-        const char* operator[](std::size_t index) const;
+        const std::string& operator[](std::size_t index) const;
 
         /** @deprecated These methods will be replaced with a proper API. */
         void addWithOwnership(StringBuffer& strBuf);

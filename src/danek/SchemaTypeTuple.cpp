@@ -49,7 +49,7 @@ namespace danek
         //--------
         for (int i = 0; i < len; i += 2)
         {
-            const char* elemType = typeArgs[i + 0];
+            const char* elemType = typeArgs[i + 0].c_str();
             SchemaType* typeDef = findType(sv, elemType);
             if (typeDef == 0)
             {
@@ -101,7 +101,7 @@ namespace danek
                 << " entries in the '" << fullyScopedName << "' " << typeName << "; entries denote";
             for (std::size_t i = 0; i < numElems; i++)
             {
-                msg << " '" << typeArgs[i * 2 + 0] << "'";
+                msg << " '" << typeArgs[i * 2 + 0].c_str() << "'";
                 if (i < numElems - 1)
                 {
                     msg << ",";
@@ -117,7 +117,7 @@ namespace danek
             int typeIndex = (i * 2 + 0) % typeArgsSize;
             int elemNameIndex = (i * 2 + 1) % typeArgsSize;
             const char* elemValue = data[i].c_str();
-            const char* elemTypeName = typeArgs[typeIndex];
+            const char* elemTypeName = typeArgs[typeIndex].c_str();
             SchemaType* elemTypeDef = findType(sv, elemTypeName);
             bool ok =
                 callIsA(elemTypeDef, sv, cfg, elemValue, elemTypeName, emptyArgs, indentLevel + 1, errSuffix);
@@ -134,7 +134,7 @@ namespace danek
                 }
                 cfg->mergeNames(scope, name, fullyScopedName);
                 msg << cfg->fileName() << ": bad " << elemTypeName << " value ('" << elemValue
-                    << "') for element " << static_cast<int>(i + 1) << " ('" << typeArgs[elemNameIndex]
+                    << "') for element " << static_cast<int>(i + 1) << " ('" << typeArgs[elemNameIndex].c_str()
                     << "') of the '" << fullyScopedName << "' " << typeName << sep << errSuffix;
                 throw ConfigurationException(msg.c_str());
             }

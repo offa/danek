@@ -40,9 +40,9 @@ void calculateRuleForName(const Configuration* cfg, const char* name, const char
     int len = wildcardedNamesAndTypes.length();
     for (int i = 0; i < len; i += 3)
     {
-        const char* keyword = wildcardedNamesAndTypes[i + 0]; // @optional or @required
-        const char* wildcardedName = wildcardedNamesAndTypes[i + 1];
-        const char* type = wildcardedNamesAndTypes[i + 2];
+        const char* keyword = wildcardedNamesAndTypes[i + 0].c_str(); // @optional or @required
+        const char* wildcardedName = wildcardedNamesAndTypes[i + 1].c_str();
+        const char* type = wildcardedNamesAndTypes[i + 2].c_str();
         if (Configuration::patternMatch(uName, wildcardedName))
         {
             rule << keyword << " " << uName << " = " << type;
@@ -116,7 +116,7 @@ bool doesVectorcontainString(const StringVector& vec, const char* str)
     len = vec.length();
     for (i = 0; i < len; i++)
     {
-        if (strcmp(vec[i], str) == 0)
+        if (strcmp(vec[i].c_str(), str) == 0)
         {
             return true;
         }
@@ -138,7 +138,7 @@ void calculateSchema(const Configuration* cfg, const StringVector& namesList,
     int len = namesList.length();
     for (int i = 0; i < len; i++)
     {
-        const char* name = namesList[i];
+        const char* name = namesList[i].c_str();
         if (strstr(name, "uid-") == 0)
         {
             calculateRuleForName(cfg, name, name, wildcardedNamesAndTypes, rule);
@@ -165,7 +165,7 @@ bool doesPatternMatchAnyUnexpandedNameInList(
     int len = namesList.length();
     for (int i = 0; i < len; i++)
     {
-        const char* uName = cfg->unexpandUid(namesList[i], buf);
+        const char* uName = cfg->unexpandUid(namesList[i].c_str(), buf);
         if (Configuration::patternMatch(uName, pattern))
         {
             return true;
@@ -185,7 +185,7 @@ void checkForUnmatchedPatterns(const Configuration* cfg, const StringVector& nam
     int len = wildcardedNamesAndTypes.length();
     for (int i = 0; i < len; i += 3)
     {
-        const char* wildcardedName = wildcardedNamesAndTypes[i + 1];
+        const char* wildcardedName = wildcardedNamesAndTypes[i + 1].c_str();
         if (!doesPatternMatchAnyUnexpandedNameInList(cfg, wildcardedName, namesList))
         {
             unmatchedPatterns.add(wildcardedName);
@@ -257,7 +257,7 @@ int main(int argc, char** argv)
                 "recipe did not match anything");
             for (int i = 0; i < len; i++)
             {
-                fprintf(stderr, "\t'%s'\n", unmatchedPatterns[i]);
+                fprintf(stderr, "\t'%s'\n", unmatchedPatterns[i].c_str());
             }
             ok = false;
         }

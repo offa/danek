@@ -159,7 +159,7 @@ int main(int argc, char** argv)
             len = names.length();
             for (i = 0; i < len; i++)
             {
-                printf("%s\n", names[i]);
+                printf("%s\n", names[i].c_str());
             }
         }
         catch (ConfigurationException& ex)
@@ -175,7 +175,7 @@ int main(int argc, char** argv)
             len = names.length();
             for (i = 0; i < len; i++)
             {
-                printf("%s\n", names[i]);
+                printf("%s\n", names[i].c_str());
             }
         }
         catch (ConfigurationException& ex)

@@ -51,7 +51,7 @@ namespace danek
         }
         try
         {
-            min = cfg->stringToInt("", "", typeArgs[0]);
+            min = cfg->stringToInt("", "", typeArgs[0].c_str());
         }
         catch (const ConfigurationException& ex)
         {
@@ -61,7 +61,7 @@ namespace danek
         }
         try
         {
-            max = cfg->stringToInt("", "", typeArgs[1]);
+            max = cfg->stringToInt("", "", typeArgs[1].c_str());
         }
         catch (const ConfigurationException& ex)
         {
@@ -94,8 +94,8 @@ namespace danek
         if (typeArgs.length() == 2)
         {
             int strLen = Configuration::mbstrlen(value);
-            int minLength = cfg->stringToInt("", "", typeArgs[0]);
-            int maxLength = cfg->stringToInt("", "", typeArgs[1]);
+            int minLength = cfg->stringToInt("", "", typeArgs[0].c_str());
+            int maxLength = cfg->stringToInt("", "", typeArgs[1].c_str());
             if (strLen < minLength || strLen > maxLength)
             {
                 errSuffix << "its length is outside the permitted range [" << minLength << ", " << maxLength

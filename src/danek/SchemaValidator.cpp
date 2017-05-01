@@ -362,7 +362,7 @@ namespace danek
         int len = itemNames.length();
         for (int i = 0; i < len; i++)
         {
-            const char* iName = itemNames[i];
+            const char* iName = itemNames[i].data();
             const char* unexpandedName = cfg->unexpandUid(iName, buf);
             if (shouldIgnore(cfg, scope, iName, unexpandedName))
             {
@@ -503,9 +503,9 @@ namespace danek
         len = parentScopes.length();
         for (int i = 0; i < len; i++)
         {
-            if (cfg->type(parentScopes[i], lastDot + 1) == Configuration::CFG_NO_VALUE)
+            if (cfg->type(parentScopes[i].c_str(), lastDot + 1) == Configuration::CFG_NO_VALUE)
             {
-                cfg->mergeNames(parentScopes[i], lastDot + 1, nameOfMissingEntry);
+                cfg->mergeNames(parentScopes[i].c_str(), lastDot + 1, nameOfMissingEntry);
                 typeName = idRule->m_typeName.c_str();
                 msg << cfg->fileName() << ": the " << typeName << " '" << nameOfMissingEntry
                     << "' does not exist";
@@ -631,7 +631,7 @@ namespace danek
         len = typeArgs.length();
         for (i = 0; i < len; i++)
         {
-            printf("\"%s\"", typeArgs[i]);
+            printf("\"%s\"", typeArgs[i].c_str());
             if (i < len - 1)
             {
                 printf(", ");
@@ -651,7 +651,7 @@ namespace danek
         len = typeArgs.length();
         for (i = 0; i < len; i++)
         {
-            printf("\"%s\"", typeArgs[i]);
+            printf("\"%s\"", typeArgs[i].c_str());
             if (i < len - 1)
             {
                 printf(", ");

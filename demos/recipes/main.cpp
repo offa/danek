@@ -73,21 +73,21 @@ int main(int argc, char** argv)
     printf("There are %d recipes\n", len);
     for (i = 0; i < len; i++)
     {
-        const char* name = parser->getRecipeName(recipeScopes[i]);
-        parser->getRecipeIngredients(recipeScopes[i], ingredients);
-        parser->getRecipeSteps(recipeScopes[i], steps);
+        const char* name = parser->getRecipeName(recipeScopes[i].c_str());
+        parser->getRecipeIngredients(recipeScopes[i].c_str(), ingredients);
+        parser->getRecipeSteps(recipeScopes[i].c_str(), steps);
         printf("\nRecipe \"%s\":\n", name);
         int len2 = ingredients.length();
         printf("\tThis recipe has %d ingredients:\n", len2);
         for (i2 = 0; i2 < len2; i2++)
         {
-            printf("\t\t\"%s\"\n", ingredients[i2]);
+            printf("\t\t\"%s\"\n", ingredients[i2].c_str());
         }
         len2 = steps.length();
         printf("\tThis recipe has %d steps:\n", len2);
         for (i2 = 0; i2 < len2; i2++)
         {
-            printf("\t\t\"%s\"\n", steps[i2]);
+            printf("\t\t\"%s\"\n", steps[i2].c_str());
         }
     }
 

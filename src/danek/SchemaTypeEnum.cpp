@@ -56,7 +56,7 @@ namespace danek
         len = typeArgs.length();
         for (i = 0; i < len; i++)
         {
-            if (strcmp(value, typeArgs[i]) == 0)
+            if (strcmp(value, typeArgs[i].c_str()) == 0)
             {
                 return true;
             }
@@ -67,11 +67,11 @@ namespace danek
         {
             if (i < len - 1)
             {
-                errSuffix << " '" << typeArgs[i] << "',";
+                errSuffix << " '" << typeArgs[i].c_str() << "',";
             }
             else
             {
-                errSuffix << " '" << typeArgs[i] << "'";
+                errSuffix << " '" << typeArgs[i].c_str() << "'";
             }
         }
         return false;

@@ -68,11 +68,11 @@ namespace danek
             {
                 if (i < len - 1)
                 {
-                    errSuffix << " '" << typeArgs[i] << "',";
+                    errSuffix << " '" << typeArgs[i].c_str() << "',";
                 }
                 else
                 {
-                    errSuffix << " '" << typeArgs[i] << "'";
+                    errSuffix << " '" << typeArgs[i].c_str() << "'";
                 }
             }
         }

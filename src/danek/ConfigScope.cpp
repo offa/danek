@@ -496,7 +496,7 @@ namespace danek
         unexpandedName = uidProc.unexpand(name, buf);
         for (int i = 0; i < len; i++)
         {
-            const char* pattern = filterPatterns[i];
+            const char* pattern = filterPatterns[i].c_str();
             if (Configuration::patternMatch(unexpandedName, pattern))
             {
                 return true;
@@ -528,7 +528,7 @@ namespace danek
         len = nameVec.length();
         for (i = 0; i < len; i++)
         {
-            item = findItem(nameVec[i]);
+            item = findItem(nameVec[i].c_str());
             assert(item->type() & Configuration::CFG_VARIABLES);
             item->dump(buf, item->name(), wantExpandedUidNames, indentLevel);
         }
@@ -541,7 +541,7 @@ namespace danek
         len = nameVec.length();
         for (i = 0; i < len; i++)
         {
-            item = findItem(nameVec[i]);
+            item = findItem(nameVec[i].c_str());
             assert(item->type() == Configuration::CFG_SCOPE);
             item->dump(buf, item->name(), wantExpandedUidNames, indentLevel);
         }

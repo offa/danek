@@ -51,7 +51,7 @@ namespace danek
         }
         try
         {
-            min = cfg->stringToDurationMicroseconds("", "", typeArgs[0]);
+            min = cfg->stringToDurationMicroseconds("", "", typeArgs[0].c_str());
         }
         catch (const ConfigurationException& ex)
         {
@@ -66,7 +66,7 @@ namespace danek
         }
         try
         {
-            max = cfg->stringToDurationMicroseconds("", "", typeArgs[1]);
+            max = cfg->stringToDurationMicroseconds("", "", typeArgs[1].c_str());
         }
         catch (const ConfigurationException& ex)
         {
@@ -124,8 +124,8 @@ namespace danek
         {
             return true;
         }
-        min = cfg->stringToDurationMicroseconds("", "", typeArgs[0]);
-        max = cfg->stringToDurationMicroseconds("", "", typeArgs[1]);
+        min = cfg->stringToDurationMicroseconds("", "", typeArgs[0].c_str());
+        max = cfg->stringToDurationMicroseconds("", "", typeArgs[1].c_str());
 
         //--------
         // We want to test for "min <= val && val <= max", but this is
@@ -151,7 +151,7 @@ namespace danek
 
         if (!ok)
         {
-            errSuffix << "the value is outside the permitted range [" << typeArgs[0] << ", " << typeArgs[1]
+            errSuffix << "the value is outside the permitted range [" << typeArgs[0].c_str() << ", " << typeArgs[1].c_str()
                       << "]";
             return false;
         }

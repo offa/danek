@@ -52,7 +52,7 @@ namespace danek
         add(strBuf);
     }
 
-    void StringVector::replace(std::size_t index, const char* str)
+    void StringVector::replace(std::size_t index, const std::string& str)
     {
         m_data.at(index) = str;
     }
@@ -73,7 +73,7 @@ namespace danek
         std::sort(m_data.begin(), m_data.end());
     }
 
-    bool StringVector::bSearchContains(const char* str) const
+    bool StringVector::bSearchContains(const std::string& str) const
     {
         return std::find(m_data.cbegin(), m_data.cend(), str) != m_data.cend();
     }
@@ -116,8 +116,8 @@ namespace danek
         m_data.erase(m_data.end() - 1);
     }
 
-    const char* StringVector::operator[](std::size_t index) const
+    const std::string& StringVector::operator[](std::size_t index) const
     {
-        return m_data[index].data();
+        return m_data[index];
     }
 }

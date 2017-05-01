@@ -81,7 +81,7 @@ namespace danek
         len = vec.length();
         for (i = 0; i < len; i++)
         {
-            buf = vec[i];
+            buf = vec[i].c_str();
             try
             {
                 expandOne(buf);
@@ -216,7 +216,7 @@ namespace danek
         {
             try
             {
-                str = unexpandOne(vec[i], buf);
+                str = unexpandOne(vec[i].c_str(), buf);
             }
             catch (const ConfigurationException&)
             {

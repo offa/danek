@@ -51,7 +51,7 @@ namespace danek
         //--------
         // The argument must be the name of a string-based type.
         //--------
-        listElementTypeName = typeArgs[0];
+        listElementTypeName = typeArgs[0].c_str();
         typeDef = findType(sv, listElementTypeName);
         if (typeDef == 0)
         {
@@ -89,7 +89,7 @@ namespace danek
         std::vector<std::string> data;
 
         assert(typeArgs.length() == 1);
-        const char* elemTypeName = typeArgs[0];
+        const char* elemTypeName = typeArgs[0].c_str();
         SchemaType* elemTypeDef = findType(sv, elemTypeName);
         assert(elemTypeDef->cfgType() == Configuration::CFG_STRING);
 

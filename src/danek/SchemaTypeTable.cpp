@@ -51,7 +51,7 @@ namespace danek
         //--------
         for (int i = 0; i < len; i += 2)
         {
-            const char* columnType = typeArgs[i + 0];
+            const char* columnType = typeArgs[i + 0].c_str();
             SchemaType* typeDef = findType(sv, columnType);
             if (typeDef == 0)
             {
@@ -114,7 +114,7 @@ namespace danek
             int colNameIndex = (i * 2 + 1) % typeArgsSize;
             int rowNum = (i / numColumns) + 1;
             const char* colValue = data[i].c_str();
-            const char* colTypeName = typeArgs[typeIndex];
+            const char* colTypeName = typeArgs[typeIndex].c_str();
             SchemaType* colTypeDef = findType(sv, colTypeName);
             bool ok =
                 callIsA(colTypeDef, sv, cfg, colValue, colTypeName, emptyArgs, indentLevel + 1, errSuffix);
@@ -131,7 +131,7 @@ namespace danek
                 }
                 cfg->mergeNames(scope, name, fullyScopedName);
                 msg << cfg->fileName() << ": bad " << colTypeName << " value ('" << colValue << "') for the '"
-                    << typeArgs[colNameIndex] << "' column in row " << rowNum << " of the '"
+                    << typeArgs[colNameIndex].c_str() << "' column in row " << rowNum << " of the '"
                     << fullyScopedName << "' " << typeName << sep << errSuffix;
                 throw ConfigurationException(msg.c_str());
             }

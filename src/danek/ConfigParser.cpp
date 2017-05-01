@@ -647,7 +647,7 @@ namespace danek
                 result = false;
                 for (i = 0; i < len; i++)
                 {
-                    if (strcmp(str1.c_str(), list[i]) == 0)
+                    if (strcmp(str1.c_str(), list[i].c_str()) == 0)
                     {
                         result = true;
                         break;
@@ -753,7 +753,7 @@ namespace danek
         for (int i = 0; i < len; i++)
         {
             const char* newName = &fromNamesVec[i][fromScopeNameLen + 1];
-            item = m_config->lookup(fromNamesVec[i], fromNamesVec[i], true);
+            item = m_config->lookup(fromNamesVec[i].c_str(), fromNamesVec[i].c_str(), true);
             assert(item != 0);
             switch (item->type())
             {
@@ -1238,7 +1238,7 @@ namespace danek
         len = list.length();
         for (i = 0; i < len; i++)
         {
-            str.append(list[i]);
+            str.append(list[i].c_str());
             if (i < len - 1)
             {
                 str.append(separator);

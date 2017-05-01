@@ -363,7 +363,7 @@ namespace danek
         splitScopedNameIntoVector(fullyScopedName.c_str(), vec);
         len = vec.length();
         ensureScopeExists(vec, 0, len - 2, scopeObj);
-        if (!scopeObj->addOrReplaceString(vec[len - 1], str))
+        if (!scopeObj->addOrReplaceString(vec[len - 1].c_str(), str))
         {
             msg << fileName() << ": "
                 << "variable '" << fullyScopedName << "' was previously used as a scope";
@@ -407,7 +407,7 @@ namespace danek
         splitScopedNameIntoVector(fullyScopedName.c_str(), vec);
         len = vec.length();
         ensureScopeExists(vec, 0, len - 2, scopeObj);
-        if (!scopeObj->addOrReplaceList(vec[len - 1], StringVector{data}))
+        if (!scopeObj->addOrReplaceList(vec[len - 1].c_str(), StringVector{data}))
         {
             msg << fileName() << ": "
                 << "variable '" << fullyScopedName << "' was previously used as a scope";
@@ -447,7 +447,7 @@ namespace danek
         splitScopedNameIntoVector(name, vec);
         len = vec.length();
         ensureScopeExists(vec, 0, len - 2, scope);
-        if (!scope->addOrReplaceList(vec[len - 1], list))
+        if (!scope->addOrReplaceList(vec[len - 1].c_str(), list))
         {
             msg << fileName() << ": "
                 << "variable '" << name << "' was previously used as a scope";
@@ -477,7 +477,7 @@ namespace danek
         len = vec.length();
         for (i = 0; i < len - 1; i++)
         {
-            item = scopeObj->findItem(vec[i]);
+            item = scopeObj->findItem(vec[i].c_str());
             if (item == 0 || item->type() != Configuration::CFG_SCOPE)
             {
                 msg << fileName() << ": '" << fullyScopedName << "' does not exist'";
@@ -488,7 +488,7 @@ namespace danek
         }
         assert(i == len - 1);
         assert(scopeObj != 0);
-        if (!scopeObj->removeItem(vec[i]))
+        if (!scopeObj->removeItem(vec[i].c_str()))
         {
             msg << fileName() << ": '" << fullyScopedName << "' does not exist'";
             throw ConfigurationException(msg.c_str());
@@ -576,7 +576,7 @@ namespace danek
         len = vec.length();
         for (i = 0; i < len - 1; i++)
         {
-            item = scope->findItem(vec[i]);
+            item = scope->findItem(vec[i].c_str());
             if (item == 0 || item->type() != Configuration::CFG_SCOPE)
             {
                 return 0;
@@ -586,7 +586,7 @@ namespace danek
         }
         assert(i == len - 1);
         assert(scope != 0);
-        item = scope->findItem(vec[i]);
+        item = scope->findItem(vec[i].c_str());
         return item;
     }
 
@@ -2359,7 +2359,7 @@ namespace danek
         size = m_fileNameStack.length();
         for (i = 0; i < size; i++)
         {
-            if (strcmp(m_fileNameStack[i], file) == 0)
+            if (strcmp(m_fileNameStack[i].c_str(), file) == 0)
             {
                 msg << fileName() << ": line " << includeLineNum << ", circular include of '" << file << "'";
                 throw ConfigurationException(msg.c_str());
@@ -2408,13 +2408,13 @@ namespace danek
         scope = m_currScope;
         for (i = firstIndex; i <= lastIndex; i++)
         {
-            if (!scope->ensureScopeExists(vec[i], scope))
+            if (!scope->ensureScopeExists(vec[i].c_str(), scope))
             {
                 msg << fileName() << ": "
                     << "scope '";
                 for (j = firstIndex; j <= i; j++)
                 {
-                    msg << vec[j];
+                    msg << vec[j].c_str();
                     if (j < i)
                     {
                         msg << ".";
@@ -2454,7 +2454,7 @@ namespace danek
         len = denyPatterns.length();
         for (i = 0; i < len; i++)
         {
-            if (patternMatch(cmdLine, denyPatterns[i]))
+            if (patternMatch(cmdLine, denyPatterns[i].c_str()))
             {
                 return false;
             }
@@ -2467,7 +2467,7 @@ namespace danek
         len = allowPatterns.length();
         for (i = 0; i < len; i++)
         {
-            if (!patternMatch(cmdLine, allowPatterns[i]))
+            if (!patternMatch(cmdLine, allowPatterns[i].c_str()))
             {
                 continue;
             }
@@ -2489,10 +2489,10 @@ namespace danek
             //--------
             for (j = 0; j < trustedDirs.length(); j++)
             {
-                if (isCmdInDir(cmd.c_str(), trustedDirs[j]))
+                if (isCmdInDir(cmd.c_str(), trustedDirs[j].c_str()))
                 {
                     trustedCmdLine = "";
-                    trustedCmdLine << trustedDirs[j] << CONFIG4CPP_DIR_SEP << cmd
+                    trustedCmdLine << trustedDirs[j].c_str() << CONFIG4CPP_DIR_SEP << cmd
                                    << &cmdLine[strlen(cmd.c_str())];
                     return true;
                 }

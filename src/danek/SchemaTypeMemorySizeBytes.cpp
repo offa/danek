@@ -51,7 +51,7 @@ namespace danek
         }
         try
         {
-            min = cfg->stringToMemorySizeBytes("", "", typeArgs[0]);
+            min = cfg->stringToMemorySizeBytes("", "", typeArgs[0].c_str());
         }
         catch (const ConfigurationException& ex)
         {
@@ -63,7 +63,7 @@ namespace danek
         }
         try
         {
-            max = cfg->stringToMemorySizeBytes("", "", typeArgs[1]);
+            max = cfg->stringToMemorySizeBytes("", "", typeArgs[1].c_str());
         }
         catch (const ConfigurationException& ex)
         {
@@ -113,11 +113,11 @@ namespace danek
         {
             return true;
         }
-        min = cfg->stringToMemorySizeBytes("", "", typeArgs[0]);
-        max = cfg->stringToMemorySizeBytes("", "", typeArgs[1]);
+        min = cfg->stringToMemorySizeBytes("", "", typeArgs[0].c_str());
+        max = cfg->stringToMemorySizeBytes("", "", typeArgs[1].c_str());
         if (val < min || val > max)
         {
-            errSuffix << "the value is outside the permitted range [" << typeArgs[0] << ", " << typeArgs[1]
+            errSuffix << "the value is outside the permitted range [" << typeArgs[0].c_str() << ", " << typeArgs[1].c_str()
                       << "]";
             return false;
         }

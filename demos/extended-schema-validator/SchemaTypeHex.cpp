@@ -52,7 +52,7 @@ void SchemaTypeHex::checkRule(const SchemaValidator* sv, const Configuration* cf
     }
     try
     {
-        maxDigits = cfg->stringToInt("", "", typeArgs[0]);
+        maxDigits = cfg->stringToInt("", "", typeArgs[0].c_str());
     }
     catch (const ConfigurationException& ex)
     {
@@ -99,7 +99,7 @@ bool SchemaTypeHex::isA(const SchemaValidator* sv, const Configuration* cfg, con
         //--------
         // Check if there are too many hex digits in the value
         //--------
-        size_t maxDigits = cfg->stringToInt("", "", typeArgs[0]);
+        size_t maxDigits = cfg->stringToInt("", "", typeArgs[0].c_str());
         if (strlen(value) > maxDigits)
         {
             errSuffix << "the value must not contain more than " << static_cast<int>(maxDigits) << " digits";

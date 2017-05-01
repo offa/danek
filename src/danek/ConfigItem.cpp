@@ -180,7 +180,7 @@ namespace danek
                 len = m_listVal->length();
                 for (i = 0; i < len; i++)
                 {
-                    escStr = escapeString((*m_listVal)[i]);
+                    escStr = escapeString((*m_listVal)[i].c_str());
                     buf << "\"" << escStr << "\"";
                     delete[] escStr;
                     if (i < len - 1)
