@@ -62,12 +62,6 @@ namespace danek
         return m_data;
     }
 
-    void StringVector::replaceWithOwnership(std::size_t index, char* str)
-    {
-        // TODO: Deprecate and replace
-        replace(index, str);
-    }
-
     void StringVector::sort()
     {
         std::sort(m_data.begin(), m_data.end());
