@@ -62,6 +62,7 @@ namespace danek
         /** @deprecated These methods will be replaced with a proper API. */
         void addWithOwnership(StringBuffer& strBuf);
         void addWithOwnership(StringVector& other);
+        [[deprecated]]
         void replaceWithOwnership(std::size_t index, char* str);
 
     private:
