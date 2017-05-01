@@ -70,12 +70,12 @@ namespace danek
 
         const char* operator[](int index) const;
 
-    private:
-        friend class ConfigParser;
+        /** @deprecated These methods will be replaced with a proper API. */
         void addWithOwnership(StringBuffer& strBuf);
         void addWithOwnership(StringVector& other);
         void replaceWithOwnership(int index, char* str);
 
+    private:
         //--------
         // Instance variables
         //--------
