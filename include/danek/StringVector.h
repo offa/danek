@@ -58,10 +58,6 @@ namespace danek
 
         const std::string& operator[](std::size_t index) const;
 
-        /** @deprecated These methods will be replaced with a proper API. */
-        void addWithOwnership(StringBuffer& strBuf);
-        void addWithOwnership(StringVector& other);
-
     private:
         std::vector<std::string> m_data;
     };

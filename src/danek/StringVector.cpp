@@ -46,12 +46,6 @@ namespace danek
         add(strBuf.c_str());
     }
 
-    void StringVector::addWithOwnership(StringBuffer& strBuf)
-    {
-        // TODO: Deprecate and replace
-        add(strBuf);
-    }
-
     void StringVector::replace(std::size_t index, const std::string& str)
     {
         m_data.at(index) = str;
@@ -65,11 +59,6 @@ namespace danek
     void StringVector::sort()
     {
         std::sort(m_data.begin(), m_data.end());
-    }
-
-    bool StringVector::bSearchContains(const std::string& str) const
-    {
-        return std::find(m_data.cbegin(), m_data.cend(), str) != m_data.cend();
     }
 
     std::size_t StringVector::length() const
@@ -91,12 +80,6 @@ namespace danek
         {
             add(other[i]);
         }
-    }
-
-    void StringVector::addWithOwnership(StringVector& other)
-    {
-        // TODO: Deprecate & Remove
-        add(other);
     }
 
     void StringVector::empty()
