@@ -20,11 +20,14 @@ endmacro()
 _add_test(ConfigurationExceptionTest ConfigurationExceptionTest.cpp danek)
 _add_test(StringVectorTest StringVectorTest.cpp danek)
 _add_test(UtilTest UtilTest.cpp danek)
+_add_test(ConfigItemTest ConfigItemTest.cpp danek)
 
 
 add_custom_target(unittest ConfigurationExceptionTest
                         COMMAND StringVectorTest
                         COMMAND UtilTest
+                        COMMAND ConfigItemTest
+
                         COMMENT "Running unittests\n\n"
                         VERBATIM
                         )

@@ -52,7 +52,7 @@ namespace danek
         //--------
         ConfigItem(const char* name, const char* str);
         ConfigItem(const char* name, const StringVector& list);
-        ConfigItem(const char* name, const char** array, int size);
+        ConfigItem(const char* name, const char** array, std::size_t size);
         ConfigItem(const char* name, ConfigScope* scope);
         virtual ~ConfigItem();
 

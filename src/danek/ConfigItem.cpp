@@ -108,16 +108,14 @@ namespace danek
         m_stringVal = 0;
     }
 
-    ConfigItem::ConfigItem(const char* name, const char** array, int size)
+    ConfigItem::ConfigItem(const char* name, const char** array, std::size_t size)
     {
-        int i;
-
         m_type = Configuration::Type::List;
         m_name = copyString(name);
         m_scope = 0;
         m_stringVal = 0;
         m_listVal = new StringVector(size);
-        for (i = 0; i < size; i++)
+        for (std::size_t i = 0; i < size; i++)
         {
             m_listVal->push_back(array[i]);
         }
