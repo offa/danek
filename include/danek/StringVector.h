@@ -55,7 +55,7 @@ namespace danek
         }
 
         std::size_t size() const;
-        void ensureCapacity(std::size_t size);
+        void reserve(std::size_t size);
 
         void clear();
         void removeLast();

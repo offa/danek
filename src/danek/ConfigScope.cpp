@@ -409,7 +409,7 @@ namespace danek
         // their names into the StringVector
         //--------
         vec.clear();
-        vec.ensureCapacity(m_numEntries);
+        vec.reserve(m_numEntries);
         countWanted = 0;
         countUnwanted = 0;
         for (i = 0; i < m_tableSize; i++)
@@ -449,7 +449,7 @@ namespace danek
         // Iterate over all the entries in the hash table and copy
         // their locally-scoped names into the StringVector
         //--------
-        vec.ensureCapacity(vec.size() + m_numEntries);
+        vec.reserve(vec.size() + m_numEntries);
         for (i = 0; i < m_tableSize; i++)
         {
             entry = m_table[i].m_next;

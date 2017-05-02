@@ -56,7 +56,7 @@ namespace danek
         return m_data.size();
     }
 
-    void StringVector::ensureCapacity(std::size_t size)
+    void StringVector::reserve(std::size_t size)
     {
         m_data.reserve(size);
     }
