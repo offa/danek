@@ -45,10 +45,10 @@ namespace danek
     {
     public:
 
-        ConfigItem(const char* name, const char* str);
-        ConfigItem(const char* name, const StringVector& list);
-        ConfigItem(const char* name, const char** array, std::size_t size);
-        ConfigItem(const char* name, ConfigScope* scope);
+        ConfigItem(const std::string& name, const std::string& str);
+        ConfigItem(const std::string& name, const StringVector& list);
+        ConfigItem(const std::string& name, const char** array, std::size_t size);
+        ConfigItem(const std::string& name, ConfigScope* scope);
         ConfigItem(const ConfigItem&) = delete;
         virtual ~ConfigItem();
 

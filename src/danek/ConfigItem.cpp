@@ -76,33 +76,27 @@ namespace danek
         }
     }
 
-    //----------------------------------------------------------------------
-    // Function:	Constructor (overloaded)
-    //
-    // Description:
-    //----------------------------------------------------------------------
-
-    ConfigItem::ConfigItem(const char* name, const char* str) : m_type(Configuration::Type::String),
-                                                            m_name(name),
-                                                            m_stringVal(str),
-                                                            m_listVal(nullptr),
-                                                            m_scope(nullptr)
+    ConfigItem::ConfigItem(const std::string& name, const std::string& str) : m_type(Configuration::Type::String),
+                                                                            m_name(name),
+                                                                            m_stringVal(str),
+                                                                            m_listVal(nullptr),
+                                                                            m_scope(nullptr)
     {
     }
 
-    ConfigItem::ConfigItem(const char* name, const StringVector& list) : m_type(Configuration::Type::List),
-                                                                        m_name(name),
-                                                                        m_stringVal(""),
-                                                                        m_listVal(new StringVector(list)),
-                                                                        m_scope(nullptr)
+    ConfigItem::ConfigItem(const std::string& name, const StringVector& list) : m_type(Configuration::Type::List),
+                                                                            m_name(name),
+                                                                            m_stringVal(""),
+                                                                            m_listVal(new StringVector(list)),
+                                                                            m_scope(nullptr)
     {
     }
 
-    ConfigItem::ConfigItem(const char* name, const char** array, std::size_t size) : m_type(Configuration::Type::List),
-                                                                                    m_name(name),
-                                                                                    m_stringVal(""),
-                                                                                    m_listVal(new StringVector(size)),
-                                                                                    m_scope(nullptr)
+    ConfigItem::ConfigItem(const std::string& name, const char** array, std::size_t size) : m_type(Configuration::Type::List),
+                                                                                        m_name(name),
+                                                                                        m_stringVal(""),
+                                                                                        m_listVal(new StringVector(size)),
+                                                                                        m_scope(nullptr)
     {
         for (std::size_t i = 0; i < size; i++)
         {
@@ -110,11 +104,11 @@ namespace danek
         }
     }
 
-    ConfigItem::ConfigItem(const char* name, ConfigScope* scope) : m_type(Configuration::Type::Scope),
-                                                                m_name(name),
-                                                                m_stringVal(""),
-                                                                m_listVal(nullptr),
-                                                                m_scope(scope)
+    ConfigItem::ConfigItem(const std::string& name, ConfigScope* scope) : m_type(Configuration::Type::Scope),
+                                                                        m_name(name),
+                                                                        m_stringVal(""),
+                                                                        m_listVal(nullptr),
+                                                                        m_scope(scope)
     {
     }
 
