@@ -94,7 +94,8 @@ namespace danek
         //--------
         void dump(StringBuffer& buf, const char* name, bool wantExpandedUidNames, int indentLevel = 0) const;
 
-    protected:
+
+    private:
 
         Configuration::Type m_type;
         char* m_name;
@@ -102,6 +103,5 @@ namespace danek
         StringVector* m_listVal;
         ConfigScope* m_scope;
 
-    private:
     };
 }
