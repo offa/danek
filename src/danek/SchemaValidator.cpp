@@ -381,12 +381,12 @@ namespace danek
                 cfg->mergeNames(fullyScopedName.c_str(), iName, unlistedName);
                 switch (cfg->type(unlistedName.c_str(), ""))
                 {
-                    case Configuration::CFG_SCOPE:
+                    case Configuration::Type::Scope:
                         msg << cfg->fileName() << ": "
                             << "the '" << unlistedName << "' scope is unknown.";
                         break;
-                    case Configuration::CFG_LIST:
-                    case Configuration::CFG_STRING:
+                    case Configuration::Type::List:
+                    case Configuration::Type::String:
                         msg << cfg->fileName() << ": "
                             << "the '" << unlistedName << "' variable is unknown.";
                         break;
@@ -437,7 +437,7 @@ namespace danek
         StringBuffer nameOfMissingEntry;
         StringBuffer msg;
 
-        if (forceMode == FORCE_OPTIONAL)
+        if (forceMode == ForceMode::Optional)
         {
             return;
         }
@@ -446,7 +446,7 @@ namespace danek
         {
             SchemaIdRuleInfo* idRule = m_idRules[i];
             bool isOptional = idRule->m_isOptional;
-            if (forceMode == DO_NOT_FORCE && isOptional)
+            if (forceMode == ForceMode::None && isOptional)
             {
                 continue;
             }
@@ -457,7 +457,7 @@ namespace danek
             }
             else
             {
-                if (cfg->type(fullyScopedName.c_str(), nameInRule) == Configuration::CFG_NO_VALUE)
+                if (cfg->type(fullyScopedName.c_str(), nameInRule) == Configuration::Type::NoValue)
                 {
                     cfg->mergeNames(fullyScopedName.c_str(), nameInRule, nameOfMissingEntry);
                     const char* typeName = idRule->m_typeName.c_str();
@@ -499,11 +499,11 @@ namespace danek
             parentScopePattern.append(*ptr);
         }
         cfg->listFullyScopedNames(
-            fullScope, "", Configuration::CFG_SCOPE, true, parentScopePattern.c_str(), parentScopes);
+            fullScope, "", Configuration::Type::Scope, true, parentScopePattern.c_str(), parentScopes);
         len = parentScopes.size();
         for (int i = 0; i < len; i++)
         {
-            if (cfg->type(parentScopes[i].c_str(), lastDot + 1) == Configuration::CFG_NO_VALUE)
+            if (cfg->type(parentScopes[i].c_str(), lastDot + 1) == Configuration::Type::NoValue)
             {
                 cfg->mergeNames(parentScopes[i].c_str(), lastDot + 1, nameOfMissingEntry);
                 typeName = idRule->m_typeName.c_str();
@@ -517,7 +517,7 @@ namespace danek
     bool SchemaValidator::shouldIgnore(const Configuration* cfg, const char* scope, const char* expandedName,
         const char* unexpandedName) const
     {
-        Configuration::Type cfgType = Configuration::CFG_NO_VALUE;
+        Configuration::Type cfgType = Configuration::Type::NoValue;
 
         for (int i = 0; i < m_ignoreRulesCurrSize; i++)
         {
@@ -577,7 +577,7 @@ namespace danek
                 // "@ignoreVariablesIn" rule applies if the item
                 // is a variable.
                 //--------
-                if ((cfgType & Configuration::CFG_VARIABLES) != 0)
+                if ((static_cast<int>(cfgType) & static_cast<int>(Configuration::Type::Variables)) != 0)
                 {
                     return true;
                 }
@@ -599,7 +599,7 @@ namespace danek
             // The item is directly in the ignore-able scope,
             // so we ignore it only if the item is a scope.
             //--------
-            if (cfgType == Configuration::CFG_SCOPE)
+            if (cfgType == Configuration::Type::Scope)
             {
                 return true;
             }

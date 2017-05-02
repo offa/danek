@@ -30,7 +30,7 @@ namespace danek
     class SchemaTypeFloat : public SchemaType
     {
     public:
-        SchemaTypeFloat() : SchemaType("float", "danek::SchemaTypeFloat", Configuration::CFG_STRING)
+        SchemaTypeFloat() : SchemaType("float", "danek::SchemaTypeFloat", Configuration::Type::String)
         {
         }
         virtual ~SchemaTypeFloat()

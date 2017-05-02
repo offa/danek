@@ -112,10 +112,10 @@ namespace danek
         m_errorInIncludedFile = false;
         switch (sourceType)
         {
-            case Configuration::INPUT_FILE:
+            case Configuration::SourceType::File:
                 m_fileName = source;
                 break;
-            case Configuration::INPUT_STRING:
+            case Configuration::SourceType::String:
                 if (strcmp(sourceDescription, "") == 0)
                 {
                     m_fileName = "<string-based configuration>";
@@ -125,7 +125,7 @@ namespace danek
                     m_fileName = sourceDescription;
                 }
                 break;
-            case Configuration::INPUT_EXEC:
+            case Configuration::SourceType::Exec:
                 if (strcmp(sourceDescription, "") == 0)
                 {
                     m_fileName.empty();
@@ -386,7 +386,7 @@ namespace danek
         {
             if (startsWith(source.c_str(), "exec#"))
             {
-                ConfigParser tmp(Configuration::INPUT_EXEC,
+                ConfigParser tmp(Configuration::SourceType::Exec,
                     execSource,
                     trustedCmdLine.c_str(),
                     "",
@@ -395,7 +395,7 @@ namespace danek
             }
             else if (startsWith(source.c_str(), "file#"))
             {
-                ConfigParser tmp(Configuration::INPUT_FILE,
+                ConfigParser tmp(Configuration::SourceType::File,
                     source.c_str() + strlen("file#"),
                     trustedCmdLine.c_str(),
                     "",
@@ -404,7 +404,7 @@ namespace danek
             }
             else
             {
-                ConfigParser tmp(Configuration::INPUT_FILE,
+                ConfigParser tmp(Configuration::SourceType::File,
                     source.c_str(),
                     trustedCmdLine.c_str(),
                     "",
@@ -733,7 +733,7 @@ namespace danek
             msg << "copy statement: scope '" << fromScopeName << "' does not exist";
             throw ConfigurationException(msg.c_str());
         }
-        if (item->type() != Configuration::CFG_SCOPE)
+        if (item->type() != Configuration::Type::Scope)
         {
             msg << "copy statement: '" << fromScopeName << "' is not a scope";
             throw ConfigurationException(msg.c_str());
@@ -744,7 +744,7 @@ namespace danek
         //--------
         // Get a recursive listing of all the items in fromScopeName
         //--------
-        fromScope->listFullyScopedNames(Configuration::CFG_SCOPE_AND_VARS, true, fromNamesVec);
+        fromScope->listFullyScopedNames(Configuration::Type::ScopesAndVars, true, fromNamesVec);
 
         //--------
         // Copy all the items into the current scope
@@ -757,13 +757,13 @@ namespace danek
             assert(item != 0);
             switch (item->type())
             {
-                case Configuration::CFG_STRING:
+                case Configuration::Type::String:
                     m_config->insertString("", newName, item->stringVal());
                     break;
-                case Configuration::CFG_LIST:
+                case Configuration::Type::List:
                     m_config->insertList(newName, item->listVal());
                     break;
-                case Configuration::CFG_SCOPE:
+                case Configuration::Type::Scope:
                     m_config->ensureScopeExists(newName, dummyScope);
                     break;
                 default:
@@ -873,8 +873,8 @@ namespace danek
 
         switch (m_config->type(varName.spelling(), ""))
         {
-            case Configuration::CFG_STRING:
-            case Configuration::CFG_LIST:
+            case Configuration::Type::String:
+            case Configuration::Type::List:
                 if (assignmentType == ConfigLex::LEX_QUESTION_EQUALS_SYM)
                 {
                     doAssign = false;
@@ -897,7 +897,7 @@ namespace danek
         {
             case ConfigLex::LEX_OPEN_BRACKET_SYM:
             case ConfigLex::LEX_FUNC_SPLIT_SYM:
-                varType = Configuration::CFG_LIST;
+                varType = Configuration::Type::List;
                 break;
             case ConfigLex::LEX_FUNC_SIBLING_SCOPE_SYM:
             case ConfigLex::LEX_FUNC_GETENV_SYM:
@@ -912,7 +912,7 @@ namespace danek
             case ConfigLex::LEX_FUNC_CONFIG_FILE_SYM:
             case ConfigLex::LEX_FUNC_CONFIG_TYPE_SYM:
             case ConfigLex::LEX_STRING_SYM:
-                varType = Configuration::CFG_STRING;
+                varType = Configuration::Type::String;
                 break;
             case ConfigLex::LEX_IDENT_SYM:
                 //--------
@@ -923,11 +923,11 @@ namespace danek
                 //--------
                 switch (m_config->type(m_token.spelling(), ""))
                 {
-                    case Configuration::CFG_STRING:
-                        varType = Configuration::CFG_STRING;
+                    case Configuration::Type::String:
+                        varType = Configuration::Type::String;
                         break;
-                    case Configuration::CFG_LIST:
-                        varType = Configuration::CFG_LIST;
+                    case Configuration::Type::List:
+                        varType = Configuration::Type::List;
                         break;
                     default:
                         msg << "identifier '" << m_token.spelling() << "' not previously declared";
@@ -946,14 +946,14 @@ namespace danek
         //--------
         switch (varType)
         {
-            case Configuration::CFG_STRING:
+            case Configuration::Type::String:
                 parseStringExpr(stringExpr);
                 if (doAssign)
                 {
                     m_config->insertString("", varName.spelling(), stringExpr.c_str());
                 }
                 break;
-            case Configuration::CFG_LIST:
+            case Configuration::Type::List:
                 parseListExpr(listExpr);
                 if (doAssign)
                 {
@@ -1061,7 +1061,7 @@ namespace danek
                 item = m_config->lookup(name.c_str(), name.c_str());
                 if (item == 0)
                 {
-                    type = Configuration::CFG_NO_VALUE;
+                    type = Configuration::Type::NoValue;
                 }
                 else
                 {
@@ -1069,16 +1069,16 @@ namespace danek
                 }
                 switch (type)
                 {
-                    case Configuration::CFG_STRING:
+                    case Configuration::Type::String:
                         str = "string";
                         break;
-                    case Configuration::CFG_LIST:
+                    case Configuration::Type::List:
                         str = "list";
                         break;
-                    case Configuration::CFG_SCOPE:
+                    case Configuration::Type::Scope:
                         str = "scope";
                         break;
-                    case Configuration::CFG_NO_VALUE:
+                    case Configuration::Type::NoValue:
                         str = "no_value";
                         break;
                     default:
@@ -1094,18 +1094,18 @@ namespace danek
                 m_config->stringValue(m_token.spelling(), m_token.spelling(), constStr, type);
                 switch (type)
                 {
-                    case Configuration::CFG_STRING:
+                    case Configuration::Type::String:
                         str = constStr;
                         break;
-                    case Configuration::CFG_NO_VALUE:
+                    case Configuration::Type::NoValue:
                         msg << "identifier '" << m_token.spelling() << "' not previously declared";
                         error(msg.c_str(), false);
                         return;
-                    case Configuration::CFG_SCOPE:
+                    case Configuration::Type::Scope:
                         msg << "identifier '" << m_token.spelling() << "' is a scope instead of a string";
                         error(msg.c_str(), false);
                         return;
-                    case Configuration::CFG_LIST:
+                    case Configuration::Type::List:
                         msg << "identifier '" << m_token.spelling() << "' is a list instead of a string";
                         error(msg.c_str(), false);
                         return;
@@ -1435,7 +1435,7 @@ namespace danek
                 // ident_sym: make sure the identifier is a list
                 //--------
                 m_config->listValue(m_token.spelling(), m_token.spelling(), expr, type);
-                if (type != Configuration::CFG_LIST)
+                if (type != Configuration::Type::List)
                 {
                     msg << "identifier '" << m_token.spelling() << "' is not a list";
                     error(msg.c_str(), false);

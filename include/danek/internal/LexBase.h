@@ -28,6 +28,7 @@
 //--------
 #include <wchar.h>
 #include "danek/Configuration.h"
+#include "danek/internal/FunctionType.h"
 #include "LexToken.h"
 #include "MBChar.h"
 #include "UidIdentifierProcessor.h"
@@ -43,16 +44,6 @@ namespace danek
         //--------
         void nextToken(LexToken& token);
 
-        //--------
-        // Constants for the type of a function.
-        //--------
-        enum FunctionType
-        {
-            NOT_A_FUNC = 1,
-            STRING_FUNC = 2,
-            LIST_FUNC = 3,
-            BOOL_FUNC = 4
-        };
 
         //--------
         // Constants for lexical symbols, for everything except
@@ -99,7 +90,7 @@ namespace danek
         struct FuncInfo
         {
             const char* m_spelling;
-            short m_funcType;
+            FunctionType m_funcType;
             short m_symbol;
         };
 
@@ -127,7 +118,7 @@ namespace danek
         //--------
         void searchForKeyword(const char* spelling, bool& found, short& symbol);
 
-        void searchForFunction(const char* spelling, bool& found, short& funcType, short& symbol);
+        void searchForFunction(const char* spelling, bool& found, FunctionType& funcType, short& symbol);
 
         void nextChar() throw(ConfigurationException);
         char nextByte();

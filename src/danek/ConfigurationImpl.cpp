@@ -189,10 +189,10 @@ namespace danek
 
         switch (sourceType)
         {
-            case Configuration::INPUT_FILE:
+            case Configuration::SourceType::File:
                 m_fileName = source;
                 break;
-            case Configuration::INPUT_STRING:
+            case Configuration::SourceType::String:
                 if (strcmp(sourceDescription, "") == 0)
                 {
                     m_fileName = "<string-based configuration>";
@@ -202,7 +202,7 @@ namespace danek
                     m_fileName = sourceDescription;
                 }
                 break;
-            case Configuration::INPUT_EXEC:
+            case Configuration::SourceType::Exec:
                 if (strcmp(sourceDescription, "") == 0)
                 {
                     m_fileName.empty();
@@ -242,7 +242,7 @@ namespace danek
         item = lookup(fullyScopedName.c_str(), localName);
         if (item == 0)
         {
-            result = Configuration::CFG_NO_VALUE;
+            result = Configuration::Type::NoValue;
         }
         else
         {
@@ -266,13 +266,13 @@ namespace danek
         item = lookup(fullyScopedName, localName);
         if (item == 0)
         {
-            type = Configuration::CFG_NO_VALUE;
+            type = Configuration::Type::NoValue;
             str = (const char*) 0;
         }
         else
         {
             type = item->type();
-            if (type == Configuration::CFG_STRING)
+            if (type == Configuration::Type::String)
             {
                 str = item->stringVal();
             }
@@ -297,13 +297,13 @@ namespace danek
         item = lookup(fullyScopedName, localName);
         if (item == 0)
         {
-            type = Configuration::CFG_NO_VALUE;
+            type = Configuration::Type::NoValue;
             list.clear();
         }
         else
         {
             type = item->type();
-            if (type == Configuration::CFG_LIST)
+            if (type == Configuration::Type::List)
             {
                 list = item->listVal();
             }
@@ -325,13 +325,13 @@ namespace danek
         ConfigItem* item = lookup(fullyScopedName, localName);
         if (item == 0)
         {
-            type = Configuration::CFG_NO_VALUE;
+            type = Configuration::Type::NoValue;
             data = std::vector<std::string>{};
         }
         else
         {
             type = item->type();
-            if (type == Configuration::CFG_LIST)
+            if (type == Configuration::Type::List)
             {
                 StringVector* list = &item->listVal();
                 data = list->get();
@@ -479,7 +479,7 @@ namespace danek
         for (i = 0; i < len - 1; i++)
         {
             item = scopeObj->findItem(vec[i].c_str());
-            if (item == 0 || item->type() != Configuration::CFG_SCOPE)
+            if (item == 0 || item->type() != Configuration::Type::Scope)
             {
                 msg << fileName() << ": '" << fullyScopedName << "' does not exist'";
                 throw ConfigurationException(msg.c_str());
@@ -578,7 +578,7 @@ namespace danek
         for (i = 0; i < len - 1; i++)
         {
             item = scope->findItem(vec[i].c_str());
-            if (item == 0 || item->type() != Configuration::CFG_SCOPE)
+            if (item == 0 || item->type() != Configuration::Type::Scope)
             {
                 return 0;
             }
@@ -674,7 +674,7 @@ namespace danek
         else
         {
             item = lookup(fullyScopedName.c_str(), localName, true);
-            if (item == 0 || item->type() != Configuration::CFG_SCOPE)
+            if (item == 0 || item->type() != Configuration::Type::Scope)
             {
                 msg << fileName() << ": "
                     << "'" << fullyScopedName << "' is not a scope";
@@ -727,7 +727,7 @@ namespace danek
         else
         {
             item = lookup(fullyScopedName.c_str(), localName, true);
-            if (item == 0 || item->type() != Configuration::CFG_SCOPE)
+            if (item == 0 || item->type() != Configuration::Type::Scope)
             {
                 msg << fileName() << ": "
                     << "'" << fullyScopedName << "' is not a scope";
@@ -751,15 +751,15 @@ namespace danek
         stringValue(fullyScopedName.c_str(), localName, str, type);
         switch (type)
         {
-            case Configuration::CFG_STRING:
+            case Configuration::Type::String:
                 break;
-            case Configuration::CFG_NO_VALUE:
+            case Configuration::Type::NoValue:
                 str = defaultVal;
                 break;
-            case Configuration::CFG_SCOPE:
+            case Configuration::Type::Scope:
                 msg << fileName() << ": '" << fullyScopedName << "' is a scope instead of a string";
                 throw ConfigurationException(msg.c_str());
-            case Configuration::CFG_LIST:
+            case Configuration::Type::List:
                 msg << fileName() << ": '" << fullyScopedName << "' is a list instead of a string";
                 throw ConfigurationException(msg.c_str());
             default:
@@ -780,15 +780,15 @@ namespace danek
         stringValue(fullyScopedName.c_str(), localName, str, type);
         switch (type)
         {
-            case Configuration::CFG_STRING:
+            case Configuration::Type::String:
                 break;
-            case Configuration::CFG_NO_VALUE:
+            case Configuration::Type::NoValue:
                 msg << fileName() << ": no value specified for '" << fullyScopedName << "'";
                 throw ConfigurationException(msg.c_str());
-            case Configuration::CFG_SCOPE:
+            case Configuration::Type::Scope:
                 msg << fileName() << ": '" << fullyScopedName << "' is a scope instead of a string";
                 throw ConfigurationException(msg.c_str());
-            case Configuration::CFG_LIST:
+            case Configuration::Type::List:
                 msg << fileName() << ": "
                     << "'" << fullyScopedName << "' is a list instead of a string";
                 throw ConfigurationException(msg.c_str());
@@ -809,20 +809,20 @@ namespace danek
         listValue(fullyScopedName.c_str(), localName, data, type);
         switch (type)
         {
-            case Configuration::CFG_LIST:
+            case Configuration::Type::List:
                 break;
-            case Configuration::CFG_NO_VALUE:
+            case Configuration::Type::NoValue:
                 std::vector<std::string>(defaultArraySize).swap(data);
                 for (std::size_t i = 0; i < static_cast<std::size_t>(defaultArraySize); i++)
                 {
                     data[i] = defaultArray[i];
                 }
                 break;
-            case Configuration::CFG_SCOPE:
+            case Configuration::Type::Scope:
                 msg << fileName() << ": "
                     << "'" << fullyScopedName << "' is a scope instead of a list";
                 throw ConfigurationException(msg.c_str());
-            case Configuration::CFG_STRING:
+            case Configuration::Type::String:
                 msg << fileName() << ": "
                     << "'" << fullyScopedName << "' is a string instead of a list";
                 throw ConfigurationException(msg.c_str());
@@ -841,15 +841,15 @@ namespace danek
         listValue(fullyScopedName.c_str(), localName, data, type);
         switch (type)
         {
-            case Configuration::CFG_LIST:
+            case Configuration::Type::List:
                 break;
-            case Configuration::CFG_NO_VALUE:
+            case Configuration::Type::NoValue:
                 msg << fileName() << ": no value specified for '" << fullyScopedName << "'";
                 throw ConfigurationException(msg.c_str());
-            case Configuration::CFG_SCOPE:
+            case Configuration::Type::Scope:
                 msg << fileName() << ": '" << fullyScopedName << "' is a scope instead of a list";
                 throw ConfigurationException(msg.c_str());
-            case Configuration::CFG_STRING:
+            case Configuration::Type::String:
                 msg << fileName() << ": "
                     << "'" << fullyScopedName << "' is a string instead of a list";
                 throw ConfigurationException(msg.c_str());
@@ -870,16 +870,16 @@ namespace danek
         listValue(fullyScopedName.c_str(), localName, data, type);
         switch (type)
         {
-            case Configuration::CFG_LIST:
+            case Configuration::Type::List:
                 list = StringVector{data};
                 break;
-            case Configuration::CFG_NO_VALUE:
+            case Configuration::Type::NoValue:
                 list = defaultList;
                 break;
-            case Configuration::CFG_SCOPE:
+            case Configuration::Type::Scope:
                 msg << fileName() << ": '" << fullyScopedName << "' is a scope instead of a list";
                 throw ConfigurationException(msg.c_str());
-            case Configuration::CFG_STRING:
+            case Configuration::Type::String:
                 msg << fileName() << ": '" << fullyScopedName << "' is a string instead of a list";
                 throw ConfigurationException(msg.c_str());
             default:
@@ -899,17 +899,17 @@ namespace danek
         listValue(fullyScopedName.c_str(), localName, data, type);
         switch (type)
         {
-            case Configuration::CFG_LIST:
+            case Configuration::Type::List:
                 list = StringVector{data};
                 break;
-            case Configuration::CFG_NO_VALUE:
+            case Configuration::Type::NoValue:
                 msg << fileName() << ": no value specified for '" << fullyScopedName << "'";
                 throw ConfigurationException(msg.c_str());
                 break;
-            case Configuration::CFG_SCOPE:
+            case Configuration::Type::Scope:
                 msg << fileName() << ": '" << fullyScopedName << "' is a scope instead of a list";
                 throw ConfigurationException(msg.c_str());
-            case Configuration::CFG_STRING:
+            case Configuration::Type::String:
                 msg << fileName() << ": "
                     << "'" << fullyScopedName << "' is a string instead of a list";
                 throw ConfigurationException(msg.c_str());
@@ -959,7 +959,7 @@ namespace danek
         int result;
         StringBuffer fullyScopedName;
 
-        if (type(scope, localName) == Configuration::CFG_NO_VALUE)
+        if (type(scope, localName) == Configuration::Type::NoValue)
         {
             return defaultVal;
         }
@@ -1254,7 +1254,7 @@ namespace danek
         const char*& unitsResult, float defaultFloat, const char* defaultUnits) const
         throw(ConfigurationException)
     {
-        if (type(scope, localName) == CFG_NO_VALUE)
+        if (type(scope, localName) == Type::NoValue)
         {
             floatResult = defaultFloat;
             unitsResult = defaultUnits;
@@ -1327,7 +1327,7 @@ namespace danek
         const char*& unitsResult, float defaultFloat, const char* defaultUnits) const
         throw(ConfigurationException)
     {
-        if (type(scope, localName) == CFG_NO_VALUE)
+        if (type(scope, localName) == Type::NoValue)
         {
             floatResult = defaultFloat;
             unitsResult = defaultUnits;
@@ -1468,7 +1468,7 @@ namespace danek
         const char** allowedUnits, int allowedUnitsSize, int& intResult, const char*& unitsResult,
         int defaultInt, const char* defaultUnits) const throw(ConfigurationException)
     {
-        if (type(scope, localName) == CFG_NO_VALUE)
+        if (type(scope, localName) == Type::NoValue)
         {
             intResult = defaultInt;
             unitsResult = defaultUnits;
@@ -1598,7 +1598,7 @@ namespace danek
         const char** allowedUnits, int allowedUnitsSize, int& intResult, const char*& unitsResult,
         int defaultInt, const char* defaultUnits) const throw(ConfigurationException)
     {
-        if (type(scope, localName) == CFG_NO_VALUE)
+        if (type(scope, localName) == Type::NoValue)
         {
             intResult = defaultInt;
             unitsResult = defaultUnits;
@@ -2318,16 +2318,16 @@ namespace danek
         mergeNames(scope, localName, fullyScopedName);
         switch (type(scope, localName))
         {
-            case Configuration::CFG_SCOPE:
+            case Configuration::Type::Scope:
                 // Okay
                 break;
-            case Configuration::CFG_STRING:
+            case Configuration::Type::String:
                 msg << fileName() << ": '" << fullyScopedName << "' is a string instead of a scope";
                 throw ConfigurationException(msg.c_str());
-            case Configuration::CFG_LIST:
+            case Configuration::Type::List:
                 msg << fileName() << ": '" << fullyScopedName << "' is a list instead of a scope";
                 throw ConfigurationException(msg.c_str());
-            case Configuration::CFG_NO_VALUE:
+            case Configuration::Type::NoValue:
                 msg << fileName() << ": scope '" << fullyScopedName << "' does not exist";
                 throw ConfigurationException(msg.c_str());
             default:

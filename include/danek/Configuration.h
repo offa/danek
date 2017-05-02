@@ -47,21 +47,21 @@ namespace danek
     class Configuration
     {
     public:
-        enum Type
+        enum class Type
         { // bit masks
-            CFG_NO_VALUE = 0,
-            CFG_STRING = 1, // 0001
-            CFG_LIST = 2, // 0010
-            CFG_SCOPE = 4, // 0100
-            CFG_VARIABLES = 3, // 0011 = CFG_STRING | CFG_LIST
-            CFG_SCOPE_AND_VARS = 7 // 0111 = CFG_STRING | CFG_LIST | CFG_SCOPE
+            NoValue = 0,
+            String = 1, // 0001
+            List = 2, // 0010
+            Scope = 4, // 0100
+            Variables = 3, // 0011 = CFG_STRING | CFG_LIST
+            ScopesAndVars = 7 // 0111 = CFG_STRING | CFG_LIST | CFG_SCOPE
         };
 
-        enum SourceType
+        enum class SourceType
         {
-            INPUT_FILE,
-            INPUT_STRING,
-            INPUT_EXEC
+            File,
+            String,
+            Exec
         };
 
         static Configuration* create();
@@ -315,15 +315,15 @@ namespace danek
     {
         if (strncmp(str, "exec#", 5) == 0)
         {
-            parse(Configuration::INPUT_EXEC, &(str[5]));
+            parse(SourceType::Exec, &(str[5]));
         }
         else if (strncmp(str, "file#", 5) == 0)
         {
-            parse(Configuration::INPUT_FILE, &(str[5]));
+            parse(SourceType::File, &(str[5]));
         }
         else
         {
-            parse(Configuration::INPUT_FILE, str);
+            parse(SourceType::File, str);
         }
     }
 }

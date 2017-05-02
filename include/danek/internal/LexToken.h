@@ -28,6 +28,7 @@
 //--------
 #include "danek/ConfigurationException.h"
 #include "danek/StringBuffer.h"
+#include "danek/internal/FunctionType.h"
 
 namespace danek
 {
@@ -63,7 +64,7 @@ namespace danek
         //--------
         void reset(short type, int lineNum, const char* spelling);
 
-        void reset(short type, int lineNum, const char* spelling, short funcType);
+        void reset(short type, int lineNum, const char* spelling, FunctionType funcType);
 
         void resetWithOwnership(short type, int lineNum, StringBuffer& str);
 
@@ -74,7 +75,7 @@ namespace danek
         short m_type;
         StringBuffer m_spelling;
         int m_lineNum;
-        short m_funcType;
+        FunctionType m_funcType;
     };
 
     //--------

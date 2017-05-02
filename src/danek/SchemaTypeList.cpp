@@ -60,13 +60,13 @@ namespace danek
         }
         switch (typeDef->cfgType())
         {
-            case Configuration::CFG_STRING:
+            case Configuration::Type::String:
                 break;
-            case Configuration::CFG_LIST:
+            case Configuration::Type::List:
                 msg << "you cannot embed a list type ('" << listElementTypeName
                     << "') inside another list in rule '" << rule << "'";
                 throw ConfigurationException(msg.c_str());
-            case Configuration::CFG_SCOPE:
+            case Configuration::Type::Scope:
                 msg << "you cannot embed a scope type ('" << listElementTypeName
                     << "') inside a list in rule '" << rule << "'";
                 throw ConfigurationException(msg.c_str());
@@ -91,7 +91,7 @@ namespace danek
         assert(typeArgs.size() == 1);
         const char* elemTypeName = typeArgs[0].c_str();
         SchemaType* elemTypeDef = findType(sv, elemTypeName);
-        assert(elemTypeDef->cfgType() == Configuration::CFG_STRING);
+        assert(elemTypeDef->cfgType() == Configuration::Type::String);
 
         cfg->lookupList(scope, name, data);
         for (std::size_t i = 0; i < data.size(); i++)

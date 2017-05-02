@@ -56,20 +56,20 @@ namespace danek
         //----------------------------------------------------------------------
         // spelling            type             symbol
         //----------------------------------------------------------------------
-        {"configFile(", LexBase::STRING_FUNC, ConfigLex::LEX_FUNC_CONFIG_FILE_SYM},
-        {"configType(", LexBase::STRING_FUNC, ConfigLex::LEX_FUNC_CONFIG_TYPE_SYM},
-        {"exec(", LexBase::STRING_FUNC, ConfigLex::LEX_FUNC_EXEC_SYM},
-        {"fileToDir(", LexBase::STRING_FUNC, ConfigLex::LEX_FUNC_FILE_TO_DIR_SYM},
-        {"getenv(", LexBase::STRING_FUNC, ConfigLex::LEX_FUNC_GETENV_SYM},
-        {"isFileReadable(", LexBase::BOOL_FUNC, ConfigLex::LEX_FUNC_IS_FILE_READABLE_SYM},
-        {"join(", LexBase::STRING_FUNC, ConfigLex::LEX_FUNC_JOIN_SYM},
-        {"osDirSeparator(", LexBase::STRING_FUNC, ConfigLex::LEX_FUNC_OS_DIR_SEP_SYM},
-        {"osPathSeparator(", LexBase::STRING_FUNC, ConfigLex::LEX_FUNC_OS_PATH_SEP_SYM},
-        {"osType(", LexBase::STRING_FUNC, ConfigLex::LEX_FUNC_OS_TYPE_SYM},
-        {"readFile(", LexBase::STRING_FUNC, ConfigLex::LEX_FUNC_READ_FILE_SYM},
-        {"replace(", LexBase::STRING_FUNC, ConfigLex::LEX_FUNC_REPLACE_SYM},
-        {"siblingScope(", LexBase::STRING_FUNC, ConfigLex::LEX_FUNC_SIBLING_SCOPE_SYM},
-        {"split(", LexBase::LIST_FUNC, ConfigLex::LEX_FUNC_SPLIT_SYM},
+        {"configFile(", FunctionType::String, ConfigLex::LEX_FUNC_CONFIG_FILE_SYM},
+        {"configType(", FunctionType::String, ConfigLex::LEX_FUNC_CONFIG_TYPE_SYM},
+        {"exec(", FunctionType::String, ConfigLex::LEX_FUNC_EXEC_SYM},
+        {"fileToDir(", FunctionType::String, ConfigLex::LEX_FUNC_FILE_TO_DIR_SYM},
+        {"getenv(", FunctionType::String, ConfigLex::LEX_FUNC_GETENV_SYM},
+        {"isFileReadable(", FunctionType::Bool, ConfigLex::LEX_FUNC_IS_FILE_READABLE_SYM},
+        {"join(", FunctionType::String, ConfigLex::LEX_FUNC_JOIN_SYM},
+        {"osDirSeparator(", FunctionType::String, ConfigLex::LEX_FUNC_OS_DIR_SEP_SYM},
+        {"osPathSeparator(", FunctionType::String, ConfigLex::LEX_FUNC_OS_PATH_SEP_SYM},
+        {"osType(", FunctionType::String, ConfigLex::LEX_FUNC_OS_TYPE_SYM},
+        {"readFile(", FunctionType::String, ConfigLex::LEX_FUNC_READ_FILE_SYM},
+        {"replace(", FunctionType::String, ConfigLex::LEX_FUNC_REPLACE_SYM},
+        {"siblingScope(", FunctionType::String, ConfigLex::LEX_FUNC_SIBLING_SCOPE_SYM},
+        {"split(", FunctionType::List, ConfigLex::LEX_FUNC_SPLIT_SYM},
     };
 
     const static int funcInfoArraySize = sizeof(funcInfoArray) / sizeof(funcInfoArray[0]);

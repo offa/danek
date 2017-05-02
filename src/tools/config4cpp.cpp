@@ -187,16 +187,16 @@ int main(int argc, char** argv)
     {
         switch (cfg->type(scope, name))
         {
-            case Configuration::CFG_STRING:
+            case Configuration::Type::String:
                 printf("string\n");
                 break;
-            case Configuration::CFG_LIST:
+            case Configuration::Type::List:
                 printf("list\n");
                 break;
-            case Configuration::CFG_SCOPE:
+            case Configuration::Type::Scope:
                 printf("scope\n");
                 break;
-            case Configuration::CFG_NO_VALUE:
+            case Configuration::Type::NoValue:
                 printf("no_value\n");
                 break;
             default:
@@ -210,11 +210,11 @@ int main(int argc, char** argv)
         {
             switch (cfg->type(scope, name))
             {
-                case Configuration::CFG_STRING:
+                case Configuration::Type::String:
                     str = cfg->lookupString(scope, name);
                     printf("%s\n", str);
                     break;
-                case Configuration::CFG_LIST:
+                case Configuration::Type::List:
                     {
                         std::vector<std::string> vec;
                         cfg->lookupList(scope, name, vec);
@@ -224,10 +224,10 @@ int main(int argc, char** argv)
                         }
                     }
                     break;
-                case Configuration::CFG_SCOPE:
+                case Configuration::Type::Scope:
                     fprintf(stderr, "'%s' is a scope\n", fullyScopedName.c_str());
                     break;
-                case Configuration::CFG_NO_VALUE:
+                case Configuration::Type::NoValue:
                     fprintf(stderr, "'%s' does not exist\n", fullyScopedName.c_str());
                     break;
                 default:
@@ -302,9 +302,9 @@ static void parseCmdLineArgs(int argc, char** argv, const char*& cmd, bool& isRe
     schemaSource = 0;
     schemaName = 0;
     wantDiagnostics = false;
-    forceMode = SchemaValidator::DO_NOT_FORCE;
+    forceMode = SchemaValidator::ForceMode::None;
     isRecursive = true;
-    types = Configuration::CFG_SCOPE_AND_VARS;
+    types = Configuration::Type::ScopesAndVars;
     filterPatterns.clear();
 
     for (i = 1; i < argc; i++)
@@ -373,11 +373,11 @@ static void parseCmdLineArgs(int argc, char** argv, const char*& cmd, bool& isRe
         }
         else if (strcmp(argv[i], "-force_optional") == 0)
         {
-            forceMode = SchemaValidator::FORCE_OPTIONAL;
+            forceMode = SchemaValidator::ForceMode::Optional;
         }
         else if (strcmp(argv[i], "-force_required") == 0)
         {
-            forceMode = SchemaValidator::FORCE_REQUIRED;
+            forceMode = SchemaValidator::ForceMode::Required;
         }
         else if (strcmp(argv[i], "-nodiagnostics") == 0)
         {
@@ -511,26 +511,26 @@ static Configuration::Type stringToTypes(const char* str)
 {
     if (strcmp(str, "string") == 0)
     {
-        return Configuration::CFG_STRING;
+        return Configuration::Type::String;
     }
     else if (strcmp(str, "list") == 0)
     {
-        return Configuration::CFG_LIST;
+        return Configuration::Type::List;
     }
     else if (strcmp(str, "scope") == 0)
     {
-        return Configuration::CFG_SCOPE;
+        return Configuration::Type::Scope;
     }
     else if (strcmp(str, "variables") == 0)
     {
-        return Configuration::CFG_VARIABLES;
+        return Configuration::Type::Variables;
     }
     else if (strcmp(str, "scope_and_vars") == 0)
     {
-        return Configuration::CFG_SCOPE_AND_VARS;
+        return Configuration::Type::ScopesAndVars;
     }
     usage("Invalid value for '-types <...>'");
-    return Configuration::CFG_STRING; // Not reached; keep compiler happy
+    return Configuration::Type::String; // Not reached; keep compiler happy
 }
 
 static void usage(const char* optMsg)

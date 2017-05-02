@@ -105,20 +105,20 @@ namespace danek
 
     inline const char* ConfigItem::stringVal() const
     {
-        assert(m_type == Configuration::CFG_STRING);
+        assert(m_type == Configuration::Type::String);
         return m_stringVal;
     }
 
     inline StringVector& ConfigItem::listVal() const
     {
-        assert(m_type == Configuration::CFG_LIST);
+        assert(m_type == Configuration::Type::List);
         assert(m_listVal != 0);
         return *m_listVal;
     }
 
     inline ConfigScope* ConfigItem::scopeVal() const
     {
-        assert(m_type == Configuration::CFG_SCOPE);
+        assert(m_type == Configuration::Type::Scope);
         assert(m_scope != 0);
         return m_scope;
     }

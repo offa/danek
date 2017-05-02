@@ -26,13 +26,13 @@
 class Logger
 {
 public:
-    enum LogLevel
+    enum class LogLevel
     {
-        NO_LOGS_LEVEL = 0,
-        ERROR_LEVEL = 1,
-        WARN_LEVEL = 2,
-        INFO_LEVEL = 3,
-        DEBUG_LEVEL = 4
+        Off,
+        Error,
+        Warn,
+        Info,
+        Debug
     };
 
     static void error(LogLevel logLevel, const char* msg);

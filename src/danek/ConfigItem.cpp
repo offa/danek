@@ -92,7 +92,7 @@ namespace danek
 
     ConfigItem::ConfigItem(const char* name, const char* str)
     {
-        m_type = Configuration::CFG_STRING;
+        m_type = Configuration::Type::String;
         m_name = copyString(name);
         m_stringVal = copyString(str);
         m_listVal = 0;
@@ -101,7 +101,7 @@ namespace danek
 
     ConfigItem::ConfigItem(const char* name, const StringVector& list)
     {
-        m_type = Configuration::CFG_LIST;
+        m_type = Configuration::Type::List;
         m_name = copyString(name);
         m_listVal = new StringVector(list);
         m_scope = 0;
@@ -112,7 +112,7 @@ namespace danek
     {
         int i;
 
-        m_type = Configuration::CFG_LIST;
+        m_type = Configuration::Type::List;
         m_name = copyString(name);
         m_scope = 0;
         m_stringVal = 0;
@@ -125,7 +125,7 @@ namespace danek
 
     ConfigItem::ConfigItem(const char* name, ConfigScope* scope)
     {
-        m_type = Configuration::CFG_SCOPE;
+        m_type = Configuration::Type::Scope;
         m_name = copyString(name);
         m_scope = scope;
         m_listVal = 0;
@@ -170,12 +170,12 @@ namespace danek
 
         switch (m_type)
         {
-            case Configuration::CFG_STRING:
+            case Configuration::Type::String:
                 escStr = escapeString(m_stringVal);
                 buf << name << " = \"" << escStr << "\";\n";
                 delete[] escStr;
                 break;
-            case Configuration::CFG_LIST:
+            case Configuration::Type::List:
                 buf << name << " = [";
                 len = m_listVal->size();
                 for (i = 0; i < len; i++)
@@ -190,7 +190,7 @@ namespace danek
                 }
                 buf << "];\n";
                 break;
-            case Configuration::CFG_SCOPE:
+            case Configuration::Type::Scope:
                 buf << name << " {\n";
                 m_scope->dump(buf, wantExpandedUidNames, indentLevel + 1);
                 printIndent(buf, indentLevel);

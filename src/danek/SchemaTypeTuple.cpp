@@ -58,13 +58,13 @@ namespace danek
             }
             switch (typeDef->cfgType())
             {
-                case Configuration::CFG_STRING:
+                case Configuration::Type::String:
                     break;
-                case Configuration::CFG_LIST:
+                case Configuration::Type::List:
                     msg << "you cannot embed a list type ('" << elemType << "') inside a "
                         << "tuple in rule '" << rule << "'";
                     throw ConfigurationException(msg.c_str());
-                case Configuration::CFG_SCOPE:
+                case Configuration::Type::Scope:
                     msg << "you cannot embed a scope type ('" << elemType << "') inside a "
                         << "tuple in rule '" << rule << "'";
                     throw ConfigurationException(msg.c_str());

@@ -31,7 +31,7 @@ Logger log;
 
 void Logger::error(LogLevel logLevel, const char* msg)
 {
-    if (logLevel >= ERROR_LEVEL)
+    if (logLevel >= LogLevel::Error)
     {
         printf("%s\n", msg);
     }
@@ -39,7 +39,7 @@ void Logger::error(LogLevel logLevel, const char* msg)
 
 void Logger::warn(LogLevel logLevel, const char* msg)
 {
-    if (logLevel >= WARN_LEVEL)
+    if (logLevel >= LogLevel::Warn)
     {
         printf("%s\n", msg);
     }
@@ -47,7 +47,7 @@ void Logger::warn(LogLevel logLevel, const char* msg)
 
 void Logger::info(LogLevel logLevel, const char* msg)
 {
-    if (logLevel >= INFO_LEVEL)
+    if (logLevel >= LogLevel::Info)
     {
         printf("%s\n", msg);
     }
@@ -55,7 +55,7 @@ void Logger::info(LogLevel logLevel, const char* msg)
 
 void Logger::debug(LogLevel logLevel, const char* msg)
 {
-    if (logLevel >= DEBUG_LEVEL)
+    if (logLevel >= LogLevel::Debug)
     {
         printf("%s\n", msg);
     }

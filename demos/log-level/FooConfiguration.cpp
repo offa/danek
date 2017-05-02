@@ -119,9 +119,9 @@ Logger::LogLevel FooConfiguration::getLogLevel(const char* opName) const
         if (Configuration::patternMatch(opName, pattern))
         {
             result = atoi(logLevelStr);
-            if (result > (int) Logger::DEBUG_LEVEL)
+            if (result > (int) Logger::LogLevel::Debug)
             {
-                result = (int) Logger::DEBUG_LEVEL;
+                result = (int) Logger::LogLevel::Debug;
             }
             else if (result < 0)
             {
@@ -130,5 +130,5 @@ Logger::LogLevel FooConfiguration::getLogLevel(const char* opName) const
             return (Logger::LogLevel) result;
         }
     }
-    return Logger::ERROR_LEVEL; // default log level
+    return Logger::LogLevel::Error; // default log level
 }

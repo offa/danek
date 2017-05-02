@@ -37,7 +37,7 @@ namespace danek
     // Description:
     //----------------------------------------------------------------------
 
-    LexToken::LexToken() : m_type(LexBase::LEX_UNKNOWN_SYM), m_lineNum(-1), m_funcType(LexBase::NOT_A_FUNC)
+    LexToken::LexToken() : m_type(LexBase::LEX_UNKNOWN_SYM), m_lineNum(-1), m_funcType(FunctionType::None)
     {
     }
 
@@ -56,7 +56,7 @@ namespace danek
     //----------------------------------------------------------------------
 
     LexToken::LexToken(short type, int lineNum, const char* spelling)
-        : m_type(type), m_spelling(spelling), m_lineNum(lineNum), m_funcType(LexBase::LEX_UNKNOWN_SYM)
+        : m_type(type), m_spelling(spelling), m_lineNum(lineNum), m_funcType(FunctionType::None)
     {
     }
 
@@ -99,7 +99,7 @@ namespace danek
         m_type = type;
         m_lineNum = lineNum;
         m_spelling = spelling;
-        m_funcType = LexBase::NOT_A_FUNC;
+        m_funcType = FunctionType::None;
     }
 
     //----------------------------------------------------------------------
@@ -108,7 +108,7 @@ namespace danek
     // Description:	Modifier function
     //----------------------------------------------------------------------
 
-    void LexToken::reset(short type, int lineNum, const char* spelling, short funcType)
+    void LexToken::reset(short type, int lineNum, const char* spelling, FunctionType funcType)
     {
         m_type = type;
         m_lineNum = lineNum;
@@ -126,20 +126,20 @@ namespace danek
     {
         m_type = type;
         m_lineNum = lineNum;
-        m_funcType = LexBase::NOT_A_FUNC;
+        m_funcType = FunctionType::None;
         m_spelling.takeOwnershipOfStringIn(str);
     }
 
     bool LexToken::isStringFunc()
     {
-        return m_funcType == LexBase::STRING_FUNC;
+        return m_funcType == FunctionType::String;
     }
     bool LexToken::isListFunc()
     {
-        return m_funcType == LexBase::LIST_FUNC;
+        return m_funcType == FunctionType::List;
     }
     bool LexToken::isBoolFunc()
     {
-        return m_funcType == LexBase::BOOL_FUNC;
+        return m_funcType == FunctionType::Bool;
     }
 }

@@ -100,14 +100,14 @@ void FooConfiguration::parse(const char* cfgInput, const char* cfgScope, const c
         {
             cfg->parse(cfgInput);
         }
-        cfg->setFallbackConfiguration(Configuration::INPUT_STRING, FallbackConfiguration::getString());
+        cfg->setFallbackConfiguration(Configuration::SourceType::String, FallbackConfiguration::getString());
 
         //--------
         // Perform schema validation.
         //--------
         sv.wantDiagnostics(m_wantDiagnostics);
         sv.parseSchema(FallbackConfiguration::getSchema());
-        sv.validate(cfg->getFallbackConfiguration(), "", "", SchemaValidator::FORCE_REQUIRED);
+        sv.validate(cfg->getFallbackConfiguration(), "", "", SchemaValidator::ForceMode::Required);
         sv.validate(cfg, cfgScope, "");
 
         //--------

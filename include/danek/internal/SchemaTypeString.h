@@ -30,7 +30,7 @@ namespace danek
     class SchemaTypeString : public SchemaType
     {
     public:
-        SchemaTypeString() : SchemaType("string", "danek::SchemaTypeString", Configuration::CFG_STRING)
+        SchemaTypeString() : SchemaType("string", "danek::SchemaTypeString", Configuration::Type::String)
         {
         }
         virtual ~SchemaTypeString()

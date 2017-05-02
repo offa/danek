@@ -30,7 +30,7 @@ namespace danek
     class SchemaTypeScope : public SchemaType
     {
     public:
-        SchemaTypeScope() : SchemaType("scope", "danek::SchemaTypeScope", Configuration::CFG_STRING)
+        SchemaTypeScope() : SchemaType("scope", "danek::SchemaTypeScope", Configuration::Type::String)
         {
         }
         virtual ~SchemaTypeScope()

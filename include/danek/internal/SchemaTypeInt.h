@@ -30,7 +30,7 @@ namespace danek
     class SchemaTypeInt : public SchemaType
     {
     public:
-        SchemaTypeInt() : SchemaType("int", "danek::SchemaTypeInt", Configuration::CFG_STRING)
+        SchemaTypeInt() : SchemaType("int", "danek::SchemaTypeInt", Configuration::Type::String)
         {
         }
         virtual ~SchemaTypeInt()

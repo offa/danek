@@ -31,7 +31,7 @@ namespace danek
     {
     public:
         SchemaTypeUnitsWithFloat()
-            : SchemaType("units_with_float", "danek::SchemaTypeUnitsWithFloat", Configuration::CFG_STRING)
+            : SchemaType("units_with_float", "danek::SchemaTypeUnitsWithFloat", Configuration::Type::String)
         {
         }
         virtual ~SchemaTypeUnitsWithFloat()

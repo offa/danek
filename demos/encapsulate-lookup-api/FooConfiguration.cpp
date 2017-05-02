@@ -83,7 +83,7 @@ void FooConfiguration::parse(const char* cfgSource, const char* scope) throw(Foo
         {
             cfg->parse(cfgSource);
         }
-        cfg->setFallbackConfiguration(Configuration::INPUT_STRING, FallbackConfiguration::getString());
+        cfg->setFallbackConfiguration(Configuration::SourceType::String, FallbackConfiguration::getString());
     }
     catch (const ConfigurationException& ex)
     {

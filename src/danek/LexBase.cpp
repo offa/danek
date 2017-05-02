@@ -83,7 +83,7 @@ namespace danek
         return strcmp(sas1->m_spelling, sas2->m_spelling);
     }
 
-    void LexBase::searchForFunction(const char* spelling, bool& found, short& funcType, short& symbol)
+    void LexBase::searchForFunction(const char* spelling, bool& found, FunctionType& funcType, short& symbol)
     {
         FuncInfo searchItem;
 
@@ -137,17 +137,17 @@ namespace danek
         m_atEOF = false;
         switch (sourceType)
         {
-            case Configuration::INPUT_FILE:
+            case Configuration::SourceType::File:
                 if (!m_file.open(source))
                 {
                     msg << "cannot open " << source << ": " << strerror(errno);
                     throw ConfigurationException(msg.c_str());
                 }
                 break;
-            case Configuration::INPUT_STRING:
+            case Configuration::SourceType::String:
                 m_ptr = m_source;
                 break;
-            case Configuration::INPUT_EXEC:
+            case Configuration::SourceType::Exec:
                 if (!execCmd(source, m_execOutput))
                 {
                     msg << "cannot parse 'exec#" << source << "': " << m_execOutput.c_str();
@@ -185,7 +185,7 @@ namespace danek
 
         m_uidIdentifierProcessor = new UidIdentifierDummyProcessor();
         m_amOwnerOfUidIdentifierProcessor = true;
-        m_sourceType = Configuration::INPUT_STRING;
+        m_sourceType = Configuration::SourceType::String;
         m_source = str;
         m_lineNum = 1;
         m_ptr = m_source;
@@ -217,7 +217,7 @@ namespace danek
     {
         int ch;
 
-        if (m_sourceType == Configuration::INPUT_FILE)
+        if (m_sourceType == Configuration::SourceType::File)
         {
             do
             {
@@ -322,7 +322,7 @@ namespace danek
         //--------
         if (m_atEOF)
         {
-            if (m_sourceType == Configuration::INPUT_STRING)
+            if (m_sourceType == Configuration::SourceType::String)
             {
                 token.reset(LEX_EOF_SYM, m_lineNum, "<end of string>");
             }
@@ -534,7 +534,7 @@ namespace danek
             //--------
             if (m_ch == '(')
             {
-                short funcType;
+                FunctionType funcType;
                 spelling.append(m_ch.c_str());
                 nextChar();
                 searchForFunction(spelling.c_str(), found, funcType, symbol);

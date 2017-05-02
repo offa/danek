@@ -34,7 +34,7 @@ using danek::StringVector;
 class SchemaTypeHex : public SchemaType
 {
 public:
-    SchemaTypeHex() : SchemaType("hex", "SchemaTypeHex", Configuration::CFG_STRING)
+    SchemaTypeHex() : SchemaType("hex", "SchemaTypeHex", Configuration::Type::String)
     {
     }
     virtual ~SchemaTypeHex();

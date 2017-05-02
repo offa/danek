@@ -1,5 +1,4 @@
 // Copyright (c) 2017 offa
-// Copyright 2011 Ciaran McHale.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -23,27 +22,21 @@
 
 #pragma once
 
-#include "danek/SchemaType.h"
-
 namespace danek
 {
-    class SchemaTypeIntWithUnits : public SchemaType
+    //--------
+    // Constants for the type of a function.
+    //--------
+
+    // Lex related
+    enum class FunctionType
     {
-    public:
-        SchemaTypeIntWithUnits()
-            : SchemaType("int_with_units", "danek::SchemaTypeIntWithUnits", Configuration::Type::String)
-        {
-        }
-        virtual ~SchemaTypeIntWithUnits()
-        {
-        }
-
-    protected:
-        virtual void checkRule(const SchemaValidator* sv, const Configuration* cfg, const char* typeName,
-            const StringVector& typeArgs, const char* rule) const throw(ConfigurationException);
-
-        virtual bool isA(const SchemaValidator* sv, const Configuration* cfg, const char* value,
-            const char* typeName, const StringVector& typeArgs, int indentLevel,
-            StringBuffer& errSuffix) const;
+        None = 1,
+        String = 2,
+        List = 3,
+        Bool = 4
     };
+
 }
+
+

@@ -39,7 +39,7 @@ namespace danek
 
         try
         {
-            parse(Configuration::INPUT_STRING, m_cfgStr.getString(), "danek default security");
+            parse(Configuration::SourceType::String, m_cfgStr.getString(), "danek default security");
             lookupList("", "allow_patterns", dummyList);
             lookupList("", "deny_patterns", dummyList);
             lookupList("", "trusted_directories", dummyList);

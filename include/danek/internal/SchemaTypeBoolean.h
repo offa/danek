@@ -30,7 +30,7 @@ namespace danek
     class SchemaTypeBoolean : public SchemaType
     {
     public:
-        SchemaTypeBoolean() : SchemaType("boolean", "danek::SchemaTypeBoolan", Configuration::CFG_STRING)
+        SchemaTypeBoolean() : SchemaType("boolean", "danek::SchemaTypeBoolan", Configuration::Type::String)
         {
         }
         virtual ~SchemaTypeBoolean()

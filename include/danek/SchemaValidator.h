@@ -39,11 +39,11 @@ namespace danek
     class SchemaValidator
     {
     public:
-        enum ForceMode
+        enum class ForceMode
         {
-            DO_NOT_FORCE,
-            FORCE_OPTIONAL,
-            FORCE_REQUIRED
+            None,
+            Optional,
+            Required
         };
 
         //--------
@@ -60,9 +60,9 @@ namespace danek
         void parseSchema(const char** schema, int schemaSize) throw(ConfigurationException);
         void parseSchema(const char** nullTerminatedSchema) throw(ConfigurationException);
         inline void validate(const Configuration* cfg, const char* scope, const char* localName,
-            ForceMode forceMode = DO_NOT_FORCE) const throw(ConfigurationException);
+            ForceMode forceMode = ForceMode::None) const throw(ConfigurationException);
         void validate(const Configuration* cfg, const char* scope, const char* localName,
-            bool recurseIntoSubscopes, Configuration::Type typeMask, ForceMode forceMode = DO_NOT_FORCE) const
+            bool recurseIntoSubscopes, Configuration::Type typeMask, ForceMode forceMode = ForceMode::None) const
             throw(ConfigurationException);
 
     protected:
@@ -149,7 +149,7 @@ namespace danek
     inline void SchemaValidator::validate(const Configuration* cfg, const char* scope, const char* localName,
         ForceMode forceMode) const throw(ConfigurationException)
     {
-        validate(cfg, scope, localName, true, Configuration::CFG_SCOPE_AND_VARS, forceMode);
+        validate(cfg, scope, localName, true, Configuration::Type::ScopesAndVars, forceMode);
     }
 
     inline void SchemaValidator::wantDiagnostics(bool value)
