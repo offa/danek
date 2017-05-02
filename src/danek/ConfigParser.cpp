@@ -758,7 +758,7 @@ namespace danek
             switch (item->type())
             {
                 case Configuration::Type::String:
-                    m_config->insertString("", newName, item->stringVal());
+                    m_config->insertString("", newName, item->stringVal().c_str());
                     break;
                 case Configuration::Type::List:
                     m_config->insertList(newName, item->listVal());

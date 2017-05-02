@@ -58,15 +58,15 @@ namespace danek
             return m_type;
         }
 
-        const char* name() const
+        const std::string& name() const
         {
-            return m_name.c_str();
+            return m_name;
         }
 
-        const char* stringVal() const
+        const std::string& stringVal() const
         {
             assert(m_type == Configuration::Type::String);
-            return m_stringVal.c_str();
+            return m_stringVal;
         }
 
         StringVector& listVal() const

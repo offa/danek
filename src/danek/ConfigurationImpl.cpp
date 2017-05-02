@@ -274,7 +274,7 @@ namespace danek
             type = item->type();
             if (type == Configuration::Type::String)
             {
-                str = item->stringVal();
+                str = item->stringVal().c_str();
             }
             else
             {

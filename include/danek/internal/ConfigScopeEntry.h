@@ -71,7 +71,7 @@ namespace danek
 
     inline const char* ConfigScopeEntry::name()
     {
-        return m_item->name();
+        return m_item->name().c_str();
     }
 
     inline const ConfigItem* ConfigScopeEntry::item()

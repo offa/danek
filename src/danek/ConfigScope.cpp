@@ -532,7 +532,7 @@ namespace danek
         {
             item = findItem(nameVec[i].c_str());
             assert(static_cast<int>(item->type()) & static_cast<int>(Configuration::Type::Variables));
-            item->dump(buf, item->name(), wantExpandedUidNames, indentLevel);
+            item->dump(buf, item->name().c_str(), wantExpandedUidNames, indentLevel);
         }
 
         //--------
@@ -546,7 +546,7 @@ namespace danek
         {
             item = findItem(nameVec[i].c_str());
             assert(item->type() == Configuration::Type::Scope);
-            item->dump(buf, item->name(), wantExpandedUidNames, indentLevel);
+            item->dump(buf, item->name().c_str(), wantExpandedUidNames, indentLevel);
         }
     }
 
