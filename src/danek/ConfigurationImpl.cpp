@@ -26,6 +26,7 @@
 //--------
 #include "danek/internal/ConfigurationImpl.h"
 #include "danek/internal/util.h"
+#include "danek/internal/Util.h"
 #include "danek/internal/platform.h"
 #include "danek/internal/DefaultSecurityConfiguration.h"
 #include "danek/internal/ConfigParser.h"
@@ -354,14 +355,13 @@ namespace danek
     void ConfigurationImpl::insertString(const char* scope, const char* localName, const char* str) throw(
         ConfigurationException)
     {
-        StringVector vec;
         int len;
         ConfigScope* scopeObj;
         StringBuffer msg;
         StringBuffer fullyScopedName;
 
         mergeNames(scope, localName, fullyScopedName);
-        splitScopedNameIntoVector(fullyScopedName.c_str(), vec);
+        StringVector vec{util::splitScopes(fullyScopedName.c_str())};
         len = vec.size();
         ensureScopeExists(vec, 0, len - 2, scopeObj);
         if (!scopeObj->addOrReplaceString(vec[len - 1].c_str(), str))
@@ -398,14 +398,13 @@ namespace danek
 
     void ConfigurationImpl::insertList(const char* scope, const char* localName, std::vector<std::string> data) throw(ConfigurationException)
     {
-        StringVector vec;
         int len;
         ConfigScope* scopeObj;
         StringBuffer msg;
         StringBuffer fullyScopedName;
 
         mergeNames(scope, localName, fullyScopedName);
-        splitScopedNameIntoVector(fullyScopedName.c_str(), vec);
+        StringVector vec{util::splitScopes(fullyScopedName.c_str())};
         len = vec.size();
         ensureScopeExists(vec, 0, len - 2, scopeObj);
         if (!scopeObj->addOrReplaceList(vec[len - 1].c_str(), StringVector{data}))
@@ -440,12 +439,11 @@ namespace danek
     void ConfigurationImpl::insertList(const char* name, const StringVector& list) throw(
         ConfigurationException)
     {
-        StringVector vec;
         int len;
         ConfigScope* scope;
         StringBuffer msg;
 
-        splitScopedNameIntoVector(name, vec);
+        StringVector vec{util::splitScopes(name)};
         len = vec.size();
         ensureScopeExists(vec, 0, len - 2, scope);
         if (!scope->addOrReplaceList(vec[len - 1].c_str(), list))
@@ -468,13 +466,12 @@ namespace danek
         StringBuffer msg;
         ConfigScope* scopeObj;
         ConfigItem* item;
-        StringVector vec;
         int i;
         int len;
 
         scopeObj = m_currScope;
         mergeNames(scope, localName, fullyScopedName);
-        splitScopedNameIntoVector(fullyScopedName.c_str(), vec);
+        StringVector vec{util::splitScopes(fullyScopedName.c_str())};
         len = vec.size();
         for (i = 0; i < len - 1; i++)
         {
@@ -532,7 +529,7 @@ namespace danek
             //--------
             // Search only in the root scope and skip over '.'
             //--------
-            splitScopedNameIntoVector(&fullyScopedName[1], vec);
+            vec = StringVector{util::splitScopes(&fullyScopedName[1])};
             scope = m_rootScope;
         }
         else if (startInRoot)
@@ -540,7 +537,7 @@ namespace danek
             //--------
             // Search only in the root scope
             //--------
-            splitScopedNameIntoVector(fullyScopedName, vec);
+            vec = StringVector{util::splitScopes(fullyScopedName)};
             scope = m_rootScope;
         }
         else
@@ -548,7 +545,7 @@ namespace danek
             //--------
             // Start search from the current scope
             //--------
-            splitScopedNameIntoVector(fullyScopedName, vec);
+            vec = StringVector{util::splitScopes(fullyScopedName)};
             scope = m_currScope;
         }
         item = 0;
@@ -2394,9 +2391,7 @@ namespace danek
     void ConfigurationImpl::ensureScopeExists(const char* name, ConfigScope*& scope) throw(
         ConfigurationException)
     {
-        StringVector vec;
-
-        splitScopedNameIntoVector(name, vec);
+        StringVector vec{util::splitScopes(name)};
         ensureScopeExists(vec, 0, vec.size() - 1, scope);
     }
 

@@ -24,7 +24,7 @@
 #include "danek/StringVector.h"
 #include <gmock/gmock.h>
 
-using namespace danek;
+using namespace danek::util;
 using namespace testing;
 
 class UtilTest : public testing::Test

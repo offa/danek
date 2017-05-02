@@ -26,6 +26,7 @@
 //--------
 #include "danek/internal/UidIdentifierProcessor.h"
 #include "danek/internal/util.h"
+#include "danek/internal/Util.h"
 #include <string.h>
 #include <ctype.h>
 #include <stdio.h>
@@ -70,14 +71,13 @@ namespace danek
         // Let's break apart the scoped name, expand each local part
         // and then recombine the parts into an expanded scoped name.
         //--------
-        StringVector vec;
         StringBuffer buf;
         StringBuffer msg;
         StringBuffer result;
         int i;
         int len;
 
-        splitScopedNameIntoVector(spelling.c_str(), vec);
+        StringVector vec{util::splitScopes(spelling.c_str())};
         len = vec.size();
         for (i = 0; i < len; i++)
         {
@@ -203,14 +203,13 @@ namespace danek
         // Let's break apart the scoped name, unexpand each local part
         // and then recombine the parts into an unexpanded scoped name.
         //--------
-        StringVector vec;
         StringBuffer result;
         StringBuffer msg;
         const char* str;
         int i;
         int len;
 
-        splitScopedNameIntoVector(spelling, vec);
+        StringVector vec{util::splitScopes(spelling)};
         len = vec.size();
         for (i = 0; i < len; i++)
         {

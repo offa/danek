@@ -27,6 +27,9 @@
 
 namespace danek
 {
-
+namespace util
+{
     std::vector<std::string> splitScopes(const std::string& input);
+
+}
 }
