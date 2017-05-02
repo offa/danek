@@ -20,30 +20,13 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "danek/internal/Util.h"
-#include "danek/StringVector.h"
-#include <gmock/gmock.h>
+#pragma once
 
-using namespace danek;
-using namespace testing;
+#include <vector>
+#include <string>
 
-class UtilTest : public testing::Test
+namespace danek
 {
-};
 
-TEST(UtilTest, splitScopedNameReturnsEmptyStringOnEmptyInput)
-{
-    auto v = splitScopes("");
-    EXPECT_EQ(1, v.size());
-    EXPECT_THAT(v[0], IsEmpty());
+    std::vector<std::string> splitScopes(const std::string& input);
 }
-
-TEST(UtilTest, splitScopedNameReturnsSplittedResults)
-{
-    auto v = splitScopes("a.b.c");
-    EXPECT_EQ(3, v.size());
-    EXPECT_THAT(v[0], Eq("a"));
-    EXPECT_THAT(v[1], Eq("b"));
-    EXPECT_THAT(v[2], Eq("c"));
-}
-

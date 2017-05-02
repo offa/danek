@@ -21,29 +21,28 @@
 // SOFTWARE.
 
 #include "danek/internal/Util.h"
-#include "danek/StringVector.h"
-#include <gmock/gmock.h>
+#include <sstream>
 
-using namespace danek;
-using namespace testing;
-
-class UtilTest : public testing::Test
+namespace danek
 {
-};
+    std::vector<std::string> splitScopes(const std::string& input)
+    {
+        if( input.empty() )
+        {
+            return { "" };
+        }
 
-TEST(UtilTest, splitScopedNameReturnsEmptyStringOnEmptyInput)
-{
-    auto v = splitScopes("");
-    EXPECT_EQ(1, v.size());
-    EXPECT_THAT(v[0], IsEmpty());
+        constexpr auto delim = '.';
+        std::vector<std::string> tokens;
+        std::stringstream ss{input};
+        std::string token;
+
+        while( std::getline(ss, token, delim) )
+        {
+            tokens.push_back(token);
+        }
+
+        return tokens;
+    }
+
 }
-
-TEST(UtilTest, splitScopedNameReturnsSplittedResults)
-{
-    auto v = splitScopes("a.b.c");
-    EXPECT_EQ(3, v.size());
-    EXPECT_THAT(v[0], Eq("a"));
-    EXPECT_THAT(v[1], Eq("b"));
-    EXPECT_THAT(v[2], Eq("c"));
-}
-
