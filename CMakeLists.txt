@@ -28,6 +28,7 @@ subdirs(src)
 
 
 if( UNIT_TESTS )
+    enable_testing()
     subdirs(test)
 endif()
 
