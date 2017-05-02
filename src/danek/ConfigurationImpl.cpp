@@ -2348,7 +2348,7 @@ namespace danek
         unused(size); // Prevent build failure in release builds
         assert(size > 0);
         assert(strcmp(m_fileNameStack[size - 1].c_str(), fileName) == 0);
-        m_fileNameStack.removeLast();
+        m_fileNameStack.erase(m_fileNameStack.end() - 1);
     }
 
     void ConfigurationImpl::checkForCircularIncludes(const char* file, int includeLineNum) throw(

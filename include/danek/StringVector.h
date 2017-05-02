@@ -58,7 +58,7 @@ namespace danek
         void reserve(std::size_t size);
 
         void clear();
-        void removeLast();
+        void erase(std::vector<std::string>::const_iterator itr);
 
         std::vector<std::string> get() const;
 

@@ -160,7 +160,7 @@ TEST_F(StringVectorTest, removeLastRemovesLastElement)
     StringVector v;
     v.push_back("x");
     v.push_back("y");
-    v.removeLast();
+    v.erase(v.end() - 1);
     EXPECT_EQ(1, v.size());
     EXPECT_EQ(std::string{"x"}, v[v.size() - 1]);
 }

@@ -77,9 +77,9 @@ namespace danek
         m_data.clear();
     }
 
-    void StringVector::removeLast()
+    void StringVector::erase(std::vector<std::string>::const_iterator itr)
     {
-        m_data.erase(m_data.end() - 1);
+        m_data.erase(itr);
     }
 
     const std::string& StringVector::operator[](std::size_t index) const
