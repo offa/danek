@@ -3,7 +3,6 @@ add_library(danek SchemaLex.cpp
                 MBChar.cpp
                 SchemaValidator.cpp
                 platform.cpp
-                util.cpp
                 Configuration.cpp
                 DefaultSecurityConfiguration.cpp
                 ConfigurationImpl.cpp

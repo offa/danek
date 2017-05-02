@@ -25,7 +25,6 @@
 // #include's
 //--------
 #include "danek/internal/ConfigurationImpl.h"
-#include "danek/internal/util.h"
 #include "danek/internal/Util.h"
 #include "danek/internal/platform.h"
 #include "danek/internal/DefaultSecurityConfiguration.h"

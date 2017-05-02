@@ -25,7 +25,6 @@
 // #include's
 //--------
 #include "danek/internal/UidIdentifierProcessor.h"
-#include "danek/internal/util.h"
 #include "danek/internal/Util.h"
 #include <string.h>
 #include <ctype.h>
