@@ -27,13 +27,13 @@
 // #includes & #defines
 //--------
 
+#include "danek/StringVector.h"
 #include <assert.h>
 
 #define CONFIG4CPP_STRING_BUFFER_INTERNAL_BUF_SIZE 32
 
 namespace danek
 {
-    class StringVector;
     class LexToken;
     class UidIdentifierProcessor;
 
@@ -72,7 +72,6 @@ namespace danek
         StringBuffer& operator=(const StringBuffer& other);
 
     protected:
-        friend class StringVector;
         friend class LexToken;
         friend class UidIdentifierProcessor;
         void takeOwnershipOfStringIn(StringBuffer& other);
