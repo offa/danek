@@ -23,39 +23,37 @@
 
 #pragma once
 
-//--------
-// #include's
-//--------
-
-#include <string.h>
+#include <exception>
+#include <string>
 
 namespace danek
 {
-    class ConfigurationException
+    class ConfigurationException : public std::exception
     {
     public:
-        //--------
-        // Constructors and destructor
-        //--------
-        ConfigurationException(const char* str);
-        ConfigurationException(const ConfigurationException& o);
-        ~ConfigurationException();
 
-        //--------
-        // Accessor
-        //--------
-        const char* c_str() const;
+        explicit ConfigurationException(const std::string& msg) : m_msg(msg)
+        {
+        }
+
+        const char* what() const noexcept override
+        {
+            return m_msg.c_str();
+        }
+
+        std::string message() const
+        {
+            return m_msg;
+        }
+
+        const char* c_str() const noexcept
+        {
+            return what();
+        }
+
 
     private:
-        //--------
-        // Instance variables
-        //--------
-        char* m_str;
 
-        //--------
-        // The following are unimplemented
-        //--------
-        ConfigurationException();
-        ConfigurationException operator=(const ConfigurationException&);
+        std::string m_msg;
     };
 }

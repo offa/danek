@@ -33,4 +33,6 @@ TEST_F(ConfigurationExceptionTest, message)
 {
     ConfigurationException ex("abc");
     EXPECT_STREQ("abc", ex.c_str());
+    EXPECT_STREQ("abc", ex.what());
+    EXPECT_EQ(std::string{"abc"}, ex.message());
 }

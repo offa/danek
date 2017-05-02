@@ -6,7 +6,6 @@ add_library(danek SchemaLex.cpp
                 util.cpp
                 Configuration.cpp
                 DefaultSecurityConfiguration.cpp
-                ConfigurationException.cpp
                 ConfigurationImpl.cpp
                 ConfigParser.cpp
                 UidIdentifierProcessor.cpp

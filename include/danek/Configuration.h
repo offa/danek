@@ -30,6 +30,7 @@
 #include "danek/ConfigurationException.h"
 #include "danek/StringBuffer.h"
 #include "danek/StringVector.h"
+#include <string.h>
 #include <stddef.h>
 
 namespace danek
