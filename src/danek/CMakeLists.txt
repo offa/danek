@@ -17,7 +17,6 @@ add_library(danek SchemaLex.cpp
                 LexBase.cpp
                 ConfigLex.cpp
                 StringBuffer.cpp
-                StringVector.cpp
                 SchemaType.cpp
                 SchemaTypeBoolean.cpp
                 SchemaTypeDurationMicroseconds.cpp

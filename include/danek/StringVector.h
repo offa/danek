@@ -35,11 +35,20 @@ namespace danek
     class StringVector
     {
     public:
-        explicit StringVector(std::size_t initialCapacity = 10);
-        explicit StringVector(const std::vector<std::string>& data); // For compatibility reasons only
+        explicit StringVector(std::size_t initialCapacity = 10)
+        {
+            m_data.reserve(initialCapacity);
+        }
+
+        explicit StringVector(const std::vector<std::string>& data) : m_data(data)
+        {
+        }
 
 
-        void push_back(const std::string& str);
+        void push_back(const std::string& str)
+        {
+            m_data.push_back(str);
+        }
 
         auto begin()
         {
@@ -61,15 +70,34 @@ namespace danek
             return m_data.end();
         }
 
-        std::size_t size() const;
-        void reserve(std::size_t size);
+        std::size_t size() const
+        {
+            return m_data.size();
+        }
 
-        void clear();
-        void erase(std::vector<std::string>::const_iterator itr);
+        void reserve(std::size_t size)
+        {
+            m_data.reserve(size);
+        }
 
-        std::vector<std::string> get() const;
+        void clear()
+        {
+            m_data.clear();
+        }
+        void erase(std::vector<std::string>::const_iterator itr)
+        {
+            m_data.erase(itr);
+        }
 
-        const std::string& operator[](std::size_t index) const;
+        std::vector<std::string> get() const
+        {
+            return m_data;
+        }
+
+        const std::string& operator[](std::size_t index) const
+        {
+            return m_data[index];
+        }
 
     private:
         std::vector<std::string> m_data;
