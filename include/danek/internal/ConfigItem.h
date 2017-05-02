@@ -52,6 +52,7 @@ namespace danek
         ConfigItem(const char* name, const StringVector& list);
         ConfigItem(const char* name, const char** array, std::size_t size);
         ConfigItem(const char* name, ConfigScope* scope);
+        ConfigItem(const ConfigItem&) = delete;
         virtual ~ConfigItem();
 
 
@@ -86,6 +87,8 @@ namespace danek
         }
 
 
+        ConfigItem& operator=(const ConfigItem&) = delete;
+
         //--------
         // Debugging aid
         //--------
@@ -100,11 +103,5 @@ namespace danek
         ConfigScope* m_scope;
 
     private:
-        //--------
-        // Unsupported constructors and operator=
-        //--------
-        ConfigItem();
-        ConfigItem(const ConfigItem&);
-        ConfigItem& operator=(const ConfigItem&);
     };
 }
