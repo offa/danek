@@ -28,6 +28,7 @@
 #include "danek/internal/ConfigItem.h"
 #include "danek/internal/ConfigScope.h"
 #include "danek/internal/UidIdentifierProcessor.h"
+#include <stdio.h>
 #include <string.h>
 #include <assert.h>
 

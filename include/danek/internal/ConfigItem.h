@@ -23,11 +23,7 @@
 
 #pragma once
 
-//--------
-// #include's
-//--------
 #include "danek/Configuration.h"
-#include <stdio.h>
 #include <assert.h>
 
 namespace danek
@@ -61,25 +57,25 @@ namespace danek
             return m_type;
         }
 
-        inline const char* name() const
+        const char* name() const
         {
             return m_name;
         }
 
-        inline const char* stringVal() const
+        const char* stringVal() const
         {
             assert(m_type == Configuration::Type::String);
             return m_stringVal;
         }
 
-        inline StringVector& listVal() const
+        StringVector& listVal() const
         {
             assert(m_type == Configuration::Type::List);
             assert(m_listVal != 0);
             return *m_listVal;
         }
 
-        inline ConfigScope* scopeVal() const
+        ConfigScope* scopeVal() const
         {
             assert(m_type == Configuration::Type::Scope);
             assert(m_scope != 0);
