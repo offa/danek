@@ -25,7 +25,6 @@
 #include <gmock/gmock.h>
 
 using danek::StringVector;
-using danek::StringBuffer;
 
 class StringVectorTest : public testing::Test
 {
@@ -112,16 +111,6 @@ TEST_F(StringVectorTest, addStringVector)
     EXPECT_EQ(2, v.size());
     EXPECT_EQ(std::string{"a"}, v[0]);
     EXPECT_EQ(std::string{"b"}, v[1]);
-}
-
-TEST_F(StringVectorTest, addStringBuffer)
-{
-    StringBuffer buffer("123");
-
-    StringVector v;
-    v.push_back(buffer.c_str());
-    EXPECT_EQ(1, v.size());
-    EXPECT_EQ(std::string{"123"}, v[0]);
 }
 
 TEST_F(StringVectorTest, elementAccessByIndex)
