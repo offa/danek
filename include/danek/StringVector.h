@@ -41,15 +41,23 @@ namespace danek
 
 
         void push_back(const std::string& str);
-        void add(const StringBuffer& strBuf);
-        void add(const StringVector& other);
 
         auto begin()
         {
             return m_data.begin();
         }
 
+        auto begin() const
+        {
+            return m_data.begin();
+        }
+
         auto end()
+        {
+            return m_data.end();
+        }
+
+        auto end() const
         {
             return m_data.end();
         }

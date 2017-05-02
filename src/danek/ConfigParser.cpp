@@ -1396,7 +1396,11 @@ namespace danek
         {
             m_lex->nextToken(m_token); // consume the '+'
             parseList(expr2);
-            expr.add(expr2);
+
+            for( const auto& str : expr2 )
+            {
+                expr.push_back(str);
+            }
         }
     }
 
@@ -1526,7 +1530,7 @@ namespace danek
         }
 
         parseStringExpr(str);
-        list.add(str);
+        list.push_back(str.c_str());
         while (m_token.type() == ConfigLex::LEX_COMMA_SYM)
         {
             m_lex->nextToken(m_token);
@@ -1535,7 +1539,7 @@ namespace danek
                 return;
             }
             parseStringExpr(str);
-            list.add(str);
+            list.push_back(str.c_str());
         }
     }
 

@@ -463,7 +463,7 @@ namespace danek
                 scopedName.append(entry->name());
                 if ((entry->type() & typeMask) && listFilter(scopedName.c_str(), filterPatterns))
                 {
-                    vec.add(scopedName);
+                    vec.push_back(scopedName.c_str());
                 }
                 if (recursive && entry->type() == Configuration::CFG_SCOPE)
                 {

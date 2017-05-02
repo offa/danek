@@ -133,8 +133,17 @@ void calculateSchema(const Configuration* cfg, const StringVector& namesList,
     StringVector uidNames;
 
     schema.clear();
-    schema.add(recipeIgnoreRules);
-    schema.add(recipeUserTypes);
+
+    for( const auto& str : recipeIgnoreRules )
+    {
+        schema.push_back(str);
+    }
+
+    for( const auto& str : recipeUserTypes )
+    {
+        schema.push_back(str);
+    }
+
     int len = namesList.size();
     for (int i = 0; i < len; i++)
     {
@@ -142,7 +151,7 @@ void calculateSchema(const Configuration* cfg, const StringVector& namesList,
         if (strstr(name, "uid-") == 0)
         {
             calculateRuleForName(cfg, name, name, wildcardedNamesAndTypes, rule);
-            schema.add(rule);
+            schema.push_back(rule.c_str());
         }
         else
         {
@@ -151,7 +160,7 @@ void calculateSchema(const Configuration* cfg, const StringVector& namesList,
             {
                 uidNames.push_back(uName);
                 calculateRuleForName(cfg, name, uName, wildcardedNamesAndTypes, rule);
-                schema.add(rule);
+                schema.push_back(rule.c_str());
             }
         }
     }

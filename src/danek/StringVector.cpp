@@ -41,11 +41,6 @@ namespace danek
         m_data.push_back(str);
     }
 
-    void StringVector::add(const StringBuffer& strBuf)
-    {
-        push_back(strBuf.c_str());
-    }
-
     std::vector<std::string> StringVector::get() const
     {
         return m_data;
@@ -59,17 +54,6 @@ namespace danek
     void StringVector::reserve(std::size_t size)
     {
         m_data.reserve(size);
-    }
-
-    void StringVector::add(const StringVector& other)
-    {
-        const auto otherLen = other.size();
-        m_data.reserve(m_data.size() + otherLen);
-
-        for (std::size_t i = 0; i < otherLen; i++)
-        {
-            push_back(other[i]);
-        }
     }
 
     void StringVector::clear()
