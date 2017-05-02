@@ -2347,7 +2347,7 @@ namespace danek
         int size = m_fileNameStack.length();
         unused(size); // Prevent build failure in release builds
         assert(size > 0);
-        assert(strcmp(m_fileNameStack[size - 1], fileName) == 0);
+        assert(strcmp(m_fileNameStack[size - 1].c_str(), fileName) == 0);
         m_fileNameStack.removeLast();
     }
 
