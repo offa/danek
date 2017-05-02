@@ -445,7 +445,7 @@ static void parseCmdLineArgs(int argc, char** argv, const char*& cmd, bool& isRe
             {
                 usage("");
             }
-            filterPatterns.add(argv[i + 1]);
+            filterPatterns.push_back(argv[i + 1]);
             i++;
         }
         else if (strcmp(argv[i], "-name") == 0)

@@ -128,7 +128,7 @@ void RecipeFileParser::getRecipeSteps(const char* recipeScope, StringVector& res
         {
             assert(m_cfg->uidEquals("uid-step", namesVec[i].c_str()));
             const char* str = m_cfg->lookupString(recipeScope, namesVec[i].c_str());
-            result.add(str);
+            result.push_back(str);
         }
     }
     catch (const ConfigurationException&)

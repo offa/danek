@@ -47,7 +47,7 @@ TEST_F(StringVectorTest, emptyPerDefault)
 TEST_F(StringVectorTest, copyInitialize)
 {
     StringVector toAdd;
-    toAdd.add("a");
+    toAdd.push_back("a");
 
     StringVector v(toAdd);
     EXPECT_EQ(1, v.size());
@@ -57,7 +57,7 @@ TEST_F(StringVectorTest, copyInitialize)
 TEST_F(StringVectorTest, copyAssign)
 {
     StringVector toAdd;
-    toAdd.add("a");
+    toAdd.push_back("a");
 
     StringVector v;
     v = toAdd;
@@ -68,10 +68,10 @@ TEST_F(StringVectorTest, copyAssign)
 TEST_F(StringVectorTest, copyAssignOverwritesExistingElements)
 {
     StringVector toAdd;
-    toAdd.add("a");
+    toAdd.push_back("a");
 
     StringVector v;
-    v.add("should-remove");
+    v.push_back("should-remove");
     v = toAdd;
     EXPECT_EQ(1, v.size());
     EXPECT_EQ(std::string{"a"}, v[0]);
@@ -80,7 +80,7 @@ TEST_F(StringVectorTest, copyAssignOverwritesExistingElements)
 TEST_F(StringVectorTest, addString)
 {
     StringVector v;
-    v.add("abc");
+    v.push_back("abc");
     EXPECT_EQ(1, v.size());
     EXPECT_EQ(std::string{"abc"}, v[0]);
 }
@@ -88,9 +88,9 @@ TEST_F(StringVectorTest, addString)
 TEST_F(StringVectorTest, addStringKeepsOrder)
 {
     StringVector v;
-    v.add("a");
-    v.add("b");
-    v.add("c");
+    v.push_back("a");
+    v.push_back("b");
+    v.push_back("c");
     EXPECT_EQ(3, v.size());
     EXPECT_EQ(std::string{"a"}, v[0]);
     EXPECT_EQ(std::string{"b"}, v[1]);
@@ -100,8 +100,8 @@ TEST_F(StringVectorTest, addStringKeepsOrder)
 TEST_F(StringVectorTest, addStringVector)
 {
     StringVector toAdd;
-    toAdd.add("a");
-    toAdd.add("b");
+    toAdd.push_back("a");
+    toAdd.push_back("b");
 
     StringVector v;
     v.add(toAdd);
@@ -123,15 +123,15 @@ TEST_F(StringVectorTest, addStringBuffer)
 TEST_F(StringVectorTest, elementAccessByIndex)
 {
     StringVector v;
-    v.add("abc");
-    v.add("def");
+    v.push_back("abc");
+    v.push_back("def");
     EXPECT_EQ(std::string{"abc"}, v[0]);
 }
 
 TEST_F(StringVectorTest, getCopyOfData)
 {
     StringVector v;
-    v.add("3");
+    v.push_back("3");
     const auto data = v.get();
     EXPECT_EQ(v.size(), data.size());
     EXPECT_EQ(std::string{"3"}, data[0]);
@@ -141,16 +141,16 @@ TEST_F(StringVectorTest, lengthMatchesElements)
 {
     StringVector v;
     EXPECT_EQ(0, v.size());
-    v.add("3");
+    v.push_back("3");
     EXPECT_EQ(1, v.size());
-    v.add("1");
+    v.push_back("1");
     EXPECT_EQ(2, v.size());
 }
 
 TEST_F(StringVectorTest, emptyClearsElements)
 {
     StringVector v;
-    v.add("3");
+    v.push_back("3");
     v.clear();
     EXPECT_EQ(0, v.size());
 }
@@ -158,8 +158,8 @@ TEST_F(StringVectorTest, emptyClearsElements)
 TEST_F(StringVectorTest, removeLastRemovesLastElement)
 {
     StringVector v;
-    v.add("x");
-    v.add("y");
+    v.push_back("x");
+    v.push_back("y");
     v.removeLast();
     EXPECT_EQ(1, v.size());
     EXPECT_EQ(std::string{"x"}, v[v.size() - 1]);

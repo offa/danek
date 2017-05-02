@@ -653,7 +653,7 @@ namespace danek
     {
         StringVector filterPatterns;
 
-        filterPatterns.add(filterPattern);
+        filterPatterns.push_back(filterPattern);
         listFullyScopedNames(scope, localName, typeMask, recursive, filterPatterns, names);
     }
 
@@ -698,7 +698,7 @@ namespace danek
     {
         StringVector filterPatterns;
 
-        filterPatterns.add(filterPattern);
+        filterPatterns.push_back(filterPattern);
         listLocallyScopedNames(scope, localName, typeMask, recursive, filterPatterns, names);
     }
 
@@ -2337,7 +2337,7 @@ namespace danek
 
     void ConfigurationImpl::pushIncludedFilename(const char* fileName)
     {
-        m_fileNameStack.add(fileName);
+        m_fileNameStack.push_back(fileName);
     }
 
     void ConfigurationImpl::popIncludedFilename(const char* fileName)

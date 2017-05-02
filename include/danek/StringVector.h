@@ -40,7 +40,7 @@ namespace danek
         explicit StringVector(const std::vector<std::string>& data); // For compatibility reasons only
 
 
-        void add(const std::string& str);
+        void push_back(const std::string& str);
         void add(const StringBuffer& strBuf);
         void add(const StringVector& other);
 

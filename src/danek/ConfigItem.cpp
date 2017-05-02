@@ -119,7 +119,7 @@ namespace danek
         m_listVal = new StringVector(size);
         for (i = 0; i < size; i++)
         {
-            m_listVal->add(array[i]);
+            m_listVal->push_back(array[i]);
         }
     }
 

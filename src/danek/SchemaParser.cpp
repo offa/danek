@@ -222,7 +222,7 @@ namespace danek
         accept(SchemaLex::LEX_OPEN_BRACKET_SYM, rule, "expecting '['");
         if (m_token.type() == SchemaLex::LEX_IDENT_SYM || m_token.type() == SchemaLex::LEX_STRING_SYM)
         {
-            ruleInfo->m_args.add(m_token.spelling());
+            ruleInfo->m_args.push_back(m_token.spelling());
             m_lex->nextToken(m_token);
         }
         else if (m_token.type() != SchemaLex::LEX_CLOSE_BRACKET_SYM)
@@ -232,7 +232,7 @@ namespace danek
         while (m_token.type() != SchemaLex::LEX_CLOSE_BRACKET_SYM)
         {
             accept(SchemaLex::LEX_COMMA_SYM, rule, "expecting ','");
-            ruleInfo->m_args.add(m_token.spelling());
+            ruleInfo->m_args.push_back(m_token.spelling());
             if (m_token.type() == SchemaLex::LEX_IDENT_SYM || m_token.type() == SchemaLex::LEX_STRING_SYM)
             {
                 m_lex->nextToken(m_token);
@@ -314,7 +314,7 @@ namespace danek
         accept(SchemaLex::LEX_OPEN_BRACKET_SYM, str, "expecting '['");
         if (m_token.type() == SchemaLex::LEX_IDENT_SYM || m_token.type() == SchemaLex::LEX_STRING_SYM)
         {
-            baseTypeArgs.add(m_token.spelling());
+            baseTypeArgs.push_back(m_token.spelling());
             m_lex->nextToken(m_token);
         }
         else if (m_token.type() != SchemaLex::LEX_CLOSE_BRACKET_SYM)
@@ -324,7 +324,7 @@ namespace danek
         while (m_token.type() != SchemaLex::LEX_CLOSE_BRACKET_SYM)
         {
             accept(SchemaLex::LEX_COMMA_SYM, str, "expecting ','");
-            baseTypeArgs.add(m_token.spelling());
+            baseTypeArgs.push_back(m_token.spelling());
             if (m_token.type() == SchemaLex::LEX_IDENT_SYM || m_token.type() == SchemaLex::LEX_STRING_SYM)
             {
                 m_lex->nextToken(m_token);

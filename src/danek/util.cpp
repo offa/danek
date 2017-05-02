@@ -42,10 +42,10 @@ namespace danek
             if (tmpStr[i] == '.')
             {
                 tmpStr[i] = 0;
-                vec.add(startOfStr);
+                vec.push_back(startOfStr);
                 startOfStr = &tmpStr[i + 1];
             }
         }
-        vec.add(startOfStr);
+        vec.push_back(startOfStr);
     }
 }

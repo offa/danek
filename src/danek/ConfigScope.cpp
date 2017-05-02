@@ -419,7 +419,7 @@ namespace danek
             {
                 if (entry->type() & typeMask)
                 {
-                    vec.add(entry->name());
+                    vec.push_back(entry->name());
                     countWanted++;
                 }
                 else

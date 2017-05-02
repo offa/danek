@@ -1312,11 +1312,11 @@ namespace danek
         {
             int currEnd = p - str.c_str();
             str[currEnd] = '\0';
-            list.add(str.c_str() + currStart);
+            list.push_back(str.c_str() + currStart);
             currStart = currEnd + delimLen;
             p = strstr(str.c_str() + currStart, delim.c_str());
         }
-        list.add(str.c_str() + currStart);
+        list.push_back(str.c_str() + currStart);
     }
 
     //----------------------------------------------------------------------
