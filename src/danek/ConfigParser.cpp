@@ -1304,7 +1304,7 @@ namespace danek
         parseStringExpr(delim);
         accept(ConfigLex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
 
-        list.empty();
+        list.clear();
         delimLen = delim.length();
         int currStart = 0;
         p = strstr(str.c_str(), delim.c_str());
@@ -1390,7 +1390,7 @@ namespace danek
     {
         StringVector expr2;
 
-        expr.empty();
+        expr.clear();
         parseList(expr);
         while (m_token.type() == ConfigLex::LEX_PLUS_SYM)
         {
@@ -1514,7 +1514,7 @@ namespace danek
         StringBuffer str;
         short type;
 
-        list.empty();
+        list.clear();
         type = m_token.type();
         if (type == ConfigLex::LEX_CLOSE_BRACKET_SYM)
         {

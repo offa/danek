@@ -137,14 +137,14 @@ namespace danek
     inline void ConfigScope::listFullyScopedNames(Configuration::Type typeMask, bool recursive,
         const StringVector& filterPatterns, StringVector& vec) const
     {
-        vec.empty();
+        vec.clear();
         listScopedNamesHelper(m_scopedName.c_str(), typeMask, recursive, filterPatterns, vec);
     }
 
     inline void ConfigScope::listLocallyScopedNames(Configuration::Type typeMask, bool recursive,
         const StringVector& filterPatterns, StringVector& vec) const
     {
-        vec.empty();
+        vec.clear();
         listScopedNamesHelper("", typeMask, recursive, filterPatterns, vec);
     }
 }

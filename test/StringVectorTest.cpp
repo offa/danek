@@ -151,7 +151,7 @@ TEST_F(StringVectorTest, emptyClearsElements)
 {
     StringVector v;
     v.add("3");
-    v.empty();
+    v.clear();
     EXPECT_EQ(0, v.size());
 }
 

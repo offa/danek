@@ -132,7 +132,7 @@ void calculateSchema(const Configuration* cfg, const StringVector& namesList,
     StringBuffer buf;
     StringVector uidNames;
 
-    schema.empty();
+    schema.clear();
     schema.add(recipeIgnoreRules);
     schema.add(recipeUserTypes);
     int len = namesList.size();
@@ -178,7 +178,7 @@ void checkForUnmatchedPatterns(const Configuration* cfg, const StringVector& nam
     const StringVector& wildcardedNamesAndTypes,
     StringVector& unmatchedPatterns) throw(ConfigurationException)
 {
-    unmatchedPatterns.empty();
+    unmatchedPatterns.clear();
     //--------
     // Check if there is a wildcarded name that does not match anything
     //--------

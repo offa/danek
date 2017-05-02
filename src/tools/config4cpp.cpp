@@ -305,7 +305,7 @@ static void parseCmdLineArgs(int argc, char** argv, const char*& cmd, bool& isRe
     forceMode = SchemaValidator::DO_NOT_FORCE;
     isRecursive = true;
     types = Configuration::CFG_SCOPE_AND_VARS;
-    filterPatterns.empty();
+    filterPatterns.clear();
 
     for (i = 1; i < argc; i++)
     {

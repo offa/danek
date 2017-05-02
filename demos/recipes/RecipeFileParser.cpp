@@ -120,7 +120,7 @@ void RecipeFileParser::getRecipeSteps(const char* recipeScope, StringVector& res
     {
         throw RecipeFileParserException(ex.c_str());
     }
-    result.empty();
+    result.clear();
     len = namesVec.size();
     try
     {

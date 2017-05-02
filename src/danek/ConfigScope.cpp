@@ -408,7 +408,7 @@ namespace danek
         // Iterate over all the entries in the hash table and copy
         // their names into the StringVector
         //--------
-        vec.empty();
+        vec.clear();
         vec.ensureCapacity(m_numEntries);
         countWanted = 0;
         countUnwanted = 0;

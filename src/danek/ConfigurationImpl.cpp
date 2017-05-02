@@ -298,7 +298,7 @@ namespace danek
         if (item == 0)
         {
             type = Configuration::CFG_NO_VALUE;
-            list.empty();
+            list.clear();
         }
         else
         {
@@ -309,7 +309,7 @@ namespace danek
             }
             else
             {
-                list.empty();
+                list.clear();
             }
         }
     }

@@ -57,7 +57,7 @@ namespace danek
         std::size_t size() const;
         void ensureCapacity(std::size_t size);
 
-        void empty();
+        void clear();
         void removeLast();
 
         std::vector<std::string> get() const;

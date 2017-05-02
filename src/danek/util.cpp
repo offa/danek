@@ -33,7 +33,7 @@ namespace danek
     {
         StringBuffer tmpStr; // Mutable copy of str
 
-        vec.empty();
+        vec.clear();
         tmpStr = str;
         int len = tmpStr.length();
         char* startOfStr = &tmpStr[0];

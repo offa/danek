@@ -72,7 +72,7 @@ namespace danek
         }
     }
 
-    void StringVector::empty()
+    void StringVector::clear()
     {
         m_data.clear();
     }
