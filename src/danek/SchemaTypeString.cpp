@@ -36,7 +36,7 @@ namespace danek
         int min;
         int max;
 
-        int len = typeArgs.length();
+        int len = typeArgs.size();
 
         if (len == 0)
         {
@@ -91,7 +91,7 @@ namespace danek
         unused(typeName);
         unused(indentLevel);
 
-        if (typeArgs.length() == 2)
+        if (typeArgs.size() == 2)
         {
             int strLen = Configuration::mbstrlen(value);
             int minLength = cfg->stringToInt("", "", typeArgs[0].c_str());

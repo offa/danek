@@ -69,7 +69,7 @@ int main(int argc, char** argv)
     // Print information about the recipes.
     //--------
     parser->listRecipeScopes(recipeScopes);
-    len = recipeScopes.length();
+    len = recipeScopes.size();
     printf("There are %d recipes\n", len);
     for (i = 0; i < len; i++)
     {
@@ -77,13 +77,13 @@ int main(int argc, char** argv)
         parser->getRecipeIngredients(recipeScopes[i].c_str(), ingredients);
         parser->getRecipeSteps(recipeScopes[i].c_str(), steps);
         printf("\nRecipe \"%s\":\n", name);
-        int len2 = ingredients.length();
+        int len2 = ingredients.size();
         printf("\tThis recipe has %d ingredients:\n", len2);
         for (i2 = 0; i2 < len2; i2++)
         {
             printf("\t\t\"%s\"\n", ingredients[i2].c_str());
         }
-        len2 = steps.length();
+        len2 = steps.size();
         printf("\tThis recipe has %d steps:\n", len2);
         for (i2 = 0; i2 < len2; i2++)
         {

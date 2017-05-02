@@ -35,7 +35,7 @@ namespace danek
 
         StringBuffer msg;
 
-        if (typeArgs.length() == 0)
+        if (typeArgs.size() == 0)
         {
             msg << "the '" << typeName << "' type should take one or more "
                 << "arguments (denoting units) in rule '" << rule << "'";
@@ -64,7 +64,7 @@ namespace danek
         {
             errSuffix << "the value should be in the format '<int> <units>' where "
                       << "<units> is one of:";
-            int len = typeArgs.length();
+            int len = typeArgs.size();
             for (int i = 0; i < len; i++)
             {
                 if (i < len - 1)

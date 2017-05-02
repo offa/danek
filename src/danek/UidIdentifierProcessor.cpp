@@ -78,7 +78,7 @@ namespace danek
         int len;
 
         splitScopedNameIntoVector(spelling.c_str(), vec);
-        len = vec.length();
+        len = vec.size();
         for (i = 0; i < len; i++)
         {
             buf = vec[i].c_str();
@@ -211,7 +211,7 @@ namespace danek
         int len;
 
         splitScopedNameIntoVector(spelling, vec);
-        len = vec.length();
+        len = vec.size();
         for (i = 0; i < len; i++)
         {
             try

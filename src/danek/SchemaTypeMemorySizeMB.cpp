@@ -33,7 +33,7 @@ namespace danek
         unused(sv);
 
         StringBuffer msg;
-        int len = typeArgs.length();
+        int len = typeArgs.size();
         int min;
         int max;
 
@@ -109,7 +109,7 @@ namespace danek
                       << "where <units> is one of: 'MB', 'GB', 'TB', 'PB'";
             return false;
         }
-        if (typeArgs.length() == 0)
+        if (typeArgs.size() == 0)
         {
             return true;
         }

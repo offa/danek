@@ -449,7 +449,7 @@ namespace danek
         // Iterate over all the entries in the hash table and copy
         // their locally-scoped names into the StringVector
         //--------
-        vec.ensureCapacity(vec.length() + m_numEntries);
+        vec.ensureCapacity(vec.size() + m_numEntries);
         for (i = 0; i < m_tableSize; i++)
         {
             entry = m_table[i].m_next;
@@ -488,7 +488,7 @@ namespace danek
         StringBuffer buf;
         UidIdentifierProcessor uidProc;
 
-        len = filterPatterns.length();
+        len = filterPatterns.size();
         if (len == 0)
         {
             return true;
@@ -527,7 +527,7 @@ namespace danek
         listLocalNames(Configuration::CFG_VARIABLES, nameVec);
         std::sort(nameVec.begin(), nameVec.end());
 
-        len = nameVec.length();
+        len = nameVec.size();
         for (i = 0; i < len; i++)
         {
             item = findItem(nameVec[i].c_str());
@@ -541,7 +541,7 @@ namespace danek
         listLocalNames(Configuration::CFG_SCOPE, nameVec);
         std::sort(nameVec.begin(), nameVec.end());
 
-        len = nameVec.length();
+        len = nameVec.size();
         for (i = 0; i < len; i++)
         {
             item = findItem(nameVec[i].c_str());

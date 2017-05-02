@@ -643,7 +643,7 @@ namespace danek
             case ConfigLex::LEX_IN_SYM:
                 m_lex->nextToken(m_token);
                 parseListExpr(list);
-                len = list.length();
+                len = list.size();
                 result = false;
                 for (i = 0; i < len; i++)
                 {
@@ -749,7 +749,7 @@ namespace danek
         //--------
         // Copy all the items into the current scope
         //--------
-        len = fromNamesVec.length();
+        len = fromNamesVec.size();
         for (int i = 0; i < len; i++)
         {
             const char* newName = &fromNamesVec[i][fromScopeNameLen + 1];
@@ -1235,7 +1235,7 @@ namespace danek
         accept(ConfigLex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
 
         str.empty();
-        len = list.length();
+        len = list.size();
         for (i = 0; i < len; i++)
         {
             str.append(list[i].c_str());

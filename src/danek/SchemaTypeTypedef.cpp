@@ -35,7 +35,7 @@ namespace danek
 
         StringBuffer msg;
 
-        if (typeArgs.length() != 0)
+        if (typeArgs.size() != 0)
         {
             msg << "you cannot specify arguments when using user-defined type '" << typeName << "' in '"
                 << rule << "'";
@@ -53,7 +53,7 @@ namespace danek
         const char* baseTypeName;
 
         unused(typeArgs); // Prevent build failure in release build
-        assert(typeArgs.length() == 0);
+        assert(typeArgs.size() == 0);
         baseTypeName = m_baseTypeName.c_str();
         baseTypeDef = findType(sv, baseTypeName);
         callValidate(
@@ -67,7 +67,7 @@ namespace danek
         unused(typeName);
         unused(typeArgs); // Prevent build failure in release build
 
-        assert(typeArgs.length() == 0);
+        assert(typeArgs.size() == 0);
         const char* baseTypeName = m_baseTypeName.c_str();
         SchemaType* baseTypeDef = findType(sv, baseTypeName);
         assert(baseTypeDef != 0);

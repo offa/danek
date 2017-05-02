@@ -121,12 +121,12 @@ void RecipeFileParser::getRecipeSteps(const char* recipeScope, StringVector& res
         throw RecipeFileParserException(ex.c_str());
     }
     result.empty();
-    len = namesVec.length();
+    len = namesVec.size();
     try
     {
         for (int i = 0; i < len; i++)
         {
-            assert(m_cfg->uidEquals("uid-step", namesVec[i]));
+            assert(m_cfg->uidEquals("uid-step", namesVec[i].c_str()));
             const char* str = m_cfg->lookupString(recipeScope, namesVec[i].c_str());
             result.add(str);
         }

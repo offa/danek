@@ -54,7 +54,7 @@ namespace danek
             return m_data.end();
         }
 
-        std::size_t length() const;
+        std::size_t size() const;
         void ensureCapacity(std::size_t size);
 
         void empty();

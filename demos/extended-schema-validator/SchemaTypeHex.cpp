@@ -38,7 +38,7 @@ void SchemaTypeHex::checkRule(const SchemaValidator* sv, const Configuration* cf
     int len;
     int maxDigits;
 
-    len = typeArgs.length();
+    len = typeArgs.size();
     if (len == 0)
     {
         return;
@@ -94,7 +94,7 @@ bool SchemaTypeHex::isA(const SchemaValidator* sv, const Configuration* cfg, con
         errSuffix << "the value is not a hexadecimal number";
         return false;
     }
-    if (typeArgs.length() == 1)
+    if (typeArgs.size() == 1)
     {
         //--------
         // Check if there are too many hex digits in the value

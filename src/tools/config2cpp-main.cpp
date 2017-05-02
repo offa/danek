@@ -37,7 +37,7 @@ void calculateRuleForName(const Configuration* cfg, const char* name, const char
     const StringVector& wildcardedNamesAndTypes, StringBuffer& rule)
 {
     rule.empty();
-    int len = wildcardedNamesAndTypes.length();
+    int len = wildcardedNamesAndTypes.size();
     for (int i = 0; i < len; i += 3)
     {
         const char* keyword = wildcardedNamesAndTypes[i + 0].c_str(); // @optional or @required
@@ -113,7 +113,7 @@ bool doesVectorcontainString(const StringVector& vec, const char* str)
     int i;
     int len;
 
-    len = vec.length();
+    len = vec.size();
     for (i = 0; i < len; i++)
     {
         if (strcmp(vec[i].c_str(), str) == 0)
@@ -135,7 +135,7 @@ void calculateSchema(const Configuration* cfg, const StringVector& namesList,
     schema.empty();
     schema.add(recipeIgnoreRules);
     schema.add(recipeUserTypes);
-    int len = namesList.length();
+    int len = namesList.size();
     for (int i = 0; i < len; i++)
     {
         const char* name = namesList[i].c_str();
@@ -162,7 +162,7 @@ bool doesPatternMatchAnyUnexpandedNameInList(
 {
     StringBuffer buf;
 
-    int len = namesList.length();
+    int len = namesList.size();
     for (int i = 0; i < len; i++)
     {
         const char* uName = cfg->unexpandUid(namesList[i].c_str(), buf);
@@ -182,7 +182,7 @@ void checkForUnmatchedPatterns(const Configuration* cfg, const StringVector& nam
     //--------
     // Check if there is a wildcarded name that does not match anything
     //--------
-    int len = wildcardedNamesAndTypes.length();
+    int len = wildcardedNamesAndTypes.size();
     for (int i = 0; i < len; i += 3)
     {
         const char* wildcardedName = wildcardedNamesAndTypes[i + 1].c_str();
@@ -248,7 +248,7 @@ int main(int argc, char** argv)
             fprintf(stderr, "%s\n", ex.c_str());
             ok = false;
         }
-        int len = unmatchedPatterns.length();
+        int len = unmatchedPatterns.size();
         if (len != 0)
         {
             fprintf(stderr,

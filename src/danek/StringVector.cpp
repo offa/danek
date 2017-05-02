@@ -51,7 +51,7 @@ namespace danek
         return m_data;
     }
 
-    std::size_t StringVector::length() const
+    std::size_t StringVector::size() const
     {
         return m_data.size();
     }
@@ -63,7 +63,7 @@ namespace danek
 
     void StringVector::add(const StringVector& other)
     {
-        const auto otherLen = other.length();
+        const auto otherLen = other.size();
         m_data.reserve(m_data.size() + otherLen);
 
         for (std::size_t i = 0; i < otherLen; i++)

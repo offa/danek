@@ -37,7 +37,7 @@ namespace danek
         int min;
         int max;
 
-        len = typeArgs.length();
+        len = typeArgs.size();
         if (len == 0)
         {
             return;
@@ -124,7 +124,7 @@ namespace danek
                       << "alternatively, you can use 'infinite'";
             return false;
         }
-        if (typeArgs.length() == 0)
+        if (typeArgs.size() == 0)
         {
             return true;
         }

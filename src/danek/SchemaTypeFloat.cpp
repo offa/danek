@@ -36,7 +36,7 @@ namespace danek
         float min;
         float max;
 
-        len = typeArgs.length();
+        len = typeArgs.size();
         if (len == 0)
         {
             return;
@@ -94,7 +94,7 @@ namespace danek
         {
             return false;
         }
-        if (typeArgs.length() == 0)
+        if (typeArgs.size() == 0)
         {
             return true;
         }

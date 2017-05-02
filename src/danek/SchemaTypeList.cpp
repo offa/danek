@@ -40,7 +40,7 @@ namespace danek
         //--------
         // Check there is one argument.
         //--------
-        len = typeArgs.length();
+        len = typeArgs.size();
         if (len != 1)
         {
             msg << "the '" << typeName << "' type requires one type argument "
@@ -88,7 +88,7 @@ namespace danek
         StringVector emptyArgs;
         std::vector<std::string> data;
 
-        assert(typeArgs.length() == 1);
+        assert(typeArgs.size() == 1);
         const char* elemTypeName = typeArgs[0].c_str();
         SchemaType* elemTypeDef = findType(sv, elemTypeName);
         assert(elemTypeDef->cfgType() == Configuration::CFG_STRING);

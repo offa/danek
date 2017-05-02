@@ -156,7 +156,7 @@ int main(int argc, char** argv)
         try
         {
             cfg->listFullyScopedNames(scope, name, types, isRecursive, filterPatterns, names);
-            len = names.length();
+            len = names.size();
             for (i = 0; i < len; i++)
             {
                 printf("%s\n", names[i].c_str());
@@ -172,7 +172,7 @@ int main(int argc, char** argv)
         try
         {
             cfg->listLocallyScopedNames(scope, name, types, isRecursive, filterPatterns, names);
-            len = names.length();
+            len = names.size();
             for (i = 0; i < len; i++)
             {
                 printf("%s\n", names[i].c_str());

@@ -34,7 +34,7 @@ namespace danek
 
         StringBuffer msg;
 
-        if (typeArgs.length() != 0)
+        if (typeArgs.size() != 0)
         {
             msg << "the '" << typeName << "' type should not take arguments "
                 << "in rule '" << rule << "'";

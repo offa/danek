@@ -362,7 +362,7 @@ namespace danek
 
         mergeNames(scope, localName, fullyScopedName);
         splitScopedNameIntoVector(fullyScopedName.c_str(), vec);
-        len = vec.length();
+        len = vec.size();
         ensureScopeExists(vec, 0, len - 2, scopeObj);
         if (!scopeObj->addOrReplaceString(vec[len - 1].c_str(), str))
         {
@@ -406,7 +406,7 @@ namespace danek
 
         mergeNames(scope, localName, fullyScopedName);
         splitScopedNameIntoVector(fullyScopedName.c_str(), vec);
-        len = vec.length();
+        len = vec.size();
         ensureScopeExists(vec, 0, len - 2, scopeObj);
         if (!scopeObj->addOrReplaceList(vec[len - 1].c_str(), StringVector{data}))
         {
@@ -446,7 +446,7 @@ namespace danek
         StringBuffer msg;
 
         splitScopedNameIntoVector(name, vec);
-        len = vec.length();
+        len = vec.size();
         ensureScopeExists(vec, 0, len - 2, scope);
         if (!scope->addOrReplaceList(vec[len - 1].c_str(), list))
         {
@@ -475,7 +475,7 @@ namespace danek
         scopeObj = m_currScope;
         mergeNames(scope, localName, fullyScopedName);
         splitScopedNameIntoVector(fullyScopedName.c_str(), vec);
-        len = vec.length();
+        len = vec.size();
         for (i = 0; i < len - 1; i++)
         {
             item = scopeObj->findItem(vec[i].c_str());
@@ -574,7 +574,7 @@ namespace danek
         int i;
         ConfigItem* item;
 
-        len = vec.length();
+        len = vec.size();
         for (i = 0; i < len - 1; i++)
         {
             item = scope->findItem(vec[i].c_str());
@@ -2344,7 +2344,7 @@ namespace danek
     {
         unused(fileName);
 
-        int size = m_fileNameStack.length();
+        int size = m_fileNameStack.size();
         unused(size); // Prevent build failure in release builds
         assert(size > 0);
         assert(strcmp(m_fileNameStack[size - 1].c_str(), fileName) == 0);
@@ -2358,7 +2358,7 @@ namespace danek
         int i;
         StringBuffer msg;
 
-        size = m_fileNameStack.length();
+        size = m_fileNameStack.size();
         for (i = 0; i < size; i++)
         {
             if (strcmp(m_fileNameStack[i].c_str(), file) == 0)
@@ -2397,7 +2397,7 @@ namespace danek
         StringVector vec;
 
         splitScopedNameIntoVector(name, vec);
-        ensureScopeExists(vec, 0, vec.length() - 1, scope);
+        ensureScopeExists(vec, 0, vec.size() - 1, scope);
     }
 
     void ConfigurationImpl::ensureScopeExists(const StringVector& vec, int firstIndex, int lastIndex,
@@ -2453,7 +2453,7 @@ namespace danek
         //--------
         // Check if there is any rule to deny execution.
         //--------
-        len = denyPatterns.length();
+        len = denyPatterns.size();
         for (i = 0; i < len; i++)
         {
             if (patternMatch(cmdLine, denyPatterns[i].c_str()))
@@ -2466,7 +2466,7 @@ namespace danek
         // Check if there is any rule to allow execution *and* the
         // command can be found in trusted_directories.
         //--------
-        len = allowPatterns.length();
+        len = allowPatterns.size();
         for (i = 0; i < len; i++)
         {
             if (!patternMatch(cmdLine, allowPatterns[i].c_str()))
@@ -2489,7 +2489,7 @@ namespace danek
             // Check if cmd resides in a directory in
             // trusted_directories.
             //--------
-            for (j = 0; j < trustedDirs.length(); j++)
+            for (j = 0; j < trustedDirs.size(); j++)
             {
                 if (isCmdInDir(cmd.c_str(), trustedDirs[j].c_str()))
                 {

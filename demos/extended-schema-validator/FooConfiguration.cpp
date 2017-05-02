@@ -129,7 +129,7 @@ void FooConfiguration::parse(const char* cfgInput, const char* scope, const char
         m_hexByte = SchemaTypeHex::lookupHex(cfg, scope, "hex_byte");
         m_hexWord = SchemaTypeHex::lookupHex(cfg, scope, "hex_word");
         cfg->lookupList(scope, "hex_list", strList);
-        m_hexListSize = strList.length();
+        m_hexListSize = strList.size();
         m_hexList = new int[m_hexListSize];
         for (int i = 0; i < m_hexListSize; i++)
         {

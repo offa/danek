@@ -359,7 +359,7 @@ namespace danek
         //--------
         // Compare every name in itemNames with m_ignoreRules and m_idRules.
         //--------
-        int len = itemNames.length();
+        int len = itemNames.size();
         for (int i = 0; i < len; i++)
         {
             const char* iName = itemNames[i].data();
@@ -500,7 +500,7 @@ namespace danek
         }
         cfg->listFullyScopedNames(
             fullScope, "", Configuration::CFG_SCOPE, true, parentScopePattern.c_str(), parentScopes);
-        len = parentScopes.length();
+        len = parentScopes.size();
         for (int i = 0; i < len; i++)
         {
             if (cfg->type(parentScopes[i].c_str(), lastDot + 1) == Configuration::CFG_NO_VALUE)
@@ -628,7 +628,7 @@ namespace danek
 
         indent(indentLevel);
         printf("typeArgs = [");
-        len = typeArgs.length();
+        len = typeArgs.size();
         for (i = 0; i < len; i++)
         {
             printf("\"%s\"", typeArgs[i].c_str());
@@ -648,7 +648,7 @@ namespace danek
 
         indent(indentLevel);
         printf("typeName = \"%s\"; typeArgs = [", typeName);
-        len = typeArgs.length();
+        len = typeArgs.size();
         for (i = 0; i < len; i++)
         {
             printf("\"%s\"", typeArgs[i].c_str());

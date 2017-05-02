@@ -37,7 +37,7 @@ namespace danek
         // Check there is at least one pair of column-type, column-name
         // arguments.
         //--------
-        int len = typeArgs.length();
+        int len = typeArgs.size();
         if ((len == 0) || (len % 2 != 0))
         {
             msg << "the '" << typeName << "' type requires pairs of column-type "
@@ -91,7 +91,7 @@ namespace danek
         // Check that the length of the list is a multiple of the number
         // of columns in the table.
         //--------
-        int typeArgsSize = typeArgs.length();
+        int typeArgsSize = typeArgs.size();
         assert(typeArgsSize != 0);
         assert(typeArgsSize % 2 == 0);
         int numColumns = typeArgsSize / 2;

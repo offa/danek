@@ -177,7 +177,7 @@ namespace danek
                 break;
             case Configuration::CFG_LIST:
                 buf << name << " = [";
-                len = m_listVal->length();
+                len = m_listVal->size();
                 for (i = 0; i < len; i++)
                 {
                     escStr = escapeString((*m_listVal)[i].c_str());

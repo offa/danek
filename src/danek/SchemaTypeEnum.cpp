@@ -34,7 +34,7 @@ namespace danek
 
         StringBuffer msg;
 
-        if (typeArgs.length() == 0)
+        if (typeArgs.size() == 0)
         {
             msg << "The '" << typeName << "' type should take one or more "
                 << "arguments (denoting enum values) in rule '" << rule << "'";
@@ -53,7 +53,7 @@ namespace danek
         int i;
         int len;
 
-        len = typeArgs.length();
+        len = typeArgs.size();
         for (i = 0; i < len; i++)
         {
             if (strcmp(value, typeArgs[i].c_str()) == 0)
