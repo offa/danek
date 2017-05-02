@@ -74,7 +74,7 @@ namespace danek
 
     void StringVector::empty()
     {
-        std::vector<std::string>().swap(m_data);
+        m_data.clear();
     }
 
     void StringVector::removeLast()
