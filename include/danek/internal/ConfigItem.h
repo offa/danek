@@ -24,6 +24,7 @@
 #pragma once
 
 #include "danek/Configuration.h"
+#include <string>
 #include <assert.h>
 
 namespace danek
@@ -59,13 +60,13 @@ namespace danek
 
         const char* name() const
         {
-            return m_name;
+            return m_name.c_str();
         }
 
         const char* stringVal() const
         {
             assert(m_type == Configuration::Type::String);
-            return m_stringVal;
+            return m_stringVal.c_str();
         }
 
         StringVector& listVal() const
@@ -94,8 +95,8 @@ namespace danek
     private:
 
         Configuration::Type m_type;
-        char* m_name;
-        char* m_stringVal;
+        const std::string m_name;
+        const std::string m_stringVal;
         StringVector* m_listVal;
         ConfigScope* m_scope;
 

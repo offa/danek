@@ -34,15 +34,6 @@
 
 namespace danek
 {
-    static char* copyString(const char* str)
-    {
-        char* result;
-
-        result = new char[strlen(str) + 1];
-        strcpy(result, str);
-        return result;
-    }
-
     static char* escapeString(const char* str)
     {
         int i;
@@ -91,58 +82,46 @@ namespace danek
     // Description:
     //----------------------------------------------------------------------
 
-    ConfigItem::ConfigItem(const char* name, const char* str)
+    ConfigItem::ConfigItem(const char* name, const char* str) : m_type(Configuration::Type::String),
+                                                            m_name(name),
+                                                            m_stringVal(str),
+                                                            m_listVal(nullptr),
+                                                            m_scope(nullptr)
     {
-        m_type = Configuration::Type::String;
-        m_name = copyString(name);
-        m_stringVal = copyString(str);
-        m_listVal = 0;
-        m_scope = 0;
     }
 
-    ConfigItem::ConfigItem(const char* name, const StringVector& list)
+    ConfigItem::ConfigItem(const char* name, const StringVector& list) : m_type(Configuration::Type::List),
+                                                                        m_name(name),
+                                                                        m_stringVal(""),
+                                                                        m_listVal(new StringVector(list)),
+                                                                        m_scope(nullptr)
     {
-        m_type = Configuration::Type::List;
-        m_name = copyString(name);
-        m_listVal = new StringVector(list);
-        m_scope = 0;
-        m_stringVal = 0;
     }
 
-    ConfigItem::ConfigItem(const char* name, const char** array, std::size_t size)
+    ConfigItem::ConfigItem(const char* name, const char** array, std::size_t size) : m_type(Configuration::Type::List),
+                                                                                    m_name(name),
+                                                                                    m_stringVal(""),
+                                                                                    m_listVal(new StringVector(size)),
+                                                                                    m_scope(nullptr)
     {
-        m_type = Configuration::Type::List;
-        m_name = copyString(name);
-        m_scope = 0;
-        m_stringVal = 0;
-        m_listVal = new StringVector(size);
         for (std::size_t i = 0; i < size; i++)
         {
             m_listVal->push_back(array[i]);
         }
     }
 
-    ConfigItem::ConfigItem(const char* name, ConfigScope* scope)
+    ConfigItem::ConfigItem(const char* name, ConfigScope* scope) : m_type(Configuration::Type::Scope),
+                                                                m_name(name),
+                                                                m_stringVal(""),
+                                                                m_listVal(nullptr),
+                                                                m_scope(scope)
     {
-        m_type = Configuration::Type::Scope;
-        m_name = copyString(name);
-        m_scope = scope;
-        m_listVal = 0;
-        m_stringVal = 0;
     }
-
-    //----------------------------------------------------------------------
-    // Function:	Destructor
-    //
-    // Description:
-    //----------------------------------------------------------------------
 
     ConfigItem::~ConfigItem()
     {
         delete m_listVal;
         delete m_scope;
-        delete[] m_stringVal;
-        delete[] m_name;
     }
 
     //----------------------------------------------------------------------
@@ -150,7 +129,6 @@ namespace danek
     //
     // Description:	Dump out the ConfigItem's contents.
     //----------------------------------------------------------------------
-
     void ConfigItem::dump(
         StringBuffer& buf, const char* name, bool wantExpandedUidNames, int indentLevel) const
     {
@@ -170,7 +148,7 @@ namespace danek
         switch (m_type)
         {
             case Configuration::Type::String:
-                escStr = escapeString(m_stringVal);
+                escStr = escapeString(m_stringVal.c_str());
                 buf << name << " = \"" << escStr << "\";\n";
                 delete[] escStr;
                 break;

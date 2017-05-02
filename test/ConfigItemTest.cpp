@@ -76,6 +76,5 @@ TEST_F(ConfigItemTest, scopeItem)
     EXPECT_EQ(EntryType::Scope, item.type());
     EXPECT_THAT(item.name(), StrEq("name_cs"));
     EXPECT_THAT(item.scopeVal(), Eq(nonOwningPtr));
-
 }
 
