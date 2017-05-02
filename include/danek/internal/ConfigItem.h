@@ -47,23 +47,44 @@ namespace danek
     class ConfigItem
     {
     public:
-        //--------
-        // Ctor and dtor
-        //--------
+
         ConfigItem(const char* name, const char* str);
         ConfigItem(const char* name, const StringVector& list);
         ConfigItem(const char* name, const char** array, std::size_t size);
         ConfigItem(const char* name, ConfigScope* scope);
         virtual ~ConfigItem();
 
-        //--------
-        // Public operations
-        //--------
-        inline Configuration::Type type();
-        inline const char* name() const;
-        inline const char* stringVal() const;
-        inline StringVector& listVal() const;
-        inline ConfigScope* scopeVal() const;
+
+        Configuration::Type type() const
+        {
+            return m_type;
+        }
+
+        inline const char* name() const
+        {
+            return m_name;
+        }
+
+        inline const char* stringVal() const
+        {
+            assert(m_type == Configuration::Type::String);
+            return m_stringVal;
+        }
+
+        inline StringVector& listVal() const
+        {
+            assert(m_type == Configuration::Type::List);
+            assert(m_listVal != 0);
+            return *m_listVal;
+        }
+
+        inline ConfigScope* scopeVal() const
+        {
+            assert(m_type == Configuration::Type::Scope);
+            assert(m_scope != 0);
+            return m_scope;
+        }
+
 
         //--------
         // Debugging aid
@@ -71,9 +92,7 @@ namespace danek
         void dump(StringBuffer& buf, const char* name, bool wantExpandedUidNames, int indentLevel = 0) const;
 
     protected:
-        //--------
-        // Instance variables
-        //--------
+
         Configuration::Type m_type;
         char* m_name;
         char* m_stringVal;
@@ -88,38 +107,4 @@ namespace danek
         ConfigItem(const ConfigItem&);
         ConfigItem& operator=(const ConfigItem&);
     };
-
-    //--------
-    // Inline implementation of operations
-    //--------
-
-    inline Configuration::Type ConfigItem::type()
-    {
-        return m_type;
-    }
-
-    inline const char* ConfigItem::name() const
-    {
-        return m_name;
-    }
-
-    inline const char* ConfigItem::stringVal() const
-    {
-        assert(m_type == Configuration::Type::String);
-        return m_stringVal;
-    }
-
-    inline StringVector& ConfigItem::listVal() const
-    {
-        assert(m_type == Configuration::Type::List);
-        assert(m_listVal != 0);
-        return *m_listVal;
-    }
-
-    inline ConfigScope* ConfigItem::scopeVal() const
-    {
-        assert(m_type == Configuration::Type::Scope);
-        assert(m_scope != 0);
-        return m_scope;
-    }
 }
