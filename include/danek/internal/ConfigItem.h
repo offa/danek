@@ -24,6 +24,7 @@
 #pragma once
 
 #include "danek/Configuration.h"
+#include <memory>
 #include <string>
 #include <assert.h>
 
@@ -47,7 +48,7 @@ namespace danek
 
         ConfigItem(const std::string& name, const std::string& str);
         ConfigItem(const std::string& name, const std::vector<std::string>& v);
-        ConfigItem(const std::string& name, ConfigScope* scope);
+        ConfigItem(const std::string& name, std::unique_ptr<ConfigScope> scope);
         ConfigItem(const ConfigItem&) = delete;
         virtual ~ConfigItem();
 
@@ -78,7 +79,7 @@ namespace danek
         {
             assert(m_type == Configuration::Type::Scope);
             assert(m_scope != 0);
-            return m_scope;
+            return m_scope.get();
         }
 
 
@@ -96,7 +97,7 @@ namespace danek
         const std::string m_name;
         const std::string m_stringVal;
         std::vector<std::string> m_listVal;
-        ConfigScope* m_scope;
+        std::unique_ptr<ConfigScope> m_scope;
 
     };
 }

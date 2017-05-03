@@ -57,10 +57,8 @@ TEST_F(ConfigItemTest, stringListItem)
 TEST_F(ConfigItemTest, scopeItem)
 {
     const char c = '\0';
-    auto nonOwningPtr = new ConfigScope(nullptr, &c);
-    ConfigItem item{"name_cs", nonOwningPtr};
+    ConfigItem item{"name_cs", std::make_unique<ConfigScope>(nullptr, &c)};
     EXPECT_EQ(EntryType::Scope, item.type());
     EXPECT_THAT(item.name(), StrEq("name_cs"));
-    EXPECT_THAT(item.scopeVal(), Eq(nonOwningPtr));
 }
 

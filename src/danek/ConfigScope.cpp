@@ -296,8 +296,9 @@ namespace danek
             index = hash(name);
             entry = &m_table[index];
             nextEntry = entry->m_next;
-            scope = new ConfigScope(this, name);
-            newEntry = new ConfigScopeEntry(name, new ConfigItem(name, scope), nextEntry);
+            ConfigItem* item = new ConfigItem(name, std::make_unique<ConfigScope>(this, name));
+            newEntry = new ConfigScopeEntry(name, item, nextEntry);
+            scope = item->scopeVal();
             entry->m_next = newEntry;
         }
         return true;

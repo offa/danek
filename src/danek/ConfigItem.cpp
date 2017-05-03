@@ -92,17 +92,17 @@ namespace danek
     {
     }
 
-    ConfigItem::ConfigItem(const std::string& name, ConfigScope* scope) : m_type(Configuration::Type::Scope),
+    ConfigItem::ConfigItem(const std::string& name, std::unique_ptr<ConfigScope> scope)
+                                                                        : m_type(Configuration::Type::Scope),
                                                                         m_name(name),
                                                                         m_stringVal(""),
                                                                         m_listVal(),
-                                                                        m_scope(scope)
+                                                                        m_scope(std::move(scope))
     {
     }
 
     ConfigItem::~ConfigItem()
     {
-        delete m_scope;
     }
 
     //----------------------------------------------------------------------
