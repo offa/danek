@@ -218,7 +218,17 @@ namespace danek
             // It already exists. Replace the existing item
             //--------
             delete entry->m_item;
-            entry->m_item = new ConfigItem(name, array, size);
+
+            // Deprecated Conversion
+            std::vector<std::string> v;
+            v.reserve(size);
+
+            for( int i=0; i<size; ++i )
+            {
+                v.emplace_back(array[i]);
+            }
+
+            entry->m_item = new ConfigItem(name, v);
         }
         else
         {
@@ -230,7 +240,17 @@ namespace danek
             index = hash(name);
             entry = &m_table[index];
             nextEntry = entry->m_next;
-            newEntry = new ConfigScopeEntry(name, new ConfigItem(name, array, size), nextEntry);
+
+            // Deprecated Conversion
+            std::vector<std::string> v;
+            v.reserve(size);
+
+            for( int i=0; i<size; ++i )
+            {
+                v.emplace_back(array[i]);
+            }
+
+            newEntry = new ConfigScopeEntry(name, new ConfigItem(name, v), nextEntry);
             entry->m_next = newEntry;
         }
         return true;

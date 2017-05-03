@@ -68,18 +68,6 @@ TEST_F(ConfigItemTest, stringListItemFromVector)
     EXPECT_THAT(ref[1], StrEq("a2"));
 }
 
-TEST_F(ConfigItemTest, stringListItemFromCArray)
-{
-    std::vector<const char*> v{"a", "b"};
-
-    ConfigItem item{"name_c", v.data(), v.size()};
-    EXPECT_EQ(EntryType::List, item.type());
-    EXPECT_THAT(item.name(), StrEq("name_c"));
-    const auto& ref = item.listVal();
-    EXPECT_THAT(ref[0], StrEq("a"));
-    EXPECT_THAT(ref[1], StrEq("b"));
-}
-
 TEST_F(ConfigItemTest, scopeItem)
 {
     const char c = '\0';
