@@ -84,14 +84,6 @@ namespace danek
     {
     }
 
-    ConfigItem::ConfigItem(const std::string& name, const StringVector& list) : m_type(Configuration::Type::List),
-                                                                            m_name(name),
-                                                                            m_stringVal(""),
-                                                                            m_listVal(list.get()),
-                                                                            m_scope(nullptr)
-    {
-    }
-
     ConfigItem::ConfigItem(const std::string& name, const std::vector<std::string>& v) : m_type(Configuration::Type::List),
                                                                             m_name(name),
                                                                             m_stringVal(""),

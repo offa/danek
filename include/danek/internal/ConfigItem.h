@@ -46,8 +46,6 @@ namespace danek
     public:
 
         ConfigItem(const std::string& name, const std::string& str);
-        [[deprecated]]
-        ConfigItem(const std::string& name, const StringVector& list);
         ConfigItem(const std::string& name, const std::vector<std::string>& v);
         ConfigItem(const std::string& name, ConfigScope* scope);
         ConfigItem(const ConfigItem&) = delete;
