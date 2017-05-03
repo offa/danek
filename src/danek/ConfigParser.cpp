@@ -761,7 +761,7 @@ namespace danek
                     m_config->insertString("", newName, item->stringVal().c_str());
                     break;
                 case Configuration::Type::List:
-                    m_config->insertList(newName, item->listVal());
+                    m_config->insertList(newName, StringVector{item->listVal()});
                     break;
                 case Configuration::Type::Scope:
                     m_config->ensureScopeExists(newName, dummyScope);

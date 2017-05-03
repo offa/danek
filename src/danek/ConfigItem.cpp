@@ -157,10 +157,10 @@ namespace danek
                 break;
             case Configuration::Type::List:
                 buf << name << " = [";
-                len = m_listVal->size();
+                len = m_listVal.size();
                 for (i = 0; i < len; i++)
                 {
-                    escStr = escapeString((*m_listVal)[i].c_str());
+                    escStr = escapeString(m_listVal[i].c_str());
                     buf << "\"" << escStr << "\"";
                     delete[] escStr;
                     if (i < len - 1)

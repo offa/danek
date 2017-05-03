@@ -305,7 +305,7 @@ namespace danek
             type = item->type();
             if (type == Configuration::Type::List)
             {
-                list = item->listVal();
+                list = StringVector{item->listVal()};
             }
             else
             {
@@ -333,8 +333,7 @@ namespace danek
             type = item->type();
             if (type == Configuration::Type::List)
             {
-                StringVector* list = &item->listVal();
-                data = list->get();
+                data = item->listVal();
             }
             else
             {
