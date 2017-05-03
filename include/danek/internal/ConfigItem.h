@@ -23,8 +23,10 @@
 
 #pragma once
 
-#include "danek/Configuration.h"
+#include "danek/ConfType.h"
+#include "danek/StringBuffer.h"
 #include <memory>
+#include <vector>
 #include <string>
 
 namespace danek
