@@ -171,7 +171,7 @@ namespace danek
             // It already exists. Replace the existing item
             //--------
             delete entry->m_item;
-            entry->m_item = new ConfigItem(name, list);
+            entry->m_item = new ConfigItem(name, list.get());
         }
         else
         {
@@ -183,7 +183,7 @@ namespace danek
             index = hash(name);
             entry = &m_table[index];
             nextEntry = entry->m_next;
-            newEntry = new ConfigScopeEntry(name, new ConfigItem(name, list), nextEntry);
+            newEntry = new ConfigScopeEntry(name, new ConfigItem(name, list.get()), nextEntry);
             entry->m_next = newEntry;
         }
         return true;
