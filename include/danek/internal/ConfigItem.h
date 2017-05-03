@@ -69,6 +69,8 @@ namespace danek
 
     private:
 
+        void checkVariantType(Configuration::Type expected) const;
+
         const Configuration::Type m_type;
         const std::string m_name;
         const std::string m_stringVal;

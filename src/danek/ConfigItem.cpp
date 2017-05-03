@@ -111,23 +111,29 @@ namespace danek
 
     const std::string& ConfigItem::stringVal() const
     {
-        assert(m_type == Configuration::Type::String);
+        checkVariantType(Configuration::Type::String);
         return m_stringVal;
     }
 
     const std::vector<std::string>& ConfigItem::listVal() const
     {
-        assert(m_type == Configuration::Type::List);
+        checkVariantType(Configuration::Type::List);
         return m_listVal;
     }
 
     ConfigScope* ConfigItem::scopeVal() const
     {
-        assert(m_type == Configuration::Type::Scope);
-        assert(m_scope != nullptr);
+        checkVariantType(Configuration::Type::Scope);
         return m_scope.get();
     }
 
+    void ConfigItem::checkVariantType(Configuration::Type expected) const
+    {
+        if( m_type != expected )
+        {
+            throw std::domain_error{"Invalid variant type"};
+        }
+    }
 
 
     //----------------------------------------------------------------------
@@ -135,8 +141,7 @@ namespace danek
     //
     // Description:	Dump out the ConfigItem's contents.
     //----------------------------------------------------------------------
-    void ConfigItem::dump(
-        StringBuffer& buf, const char* name, bool wantExpandedUidNames, int indentLevel) const
+    void ConfigItem::dump(StringBuffer& buf, const char* name, bool wantExpandedUidNames, int indentLevel) const
     {
         int i;
         int len;

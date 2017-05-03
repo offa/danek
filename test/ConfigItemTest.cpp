@@ -42,6 +42,12 @@ TEST_F(ConfigItemTest, stringItem)
     EXPECT_THAT(item.stringVal(), StrEq("value"));
 }
 
+TEST_F(ConfigItemTest, stringItemThrowsOnInvalidTypeAccess)
+{
+    ConfigItem item{"bad", std::vector<std::string>{}};
+    EXPECT_THROW(item.stringVal(), std::domain_error);
+}
+
 TEST_F(ConfigItemTest, stringListItem)
 {
     const std::vector<std::string> v{"a1", "a2"};
@@ -54,11 +60,23 @@ TEST_F(ConfigItemTest, stringListItem)
     EXPECT_THAT(ref[1], StrEq("a2"));
 }
 
+TEST_F(ConfigItemTest, stringListItemThrowsOnInvalidTypeAccess)
+{
+    ConfigItem item{"bad", "value"};
+    EXPECT_THROW(item.listVal(), std::domain_error);
+}
+
 TEST_F(ConfigItemTest, scopeItem)
 {
     const char c = '\0';
     ConfigItem item{"name_cs", std::make_unique<ConfigScope>(nullptr, &c)};
     EXPECT_EQ(EntryType::Scope, item.type());
     EXPECT_THAT(item.name(), StrEq("name_cs"));
+}
+
+TEST_F(ConfigItemTest, scopeItemThrowsOnInvalidTypeAccess)
+{
+    ConfigItem item{"bad", "value"};
+    EXPECT_THROW(item.scopeVal(), std::domain_error);
 }
 
