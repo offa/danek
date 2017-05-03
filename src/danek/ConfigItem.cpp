@@ -99,6 +99,37 @@ namespace danek
     }
 
 
+    Configuration::Type ConfigItem::type() const
+    {
+        return m_type;
+    }
+
+    const std::string& ConfigItem::name() const
+    {
+        return m_name;
+    }
+
+    const std::string& ConfigItem::stringVal() const
+    {
+        assert(m_type == Configuration::Type::String);
+        return m_stringVal;
+    }
+
+    const std::vector<std::string>& ConfigItem::listVal() const
+    {
+        assert(m_type == Configuration::Type::List);
+        return m_listVal;
+    }
+
+    ConfigScope* ConfigItem::scopeVal() const
+    {
+        assert(m_type == Configuration::Type::Scope);
+        assert(m_scope != nullptr);
+        return m_scope.get();
+    }
+
+
+
     //----------------------------------------------------------------------
     // Function:	dump()
     //

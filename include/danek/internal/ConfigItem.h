@@ -52,34 +52,11 @@ namespace danek
         ConfigItem(const ConfigItem&) = delete;
 
 
-        Configuration::Type type() const
-        {
-            return m_type;
-        }
-
-        const std::string& name() const
-        {
-            return m_name;
-        }
-
-        const std::string& stringVal() const
-        {
-            assert(m_type == Configuration::Type::String);
-            return m_stringVal;
-        }
-
-        const std::vector<std::string>& listVal() const
-        {
-            assert(m_type == Configuration::Type::List);
-            return m_listVal;
-        }
-
-        ConfigScope* scopeVal() const
-        {
-            assert(m_type == Configuration::Type::Scope);
-            assert(m_scope != 0);
-            return m_scope.get();
-        }
+        Configuration::Type type() const;
+        const std::string& name() const;
+        const std::string& stringVal() const;
+        const std::vector<std::string>& listVal() const;
+        ConfigScope* scopeVal() const;
 
 
         ConfigItem& operator=(const ConfigItem&) = delete;
@@ -92,11 +69,11 @@ namespace danek
 
     private:
 
-        Configuration::Type m_type;
+        const Configuration::Type m_type;
         const std::string m_name;
         const std::string m_stringVal;
-        std::vector<std::string> m_listVal;
-        std::unique_ptr<ConfigScope> m_scope;
+        const std::vector<std::string> m_listVal;
+        const std::unique_ptr<ConfigScope> m_scope;
 
     };
 }
