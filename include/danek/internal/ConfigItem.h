@@ -70,11 +70,10 @@ namespace danek
             return m_stringVal;
         }
 
-        StringVector& listVal() const
+        const std::vector<std::string>& listVal() const
         {
             assert(m_type == Configuration::Type::List);
-            assert(m_listVal != 0);
-            return *m_listVal;
+            return m_listVal;
         }
 
         ConfigScope* scopeVal() const
@@ -98,7 +97,7 @@ namespace danek
         Configuration::Type m_type;
         const std::string m_name;
         const std::string m_stringVal;
-        StringVector* m_listVal;
+        std::vector<std::string> m_listVal;
         ConfigScope* m_scope;
 
     };

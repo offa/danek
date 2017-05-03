@@ -79,7 +79,7 @@ namespace danek
     ConfigItem::ConfigItem(const std::string& name, const std::string& str) : m_type(Configuration::Type::String),
                                                                             m_name(name),
                                                                             m_stringVal(str),
-                                                                            m_listVal(nullptr),
+                                                                            m_listVal(),
                                                                             m_scope(nullptr)
     {
     }
@@ -87,7 +87,7 @@ namespace danek
     ConfigItem::ConfigItem(const std::string& name, const StringVector& list) : m_type(Configuration::Type::List),
                                                                             m_name(name),
                                                                             m_stringVal(""),
-                                                                            m_listVal(new StringVector(list)),
+                                                                            m_listVal(list.get()),
                                                                             m_scope(nullptr)
     {
     }
@@ -95,7 +95,7 @@ namespace danek
     ConfigItem::ConfigItem(const std::string& name, const std::vector<std::string>& v) : m_type(Configuration::Type::List),
                                                                             m_name(name),
                                                                             m_stringVal(""),
-                                                                            m_listVal(new StringVector(v)),
+                                                                            m_listVal(v),
                                                                             m_scope(nullptr)
     {
     }
@@ -103,26 +103,27 @@ namespace danek
     ConfigItem::ConfigItem(const std::string& name, const char** array, std::size_t size) : m_type(Configuration::Type::List),
                                                                                         m_name(name),
                                                                                         m_stringVal(""),
-                                                                                        m_listVal(new StringVector(size)),
+                                                                                        m_listVal(),
                                                                                         m_scope(nullptr)
     {
+        m_listVal.reserve(size);
+
         for (std::size_t i = 0; i < size; i++)
         {
-            m_listVal->push_back(array[i]);
+            m_listVal.push_back(array[i]);
         }
     }
 
     ConfigItem::ConfigItem(const std::string& name, ConfigScope* scope) : m_type(Configuration::Type::Scope),
                                                                         m_name(name),
                                                                         m_stringVal(""),
-                                                                        m_listVal(nullptr),
+                                                                        m_listVal(),
                                                                         m_scope(scope)
     {
     }
 
     ConfigItem::~ConfigItem()
     {
-        delete m_listVal;
         delete m_scope;
     }
 
