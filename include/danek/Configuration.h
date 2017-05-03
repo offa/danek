@@ -48,15 +48,6 @@ namespace danek
     class Configuration
     {
     public:
-        enum class Type
-        { // bit masks
-            NoValue = 0,
-            String = 1, // 0001
-            List = 2, // 0010
-            Scope = 4, // 0100
-            Variables = 3, // 0011 = CFG_STRING | CFG_LIST
-            ScopesAndVars = 7 // 0111 = CFG_STRING | CFG_LIST | CFG_SCOPE
-        };
 
         enum class SourceType
         {
