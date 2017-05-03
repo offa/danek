@@ -100,20 +100,6 @@ namespace danek
     {
     }
 
-    ConfigItem::ConfigItem(const std::string& name, const char** array, std::size_t size) : m_type(Configuration::Type::List),
-                                                                                        m_name(name),
-                                                                                        m_stringVal(""),
-                                                                                        m_listVal(),
-                                                                                        m_scope(nullptr)
-    {
-        m_listVal.reserve(size);
-
-        for (std::size_t i = 0; i < size; i++)
-        {
-            m_listVal.push_back(array[i]);
-        }
-    }
-
     ConfigItem::ConfigItem(const std::string& name, ConfigScope* scope) : m_type(Configuration::Type::Scope),
                                                                         m_name(name),
                                                                         m_stringVal(""),
