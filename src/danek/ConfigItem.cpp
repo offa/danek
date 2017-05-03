@@ -139,16 +139,16 @@ namespace danek
     //----------------------------------------------------------------------
     void ConfigItem::dump(StringBuffer& buf, const char* name, bool wantExpandedUidNames, int indentLevel) const
     {
-        char* escStr;
         StringBuffer nameBuf;
-        UidIdentifierProcessor uidIdProc;
 
         if (!wantExpandedUidNames)
         {
+            UidIdentifierProcessor uidIdProc;
             name = uidIdProc.unexpand(name, nameBuf);
         }
 
         printIndent(buf, indentLevel);
+        char* escStr;
 
         switch (m_type)
         {
