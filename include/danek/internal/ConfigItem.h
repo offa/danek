@@ -26,7 +26,6 @@
 #include "danek/Configuration.h"
 #include <memory>
 #include <string>
-#include <assert.h>
 
 namespace danek
 {
