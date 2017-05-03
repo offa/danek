@@ -25,6 +25,7 @@
 // #include's
 //--------
 #include "danek/internal/ConfigScopeEntry.h"
+#include "danek/internal/ConfigScope.h"
 #include "danek/internal/Common.h"
 #include <string.h>
 #include <assert.h>

@@ -50,7 +50,6 @@ namespace danek
         ConfigItem(const std::string& name, const std::vector<std::string>& v);
         ConfigItem(const std::string& name, std::unique_ptr<ConfigScope> scope);
         ConfigItem(const ConfigItem&) = delete;
-        virtual ~ConfigItem();
 
 
         Configuration::Type type() const
