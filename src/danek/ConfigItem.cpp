@@ -31,13 +31,11 @@ namespace danek
 {
     static char* escapeString(const char* str)
     {
-        int i;
-        int len;
         StringBuffer buf;
         char* result;
 
-        len = strlen(str);
-        for (i = 0; i < len; i++)
+        std::size_t len = strlen(str);
+        for (std::size_t i = 0; i < len; i++)
         {
             switch (str[i])
             {
@@ -141,8 +139,6 @@ namespace danek
     //----------------------------------------------------------------------
     void ConfigItem::dump(StringBuffer& buf, const char* name, bool wantExpandedUidNames, int indentLevel) const
     {
-        int i;
-        int len;
         char* escStr;
         StringBuffer nameBuf;
         UidIdentifierProcessor uidIdProc;
@@ -162,19 +158,21 @@ namespace danek
                 delete[] escStr;
                 break;
             case Configuration::Type::List:
-                buf << name << " = [";
-                len = m_listVal.size();
-                for (i = 0; i < len; i++)
                 {
-                    escStr = escapeString(m_listVal[i].c_str());
-                    buf << "\"" << escStr << "\"";
-                    delete[] escStr;
-                    if (i < len - 1)
+                    buf << name << " = [";
+                    std::size_t len = m_listVal.size();
+                    for (std::size_t i = 0; i < len; i++)
                     {
-                        buf << ", ";
+                        escStr = escapeString(m_listVal[i].c_str());
+                        buf << "\"" << escStr << "\"";
+                        delete[] escStr;
+                        if (i < len - 1)
+                        {
+                            buf << ", ";
+                        }
                     }
+                    buf << "];\n";
                 }
-                buf << "];\n";
                 break;
             case Configuration::Type::Scope:
                 buf << name << " {\n";
