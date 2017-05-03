@@ -58,7 +58,7 @@ TEST_F(ConfigItemTest, stringListItem)
 
 TEST_F(ConfigItemTest, stringListItemFromVector)
 {
-    std::vector<std::string> v{"a1", "a2"};
+    const std::vector<std::string> v{"a1", "a2"};
 
     ConfigItem item{"name_l", v};
     EXPECT_EQ(EntryType::List, item.type());
