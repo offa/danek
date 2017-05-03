@@ -30,7 +30,7 @@ namespace danek
     class SchemaTypeEnum : public SchemaType
     {
     public:
-        SchemaTypeEnum() : SchemaType("enum", "danek::SchemaTypeEnum", Configuration::Type::String)
+        SchemaTypeEnum() : SchemaType("enum", "danek::SchemaTypeEnum", ConfType::String)
         {
         }
         virtual ~SchemaTypeEnum()

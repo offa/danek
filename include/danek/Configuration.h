@@ -28,6 +28,7 @@
 //--------
 
 #include "danek/ConfigurationException.h"
+#include "danek/ConfType.h"
 #include "danek/StringBuffer.h"
 #include "danek/StringVector.h"
 #include <string.h>
@@ -81,25 +82,25 @@ namespace danek
 
         virtual const char* fileName() const = 0;
 
-        virtual void listFullyScopedNames(const char* scope, const char* localName, Type typeMask,
+        virtual void listFullyScopedNames(const char* scope, const char* localName, ConfType typeMask,
             bool recursive, StringVector& names) const throw(ConfigurationException) = 0;
-        virtual void listFullyScopedNames(const char* scope, const char* localName, Type typeMask,
+        virtual void listFullyScopedNames(const char* scope, const char* localName, ConfType typeMask,
             bool recursive, const char* filterPattern, StringVector& names) const
             throw(ConfigurationException) = 0;
-        virtual void listFullyScopedNames(const char* scope, const char* localName, Type typeMask,
+        virtual void listFullyScopedNames(const char* scope, const char* localName, ConfType typeMask,
             bool recursive, const StringVector& filterPatterns, StringVector& names) const
             throw(ConfigurationException) = 0;
 
-        virtual void listLocallyScopedNames(const char* scope, const char* localName, Type typeMask,
+        virtual void listLocallyScopedNames(const char* scope, const char* localName, ConfType typeMask,
             bool recursive, StringVector& names) const throw(ConfigurationException) = 0;
-        virtual void listLocallyScopedNames(const char* scope, const char* localName, Type typeMask,
+        virtual void listLocallyScopedNames(const char* scope, const char* localName, ConfType typeMask,
             bool recursive, const char* filterPattern, StringVector& names) const
             throw(ConfigurationException) = 0;
-        virtual void listLocallyScopedNames(const char* scope, const char* localName, Type typeMask,
+        virtual void listLocallyScopedNames(const char* scope, const char* localName, ConfType typeMask,
             bool recursive, const StringVector& filterPatterns, StringVector& names) const
             throw(ConfigurationException) = 0;
 
-        virtual Type type(const char* scope, const char* localName) const = 0;
+        virtual ConfType type(const char* scope, const char* localName) const = 0;
 
         static bool patternMatch(const char* str, const char* pattern);
 

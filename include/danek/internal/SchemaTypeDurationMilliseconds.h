@@ -32,7 +32,7 @@ namespace danek
     public:
         SchemaTypeDurationMilliseconds()
             : SchemaType(
-                  "durationMilliseconds", "danek::SchemaTypeDurationMilliseconds", Configuration::Type::String)
+                  "durationMilliseconds", "danek::SchemaTypeDurationMilliseconds", ConfType::String)
         {
         }
         virtual ~SchemaTypeDurationMilliseconds()

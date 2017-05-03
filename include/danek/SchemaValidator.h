@@ -62,7 +62,7 @@ namespace danek
         inline void validate(const Configuration* cfg, const char* scope, const char* localName,
             ForceMode forceMode = ForceMode::None) const throw(ConfigurationException);
         void validate(const Configuration* cfg, const char* scope, const char* localName,
-            bool recurseIntoSubscopes, Configuration::Type typeMask, ForceMode forceMode = ForceMode::None) const
+            bool recurseIntoSubscopes, ConfType typeMask, ForceMode forceMode = ForceMode::None) const
             throw(ConfigurationException);
 
     protected:
@@ -111,7 +111,7 @@ namespace danek
         void ensureSpaceInTypesArray();
 
         void registerTypedef( // called by the SchemaParser class
-            const char* typeName, Configuration::Type cfgType, const char* baseTypeName,
+            const char* typeName, ConfType cfgType, const char* baseTypeName,
             const StringVector& baseTypeArgs) throw(ConfigurationException);
 
         SchemaIdRuleInfo* findIdRule(const char* name) const;
@@ -149,7 +149,7 @@ namespace danek
     inline void SchemaValidator::validate(const Configuration* cfg, const char* scope, const char* localName,
         ForceMode forceMode) const throw(ConfigurationException)
     {
-        validate(cfg, scope, localName, true, Configuration::Type::ScopesAndVars, forceMode);
+        validate(cfg, scope, localName, true, ConfType::ScopesAndVars, forceMode);
     }
 
     inline void SchemaValidator::wantDiagnostics(bool value)

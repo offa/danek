@@ -109,7 +109,7 @@ namespace danek
 
         entry = findEntry(name, index);
 
-        if (entry != 0 && entry->type() == Configuration::Type::Scope)
+        if (entry != 0 && entry->type() == ConfType::Scope)
         {
             //--------
             // Fail because there is a scope with the same name.
@@ -158,7 +158,7 @@ namespace danek
         ConfigScopeEntry* newEntry;
 
         entry = findEntry(name, index);
-        if (entry && entry->type() == Configuration::Type::Scope)
+        if (entry && entry->type() == ConfType::Scope)
         {
             //--------
             // Fail because there is a scope with the same name.
@@ -205,7 +205,7 @@ namespace danek
         ConfigScopeEntry* newEntry;
 
         entry = findEntry(name, index);
-        if (entry && entry->type() == Configuration::Type::Scope)
+        if (entry && entry->type() == ConfType::Scope)
         {
             //--------
             // Fail because there is a scope with the same name.
@@ -270,7 +270,7 @@ namespace danek
         ConfigScopeEntry* newEntry;
 
         entry = findEntry(name, index);
-        if (entry && entry->type() != Configuration::Type::Scope)
+        if (entry && entry->type() != ConfType::Scope)
         {
             //--------
             // Fail because it already exists, but not as a scope
@@ -418,7 +418,7 @@ namespace danek
     // Description:
     //----------------------------------------------------------------------
 
-    void ConfigScope::listLocalNames(Configuration::Type typeMask, StringVector& vec) const
+    void ConfigScope::listLocalNames(ConfType typeMask, StringVector& vec) const
     {
         int i;
         int countWanted;
@@ -459,7 +459,7 @@ namespace danek
     // Description:
     //----------------------------------------------------------------------
 
-    void ConfigScope::listScopedNamesHelper(const char* prefix, Configuration::Type typeMask, bool recursive,
+    void ConfigScope::listScopedNamesHelper(const char* prefix, ConfType typeMask, bool recursive,
         const StringVector& filterPatterns, StringVector& vec) const
     {
         int i;
@@ -486,7 +486,7 @@ namespace danek
                 {
                     vec.push_back(scopedName.c_str());
                 }
-                if (recursive && entry->type() == Configuration::Type::Scope)
+                if (recursive && entry->type() == ConfType::Scope)
                 {
                     entry->item()->scopeVal()->listScopedNamesHelper(
                         scopedName.c_str(), typeMask, true, filterPatterns, vec);
@@ -545,28 +545,28 @@ namespace danek
         //--------
         // First pass. Dump the variables
         //--------
-        listLocalNames(Configuration::Type::Variables, nameVec);
+        listLocalNames(ConfType::Variables, nameVec);
         std::sort(nameVec.begin(), nameVec.end());
 
         len = nameVec.size();
         for (i = 0; i < len; i++)
         {
             item = findItem(nameVec[i].c_str());
-            assert(static_cast<int>(item->type()) & static_cast<int>(Configuration::Type::Variables));
+            assert(static_cast<int>(item->type()) & static_cast<int>(ConfType::Variables));
             item->dump(buf, item->name().c_str(), wantExpandedUidNames, indentLevel);
         }
 
         //--------
         // Second pass. Dump the nested scopes
         //--------
-        listLocalNames(Configuration::Type::Scope, nameVec);
+        listLocalNames(ConfType::Scope, nameVec);
         std::sort(nameVec.begin(), nameVec.end());
 
         len = nameVec.size();
         for (i = 0; i < len; i++)
         {
             item = findItem(nameVec[i].c_str());
-            assert(item->type() == Configuration::Type::Scope);
+            assert(item->type() == ConfType::Scope);
             item->dump(buf, item->name().c_str(), wantExpandedUidNames, indentLevel);
         }
     }

@@ -51,7 +51,7 @@ namespace danek
         ConfigItem(const ConfigItem&) = delete;
 
 
-        Configuration::Type type() const;
+        ConfType type() const;
         const std::string& name() const;
         const std::string& stringVal() const;
         const std::vector<std::string>& listVal() const;
@@ -68,9 +68,9 @@ namespace danek
 
     private:
 
-        void checkVariantType(Configuration::Type expected) const;
+        void checkVariantType(ConfType expected) const;
 
-        const Configuration::Type m_type;
+        const ConfType m_type;
         const std::string m_name;
         const std::string m_stringVal;
         const std::vector<std::string> m_listVal;

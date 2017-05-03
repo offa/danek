@@ -46,7 +46,7 @@ namespace danek
 
         inline const char* name();
         inline const ConfigItem* item();
-        inline Configuration::Type type();
+        inline ConfType type();
         void setItem(ConfigItem* item);
 
     protected:
@@ -79,7 +79,7 @@ namespace danek
         return m_item;
     }
 
-    inline Configuration::Type ConfigScopeEntry::type()
+    inline ConfType ConfigScopeEntry::type()
     {
         return m_item->type();
     }

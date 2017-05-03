@@ -30,7 +30,7 @@ namespace danek
     class SchemaTypeList : public SchemaType
     {
     public:
-        SchemaTypeList() : SchemaType("list", "danek::SchemaTypeList", Configuration::Type::String)
+        SchemaTypeList() : SchemaType("list", "danek::SchemaTypeList", ConfType::String)
         {
         }
         virtual ~SchemaTypeList()

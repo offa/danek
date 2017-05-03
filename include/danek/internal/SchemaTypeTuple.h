@@ -30,7 +30,7 @@ namespace danek
     class SchemaTypeTuple : public SchemaType
     {
     public:
-        SchemaTypeTuple() : SchemaType("tuple", "danek::SchemaTypeTuple", Configuration::Type::String)
+        SchemaTypeTuple() : SchemaType("tuple", "danek::SchemaTypeTuple", ConfType::String)
         {
         }
         virtual ~SchemaTypeTuple()

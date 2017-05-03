@@ -69,7 +69,7 @@ namespace danek
         }
     }
 
-    ConfigItem::ConfigItem(const std::string& name, const std::string& str) : m_type(Configuration::Type::String),
+    ConfigItem::ConfigItem(const std::string& name, const std::string& str) : m_type(ConfType::String),
                                                                             m_name(name),
                                                                             m_stringVal(str),
                                                                             m_listVal(),
@@ -77,7 +77,7 @@ namespace danek
     {
     }
 
-    ConfigItem::ConfigItem(const std::string& name, const std::vector<std::string>& v) : m_type(Configuration::Type::List),
+    ConfigItem::ConfigItem(const std::string& name, const std::vector<std::string>& v) : m_type(ConfType::List),
                                                                             m_name(name),
                                                                             m_stringVal(""),
                                                                             m_listVal(v),
@@ -86,7 +86,7 @@ namespace danek
     }
 
     ConfigItem::ConfigItem(const std::string& name, std::unique_ptr<ConfigScope> scope)
-                                                                        : m_type(Configuration::Type::Scope),
+                                                                        : m_type(ConfType::Scope),
                                                                         m_name(name),
                                                                         m_stringVal(""),
                                                                         m_listVal(),
@@ -95,7 +95,7 @@ namespace danek
     }
 
 
-    Configuration::Type ConfigItem::type() const
+    ConfType ConfigItem::type() const
     {
         return m_type;
     }
@@ -107,23 +107,23 @@ namespace danek
 
     const std::string& ConfigItem::stringVal() const
     {
-        checkVariantType(Configuration::Type::String);
+        checkVariantType(ConfType::String);
         return m_stringVal;
     }
 
     const std::vector<std::string>& ConfigItem::listVal() const
     {
-        checkVariantType(Configuration::Type::List);
+        checkVariantType(ConfType::List);
         return m_listVal;
     }
 
     ConfigScope* ConfigItem::scopeVal() const
     {
-        checkVariantType(Configuration::Type::Scope);
+        checkVariantType(ConfType::Scope);
         return m_scope.get();
     }
 
-    void ConfigItem::checkVariantType(Configuration::Type expected) const
+    void ConfigItem::checkVariantType(ConfType expected) const
     {
         if( m_type != expected )
         {
@@ -152,12 +152,12 @@ namespace danek
 
         switch (m_type)
         {
-            case Configuration::Type::String:
+            case ConfType::String:
                 escStr = escapeString(m_stringVal.c_str());
                 buf << name << " = \"" << escStr << "\";\n";
                 delete[] escStr;
                 break;
-            case Configuration::Type::List:
+            case ConfType::List:
                 {
                     buf << name << " = [";
                     std::size_t len = m_listVal.size();
@@ -174,7 +174,7 @@ namespace danek
                     buf << "];\n";
                 }
                 break;
-            case Configuration::Type::Scope:
+            case ConfType::Scope:
                 buf << name << " {\n";
                 m_scope->dump(buf, wantExpandedUidNames, indentLevel + 1);
                 printIndent(buf, indentLevel);

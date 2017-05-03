@@ -123,7 +123,7 @@ int SchemaTypeHex::lookupHex(const Configuration* cfg, const char* scope, const 
 {
     const char* str;
 
-    if (cfg->type(scope, localName) == Configuration::Type::NoValue)
+    if (cfg->type(scope, localName) == ConfType::NoValue)
     {
         return defaultVal;
     }

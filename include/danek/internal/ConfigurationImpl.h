@@ -73,23 +73,23 @@ namespace danek
         virtual void parse(Configuration::SourceType sourceType, const char* source,
             const char* sourceDescription = "") throw(ConfigurationException);
         virtual const char* fileName() const;
-        virtual Type type(const char* scope, const char* localName) const;
+        virtual ConfType type(const char* scope, const char* localName) const;
 
-        virtual void listFullyScopedNames(const char* scope, const char* localName, Type typeMask,
+        virtual void listFullyScopedNames(const char* scope, const char* localName, ConfType typeMask,
             bool recursive, StringVector& names) const throw(ConfigurationException);
-        virtual void listFullyScopedNames(const char* scope, const char* localName, Type typeMask,
+        virtual void listFullyScopedNames(const char* scope, const char* localName, ConfType typeMask,
             bool recursive, const char* filterPattern, StringVector& names) const
             throw(ConfigurationException);
-        virtual void listFullyScopedNames(const char* scope, const char* localName, Type typeMask,
+        virtual void listFullyScopedNames(const char* scope, const char* localName, ConfType typeMask,
             bool recursive, const StringVector& filterPatterns, StringVector& names) const
             throw(ConfigurationException);
 
-        virtual void listLocallyScopedNames(const char* scope, const char* localName, Type typeMask,
+        virtual void listLocallyScopedNames(const char* scope, const char* localName, ConfType typeMask,
             bool recursive, StringVector& names) const throw(ConfigurationException);
-        virtual void listLocallyScopedNames(const char* scope, const char* localName, Type typeMask,
+        virtual void listLocallyScopedNames(const char* scope, const char* localName, ConfType typeMask,
             bool recursive, const char* filterPattern, StringVector& names) const
             throw(ConfigurationException);
-        virtual void listLocallyScopedNames(const char* scope, const char* localName, Type typeMask,
+        virtual void listLocallyScopedNames(const char* scope, const char* localName, ConfType typeMask,
             bool recursive, const StringVector& filterPatterns, StringVector& names) const
             throw(ConfigurationException);
 
@@ -285,9 +285,9 @@ namespace danek
             const char* fullyScopedName, const char* localName, bool startInRoot = false) const;
         ConfigItem* lookupHelper(ConfigScope* scope, const StringVector& vec) const;
         void stringValue(
-            const char* fullyScopedName, const char* localName, const char*& str, Type& type) const;
-        void listValue(const char* fullyScopedName, const char* localName, StringVector& list, Type& type) const;
-        void listValue(const char* fullyScopedName, const char* localName, std::vector<std::string>& list, Type& type) const;
+            const char* fullyScopedName, const char* localName, const char*& str, ConfType& type) const;
+        void listValue(const char* fullyScopedName, const char* localName, StringVector& list, ConfType& type) const;
+        void listValue(const char* fullyScopedName, const char* localName, std::vector<std::string>& list, ConfType& type) const;
         virtual bool enumVal(
             const char* description, const EnumNameAndValue* enumInfo, int numEnums, int& val) const;
 

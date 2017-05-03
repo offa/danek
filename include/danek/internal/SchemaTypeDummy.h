@@ -32,7 +32,7 @@ namespace danek
     {
     public:
         explicit SchemaTypeDummy(const char* name)
-            : SchemaType(name, "danek::SchemaTypeDummy", Configuration::Type::String)
+            : SchemaType(name, "danek::SchemaTypeDummy", ConfType::String)
         {
         }
         virtual ~SchemaTypeDummy()

@@ -54,11 +54,11 @@ void calculateRuleForName(const Configuration* cfg, const char* name, const char
     // We couldn's determine the type from the wildcarded_names_and_types
     // table. So we fall back to using heuristics to guess a good type.
     //--------
-    if (cfg->type("", name) == Configuration::Type::Scope)
+    if (cfg->type("", name) == ConfType::Scope)
     {
         rule << uName << " = scope";
     }
-    else if (cfg->type("", name) == Configuration::Type::List)
+    else if (cfg->type("", name) == ConfType::List)
     {
         rule << uName << " = list[string]";
     }
@@ -228,7 +228,7 @@ int main(int argc, char** argv)
         try
         {
             cfg->parse(util.cfgFileName());
-            cfg->listFullyScopedNames("", "", Configuration::Type::ScopesAndVars, true, namesList);
+            cfg->listFullyScopedNames("", "", ConfType::ScopesAndVars, true, namesList);
             if (util.schemaOverrideCfg() != 0)
             {
                 const char* overrideSchema[] = {

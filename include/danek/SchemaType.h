@@ -33,7 +33,7 @@ namespace danek
     class SchemaType
     {
     public:
-        SchemaType(const char* typeName, const char* className, Configuration::Type cfgType);
+        SchemaType(const char* typeName, const char* className, ConfType cfgType);
         virtual ~SchemaType();
 
         const char* typeName() const
@@ -44,7 +44,7 @@ namespace danek
         {
             return m_className.c_str();
         }
-        Configuration::Type cfgType() const
+        ConfType cfgType() const
         {
             return m_cfgType;
         }
@@ -76,6 +76,6 @@ namespace danek
         friend class SchemaParser;
         StringBuffer m_typeName;
         StringBuffer m_className;
-        Configuration::Type m_cfgType;
+        ConfType m_cfgType;
     };
 }

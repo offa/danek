@@ -29,15 +29,12 @@ using namespace testing;
 
 class ConfigItemTest : public testing::Test
 {
-protected:
-
-    using EntryType = Configuration::Type;
 };
 
 TEST_F(ConfigItemTest, stringItem)
 {
     ConfigItem item{"name_s", "value"};
-    EXPECT_EQ(EntryType::String, item.type());
+    EXPECT_EQ(ConfType::String, item.type());
     EXPECT_THAT(item.name(), StrEq("name_s"));
     EXPECT_THAT(item.stringVal(), StrEq("value"));
 }
@@ -53,7 +50,7 @@ TEST_F(ConfigItemTest, stringListItem)
     const std::vector<std::string> v{"a1", "a2"};
 
     ConfigItem item{"name_l", v};
-    EXPECT_EQ(EntryType::List, item.type());
+    EXPECT_EQ(ConfType::List, item.type());
     EXPECT_THAT(item.name(), StrEq("name_l"));
     const auto& ref = item.listVal();
     EXPECT_THAT(ref[0], StrEq("a1"));
@@ -70,7 +67,7 @@ TEST_F(ConfigItemTest, scopeItem)
 {
     const char c = '\0';
     ConfigItem item{"name_cs", std::make_unique<ConfigScope>(nullptr, &c)};
-    EXPECT_EQ(EntryType::Scope, item.type());
+    EXPECT_EQ(ConfType::Scope, item.type());
     EXPECT_THAT(item.name(), StrEq("name_cs"));
 }
 

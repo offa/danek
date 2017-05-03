@@ -31,7 +31,7 @@ namespace danek
     {
     public:
         SchemaTypeIntWithUnits()
-            : SchemaType("int_with_units", "danek::SchemaTypeIntWithUnits", Configuration::Type::String)
+            : SchemaType("int_with_units", "danek::SchemaTypeIntWithUnits", ConfType::String)
         {
         }
         virtual ~SchemaTypeIntWithUnits()

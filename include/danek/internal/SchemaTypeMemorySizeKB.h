@@ -31,7 +31,7 @@ namespace danek
     {
     public:
         SchemaTypeMemorySizeKB()
-            : SchemaType("memorySizeKB", "danek::SchemaTypeMemorySizeKB", Configuration::Type::String)
+            : SchemaType("memorySizeKB", "danek::SchemaTypeMemorySizeKB", ConfType::String)
         {
         }
         virtual ~SchemaTypeMemorySizeKB()

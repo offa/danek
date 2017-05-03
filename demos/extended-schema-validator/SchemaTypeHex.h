@@ -30,11 +30,12 @@ using danek::SchemaValidator;
 using danek::SchemaType;
 using danek::StringBuffer;
 using danek::StringVector;
+using danek::ConfType;
 
 class SchemaTypeHex : public SchemaType
 {
 public:
-    SchemaTypeHex() : SchemaType("hex", "SchemaTypeHex", Configuration::Type::String)
+    SchemaTypeHex() : SchemaType("hex", "SchemaTypeHex", ConfType::String)
     {
     }
     virtual ~SchemaTypeHex();

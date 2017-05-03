@@ -62,7 +62,7 @@ void RecipeFileParser::parse(const char* recipeFilename, const char* scope) thro
         sv.parseSchema(schema);
         sv.validate(m_cfg, m_scope.c_str(), "");
         m_cfg->listFullyScopedNames(
-            m_scope.c_str(), "", Configuration::Type::Scope, false, filter.c_str(), m_recipeScopeNames);
+            m_scope.c_str(), "", ConfType::Scope, false, filter.c_str(), m_recipeScopeNames);
     }
     catch (const ConfigurationException& ex)
     {
@@ -114,7 +114,7 @@ void RecipeFileParser::getRecipeSteps(const char* recipeScope, StringVector& res
     try
     {
         m_cfg->listLocallyScopedNames(
-            recipeScope, "", Configuration::Type::String, false, "uid-step", namesVec);
+            recipeScope, "", ConfType::String, false, "uid-step", namesVec);
     }
     catch (const ConfigurationException& ex)
     {

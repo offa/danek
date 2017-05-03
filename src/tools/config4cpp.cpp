@@ -32,11 +32,13 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <locale.h>
+
 using danek::Configuration;
 using danek::ConfigurationException;
 using danek::SchemaValidator;
 using danek::StringBuffer;
 using danek::StringVector;
+using danek::ConfType;
 
 //--------
 // Forward declarations
@@ -47,9 +49,9 @@ static void parseCmdLineArgs(int argc, char** argv, const char*& cmd, bool& isRe
     bool& wantExpandedUidNames, StringVector& filterPatterns, const char*& scope, const char*& name,
     const char*& cfgSource, const char*& secSource, const char*& secScope, const char*& schemaSource,
     const char*& schemaName, SchemaValidator::ForceMode& forceMode, bool& wantDiagnostics,
-    Configuration::Type& types, Configuration* cfg);
+    ConfType& types, Configuration* cfg);
 
-static Configuration::Type stringToTypes(const char* str);
+static ConfType stringToTypes(const char* str);
 
 int main(int argc, char** argv)
 {
@@ -77,7 +79,7 @@ int main(int argc, char** argv)
     StringBuffer buf;
     StringVector names;
     StringBuffer fullyScopedName;
-    Configuration::Type types;
+    ConfType types;
     SchemaValidator sv;
 
     setlocale(LC_ALL, "");
@@ -187,16 +189,16 @@ int main(int argc, char** argv)
     {
         switch (cfg->type(scope, name))
         {
-            case Configuration::Type::String:
+            case ConfType::String:
                 printf("string\n");
                 break;
-            case Configuration::Type::List:
+            case ConfType::List:
                 printf("list\n");
                 break;
-            case Configuration::Type::Scope:
+            case ConfType::Scope:
                 printf("scope\n");
                 break;
-            case Configuration::Type::NoValue:
+            case ConfType::NoValue:
                 printf("no_value\n");
                 break;
             default:
@@ -210,11 +212,11 @@ int main(int argc, char** argv)
         {
             switch (cfg->type(scope, name))
             {
-                case Configuration::Type::String:
+                case ConfType::String:
                     str = cfg->lookupString(scope, name);
                     printf("%s\n", str);
                     break;
-                case Configuration::Type::List:
+                case ConfType::List:
                     {
                         std::vector<std::string> vec;
                         cfg->lookupList(scope, name, vec);
@@ -224,10 +226,10 @@ int main(int argc, char** argv)
                         }
                     }
                     break;
-                case Configuration::Type::Scope:
+                case ConfType::Scope:
                     fprintf(stderr, "'%s' is a scope\n", fullyScopedName.c_str());
                     break;
-                case Configuration::Type::NoValue:
+                case ConfType::NoValue:
                     fprintf(stderr, "'%s' does not exist\n", fullyScopedName.c_str());
                     break;
                 default:
@@ -287,7 +289,7 @@ static void parseCmdLineArgs(int argc, char** argv, const char*& cmd, bool& isRe
     bool& wantExpandedUidNames, StringVector& filterPatterns, const char*& scope, const char*& name,
     const char*& cfgSource, const char*& secSource, const char*& secScope, const char*& schemaSource,
     const char*& schemaName, SchemaValidator::ForceMode& forceMode, bool& wantDiagnostics,
-    Configuration::Type& types, Configuration* cfg)
+    ConfType& types, Configuration* cfg)
 {
     int i;
     StringBuffer msg;
@@ -304,7 +306,7 @@ static void parseCmdLineArgs(int argc, char** argv, const char*& cmd, bool& isRe
     wantDiagnostics = false;
     forceMode = SchemaValidator::ForceMode::None;
     isRecursive = true;
-    types = Configuration::Type::ScopesAndVars;
+    types = ConfType::ScopesAndVars;
     filterPatterns.clear();
 
     for (i = 1; i < argc; i++)
@@ -507,30 +509,30 @@ static void parseCmdLineArgs(int argc, char** argv, const char*& cmd, bool& isRe
     }
 }
 
-static Configuration::Type stringToTypes(const char* str)
+static ConfType stringToTypes(const char* str)
 {
     if (strcmp(str, "string") == 0)
     {
-        return Configuration::Type::String;
+        return ConfType::String;
     }
     else if (strcmp(str, "list") == 0)
     {
-        return Configuration::Type::List;
+        return ConfType::List;
     }
     else if (strcmp(str, "scope") == 0)
     {
-        return Configuration::Type::Scope;
+        return ConfType::Scope;
     }
     else if (strcmp(str, "variables") == 0)
     {
-        return Configuration::Type::Variables;
+        return ConfType::Variables;
     }
     else if (strcmp(str, "scope_and_vars") == 0)
     {
-        return Configuration::Type::ScopesAndVars;
+        return ConfType::ScopesAndVars;
     }
     usage("Invalid value for '-types <...>'");
-    return Configuration::Type::String; // Not reached; keep compiler happy
+    return ConfType::String; // Not reached; keep compiler happy
 }
 
 static void usage(const char* optMsg)

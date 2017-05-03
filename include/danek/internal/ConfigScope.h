@@ -66,12 +66,12 @@ namespace danek
         bool is_in_table(const char* name) const;
 
         inline void listFullyScopedNames(
-            Configuration::Type typeMask, bool recursive, StringVector& vec) const;
+            ConfType typeMask, bool recursive, StringVector& vec) const;
 
-        inline void listFullyScopedNames(Configuration::Type typeMask, bool recursive,
+        inline void listFullyScopedNames(ConfType typeMask, bool recursive,
             const StringVector& filterPatterns, StringVector& vec) const;
 
-        inline void listLocallyScopedNames(Configuration::Type typeMask, bool recursive,
+        inline void listLocallyScopedNames(ConfType typeMask, bool recursive,
             const StringVector& filterPatterns, StringVector& vec) const;
 
         inline ConfigScope* parentScope() const;
@@ -90,9 +90,9 @@ namespace danek
 
         void growIfTooFull();
 
-        void listLocalNames(Configuration::Type typeMask, StringVector& vec) const;
+        void listLocalNames(ConfType typeMask, StringVector& vec) const;
 
-        void listScopedNamesHelper(const char* prefix, Configuration::Type typeMask, bool recursive,
+        void listScopedNamesHelper(const char* prefix, ConfType typeMask, bool recursive,
             const StringVector& filterPatterns, StringVector& vec) const;
 
         bool listFilter(const char* name, const StringVector& filterPatterns) const;
@@ -127,21 +127,21 @@ namespace danek
     }
 
     inline void ConfigScope::listFullyScopedNames(
-        Configuration::Type typeMask, bool recursive, StringVector& vec) const
+        ConfType typeMask, bool recursive, StringVector& vec) const
     {
         StringVector filterPatterns;
 
         listScopedNamesHelper(m_scopedName.c_str(), typeMask, recursive, filterPatterns, vec);
     }
 
-    inline void ConfigScope::listFullyScopedNames(Configuration::Type typeMask, bool recursive,
+    inline void ConfigScope::listFullyScopedNames(ConfType typeMask, bool recursive,
         const StringVector& filterPatterns, StringVector& vec) const
     {
         vec.clear();
         listScopedNamesHelper(m_scopedName.c_str(), typeMask, recursive, filterPatterns, vec);
     }
 
-    inline void ConfigScope::listLocallyScopedNames(Configuration::Type typeMask, bool recursive,
+    inline void ConfigScope::listLocallyScopedNames(ConfType typeMask, bool recursive,
         const StringVector& filterPatterns, StringVector& vec) const
     {
         vec.clear();
