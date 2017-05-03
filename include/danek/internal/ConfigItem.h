@@ -47,6 +47,7 @@ namespace danek
 
         ConfigItem(const std::string& name, const std::string& str);
         ConfigItem(const std::string& name, const StringVector& list);
+        ConfigItem(const std::string& name, const std::vector<std::string>& v);
         ConfigItem(const std::string& name, const char** array, std::size_t size);
         ConfigItem(const std::string& name, ConfigScope* scope);
         ConfigItem(const ConfigItem&) = delete;

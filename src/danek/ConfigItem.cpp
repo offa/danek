@@ -92,6 +92,14 @@ namespace danek
     {
     }
 
+    ConfigItem::ConfigItem(const std::string& name, const std::vector<std::string>& v) : m_type(Configuration::Type::List),
+                                                                            m_name(name),
+                                                                            m_stringVal(""),
+                                                                            m_listVal(new StringVector(v)),
+                                                                            m_scope(nullptr)
+    {
+    }
+
     ConfigItem::ConfigItem(const std::string& name, const char** array, std::size_t size) : m_type(Configuration::Type::List),
                                                                                         m_name(name),
                                                                                         m_stringVal(""),
