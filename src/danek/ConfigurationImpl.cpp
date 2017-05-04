@@ -29,6 +29,7 @@
 #include "danek/internal/platform.h"
 #include "danek/internal/DefaultSecurityConfiguration.h"
 #include "danek/internal/ConfigParser.h"
+#include "danek/internal/ToString.h"
 #include "danek/internal/Common.h"
 #include <algorithm>
 #include <stdlib.h>
@@ -625,7 +626,9 @@ namespace danek
                     << "'" << fullyScopedName << "' is not an entry";
                 throw ConfigurationException(msg.c_str());
             }
-            item->dump(buf, fullyScopedName.c_str(), wantExpandedUidNames);
+
+            const auto str = toString(*item, fullyScopedName.c_str(), wantExpandedUidNames);
+            buf << str.c_str();
         }
     }
 

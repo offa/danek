@@ -48,8 +48,8 @@ TEST_F(ConfigItemTest, stringItemThrowsOnInvalidTypeAccess)
 TEST_F(ConfigItemTest, stringListItem)
 {
     const std::vector<std::string> v{"a1", "a2"};
-
     ConfigItem item{"name_l", v};
+
     EXPECT_EQ(ConfType::List, item.type());
     EXPECT_THAT(item.name(), StrEq("name_l"));
     const auto& ref = item.listVal();
@@ -69,6 +69,7 @@ TEST_F(ConfigItemTest, scopeItem)
     ConfigItem item{"name_cs", std::make_unique<ConfigScope>(nullptr, &c)};
     EXPECT_EQ(ConfType::Scope, item.type());
     EXPECT_THAT(item.name(), StrEq("name_cs"));
+    EXPECT_THAT(item.scopeVal(), Not(nullptr));
 }
 
 TEST_F(ConfigItemTest, scopeItemThrowsOnInvalidTypeAccess)

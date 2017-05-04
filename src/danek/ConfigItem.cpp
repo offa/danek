@@ -23,51 +23,11 @@
 
 #include "danek/internal/ConfigItem.h"
 #include "danek/internal/ConfigScope.h"
-#include "danek/internal/UidIdentifierProcessor.h"
-#include <stdio.h>
-#include <string.h>
+#include <sstream>
+#include <regex>
 
 namespace danek
 {
-    static char* escapeString(const char* str)
-    {
-        StringBuffer buf;
-        char* result;
-
-        std::size_t len = strlen(str);
-        for (std::size_t i = 0; i < len; i++)
-        {
-            switch (str[i])
-            {
-                case '\t':
-                    buf.append("%t");
-                    break;
-                case '\n':
-                    buf.append("%n");
-                    break;
-                case '%':
-                    buf.append("%%");
-                    break;
-                case '"':
-                    buf.append("%\"");
-                    break;
-                default:
-                    buf.append(str[i]);
-                    break;
-            }
-        }
-        result = new char[buf.length() + 1];
-        strcpy(result, buf.c_str());
-        return result;
-    }
-
-    static void printIndent(StringBuffer& buf, int indentLevel)
-    {
-        for (int i = 0; i < indentLevel; ++i)
-        {
-            buf.append("    ");
-        }
-    }
 
     ConfigItem::ConfigItem(const std::string& name, const std::string& str) : m_type(ConfType::String),
                                                                             m_name(name),
@@ -131,58 +91,4 @@ namespace danek
         }
     }
 
-
-    //----------------------------------------------------------------------
-    // Function:	dump()
-    //
-    // Description:	Dump out the ConfigItem's contents.
-    //----------------------------------------------------------------------
-    void ConfigItem::dump(StringBuffer& buf, const char* name, bool wantExpandedUidNames, int indentLevel) const
-    {
-        StringBuffer nameBuf;
-
-        if (!wantExpandedUidNames)
-        {
-            UidIdentifierProcessor uidIdProc;
-            name = uidIdProc.unexpand(name, nameBuf);
-        }
-
-        printIndent(buf, indentLevel);
-        char* escStr;
-
-        switch (m_type)
-        {
-            case ConfType::String:
-                escStr = escapeString(m_stringVal.c_str());
-                buf << name << " = \"" << escStr << "\";\n";
-                delete[] escStr;
-                break;
-            case ConfType::List:
-                {
-                    buf << name << " = [";
-                    std::size_t len = m_listVal.size();
-                    for (std::size_t i = 0; i < len; i++)
-                    {
-                        escStr = escapeString(m_listVal[i].c_str());
-                        buf << "\"" << escStr << "\"";
-                        delete[] escStr;
-                        if (i < len - 1)
-                        {
-                            buf << ", ";
-                        }
-                    }
-                    buf << "];\n";
-                }
-                break;
-            case ConfType::Scope:
-                buf << name << " {\n";
-                m_scope->dump(buf, wantExpandedUidNames, indentLevel + 1);
-                printIndent(buf, indentLevel);
-                buf << "}\n";
-                break;
-            default:
-                assert(0); // Bug
-                break;
-        };
-    }
 }

@@ -24,7 +24,6 @@
 #pragma once
 
 #include "danek/ConfType.h"
-#include "danek/StringBuffer.h"
 #include <memory>
 #include <vector>
 #include <string>
@@ -34,13 +33,13 @@ namespace danek
     class ConfigScope;
 
     //--------------------------------------------------------------
-    // Class:	ConfigItem
+    // Class:   ConfigItem
     //
     // Description:
-    //		A config file contains "name = <value>" statements and
-    //		"name <scope>" statements. This class is used to store
-    //		name plus the the <value> part, (which can be a string
-    //		or a sequence of string) or a <scope>.
+    //      A config file contains "name = <value>" statements and
+    //      "name <scope>" statements. This class is used to store
+    //      name plus the the <value> part, (which can be a string
+    //      or a sequence of string) or a <scope>.
     //--------------------------------------------------------------
 
     class ConfigItem
@@ -61,11 +60,6 @@ namespace danek
 
 
         ConfigItem& operator=(const ConfigItem&) = delete;
-
-        //--------
-        // Debugging aid
-        //--------
-        void dump(StringBuffer& buf, const char* name, bool wantExpandedUidNames, int indentLevel = 0) const;
 
 
     private:

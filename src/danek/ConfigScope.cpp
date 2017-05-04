@@ -26,6 +26,7 @@
 //--------
 #include "danek/internal/ConfigScope.h"
 #include "danek/internal/UidIdentifierProcessor.h"
+#include "danek/internal/ToString.h"
 #include "danek/Configuration.h"
 #include <algorithm>
 #include <string.h>
@@ -554,7 +555,9 @@ namespace danek
         {
             item = findItem(nameVec[i].c_str());
             assert(static_cast<int>(item->type()) & static_cast<int>(ConfType::Variables));
-            item->dump(buf, item->name().c_str(), wantExpandedUidNames, indentLevel);
+
+            const auto str = toString(*item, item->name().c_str(), wantExpandedUidNames, indentLevel);
+            buf << str.c_str();
         }
 
         //--------
@@ -568,7 +571,8 @@ namespace danek
         {
             item = findItem(nameVec[i].c_str());
             assert(item->type() == ConfType::Scope);
-            item->dump(buf, item->name().c_str(), wantExpandedUidNames, indentLevel);
+            const auto str = toString(*item, item->name().c_str(), wantExpandedUidNames, indentLevel);
+            buf << str.c_str();
         }
     }
 

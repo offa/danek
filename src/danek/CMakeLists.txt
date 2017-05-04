@@ -37,6 +37,7 @@ add_library(danek SchemaLex.cpp
                 SchemaTypeTuple.cpp
                 SchemaTypeTypedef.cpp
                 Util.cpp
+                ToString.cpp
 
                 $<TARGET_OBJECTS:DefaultSecurity>
                 )
