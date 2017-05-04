@@ -32,7 +32,7 @@ namespace danek
     public:
         DefaultSecurity();
 
-        const std::string& getString() const
+        const std::string& get() const
         {
             return m_str;
         }
