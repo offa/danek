@@ -33,8 +33,6 @@ namespace danek
 
         StringBuffer();
         explicit StringBuffer(const std::string& str);
-        /** @deprecated */
-        StringBuffer(const StringBuffer&);
 
         /** @deprected */
         const char* c_str() const;
@@ -64,7 +62,6 @@ namespace danek
         StringBuffer& operator<<(char ch);
 
         StringBuffer& operator=(const char* str);
-        StringBuffer& operator=(const StringBuffer& other);
 
         /** @deprecated */
         void takeOwnershipOfStringIn(StringBuffer& other);

@@ -36,10 +36,6 @@ namespace danek
     {
     }
 
-    StringBuffer::StringBuffer(const StringBuffer& other) : m_string(other.m_string)
-    {
-    }
-
     const char* StringBuffer::c_str() const
     {
         return m_string.c_str();
@@ -144,12 +140,6 @@ namespace danek
     StringBuffer& StringBuffer::operator=(const char* str)
     {
         m_string = str;
-        return *this;
-    }
-
-    StringBuffer& StringBuffer::operator=(const StringBuffer& other)
-    {
-        m_string = other.str();
         return *this;
     }
 
