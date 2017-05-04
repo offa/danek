@@ -58,12 +58,6 @@ TEST_F(StringBufferTest, sizeMatchesElements)
     EXPECT_EQ(2, sb.size());
 }
 
-TEST_F(StringBufferTest, accessLastChar)
-{
-    StringBuffer sb{"xy"};
-    EXPECT_EQ('y', sb.lastChar());
-}
-
 TEST_F(StringBufferTest, accessByIndex)
 {
     StringBuffer sb{"xy"};

@@ -46,11 +46,6 @@ namespace danek
         return m_string.size();
     }
 
-    char StringBuffer::lastChar() const
-    {
-        return *std::prev(m_string.cend());
-    }
-
     char& StringBuffer::operator[](std::size_t index)
     {
         return m_string[index];
