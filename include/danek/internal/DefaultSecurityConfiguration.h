@@ -42,7 +42,7 @@ namespace danek
 
     private:
 
-        DefaultSecurity m_cfgStr;
+        const DefaultSecurity m_cfgStr;
 
     };
 }
