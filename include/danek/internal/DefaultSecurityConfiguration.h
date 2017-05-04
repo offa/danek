@@ -32,20 +32,17 @@ namespace danek
     {
     public:
         DefaultSecurityConfiguration();
-        ~DefaultSecurityConfiguration();
+        DefaultSecurityConfiguration(const DefaultSecurityConfiguration&) = delete;
+
+
+        DefaultSecurityConfiguration& operator=(const DefaultSecurityConfiguration&) = delete;
+
 
         static DefaultSecurityConfiguration singleton;
 
     private:
-        //--------
-        // Instance variables
-        //--------
+
         DefaultSecurity m_cfgStr;
 
-        //--------
-        // The following are not implemented
-        //--------
-        DefaultSecurityConfiguration& operator=(const DefaultSecurityConfiguration&);
-        DefaultSecurityConfiguration(const DefaultSecurityConfiguration&);
     };
 }

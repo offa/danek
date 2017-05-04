@@ -28,10 +28,6 @@
 
 namespace danek
 {
-    //--------
-    // Define the singleton object
-    //--------
-    DefaultSecurityConfiguration DefaultSecurityConfiguration::singleton;
 
     DefaultSecurityConfiguration::DefaultSecurityConfiguration()
     {
@@ -52,8 +48,6 @@ namespace danek
         }
     }
 
-    DefaultSecurityConfiguration::~DefaultSecurityConfiguration()
-    {
-        // Nothing to do
-    }
+
+    DefaultSecurityConfiguration DefaultSecurityConfiguration::singleton;
 }
