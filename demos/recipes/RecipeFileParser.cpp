@@ -60,9 +60,8 @@ void RecipeFileParser::parse(const char* recipeFilename, const char* scope) thro
 
         m_cfg->parse(recipeFilename);
         sv.parseSchema(schema);
-        sv.validate(m_cfg, m_scope.c_str(), "");
-        m_cfg->listFullyScopedNames(
-            m_scope.c_str(), "", ConfType::Scope, false, filter.c_str(), m_recipeScopeNames);
+        sv.validate(m_cfg, m_scope.str().c_str(), "");
+        m_cfg->listFullyScopedNames(m_scope.str().c_str(), "", ConfType::Scope, false, filter.str().c_str(), m_recipeScopeNames);
     }
     catch (const ConfigurationException& ex)
     {

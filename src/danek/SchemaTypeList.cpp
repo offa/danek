@@ -46,7 +46,7 @@ namespace danek
         {
             msg << "the '" << typeName << "' type requires one type argument "
                 << "in rule '" << rule << "'";
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
 
         //--------
@@ -57,7 +57,7 @@ namespace danek
         if (typeDef == 0)
         {
             msg << "unknown type '" << listElementTypeName << "' in rule '" << rule << "'";
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
         switch (typeDef->cfgType())
         {
@@ -66,11 +66,11 @@ namespace danek
             case ConfType::List:
                 msg << "you cannot embed a list type ('" << listElementTypeName
                     << "') inside another list in rule '" << rule << "'";
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             case ConfType::Scope:
                 msg << "you cannot embed a scope type ('" << listElementTypeName
                     << "') inside a list in rule '" << rule << "'";
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             default:
                 assert(0); // Bug!
         }
@@ -114,7 +114,7 @@ namespace danek
                 cfg->mergeNames(scope, name, fullyScopedName);
                 msg << cfg->fileName() << ": bad " << elemTypeName << " value ('" << elemValue << "') for '"
                     << fullyScopedName << "[" << static_cast<int>(i) << "]'" << sep << errSuffix;
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             }
         }
     }

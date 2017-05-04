@@ -141,7 +141,7 @@ namespace danek
                 if (!m_file.open(source))
                 {
                     msg << "cannot open " << source << ": " << strerror(errno);
-                    throw ConfigurationException(msg.c_str());
+                    throw ConfigurationException(msg.str());
                 }
                 break;
             case Configuration::SourceType::String:
@@ -150,10 +150,10 @@ namespace danek
             case Configuration::SourceType::Exec:
                 if (!execCmd(source, m_execOutput))
                 {
-                    msg << "cannot parse 'exec#" << source << "': " << m_execOutput.c_str();
-                    throw ConfigurationException(msg.c_str());
+                    msg << "cannot parse 'exec#" << source << "': " << m_execOutput.str();
+                    throw ConfigurationException(msg.str());
                 }
-                m_ptr = m_execOutput.c_str();
+                m_ptr = m_execOutput.str().c_str();
                 break;
             default:
                 assert(0); // Bug!
@@ -265,7 +265,7 @@ namespace danek
             {
                 StringBuffer msg;
                 msg << "Invalid multi-byte character on line " << m_lineNum;
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             }
             if (m_atEOF)
             {
@@ -278,7 +278,7 @@ namespace danek
             {
                 StringBuffer msg;
                 msg << "Invalid multi-byte character on line " << m_lineNum;
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             }
 
             status = mbrtowc(&wChar, m_ch.c_str(), m_ch.length(), &m_mbtowcState);
@@ -286,7 +286,7 @@ namespace danek
             {
                 StringBuffer msg;
                 msg << "Invalid multi-byte character on line " << m_lineNum;
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             }
             m_ch.setWChar(wChar);
         }
@@ -352,7 +352,7 @@ namespace danek
                 }
                 else
                 {
-                    token.reset(LEX_UNKNOWN_SYM, lineNum, spelling.c_str());
+                    token.reset(LEX_UNKNOWN_SYM, lineNum, spelling.str().c_str());
                 }
                 return;
             case '!':
@@ -375,14 +375,14 @@ namespace danek
                     spelling.append(m_ch.c_str());
                     nextChar();
                 }
-                searchForKeyword(spelling.c_str(), found, symbol);
+                searchForKeyword(spelling.str().c_str(), found, symbol);
                 if (found)
                 {
-                    token.reset(symbol, lineNum, spelling.c_str());
+                    token.reset(symbol, lineNum, spelling.str().c_str());
                 }
                 else
                 {
-                    token.reset(LEX_UNKNOWN_SYM, lineNum, spelling.c_str());
+                    token.reset(LEX_UNKNOWN_SYM, lineNum, spelling.str().c_str());
                 }
                 return;
             case '+':
@@ -399,7 +399,7 @@ namespace danek
                 else
                 {
                     spelling << '&' << m_ch.c_str();
-                    token.reset(LEX_UNKNOWN_SYM, lineNum, spelling.c_str());
+                    token.reset(LEX_UNKNOWN_SYM, lineNum, spelling.str().c_str());
                 }
                 return;
             case '|':
@@ -412,7 +412,7 @@ namespace danek
                 else
                 {
                     spelling << '|' << m_ch.c_str();
-                    token.reset(LEX_UNKNOWN_SYM, lineNum, spelling.c_str());
+                    token.reset(LEX_UNKNOWN_SYM, lineNum, spelling.str().c_str());
                 }
                 return;
             case '=':
@@ -537,14 +537,14 @@ namespace danek
                 FunctionType funcType;
                 spelling.append(m_ch.c_str());
                 nextChar();
-                searchForFunction(spelling.c_str(), found, funcType, symbol);
+                searchForFunction(spelling.str().c_str(), found, funcType, symbol);
                 if (found)
                 {
-                    token.reset(symbol, lineNum, spelling.c_str(), funcType);
+                    token.reset(symbol, lineNum, spelling.str().c_str(), funcType);
                 }
                 else
                 {
-                    token.reset(LEX_UNKNOWN_FUNC_SYM, lineNum, spelling.c_str());
+                    token.reset(LEX_UNKNOWN_FUNC_SYM, lineNum, spelling.str().c_str());
                 }
                 return;
             }
@@ -553,13 +553,13 @@ namespace danek
             // It's not a function so it looks like an identifier.
             // Better check it's a legal identifier.
             //--------
-            if (strcmp(spelling.c_str(), ".") == 0)
+            if (strcmp(spelling.str().c_str(), ".") == 0)
             {
-                token.reset(LEX_SOLE_DOT_IDENT_SYM, lineNum, spelling.c_str());
+                token.reset(LEX_SOLE_DOT_IDENT_SYM, lineNum, spelling.str().c_str());
             }
-            else if (strstr(spelling.c_str(), "..") != 0)
+            else if (strstr(spelling.str().c_str(), "..") != 0)
             {
-                token.reset(LEX_TWO_DOTS_IDENT_SYM, lineNum, spelling.c_str());
+                token.reset(LEX_TWO_DOTS_IDENT_SYM, lineNum, spelling.str().c_str());
             }
             else
             {
@@ -581,7 +581,7 @@ namespace danek
         //--------
         spelling << m_ch.c_str();
         nextChar();
-        token.reset(LEX_UNKNOWN_SYM, lineNum, spelling.c_str());
+        token.reset(LEX_UNKNOWN_SYM, lineNum, spelling.str().c_str());
     }
 
     //----------------------------------------------------------------------
@@ -610,7 +610,7 @@ namespace danek
         {
             if (m_atEOF)
             {
-                token.reset(LEX_BLOCK_STRING_WITH_EOF_SYM, lineNum, spelling.c_str());
+                token.reset(LEX_BLOCK_STRING_WITH_EOF_SYM, lineNum, spelling.str().c_str());
                 return;
             }
             spelling << m_ch.c_str();
@@ -659,7 +659,7 @@ namespace danek
         {
             if (m_atEOF || m_ch.c_str()[0] == '\n')
             {
-                token.reset(LEX_STRING_WITH_EOL_SYM, lineNum, spelling.c_str());
+                token.reset(LEX_STRING_WITH_EOL_SYM, lineNum, spelling.str().c_str());
                 return;
             }
             switch (m_ch.c_str()[0])
@@ -671,7 +671,7 @@ namespace danek
                     nextChar();
                     if (m_atEOF || m_ch.c_str()[0] == '\n')
                     {
-                        token.reset(LEX_STRING_WITH_EOL_SYM, lineNum, spelling.c_str());
+                        token.reset(LEX_STRING_WITH_EOL_SYM, lineNum, spelling.str().c_str());
                         return;
                     }
                     switch (m_ch.c_str()[0])
@@ -691,7 +691,7 @@ namespace danek
                         default:
                             msg << "Invalid escape sequence (%" << m_ch.c_str()[0] << ") in string on line "
                                 << m_lineNum;
-                            throw ConfigurationException(msg.c_str());
+                            throw ConfigurationException(msg.str());
                     }
                     break;
                 default:

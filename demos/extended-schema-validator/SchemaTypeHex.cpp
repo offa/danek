@@ -48,7 +48,7 @@ void SchemaTypeHex::checkRule(const SchemaValidator* sv, const Configuration* cf
         msg << "schema error: the '" << typeName << "' type should "
             << "take either no arguments or 1 argument (denoting "
             << "max-digits) in rule '" << rule << "'";
-        throw ConfigurationException(msg.c_str());
+        throw ConfigurationException(msg.str());
     }
     try
     {
@@ -58,13 +58,13 @@ void SchemaTypeHex::checkRule(const SchemaValidator* sv, const Configuration* cf
     {
         msg << "schema error: non-integer value for the 'max-digits' "
             << "argument in rule '" << rule << "'";
-        throw ConfigurationException(msg.c_str());
+        throw ConfigurationException(msg.str());
     }
     if (maxDigits < 1)
     {
         msg << "schema error: the 'max-digits' argument must be 1 or "
             << "greater in rule '" << rule << "'";
-        throw ConfigurationException(msg.c_str());
+        throw ConfigurationException(msg.str());
     }
 }
 
@@ -145,7 +145,7 @@ int SchemaTypeHex::stringToHex(const Configuration* cfg, const char* scope, cons
         cfg->mergeNames(scope, localName, fullyScopedName);
         msg << cfg->fileName() << ": bad " << typeName << " value ('" << str << "') specified for '"
             << fullyScopedName;
-        throw ConfigurationException(msg.c_str());
+        throw ConfigurationException(msg.str());
     }
     return (int) value;
 }

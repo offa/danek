@@ -66,7 +66,7 @@ namespace danek
             }
             msg << cfg->fileName() << ": bad " << typeName << " value ('" << value << "') for '"
                 << fullyScopedName << "'" << sep << errSuffix;
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
     }
 

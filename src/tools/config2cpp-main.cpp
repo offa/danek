@@ -151,7 +151,7 @@ void calculateSchema(const Configuration* cfg, const StringVector& namesList,
         if (strstr(name, "uid-") == 0)
         {
             calculateRuleForName(cfg, name, name, wildcardedNamesAndTypes, rule);
-            schema.push_back(rule.c_str());
+            schema.push_back(rule.str());
         }
         else
         {
@@ -160,7 +160,7 @@ void calculateSchema(const Configuration* cfg, const StringVector& namesList,
             {
                 uidNames.push_back(uName);
                 calculateRuleForName(cfg, name, uName, wildcardedNamesAndTypes, rule);
-                schema.push_back(rule.c_str());
+                schema.push_back(rule.str());
             }
         }
     }

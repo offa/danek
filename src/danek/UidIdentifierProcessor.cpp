@@ -54,12 +54,12 @@ namespace danek
         //--------
         // Common case optimizations
         //--------
-        if (strchr(spelling.c_str(), '.') == 0)
+        if (strchr(spelling.str().c_str(), '.') == 0)
         {
             expandOne(spelling);
             return;
         }
-        if (strstr(spelling.c_str(), "uid-") == 0)
+        if (strstr(spelling.str().c_str(), "uid-") == 0)
         {
             return;
         }
@@ -74,11 +74,11 @@ namespace danek
         int i;
         int len;
 
-        StringVector vec{util::splitScopes(spelling.c_str())};
+        StringVector vec{util::splitScopes(spelling.str())};
         len = vec.size();
         for (i = 0; i < len; i++)
         {
-            buf = vec[i].c_str();
+            buf = vec[i];
             try
             {
                 expandOne(buf);
@@ -86,7 +86,7 @@ namespace danek
             catch (const ConfigurationException&)
             {
                 msg << "'" << spelling << "' is not a legal identifier";
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             }
             result.append(buf);
             if (i < len - 1)
@@ -108,7 +108,7 @@ namespace danek
         //--------
         // If spelling does not start with "uid-" then do nothing.
         //--------
-        ptr = spelling.c_str();
+        ptr = spelling.str().c_str();
         if (strncmp(ptr, "uid-", 4) != 0)
         {
             return;
@@ -122,12 +122,12 @@ namespace danek
         //--------
         if (ptr[4] == '\0')
         {
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
         if (ptr[4] == '-')
         {
             // illegal: "uid--foo"
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
 
         if (!isdigit(ptr[4]))
@@ -138,7 +138,7 @@ namespace danek
             assert(m_count < 1000 * 1000 * 1000);
             sprintf(digits, "%09ld", m_count);
             m_count++;
-            suffix = &(spelling.c_str()[4]); // deep copy
+            suffix = &(spelling.str().c_str()[4]); // deep copy
             spelling.clear();
             spelling << "uid-" << digits << "-" << suffix;
             return;
@@ -155,23 +155,23 @@ namespace danek
         if (*ptr == '\0' || *ptr != '-')
         {
             // illegal: "uid-<digits>" or "uid-<digits>foo"
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
         ptr++; // point to just after "uid-<digits>-"
         if (*ptr == '\0')
         {
             // illegal: "uid-<digits>-"
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
         if (*ptr == '-')
         {
             // illegal: "uid-<digits>--"
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
         if (isdigit(*(ptr)))
         {
             // illegal: "uid-<digits>-<digits>foo"
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
         assert(m_count < 1000 * 1000 * 1000);
         sprintf(digits, "%09ld", m_count);
@@ -217,7 +217,7 @@ namespace danek
             catch (const ConfigurationException&)
             {
                 msg << "'" << spelling << "' is not a legal identifier";
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             }
             result.append(str);
             if (i < len - 1)
@@ -226,7 +226,7 @@ namespace danek
             }
         }
         buf = result.str();
-        return buf.c_str();
+        return buf.str().c_str();
     }
 
     const char* UidIdentifierProcessor::unexpandOne(const char* spelling, StringBuffer& buf) const
@@ -263,6 +263,6 @@ namespace danek
         suffix = (ptr + 1); // deep copy from just after "uid-<digits>-"
         buf.clear();
         buf << "uid-" << suffix;
-        return buf.c_str();
+        return buf.str().c_str();
     }
 }

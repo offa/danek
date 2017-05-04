@@ -484,14 +484,14 @@ namespace danek
                     scopedName.append(".");
                 }
                 scopedName.append(entry->name());
-                if ((static_cast<int>(entry->type()) & static_cast<int>(typeMask)) && listFilter(scopedName.c_str(), filterPatterns))
+                if ((static_cast<int>(entry->type()) & static_cast<int>(typeMask)) && listFilter(scopedName.str().c_str(), filterPatterns))
                 {
-                    vec.push_back(scopedName.c_str());
+                    vec.push_back(scopedName.str());
                 }
                 if (recursive && entry->type() == ConfType::Scope)
                 {
                     entry->item()->scopeVal()->listScopedNamesHelper(
-                        scopedName.c_str(), typeMask, true, filterPatterns, vec);
+                        scopedName.str().c_str(), typeMask, true, filterPatterns, vec);
                 }
                 entry = entry->m_next;
             }

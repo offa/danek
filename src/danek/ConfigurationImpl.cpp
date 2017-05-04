@@ -100,7 +100,7 @@ namespace danek
         {
             cfg->destroy();
             msg << "cannot set default configuration: " << ex.c_str();
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
 
         if (m_amOwnerOfFallbackCfg)
@@ -131,7 +131,7 @@ namespace danek
         catch (const ConfigurationException& ex)
         {
             msg << "cannot set security configuration: " << ex.c_str();
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
 
         m_securityCfg = cfg;
@@ -158,7 +158,7 @@ namespace danek
         {
             cfg->destroy();
             msg << "cannot set security configuration: " << ex.c_str();
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
 
         if (m_amOwnerOfSecurityCfg)
@@ -173,7 +173,7 @@ namespace danek
     void ConfigurationImpl::getSecurityConfiguration(const Configuration*& cfg, const char*& scope)
     {
         cfg = m_securityCfg;
-        scope = m_securityCfgScope.c_str();
+        scope = m_securityCfgScope.str().c_str();
     }
 
     //----------------------------------------------------------------------
@@ -217,14 +217,14 @@ namespace danek
                 {
                     msg << "cannot parse output of executing \"" << source << "\" "
                         << "due to security restrictions";
-                    throw ConfigurationException(msg.c_str());
+                    throw ConfigurationException(msg.str());
                 }
                 break;
             default:
                 assert(0); // Bug!
                 break;
         }
-        ConfigParser parser(sourceType, source, trustedCmdLine.c_str(), m_fileName.c_str(), this);
+        ConfigParser parser(sourceType, source, trustedCmdLine.str().c_str(), m_fileName.str().c_str(), this);
     }
 
     //----------------------------------------------------------------------
@@ -240,7 +240,7 @@ namespace danek
         StringBuffer fullyScopedName;
 
         mergeNames(scope, localName, fullyScopedName);
-        item = lookup(fullyScopedName.c_str(), localName);
+        item = lookup(fullyScopedName.str().c_str(), localName);
         if (item == 0)
         {
             result = ConfType::NoValue;
@@ -360,14 +360,14 @@ namespace danek
         StringBuffer fullyScopedName;
 
         mergeNames(scope, localName, fullyScopedName);
-        StringVector vec{util::splitScopes(fullyScopedName.c_str())};
+        StringVector vec{util::splitScopes(fullyScopedName.str())};
         len = vec.size();
         ensureScopeExists(vec, 0, len - 2, scopeObj);
         if (!scopeObj->addOrReplaceString(vec[len - 1].c_str(), str))
         {
             msg << fileName() << ": "
                 << "variable '" << fullyScopedName << "' was previously used as a scope";
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
     }
 
@@ -384,7 +384,7 @@ namespace danek
         ConfigScope* dummyScope;
 
         mergeNames(scope, localName, fullyScopedName);
-        ensureScopeExists(fullyScopedName.c_str(), dummyScope);
+        ensureScopeExists(fullyScopedName.str().c_str(), dummyScope);
     }
 
     //----------------------------------------------------------------------
@@ -403,14 +403,14 @@ namespace danek
         StringBuffer fullyScopedName;
 
         mergeNames(scope, localName, fullyScopedName);
-        StringVector vec{util::splitScopes(fullyScopedName.c_str())};
+        StringVector vec{util::splitScopes(fullyScopedName.str())};
         len = vec.size();
         ensureScopeExists(vec, 0, len - 2, scopeObj);
         if (!scopeObj->addOrReplaceList(vec[len - 1].c_str(), StringVector{data}))
         {
             msg << fileName() << ": "
                 << "variable '" << fullyScopedName << "' was previously used as a scope";
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
     }
 
@@ -449,7 +449,7 @@ namespace danek
         {
             msg << fileName() << ": "
                 << "variable '" << name << "' was previously used as a scope";
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
     }
 
@@ -470,7 +470,7 @@ namespace danek
 
         scopeObj = m_currScope;
         mergeNames(scope, localName, fullyScopedName);
-        StringVector vec{util::splitScopes(fullyScopedName.c_str())};
+        StringVector vec{util::splitScopes(fullyScopedName.str())};
         len = vec.size();
         for (i = 0; i < len - 1; i++)
         {
@@ -478,7 +478,7 @@ namespace danek
             if (item == 0 || item->type() != ConfType::Scope)
             {
                 msg << fileName() << ": '" << fullyScopedName << "' does not exist'";
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             }
             scopeObj = item->scopeVal();
             assert(scopeObj != 0);
@@ -488,7 +488,7 @@ namespace danek
         if (!scopeObj->removeItem(vec[i].c_str()))
         {
             msg << fileName() << ": '" << fullyScopedName << "' does not exist'";
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
     }
 
@@ -613,22 +613,21 @@ namespace danek
 
         buf = "";
         mergeNames(scope, localName, fullyScopedName);
-        if (strcmp(fullyScopedName.c_str(), "") == 0)
+        if (strcmp(fullyScopedName.str().c_str(), "") == 0)
         {
             m_rootScope->dump(buf, wantExpandedUidNames);
         }
         else
         {
-            ConfigItem* item = lookup(fullyScopedName.c_str(), localName, true);
+            ConfigItem* item = lookup(fullyScopedName.str().c_str(), localName, true);
             if (item == 0)
             {
                 msg << fileName() << ": "
                     << "'" << fullyScopedName << "' is not an entry";
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             }
 
-            const auto str = toString(*item, fullyScopedName.c_str(), wantExpandedUidNames);
-            buf << str.c_str();
+            buf << toString(*item, fullyScopedName.str(), wantExpandedUidNames);
         }
     }
 
@@ -665,18 +664,18 @@ namespace danek
         ConfigScope* scopeObj;
 
         mergeNames(scope, localName, fullyScopedName);
-        if (strcmp(fullyScopedName.c_str(), "") == 0)
+        if (strcmp(fullyScopedName.str().c_str(), "") == 0)
         {
             scopeObj = m_rootScope;
         }
         else
         {
-            item = lookup(fullyScopedName.c_str(), localName, true);
+            item = lookup(fullyScopedName.str().c_str(), localName, true);
             if (item == 0 || item->type() != ConfType::Scope)
             {
                 msg << fileName() << ": "
                     << "'" << fullyScopedName << "' is not a scope";
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             }
             scopeObj = item->scopeVal();
         }
@@ -718,18 +717,18 @@ namespace danek
         ConfigScope* scopeObj;
 
         mergeNames(scope, localName, fullyScopedName);
-        if (strcmp(fullyScopedName.c_str(), "") == 0)
+        if (strcmp(fullyScopedName.str().c_str(), "") == 0)
         {
             scopeObj = m_rootScope;
         }
         else
         {
-            item = lookup(fullyScopedName.c_str(), localName, true);
+            item = lookup(fullyScopedName.str().c_str(), localName, true);
             if (item == 0 || item->type() != ConfType::Scope)
             {
                 msg << fileName() << ": "
                     << "'" << fullyScopedName << "' is not a scope";
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             }
             scopeObj = item->scopeVal();
         }
@@ -746,7 +745,7 @@ namespace danek
         StringBuffer fullyScopedName;
 
         mergeNames(scope, localName, fullyScopedName);
-        stringValue(fullyScopedName.c_str(), localName, str, type);
+        stringValue(fullyScopedName.str().c_str(), localName, str, type);
         switch (type)
         {
             case ConfType::String:
@@ -756,10 +755,10 @@ namespace danek
                 break;
             case ConfType::Scope:
                 msg << fileName() << ": '" << fullyScopedName << "' is a scope instead of a string";
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             case ConfType::List:
                 msg << fileName() << ": '" << fullyScopedName << "' is a list instead of a string";
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             default:
                 assert(0); // Bug
         }
@@ -775,21 +774,21 @@ namespace danek
         StringBuffer fullyScopedName;
 
         mergeNames(scope, localName, fullyScopedName);
-        stringValue(fullyScopedName.c_str(), localName, str, type);
+        stringValue(fullyScopedName.str().c_str(), localName, str, type);
         switch (type)
         {
             case ConfType::String:
                 break;
             case ConfType::NoValue:
                 msg << fileName() << ": no value specified for '" << fullyScopedName << "'";
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             case ConfType::Scope:
                 msg << fileName() << ": '" << fullyScopedName << "' is a scope instead of a string";
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             case ConfType::List:
                 msg << fileName() << ": "
                     << "'" << fullyScopedName << "' is a list instead of a string";
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             default:
                 assert(0); // Bug
         }
@@ -804,7 +803,7 @@ namespace danek
         StringBuffer fullyScopedName;
 
         mergeNames(scope, localName, fullyScopedName);
-        listValue(fullyScopedName.c_str(), localName, data, type);
+        listValue(fullyScopedName.str().c_str(), localName, data, type);
         switch (type)
         {
             case ConfType::List:
@@ -819,11 +818,11 @@ namespace danek
             case ConfType::Scope:
                 msg << fileName() << ": "
                     << "'" << fullyScopedName << "' is a scope instead of a list";
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             case ConfType::String:
                 msg << fileName() << ": "
                     << "'" << fullyScopedName << "' is a string instead of a list";
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             default:
                 assert(0); // Bug
         }
@@ -836,21 +835,21 @@ namespace danek
         StringBuffer fullyScopedName;
 
         mergeNames(scope, localName, fullyScopedName);
-        listValue(fullyScopedName.c_str(), localName, data, type);
+        listValue(fullyScopedName.str().c_str(), localName, data, type);
         switch (type)
         {
             case ConfType::List:
                 break;
             case ConfType::NoValue:
                 msg << fileName() << ": no value specified for '" << fullyScopedName << "'";
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             case ConfType::Scope:
                 msg << fileName() << ": '" << fullyScopedName << "' is a scope instead of a list";
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             case ConfType::String:
                 msg << fileName() << ": "
                     << "'" << fullyScopedName << "' is a string instead of a list";
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             default:
                 assert(0); // Bug
         }
@@ -865,7 +864,7 @@ namespace danek
         std::vector<std::string> data;
 
         mergeNames(scope, localName, fullyScopedName);
-        listValue(fullyScopedName.c_str(), localName, data, type);
+        listValue(fullyScopedName.str().c_str(), localName, data, type);
         switch (type)
         {
             case ConfType::List:
@@ -876,10 +875,10 @@ namespace danek
                 break;
             case ConfType::Scope:
                 msg << fileName() << ": '" << fullyScopedName << "' is a scope instead of a list";
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             case ConfType::String:
                 msg << fileName() << ": '" << fullyScopedName << "' is a string instead of a list";
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             default:
                 assert(0); // Bug
         }
@@ -894,7 +893,7 @@ namespace danek
         std::vector<std::string> data;
 
         mergeNames(scope, localName, fullyScopedName);
-        listValue(fullyScopedName.c_str(), localName, data, type);
+        listValue(fullyScopedName.str().c_str(), localName, data, type);
         switch (type)
         {
             case ConfType::List:
@@ -902,15 +901,15 @@ namespace danek
                 break;
             case ConfType::NoValue:
                 msg << fileName() << ": no value specified for '" << fullyScopedName << "'";
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
                 break;
             case ConfType::Scope:
                 msg << fileName() << ": '" << fullyScopedName << "' is a scope instead of a list";
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             case ConfType::String:
                 msg << fileName() << ": "
                     << "'" << fullyScopedName << "' is a string instead of a list";
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             default:
                 assert(0); // Bug
         }
@@ -945,7 +944,7 @@ namespace danek
                     msg << " '" << enumInfo[i].name << "'";
                 }
             }
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
         return result;
     }
@@ -983,7 +982,7 @@ namespace danek
                     msg << " '" << enumInfo[i].name << "'";
                 }
             }
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
         return result;
     }
@@ -1016,7 +1015,7 @@ namespace danek
                     msg << " '" << enumInfo[i].name << "'";
                 }
             }
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
         return result;
     }
@@ -1138,7 +1137,7 @@ namespace danek
             //--------
             mergeNames(scope, localName, fullyScopedName);
             msg << fileName() << ": non-integer value for '" << fullyScopedName << "'";
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
         return result;
     }
@@ -1173,7 +1172,7 @@ namespace danek
             //--------
             mergeNames(scope, localName, fullyScopedName);
             msg << fileName() << ": non-numeric value for '" << fullyScopedName << "'";
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
         return result;
     }
@@ -1222,7 +1221,7 @@ namespace danek
                     msg << " '" << enumInfo[i].name << "'";
                 }
             }
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
         return result;
     }
@@ -1411,7 +1410,7 @@ namespace danek
                     msg << ",";
                 }
             }
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
 
         //--------
@@ -1448,7 +1447,7 @@ namespace danek
                 msg << ",";
             }
         }
-        throw ConfigurationException(msg.c_str());
+        throw ConfigurationException(msg.str());
     }
 
     void ConfigurationImpl::lookupIntWithUnits(const char* scope, const char* localName, const char* typeName,
@@ -1578,7 +1577,7 @@ namespace danek
                 msg << ",";
             }
         }
-        throw ConfigurationException(msg.c_str());
+        throw ConfigurationException(msg.str());
     }
 
     void ConfigurationImpl::lookupUnitsWithInt(const char* scope, const char* localName, const char* typeName,
@@ -1836,7 +1835,7 @@ namespace danek
                 msg << ",";
             }
         }
-        throw ConfigurationException(msg.c_str());
+        throw ConfigurationException(msg.str());
     }
 
     void ConfigurationImpl::stringToFloatWithUnits(const char* scope, const char* localName,
@@ -1869,7 +1868,7 @@ namespace danek
                     msg << ",";
                 }
             }
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
 
         //--------
@@ -1906,7 +1905,7 @@ namespace danek
                 msg << ",";
             }
         }
-        throw ConfigurationException(msg.c_str());
+        throw ConfigurationException(msg.str());
     }
 
     int ConfigurationImpl::stringToDurationMicroseconds(
@@ -1945,7 +1944,7 @@ namespace danek
         {
             msg = ex.c_str();
             msg << "; alternatively, you can use 'infinite'";
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
         assert(countDurationMicrosecondsInfo == countAllowedDurationMicrosecondsUnits);
         result = -1; // avoid compiler warning about an unitialized variable
@@ -1998,7 +1997,7 @@ namespace danek
         {
             msg = ex.c_str();
             msg << "; alternatively, you can use 'infinite'";
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
         assert(countDurationMillisecondsInfo == countAllowedDurationMillisecondsUnits);
         result = -1; // avoid compiler warning about an unitialized variable
@@ -2051,7 +2050,7 @@ namespace danek
         {
             msg = ex.c_str();
             msg << "; alternatively, you can use 'infinite'";
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
         assert(countDurationSecondsInfo == countAllowedDurationSecondsUnits);
         result = -1; // avoid compiler warning about an unitialized variable
@@ -2321,13 +2320,13 @@ namespace danek
                 break;
             case ConfType::String:
                 msg << fileName() << ": '" << fullyScopedName << "' is a string instead of a scope";
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             case ConfType::List:
                 msg << fileName() << ": '" << fullyScopedName << "' is a list instead of a scope";
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             case ConfType::NoValue:
                 msg << fileName() << ": scope '" << fullyScopedName << "' does not exist";
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             default:
                 assert(0); // Bug
         }
@@ -2362,7 +2361,7 @@ namespace danek
             if (strcmp(m_fileNameStack[i].c_str(), file) == 0)
             {
                 msg << fileName() << ": line " << includeLineNum << ", circular include of '" << file << "'";
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             }
         }
     }
@@ -2419,7 +2418,7 @@ namespace danek
                     }
                 }
                 msg << "' was previously used as a variable name";
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             }
         }
     }
@@ -2440,7 +2439,7 @@ namespace danek
         {
             return false;
         }
-        scope = m_securityCfgScope.c_str();
+        scope = m_securityCfgScope.str().c_str();
 
         m_securityCfg->lookupList(scope, "allow_patterns", allowPatterns);
         m_securityCfg->lookupList(scope, "deny_patterns", denyPatterns);
@@ -2487,11 +2486,11 @@ namespace danek
             //--------
             for (j = 0; j < trustedDirs.size(); j++)
             {
-                if (isCmdInDir(cmd.c_str(), trustedDirs[j].c_str()))
+                if (isCmdInDir(cmd.str().c_str(), trustedDirs[j].c_str()))
                 {
                     trustedCmdLine = "";
                     trustedCmdLine << trustedDirs[j].c_str() << CONFIG4CPP_DIR_SEP << cmd
-                                   << &cmdLine[strlen(cmd.c_str())];
+                                   << &cmdLine[strlen(cmd.str().c_str())];
                     return true;
                 }
             }

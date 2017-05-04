@@ -61,7 +61,7 @@ namespace danek
         //--------
         modifiedCmd << cmd << " 2>&1";
         // modifiedCmd << cmd;
-        pipe = CONFIG4CPP_POPEN(modifiedCmd.c_str(), "r");
+        pipe = CONFIG4CPP_POPEN(modifiedCmd.str().c_str(), "r");
         if (!pipe)
         {
             output << "cannot execute '" << cmd << "': popen() failed";
@@ -129,7 +129,7 @@ namespace danek
         struct stat sb;
 
         fileName << dir << "/" << cmd;
-        if (stat(fileName.c_str(), &sb) == 0)
+        if (stat(fileName.str().c_str(), &sb) == 0)
         {
             return true;
         }

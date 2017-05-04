@@ -129,12 +129,12 @@ namespace danek
         //--------
         for (int i = 0; i < m_sv->m_idRulesCurrSize - 1; i++)
         {
-            const char* s1 = m_sv->m_idRules[i]->m_locallyScopedName.c_str();
-            const char* s2 = m_sv->m_idRules[i + 1]->m_locallyScopedName.c_str();
+            const char* s1 = m_sv->m_idRules[i]->m_locallyScopedName.str().c_str();
+            const char* s2 = m_sv->m_idRules[i + 1]->m_locallyScopedName.str().c_str();
             if (strcmp(s1, s2) == 0)
             {
                 msg << "There are multiple rules for '" << s1 << "'";
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             }
         }
     }
@@ -184,7 +184,7 @@ namespace danek
         //--------
         if (!isOptional)
         {
-            const char* name = ruleInfo->m_locallyScopedName.c_str();
+            const char* name = ruleInfo->m_locallyScopedName.str().c_str();
             const char* ptr = strrchr(name, '.');
             if (ptr == 0)
             {
@@ -198,7 +198,7 @@ namespace danek
             {
                 msg << "Use of '@required' is incompatible with the uid- entry ('" << ptr << "') in rule '"
                     << rule << "'";
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             }
         }
 
@@ -207,15 +207,15 @@ namespace danek
         ruleInfo->m_typeName = m_token.spelling();
         accept(SchemaLex::LEX_IDENT_SYM, rule, "expecting an identifier");
 
-        typeDef = m_sv->findType(ruleInfo->m_typeName.c_str());
+        typeDef = m_sv->findType(ruleInfo->m_typeName.str().c_str());
         if (typeDef == 0)
         {
             msg << "Unknown type '" << ruleInfo->m_typeName << "' in rule '" << rule << "'";
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
         if (m_token.type() == SchemaLex::LEX_EOF_SYM)
         {
-            m_sv->callCheckRule(typeDef, m_cfg, ruleInfo->m_typeName.c_str(), ruleInfo->m_args, rule, 1);
+            m_sv->callCheckRule(typeDef, m_cfg, ruleInfo->m_typeName.str().c_str(), ruleInfo->m_args, rule, 1);
             return;
         }
 
@@ -244,7 +244,7 @@ namespace danek
         }
         accept(SchemaLex::LEX_CLOSE_BRACKET_SYM, rule, "expecting ']'");
         accept(SchemaLex::LEX_EOF_SYM, rule, "expecting <end of string>");
-        m_sv->callCheckRule(typeDef, m_cfg, ruleInfo->m_typeName.c_str(), ruleInfo->m_args, rule, 1);
+        m_sv->callCheckRule(typeDef, m_cfg, ruleInfo->m_typeName.str().c_str(), ruleInfo->m_args, rule, 1);
     }
 
     //----------------------------------------------------------------------
@@ -292,11 +292,11 @@ namespace danek
         baseTypeName = m_token.spelling();
         accept(SchemaLex::LEX_IDENT_SYM, str, "expecting an identifier");
 
-        baseTypeDef = m_sv->findType(baseTypeName.c_str());
+        baseTypeDef = m_sv->findType(baseTypeName.str().c_str());
         if (baseTypeDef == 0)
         {
             msg << "Unknown type '" << baseTypeName << "' in user-type definition '" << str << "'";
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
 
         if (m_token.type() == SchemaLex::LEX_EOF_SYM)
@@ -305,9 +305,9 @@ namespace danek
             // Finished. Ask the base type to check its (empty) arguments
             // and then register the new command.
             //--------
-            m_sv->callCheckRule(baseTypeDef, m_cfg, baseTypeName.c_str(), baseTypeArgs, str, 1);
+            m_sv->callCheckRule(baseTypeDef, m_cfg, baseTypeName.str().c_str(), baseTypeArgs, str, 1);
             m_sv->registerTypedef(
-                typeName.c_str(), baseTypeDef->cfgType(), baseTypeName.c_str(), baseTypeArgs);
+                typeName.str().c_str(), baseTypeDef->cfgType(), baseTypeName.str().c_str(), baseTypeArgs);
             return;
         }
 
@@ -341,8 +341,8 @@ namespace danek
         // Finished. Ask the base type to check its arguments
         // and then register the new command.
         //--------
-        m_sv->callCheckRule(baseTypeDef, m_cfg, baseTypeName.c_str(), baseTypeArgs, str, 1);
-        m_sv->registerTypedef(typeName.c_str(), baseTypeDef->cfgType(), baseTypeName.c_str(), baseTypeArgs);
+        m_sv->callCheckRule(baseTypeDef, m_cfg, baseTypeName.str().c_str(), baseTypeArgs, str, 1);
+        m_sv->registerTypedef(typeName.str().c_str(), baseTypeDef->cfgType(), baseTypeName.str().c_str(), baseTypeArgs);
     }
 
     void SchemaParser::accept(short sym, const char* rule, const char* msgPrefix) throw(
@@ -358,7 +358,7 @@ namespace danek
         {
             msg << "error in validation rule '" << rule << "': " << msgPrefix << " near '"
                 << m_token.spelling() << "'";
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
     }
 }

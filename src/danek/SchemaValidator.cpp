@@ -63,7 +63,7 @@ namespace danek
 
         r1 = (SchemaIdRuleInfo**) p1;
         r2 = (SchemaIdRuleInfo**) p2;
-        result = strcmp((*r1)->m_locallyScopedName.c_str(), (*r2)->m_locallyScopedName.c_str());
+        result = strcmp((*r1)->m_locallyScopedName.str().c_str(), (*r2)->m_locallyScopedName.str().c_str());
         return result;
     }
 
@@ -265,7 +265,7 @@ namespace danek
             if (strcmp(m_types[i]->typeName(), typeName) == 0)
             {
                 msg << "schema type '" << typeName << "' is already registed";
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             }
         }
     }
@@ -378,8 +378,8 @@ namespace danek
                 //--------
                 // Can't find an idRule for the entry
                 //--------
-                cfg->mergeNames(fullyScopedName.c_str(), iName, unlistedName);
-                switch (cfg->type(unlistedName.c_str(), ""))
+                cfg->mergeNames(fullyScopedName.str().c_str(), iName, unlistedName);
+                switch (cfg->type(unlistedName.str().c_str(), ""))
                 {
                     case ConfType::Scope:
                         msg << cfg->fileName() << ": "
@@ -395,22 +395,21 @@ namespace danek
                 }
                 if (m_wantDiagnostics)
                 {
-                    printf("\n%s: error: %s\n", prefix, msg.c_str());
+                    printf("\n%s: error: %s\n", prefix, msg.str().c_str());
                 }
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             }
 
             //--------
             // There is an idRule for the entry. Look up the idRule's
             // type, and invoke its validate() operation.
             //--------
-            const char* typeName = idRule->m_typeName.c_str();
+            const char* typeName = idRule->m_typeName.str().c_str();
             SchemaType* typeDef = findType(typeName);
             assert(typeDef != 0);
             try
             {
-                callValidate(
-                    typeDef, cfg, fullyScopedName.c_str(), iName, typeName, typeName, idRule->m_args, 1);
+                callValidate(typeDef, cfg, fullyScopedName.str().c_str(), iName, typeName, typeName, idRule->m_args, 1);
             }
             catch (const ConfigurationException& ex)
             {
@@ -450,20 +449,20 @@ namespace danek
             {
                 continue;
             }
-            const char* nameInRule = idRule->m_locallyScopedName.c_str();
+            const char* nameInRule = idRule->m_locallyScopedName.str().c_str();
             if (strstr(nameInRule, "uid-") != 0)
             {
-                validateRequiredUidEntry(cfg, fullyScopedName.c_str(), idRule);
+                validateRequiredUidEntry(cfg, fullyScopedName.str().c_str(), idRule);
             }
             else
             {
-                if (cfg->type(fullyScopedName.c_str(), nameInRule) == ConfType::NoValue)
+                if (cfg->type(fullyScopedName.str().c_str(), nameInRule) == ConfType::NoValue)
                 {
-                    cfg->mergeNames(fullyScopedName.c_str(), nameInRule, nameOfMissingEntry);
-                    const char* typeName = idRule->m_typeName.c_str();
+                    cfg->mergeNames(fullyScopedName.str().c_str(), nameInRule, nameOfMissingEntry);
+                    const char* typeName = idRule->m_typeName.str().c_str();
                     msg << cfg->fileName() << ": the " << typeName << " '" << nameOfMissingEntry
                         << "' does not exist";
-                    throw ConfigurationException(msg.c_str());
+                    throw ConfigurationException(msg.str());
                 }
             }
         }
@@ -480,9 +479,8 @@ namespace danek
         StringVector parentScopes;
         const char* typeName;
         const char* ptr;
-        int len;
 
-        nameInRule = idRule->m_locallyScopedName.c_str();
+        nameInRule = idRule->m_locallyScopedName.str().c_str();
         assert(strstr(nameInRule, "uid-") != 0);
         lastDot = strrchr(nameInRule, '.');
         if (lastDot == 0 || strstr(lastDot + 1, "uid-") != 0)
@@ -499,17 +497,17 @@ namespace danek
             parentScopePattern.append(*ptr);
         }
         cfg->listFullyScopedNames(
-            fullScope, "", ConfType::Scope, true, parentScopePattern.c_str(), parentScopes);
-        len = parentScopes.size();
+            fullScope, "", ConfType::Scope, true, parentScopePattern.str().c_str(), parentScopes);
+        int len = parentScopes.size();
         for (int i = 0; i < len; i++)
         {
             if (cfg->type(parentScopes[i].c_str(), lastDot + 1) == ConfType::NoValue)
             {
                 cfg->mergeNames(parentScopes[i].c_str(), lastDot + 1, nameOfMissingEntry);
-                typeName = idRule->m_typeName.c_str();
+                typeName = idRule->m_typeName.str().c_str();
                 msg << cfg->fileName() << ": the " << typeName << " '" << nameOfMissingEntry
                     << "' does not exist";
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             }
         }
     }
@@ -525,7 +523,7 @@ namespace danek
             // Does unexpandedName start with rule.m_locallyScopedName
             // followed by "."?
             //--------
-            const char* name = m_ignoreRules[i]->m_locallyScopedName.c_str();
+            const char* name = m_ignoreRules[i]->m_locallyScopedName.str().c_str();
             int len = strlen(name);
             if (strncmp(unexpandedName, name, len) != 0)
             {
@@ -751,7 +749,7 @@ namespace danek
                 indent(indentLevel);
                 printf("end %s::isA()\n", target->className());
                 indent(indentLevel + 1);
-                printf("result = %s; errSuffix = \"%s\"\n", (result ? "true" : "false"), errSuffix.c_str());
+                printf("result = %s; errSuffix = \"%s\"\n", (result ? "true" : "false"), errSuffix.str().c_str());
             }
         }
         catch (const ConfigurationException& ex)

@@ -38,11 +38,11 @@ namespace danek
 
         const char* typeName() const
         {
-            return m_typeName.c_str();
+            return m_typeName.str().c_str();
         }
         const char* className() const
         {
-            return m_className.c_str();
+            return m_className.str().c_str();
         }
         ConfType cfgType() const
         {

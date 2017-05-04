@@ -70,7 +70,6 @@ TEST_F(StringBufferTest, stringAccess)
 {
     StringBuffer sb{"xy"};
     EXPECT_THAT(sb.str(), StrEq("xy"));
-    EXPECT_THAT(sb.c_str(), StrEq("xy"));
 }
 
 TEST_F(StringBufferTest, clearElements)

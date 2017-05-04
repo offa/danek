@@ -46,7 +46,7 @@ namespace danek
             msg << "the '" << typeName << "' type should take either no "
                 << "arguments or 2 arguments (denoting min and max values) "
                 << "in rule '" << rule << "'";
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
         try
         {
@@ -55,7 +55,7 @@ namespace danek
         catch (const ConfigurationException& ex)
         {
             msg << "non-integer value for the first ('min') argument in rule '" << rule << "'";
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
         try
         {
@@ -64,14 +64,14 @@ namespace danek
         catch (const ConfigurationException& ex)
         {
             msg << "non-integer value for the second ('max') argument in rule '" << rule << "'";
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
         if (min > max)
         {
             msg << "the first ('min') value is larger than the second ('max') "
                 << "argument "
                 << "in rule '" << rule << "'";
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
     }
 

@@ -46,7 +46,7 @@ namespace danek
             msg << "The '" << typeName << "' type should take "
                 << "either no arguments or 2 arguments (denoting "
                 << "min and max memory sizes) in rule '" << rule << "'";
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
         try
         {
@@ -58,7 +58,7 @@ namespace danek
                 << "argument in rule '" << rule << "'; should be in the format "
                 << "'<float> <units>' where <units> is one of: "
                 << "'MB', 'GB', 'TB', 'PB'";
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
         try
         {
@@ -70,19 +70,19 @@ namespace danek
                 << "argument in rule '" << rule << "'; should be in the format "
                 << "'<float> <units>' where <units> is one of: "
                 << "'MB', 'GB', 'TB', 'PB'";
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
         if ((min < -1) || (max < -1))
         {
             msg << "The 'min' and 'max' of a " << typeName << " cannot be negative in rule '" << rule << "'"
                 << "; min=" << min << "; max=" << max;
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
         if ((max != -1) && (min == -1 || min > max))
         {
             msg << "The first ('min') argument is larger than the second "
                 << "('max') argument in rule '" << rule << "'";
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
     }
 

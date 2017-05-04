@@ -88,7 +88,7 @@ namespace danek
     }
     inline const char* LexToken::spelling()
     {
-        return m_spelling.c_str();
+        return m_spelling.str().c_str();
     }
     inline int LexToken::lineNum()
     {

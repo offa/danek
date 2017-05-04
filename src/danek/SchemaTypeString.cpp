@@ -47,7 +47,7 @@ namespace danek
             msg << "the '" << typeName << "' type should take "
                 << "either no arguments or 2 arguments (denoting min_length "
                 << "and max_length values) in rule '" << rule << "'";
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
         try
         {
@@ -57,7 +57,7 @@ namespace danek
         {
             msg << "non-integer value for the first ('min_length') argument "
                 << "in rule '" << rule << "'";
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
         try
         {
@@ -67,20 +67,20 @@ namespace danek
         {
             msg << "non-integer value for the second ('max_length') argument "
                 << "in rule '" << rule << "'";
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
         if (min < 0 || max < 0)
         {
             msg << "the 'min_length' and 'max_length' of a string cannot be "
                 << "negative "
                 << "in rule '" << rule << "'";
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
         if (min > max)
         {
             msg << "the first ('min_length') argument is larger than the second "
                 << "('max_length') argument in rule '" << rule << "'";
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
     }
 

@@ -227,10 +227,10 @@ int main(int argc, char** argv)
                     }
                     break;
                 case ConfType::Scope:
-                    fprintf(stderr, "'%s' is a scope\n", fullyScopedName.c_str());
+                    fprintf(stderr, "'%s' is a scope\n", fullyScopedName.str().c_str());
                     break;
                 case ConfType::NoValue:
-                    fprintf(stderr, "'%s' does not exist\n", fullyScopedName.c_str());
+                    fprintf(stderr, "'%s' does not exist\n", fullyScopedName.str().c_str());
                     break;
                 default:
                     assert(0); // Bug!
@@ -248,11 +248,11 @@ int main(int argc, char** argv)
         {
             cfg->getSecurityConfiguration(secDumpCfg, secDumpScope);
             secDumpCfg->dump(buf, wantExpandedUidNames, secDumpScope, "allow_patterns");
-            printf("%s", buf.c_str());
+            printf("%s", buf.str().c_str());
             secDumpCfg->dump(buf, wantExpandedUidNames, secDumpScope, "deny_patterns");
-            printf("%s", buf.c_str());
+            printf("%s", buf.str().c_str());
             secDumpCfg->dump(buf, wantExpandedUidNames, secDumpScope, "trusted_directories");
-            printf("%s", buf.c_str());
+            printf("%s", buf.str().c_str());
         }
         catch (const ConfigurationException& ex)
         {
@@ -264,7 +264,7 @@ int main(int argc, char** argv)
         try
         {
             cfg->dump(buf, wantExpandedUidNames, scope, name);
-            printf("%s", buf.c_str());
+            printf("%s", buf.str().c_str());
         }
         catch (const ConfigurationException& ex)
         {
@@ -592,6 +592,6 @@ static void usage(const char* optMsg)
         << "  file.cfg       A configuration file\n"
         << "  file#file.cfg  A configuration file\n"
         << "  exec#<command> Output from executing the specified command\n";
-    fprintf(stderr, "%s", msg.c_str());
+    fprintf(stderr, "%s", msg.str().c_str());
     exit(1);
 }

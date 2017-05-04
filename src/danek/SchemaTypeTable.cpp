@@ -44,7 +44,7 @@ namespace danek
             msg << "the '" << typeName << "' type requires pairs of column-type "
                 << "and column-name arguments in "
                 << "rule '" << rule << "'";
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
 
         //--------
@@ -57,7 +57,7 @@ namespace danek
             if (typeDef == 0)
             {
                 msg << "unknown type '" << columnType << "' in rule '" << rule << "'";
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             }
             switch (typeDef->cfgType())
             {
@@ -66,11 +66,11 @@ namespace danek
                 case ConfType::List:
                     msg << "you cannot embed a list type ('" << columnType << "') inside a table in rule '"
                         << rule << "'";
-                    throw ConfigurationException(msg.c_str());
+                    throw ConfigurationException(msg.str());
                 case ConfType::Scope:
                     msg << "you cannot embed a scope type ('" << columnType << "') inside a table in rule '"
                         << rule << "'";
-                    throw ConfigurationException(msg.c_str());
+                    throw ConfigurationException(msg.str());
                 default:
                     assert(0); // Bug!
             }
@@ -103,7 +103,7 @@ namespace danek
             cfg->mergeNames(scope, name, fullyScopedName);
             msg << cfg->fileName() << ": the number of entries in the '" << fullyScopedName << "' "
                 << typeName << " is not a multiple of " << numColumns;
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
 
         //--------
@@ -134,7 +134,7 @@ namespace danek
                 msg << cfg->fileName() << ": bad " << colTypeName << " value ('" << colValue << "') for the '"
                     << typeArgs[colNameIndex].c_str() << "' column in row " << rowNum << " of the '"
                     << fullyScopedName << "' " << typeName << sep << errSuffix;
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             }
         }
     }

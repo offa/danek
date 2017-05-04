@@ -38,7 +38,7 @@ namespace danek
         {
             msg << "the '" << typeName << "' type should not take arguments "
                 << "in rule '" << rule << "'";
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
     }
 

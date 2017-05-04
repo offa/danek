@@ -39,7 +39,7 @@ namespace danek
         {
             msg << "the '" << typeName << "' type should take one or more "
                 << "arguments (denoting units) in rule '" << rule << "'";
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
     }
 

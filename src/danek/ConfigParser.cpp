@@ -171,7 +171,7 @@ namespace danek
         //--------
         // Push our file onto the the stack of (include'd) files.
         //--------
-        m_config->pushIncludedFilename(m_fileName.c_str());
+        m_config->pushIncludedFilename(m_fileName.str().c_str());
 
         //--------
         // Perform the actual work. Note that a config file
@@ -186,7 +186,7 @@ namespace danek
         {
             delete m_lex;
             m_lex = 0;
-            m_config->popIncludedFilename(m_fileName.c_str());
+            m_config->popIncludedFilename(m_fileName.str().c_str());
             if (m_errorInIncludedFile)
             {
                 throw;
@@ -194,14 +194,14 @@ namespace danek
             else
             {
                 msg << m_fileName << ", line " << m_token.lineNum() << ": " << ex.c_str();
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             }
         }
 
         //--------
         // Pop our file from the the stack of (include'd) files.
         //--------
-        m_config->popIncludedFilename(m_fileName.c_str());
+        m_config->popIncludedFilename(m_fileName.str().c_str());
     }
 
     //----------------------------------------------------------------------
@@ -341,7 +341,7 @@ namespace danek
         //--------
         // Check if this is a circular include.
         //--------
-        m_config->checkForCircularIncludes(source.c_str(), includeLineNum);
+        m_config->checkForCircularIncludes(source.str().c_str(), includeLineNum);
 
         //--------
         // Consume "@ifExists" if specified
@@ -362,13 +362,13 @@ namespace danek
         // inside a recursive call to the parser.
         //--------
         execSource = 0; // prevent warning about it possibly being uninitialized
-        if (startsWith(source.c_str(), "exec#"))
+        if (startsWith(source.str().c_str(), "exec#"))
         {
-            execSource = source.c_str() + strlen("exec#");
+            execSource = source.str().c_str() + strlen("exec#");
             if (!m_config->isExecAllowed(execSource, trustedCmdLine))
             {
                 msg << "cannot include \"" << source << "\" due to security restrictions";
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             }
         }
 
@@ -384,20 +384,20 @@ namespace danek
         //--------
         try
         {
-            if (startsWith(source.c_str(), "exec#"))
+            if (startsWith(source.str().c_str(), "exec#"))
             {
                 ConfigParser tmp(Configuration::SourceType::Exec,
                     execSource,
-                    trustedCmdLine.c_str(),
+                    trustedCmdLine.str().c_str(),
                     "",
                     m_config,
                     ifExistsIsSpecified);
             }
-            else if (startsWith(source.c_str(), "file#"))
+            else if (startsWith(source.str().c_str(), "file#"))
             {
                 ConfigParser tmp(Configuration::SourceType::File,
-                    source.c_str() + strlen("file#"),
-                    trustedCmdLine.c_str(),
+                    source.str().c_str() + strlen("file#"),
+                    trustedCmdLine.str().c_str(),
                     "",
                     m_config,
                     ifExistsIsSpecified);
@@ -405,8 +405,8 @@ namespace danek
             else
             {
                 ConfigParser tmp(Configuration::SourceType::File,
-                    source.c_str(),
-                    trustedCmdLine.c_str(),
+                    source.str().c_str(),
+                    trustedCmdLine.str().c_str(),
                     "",
                     m_config,
                     ifExistsIsSpecified);
@@ -416,7 +416,7 @@ namespace danek
         {
             m_errorInIncludedFile = true;
             msg << ex.c_str() << "\n(included from " << m_fileName << ", line " << includeLineNum << ")";
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
 
         //--------
@@ -616,7 +616,7 @@ namespace danek
             m_lex->nextToken(m_token);
             parseStringExpr(str1);
             accept(ConfigLex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
-            FILE* file = fopen(str1.c_str(), "r");
+            FILE* file = fopen(str1.str().c_str(), "r");
             if (file == 0)
             {
                 return false;
@@ -633,12 +633,12 @@ namespace danek
             case ConfigLex::LEX_EQUALS_EQUALS_SYM:
                 m_lex->nextToken(m_token);
                 parseStringExpr(str2);
-                result = (strcmp(str1.c_str(), str2.c_str()) == 0);
+                result = (strcmp(str1.str().c_str(), str2.str().c_str()) == 0);
                 break;
             case ConfigLex::LEX_NOT_EQUALS_SYM:
                 m_lex->nextToken(m_token);
                 parseStringExpr(str2);
-                result = (strcmp(str1.c_str(), str2.c_str()) != 0);
+                result = (strcmp(str1.str().c_str(), str2.str().c_str()) != 0);
                 break;
             case ConfigLex::LEX_IN_SYM:
                 m_lex->nextToken(m_token);
@@ -647,7 +647,7 @@ namespace danek
                 result = false;
                 for (i = 0; i < len; i++)
                 {
-                    if (strcmp(str1.c_str(), list[i].c_str()) == 0)
+                    if (strcmp(str1.str().c_str(), list[i].c_str()) == 0)
                     {
                         result = true;
                         break;
@@ -657,7 +657,7 @@ namespace danek
             case ConfigLex::LEX_MATCHES_SYM:
                 m_lex->nextToken(m_token);
                 parseStringExpr(str2);
-                result = Configuration::patternMatch(str1.c_str(), str2.c_str());
+                result = Configuration::patternMatch(str1.str().c_str(), str2.str().c_str());
                 break;
             default:
                 error("expecting '(', or a string expression");
@@ -707,12 +707,12 @@ namespace danek
         // Sanity check: cannot copy from a parent scope
         //--------
         toScopeName = m_config->getCurrScope()->scopedName();
-        if (strcmp(toScopeName, fromScopeName.c_str()) == 0)
+        if (strcmp(toScopeName, fromScopeName.str().c_str()) == 0)
         {
             throw ConfigurationException("copy statement: cannot copy from own scope");
         }
         prefix << fromScopeName << ".";
-        if (strncmp(toScopeName, prefix.c_str(), fromScopeNameLen + 1) == 0)
+        if (strncmp(toScopeName, prefix.str().c_str(), fromScopeNameLen + 1) == 0)
         {
             throw ConfigurationException("copy statement: cannot copy from a parent scope");
         }
@@ -721,7 +721,7 @@ namespace danek
         // If the scope does not exist and if "@ifExists" was specified
         // then we short-circuit the rest of this function.
         //--------
-        item = m_config->lookup(fromScopeName.c_str(), fromScopeName.c_str(), true);
+        item = m_config->lookup(fromScopeName.str().c_str(), fromScopeName.str().c_str(), true);
         if (item == 0 && ifExistsIsSpecified)
         {
             accept(ConfigLex::LEX_SEMICOLON_SYM, "expecting ';'");
@@ -731,12 +731,12 @@ namespace danek
         if (item == 0)
         {
             msg << "copy statement: scope '" << fromScopeName << "' does not exist";
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
         if (item->type() != ConfType::Scope)
         {
             msg << "copy statement: '" << fromScopeName << "' is not a scope";
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
         fromScope = item->scopeVal();
         assert(fromScope != 0);
@@ -793,17 +793,17 @@ namespace danek
         accept(ConfigLex::LEX_REMOVE_SYM, "expecting 'remove'");
         identName = m_token.spelling();
         accept(ConfigLex::LEX_IDENT_SYM, "expecting an identifier");
-        if (strchr(identName.c_str(), '.') != 0)
+        if (strchr(identName.str().c_str(), '.') != 0)
         {
             msg << m_fileName << ": can remove entries from only the "
                 << "current scope";
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
         currScope = m_config->getCurrScope();
-        if (!currScope->removeItem(identName.c_str()))
+        if (!currScope->removeItem(identName.str().c_str()))
         {
             msg << m_fileName << ": '" << identName << "' does not exist in the current scope";
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
         accept(ConfigLex::LEX_SEMICOLON_SYM, "expecting ';'");
     }
@@ -821,7 +821,7 @@ namespace danek
         accept(ConfigLex::LEX_ERROR_SYM, "expecting 'error'");
         parseStringExpr(msg);
         accept(ConfigLex::LEX_SEMICOLON_SYM, "expecting ';'");
-        throw ConfigurationException(msg.c_str());
+        throw ConfigurationException(msg.str());
     }
 
     //----------------------------------------------------------------------
@@ -931,7 +931,7 @@ namespace danek
                         break;
                     default:
                         msg << "identifier '" << m_token.spelling() << "' not previously declared";
-                        error(msg.c_str(), false);
+                        error(msg.str().c_str(), false);
                         return;
                 }
                 break;
@@ -950,7 +950,7 @@ namespace danek
                 parseStringExpr(stringExpr);
                 if (doAssign)
                 {
-                    m_config->insertString("", varName.spelling(), stringExpr.c_str());
+                    m_config->insertString("", varName.spelling(), stringExpr.str().c_str());
                 }
                 break;
             case ConfType::List:
@@ -1047,7 +1047,7 @@ namespace danek
                 m_lex->nextToken(m_token);
                 parseStringExpr(name);
                 accept(ConfigLex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
-                getDirectoryOfFile(name.c_str(), str);
+                getDirectoryOfFile(name.str().c_str(), str);
                 break;
             case ConfigLex::LEX_FUNC_CONFIG_FILE_SYM:
                 m_lex->nextToken(m_token);
@@ -1058,7 +1058,7 @@ namespace danek
                 m_lex->nextToken(m_token);
                 parseStringExpr(name);
                 accept(ConfigLex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
-                item = m_config->lookup(name.c_str(), name.c_str());
+                item = m_config->lookup(name.str().c_str(), name.str().c_str());
                 if (item == 0)
                 {
                     type = ConfType::NoValue;
@@ -1099,15 +1099,15 @@ namespace danek
                         break;
                     case ConfType::NoValue:
                         msg << "identifier '" << m_token.spelling() << "' not previously declared";
-                        error(msg.c_str(), false);
+                        error(msg.str().c_str(), false);
                         return;
                     case ConfType::Scope:
                         msg << "identifier '" << m_token.spelling() << "' is a scope instead of a string";
-                        error(msg.c_str(), false);
+                        error(msg.str().c_str(), false);
                         return;
                     case ConfType::List:
                         msg << "identifier '" << m_token.spelling() << "' is a list instead of a string";
-                        error(msg.c_str(), false);
+                        error(msg.str().c_str(), false);
                         return;
                     default:
                         assert(0); // Bug
@@ -1149,15 +1149,15 @@ namespace danek
             hasDefaultStr = false;
         }
         accept(ConfigLex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
-        val = getenv(envVarName.c_str());
+        val = getenv(envVarName.str().c_str());
         if (val == 0 && hasDefaultStr)
         {
-            val = defaultStr.c_str();
+            val = defaultStr.str().c_str();
         }
         if (val == 0)
         {
             msg << "cannot access the '" << envVarName << "' environment variable";
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
         str = val;
     }
@@ -1181,7 +1181,7 @@ namespace danek
         parentScopeName = currScope->parentScope()->scopedName();
         parseStringExpr(siblingName);
         accept(ConfigLex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
-        Configuration::mergeNames(parentScopeName, siblingName.c_str(), str);
+        Configuration::mergeNames(parentScopeName, siblingName.str().c_str(), str);
     }
 
     //----------------------------------------------------------------------
@@ -1201,10 +1201,10 @@ namespace danek
         parseStringExpr(fileName);
         accept(ConfigLex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
         str.clear();
-        if (!file.open(fileName.c_str()))
+        if (!file.open(fileName.str().c_str()))
         {
             msg << "error reading " << fileName << ": " << strerror(errno);
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
         while ((ch = file.getChar()) != EOF)
         {
@@ -1238,7 +1238,7 @@ namespace danek
         len = list.size();
         for (i = 0; i < len; i++)
         {
-            str.append(list[i].c_str());
+            str.append(list[i]);
             if (i < len - 1)
             {
                 str.append(separator);
@@ -1272,17 +1272,17 @@ namespace danek
         result = "";
         searchStrLen = searchStr.size();
         int currStart = 0;
-        p = strstr(origStr.c_str(), searchStr.c_str());
+        p = strstr(origStr.str().c_str(), searchStr.str().c_str());
         while (p != 0)
         {
-            int currEnd = p - origStr.c_str();
+            int currEnd = p - origStr.str().c_str();
             origStr[currEnd] = '\0';
-            result << (origStr.c_str() + currStart);
+            result << (origStr.str().c_str() + currStart);
             result << replacementStr;
             currStart = currEnd + searchStrLen;
-            p = strstr(origStr.c_str() + currStart, searchStr.c_str());
+            p = strstr(origStr.str().c_str() + currStart, searchStr.str().c_str());
         }
-        result << (origStr.c_str() + currStart);
+        result << (origStr.str().c_str() + currStart);
     }
 
     //----------------------------------------------------------------------
@@ -1307,16 +1307,16 @@ namespace danek
         list.clear();
         delimLen = delim.size();
         int currStart = 0;
-        p = strstr(str.c_str(), delim.c_str());
+        p = strstr(str.str().c_str(), delim.str().c_str());
         while (p != 0)
         {
-            int currEnd = p - str.c_str();
+            int currEnd = p - str.str().c_str();
             str[currEnd] = '\0';
-            list.push_back(str.c_str() + currStart);
+            list.push_back(str.str().c_str() + currStart);
             currStart = currEnd + delimLen;
-            p = strstr(str.c_str() + currStart, delim.c_str());
+            p = strstr(str.str().c_str() + currStart, delim.str().c_str());
         }
-        list.push_back(str.c_str() + currStart);
+        list.push_back(str.str().c_str() + currStart);
     }
 
     //----------------------------------------------------------------------
@@ -1351,10 +1351,10 @@ namespace danek
             hasDefaultStr = false;
         }
 
-        if (!m_config->isExecAllowed(cmd.c_str(), trustedCmdLine))
+        if (!m_config->isExecAllowed(cmd.str().c_str(), trustedCmdLine))
         {
-            msg << "cannot execute \"" << cmd.c_str() << "\" due to security restrictions";
-            throw ConfigurationException(msg.c_str());
+            msg << "cannot execute \"" << cmd.str() << "\" due to security restrictions";
+            throw ConfigurationException(msg.str());
         }
 
         //--------
@@ -1362,11 +1362,11 @@ namespace danek
         // return the default value, if any, or return the output of
         // the successful execCmd().
         //--------
-        execStatus = execCmd(trustedCmdLine.c_str(), str);
+        execStatus = execCmd(trustedCmdLine.str().c_str(), str);
         if (!execStatus && !hasDefaultStr)
         {
             msg << "os.exec(\"" << cmd << "\") failed: " << str;
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
         else if (!execStatus && hasDefaultStr)
         {
@@ -1438,7 +1438,7 @@ namespace danek
                 if (type != ConfType::List)
                 {
                     msg << "identifier '" << m_token.spelling() << "' is not a list";
-                    error(msg.c_str(), false);
+                    error(msg.str().c_str(), false);
                 }
                 m_lex->nextToken(m_token); // consume the identifier
                 break;
@@ -1530,7 +1530,7 @@ namespace danek
         }
 
         parseStringExpr(str);
-        list.push_back(str.c_str());
+        list.push_back(str.str());
         while (m_token.type() == ConfigLex::LEX_COMMA_SYM)
         {
             m_lex->nextToken(m_token);
@@ -1539,7 +1539,7 @@ namespace danek
                 return;
             }
             parseStringExpr(str);
-            list.push_back(str.c_str());
+            list.push_back(str.str());
         }
     }
 
@@ -1585,24 +1585,24 @@ namespace danek
             case ConfigLex::LEX_UNKNOWN_FUNC_SYM:
                 msg << "'" << m_token.spelling() << "' "
                     << "is not a built-in function";
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             case ConfigLex::LEX_SOLE_DOT_IDENT_SYM:
                 msg << "'.' is not a valid identifier";
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             case ConfigLex::LEX_TWO_DOTS_IDENT_SYM:
                 msg << "'..' appears in identified '" << m_token.spelling() << "'";
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             case ConfigLex::LEX_STRING_WITH_EOL_SYM:
                 msg << "end-of-line not allowed in string '" << m_token.spelling() << "'";
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             case ConfigLex::LEX_BLOCK_STRING_WITH_EOF_SYM:
                 msg << "end-of-file encountered in block string starting at "
                     << "line " << m_token.lineNum();
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             case ConfigLex::LEX_ILLEGAL_IDENT_SYM:
                 msg << "'" << m_token.spelling() << "' "
                     << "is not a legal identifier";
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             default:
                 // No lexical error. Handle the parsing error below.
                 break;
@@ -1617,17 +1617,17 @@ namespace danek
         if (printNear && m_token.type() == ConfigLex::LEX_STRING_SYM)
         {
             msg << errMsg << " near \"" << m_token.spelling() << "\"";
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
         else if (printNear && m_token.type() != ConfigLex::LEX_STRING_SYM)
         {
             msg << errMsg << " near '" << m_token.spelling() << "'";
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
         else
         {
             msg << errMsg;
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
     }
 }

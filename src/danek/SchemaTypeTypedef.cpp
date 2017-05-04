@@ -40,7 +40,7 @@ namespace danek
         {
             msg << "you cannot specify arguments when using user-defined type '" << typeName << "' in '"
                 << rule << "'";
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
     }
 
@@ -55,7 +55,7 @@ namespace danek
 
         unused(typeArgs); // Prevent build failure in release build
         assert(typeArgs.size() == 0);
-        baseTypeName = m_baseTypeName.c_str();
+        baseTypeName = m_baseTypeName.str().c_str();
         baseTypeDef = findType(sv, baseTypeName);
         callValidate(
             baseTypeDef, sv, cfg, scope, name, baseTypeName, origTypeName, m_baseTypeArgs, indentLevel + 1);
@@ -69,7 +69,7 @@ namespace danek
         unused(typeArgs); // Prevent build failure in release build
 
         assert(typeArgs.size() == 0);
-        const char* baseTypeName = m_baseTypeName.c_str();
+        const char* baseTypeName = m_baseTypeName.str().c_str();
         SchemaType* baseTypeDef = findType(sv, baseTypeName);
         assert(baseTypeDef != 0);
         bool result =

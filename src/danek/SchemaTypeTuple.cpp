@@ -42,7 +42,7 @@ namespace danek
         {
             msg << "the '" << typeName << "' type requires pairs of type and "
                 << "name arguments in rule '" << rule << "'";
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
 
         //--------
@@ -55,7 +55,7 @@ namespace danek
             if (typeDef == 0)
             {
                 msg << "unknown type '" << elemType << "' in rule '" << rule << "'";
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             }
             switch (typeDef->cfgType())
             {
@@ -64,11 +64,11 @@ namespace danek
                 case ConfType::List:
                     msg << "you cannot embed a list type ('" << elemType << "') inside a "
                         << "tuple in rule '" << rule << "'";
-                    throw ConfigurationException(msg.c_str());
+                    throw ConfigurationException(msg.str());
                 case ConfType::Scope:
                     msg << "you cannot embed a scope type ('" << elemType << "') inside a "
                         << "tuple in rule '" << rule << "'";
-                    throw ConfigurationException(msg.c_str());
+                    throw ConfigurationException(msg.str());
                 default:
                     assert(0); // Bug!
             }
@@ -108,7 +108,7 @@ namespace danek
                     msg << ",";
                 }
             }
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
         //--------
         // Check each item is of the type specified in the tuple
@@ -137,7 +137,7 @@ namespace danek
                 msg << cfg->fileName() << ": bad " << elemTypeName << " value ('" << elemValue
                     << "') for element " << static_cast<int>(i + 1) << " ('" << typeArgs[elemNameIndex].c_str()
                     << "') of the '" << fullyScopedName << "' " << typeName << sep << errSuffix;
-                throw ConfigurationException(msg.c_str());
+                throw ConfigurationException(msg.str());
             }
         }
     }

@@ -447,7 +447,7 @@ namespace danek
             fprintf(file, "\t//--------\n");
             fprintf(file, "\tstatic const char * getString()\n");
             fprintf(file, "\t{\n");
-            fprintf(file, "\t\treturn s_singleton.m_str.c_str();\n");
+            fprintf(file, "\t\treturn s_singleton.m_str.str().c_str();\n");
             fprintf(file, "\t}\n");
             if (schemaSize > 0)
             {
@@ -474,7 +474,7 @@ namespace danek
             fprintf(file, "\t//--------\n");
             fprintf(file, "\tconst char * getString()\n");
             fprintf(file, "\t{\n");
-            fprintf(file, "\t\treturn m_str.c_str();\n");
+            fprintf(file, "\t\treturn m_str.str().c_str();\n");
             fprintf(file, "\t}\n");
             if (schemaSize > 0)
             {

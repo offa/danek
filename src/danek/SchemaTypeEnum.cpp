@@ -38,7 +38,7 @@ namespace danek
         {
             msg << "The '" << typeName << "' type should take one or more "
                 << "arguments (denoting enum values) in rule '" << rule << "'";
-            throw ConfigurationException(msg.c_str());
+            throw ConfigurationException(msg.str());
         }
     }
 

@@ -135,7 +135,7 @@ void FooConfiguration::parse(const char* cfgInput, const char* scope, const char
         {
             localName.clear();
             localName << "hex_list[" << (i + 1) << "]";
-            m_hexList[i] = SchemaTypeHex::stringToHex(cfg, scope, localName.c_str(), strList[i].c_str());
+            m_hexList[i] = SchemaTypeHex::stringToHex(cfg, scope, localName.str().c_str(), strList[i].c_str());
         }
     }
     catch (const ConfigurationException& ex)

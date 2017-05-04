@@ -328,7 +328,7 @@ namespace danek
 
     inline const char* ConfigurationImpl::fileName() const
     {
-        return m_fileName.c_str();
+        return m_fileName.str().c_str();
     }
 
     inline ConfigScope* ConfigurationImpl::rootScope()
