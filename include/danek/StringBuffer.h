@@ -30,9 +30,6 @@
 
 namespace danek
 {
-    class LexToken;
-    class UidIdentifierProcessor;
-
     class StringBuffer
     {
     public:
@@ -72,10 +69,10 @@ namespace danek
         StringBuffer& operator=(const char* str);
         StringBuffer& operator=(const StringBuffer& other);
 
-    protected:
-        friend class LexToken;
-        friend class UidIdentifierProcessor;
+        /** @deprecated */
         void takeOwnershipOfStringIn(StringBuffer& other);
+
+    private:
         char* c_strWithOwnership();
 
         //--------
