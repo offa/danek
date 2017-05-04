@@ -134,3 +134,10 @@ TEST_F(StringBufferTest, appendChar)
     EXPECT_THAT(sb.str(), StrEq("cu_"));
 }
 
+TEST_F(StringBufferTest, assignNewValue)
+{
+    StringBuffer sb{"123"};
+    sb = "new_string";
+    EXPECT_THAT(sb.str(), StrEq("new_string"));
+}
+
