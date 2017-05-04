@@ -23,11 +23,7 @@
 
 #pragma once
 
-//--------
-// #includes & #defines
-//--------
-
-#include "danek/StringVector.h"
+#include <string>
 #include <assert.h>
 
 #define CONFIG4CPP_STRING_BUFFER_INTERNAL_BUF_SIZE 32

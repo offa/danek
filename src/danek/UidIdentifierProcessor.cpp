@@ -21,11 +21,9 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//--------
-// #include's
-//--------
 #include "danek/internal/UidIdentifierProcessor.h"
 #include "danek/internal/Util.h"
+#include "danek/StringVector.h"
 #include <string.h>
 #include <ctype.h>
 #include <stdio.h>
