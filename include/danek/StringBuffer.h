@@ -24,6 +24,7 @@
 #pragma once
 
 #include <string>
+#include <sstream>
 #include <assert.h>
 
 #define CONFIG4CPP_STRING_BUFFER_INTERNAL_BUF_SIZE 32
@@ -38,34 +39,32 @@ namespace danek
         StringBuffer(const StringBuffer&);
         ~StringBuffer();
 
-        //--------
-        // Public API
-        //--------
-        inline const char* c_str() const;
-        inline int length() const;
-        inline char lastChar() const;
-        inline char operator[](int index) const;
-        inline char& operator[](int index);
+        const char* c_str() const;
+        std::size_t length() const;
+        char lastChar() const;
 
-        std::string str() const
-        {
-            return std::string(c_str());
-        }
+        char& operator[](std::size_t index);
+        char operator[](std::size_t index) const;
 
-        inline void empty();
-        inline void deleteLastChar();
-        StringBuffer& append(const StringBuffer& other);
+        const std::string& str() const;
+
+        void empty();
+
+        void deleteLastChar();
+
+        StringBuffer& append(char value);
+        StringBuffer& append(int value);
+        StringBuffer& append(float value);
         StringBuffer& append(const char* str);
-        StringBuffer& append(int val);
-        StringBuffer& append(float val);
-        StringBuffer& append(char ch);
+        StringBuffer& append(const std::string& str);
+        StringBuffer& append(StringBuffer other);
 
-        inline StringBuffer& operator<<(const StringBuffer& other);
-        inline StringBuffer& operator<<(const char* str);
-        inline StringBuffer& operator<<(int val);
-        inline StringBuffer& operator<<(float val);
-        inline StringBuffer& operator<<(char ch);
 
+        StringBuffer& operator<<(const StringBuffer& other);
+        StringBuffer& operator<<(const char* str);
+        StringBuffer& operator<<(int val);
+        StringBuffer& operator<<(float val);
+        StringBuffer& operator<<(char ch);
         StringBuffer& operator=(const char* str);
         StringBuffer& operator=(const StringBuffer& other);
 
@@ -73,101 +72,8 @@ namespace danek
         void takeOwnershipOfStringIn(StringBuffer& other);
 
     private:
-        char* c_strWithOwnership();
 
-        //--------
-        // Helper operations
-        //--------
-        void growIfNeeded(int len);
-
-        //--------
-        // Instance variables
-        //--------
-        char m_internalBuf[CONFIG4CPP_STRING_BUFFER_INTERNAL_BUF_SIZE];
-        char* m_buf;
-        int m_currSize;
-        int m_maxSize;
+        std::string m_string;
     };
 
-    //----------------------------------------------------------------------
-    // Implementation of inline operations
-    //----------------------------------------------------------------------
-
-    inline const char* StringBuffer::c_str() const
-    {
-        return m_buf;
-    }
-
-    inline int StringBuffer::length() const
-    {
-        return m_currSize - 1;
-    }
-
-    inline char StringBuffer::lastChar() const
-    {
-        char result;
-        if (length() == 0)
-        {
-            result = '\0';
-        }
-        else
-        {
-            result = m_buf[length() - 1];
-        }
-        return result;
-    }
-
-    inline char StringBuffer::operator[](int index) const
-    {
-        return m_buf[index];
-    }
-
-    inline char& StringBuffer::operator[](int index)
-    {
-        return m_buf[index];
-    }
-
-    inline void StringBuffer::empty()
-    {
-        m_buf[0] = '\0';
-        m_maxSize = CONFIG4CPP_STRING_BUFFER_INTERNAL_BUF_SIZE;
-        m_currSize = 1;
-    }
-
-    inline void StringBuffer::deleteLastChar()
-    {
-        assert(m_currSize > 1);
-        m_currSize--;
-        m_buf[m_currSize - 1] = '\0';
-    }
-
-    inline StringBuffer& StringBuffer::operator<<(const StringBuffer& other)
-    {
-        append(other.c_str());
-        return *this;
-    }
-
-    inline StringBuffer& StringBuffer::operator<<(const char* str)
-    {
-        append(str);
-        return *this;
-    }
-
-    inline StringBuffer& StringBuffer::operator<<(int val)
-    {
-        append(val);
-        return *this;
-    }
-
-    inline StringBuffer& StringBuffer::operator<<(float val)
-    {
-        append(val);
-        return *this;
-    }
-
-    inline StringBuffer& StringBuffer::operator<<(char ch)
-    {
-        append(ch);
-        return *this;
-    }
 }

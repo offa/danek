@@ -21,9 +21,6 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//--------
-// #include's
-//--------
 #include "danek/StringBuffer.h"
 #include <string.h>
 #include <stdio.h>
@@ -31,183 +28,153 @@
 
 namespace danek
 {
-    StringBuffer::StringBuffer()
+    StringBuffer::StringBuffer() : m_string()
     {
-        m_maxSize = CONFIG4CPP_STRING_BUFFER_INTERNAL_BUF_SIZE;
-        m_buf = m_internalBuf;
-        m_buf[0] = '\0';
-        m_currSize = 1;
     }
 
-    StringBuffer::StringBuffer(const char* str)
+    StringBuffer::StringBuffer(const char* str) : m_string(str)
     {
-        m_maxSize = CONFIG4CPP_STRING_BUFFER_INTERNAL_BUF_SIZE;
-        m_buf = m_internalBuf;
-        m_buf[0] = '\0';
-        m_currSize = 1;
-
-        append(str);
     }
 
-    StringBuffer::StringBuffer(const StringBuffer& other)
+    StringBuffer::StringBuffer(const StringBuffer& other) : m_string(other.m_string)
     {
-        m_maxSize = CONFIG4CPP_STRING_BUFFER_INTERNAL_BUF_SIZE;
-        m_buf = m_internalBuf;
-        m_buf[0] = '\0';
-        m_currSize = 1;
-
-        append(other);
     }
 
     StringBuffer::~StringBuffer()
     {
-        if (m_buf != m_internalBuf)
-        {
-            delete[] m_buf;
-        }
     }
 
-    char* StringBuffer::c_strWithOwnership()
+    const char* StringBuffer::c_str() const
     {
-        char* result;
+        return m_string.c_str();
+    }
 
-        if (m_buf == m_internalBuf)
-        {
-            result = new char[m_currSize];
-            strcpy(result, m_buf);
-        }
-        else
-        {
-            result = m_buf;
-            m_maxSize = CONFIG4CPP_STRING_BUFFER_INTERNAL_BUF_SIZE;
-        }
-        m_buf = m_internalBuf;
-        m_buf[0] = '\0';
-        m_currSize = 1;
-        return result;
+    std::size_t StringBuffer::length() const  // TODO: Fix type
+    {
+        return m_string.size();
+    }
+
+    char StringBuffer::lastChar() const
+    {
+        return *std::prev(m_string.cend());
+    }
+
+    char& StringBuffer::operator[](std::size_t index)
+    {
+        return m_string[index];
+    }
+
+    char StringBuffer::operator[](std::size_t index) const
+    {
+        return m_string[index];
+    }
+
+    const std::string& StringBuffer::str() const
+    {
+        return m_string;
+    }
+
+    void StringBuffer::empty()
+    {
+        std::string{}.swap(m_string);
+    }
+
+    void StringBuffer::deleteLastChar()
+    {
+        m_string.erase(m_string.cend()-1);
+    }
+
+    StringBuffer& StringBuffer::append(char value)
+    {
+        m_string += value;
+        return *this;
+    }
+
+    StringBuffer& StringBuffer::append(int value)
+    {
+        m_string += std::to_string(value);
+        return *this;
+    }
+
+    StringBuffer& StringBuffer::append(float value)
+    {
+        m_string += std::to_string(value);
+        return *this;
     }
 
     StringBuffer& StringBuffer::append(const char* str)
     {
-        int len;
+        return append(std::string(str));
+    }
 
-        len = strlen(str);
-        growIfNeeded(len);
-        strcpy(&m_buf[m_currSize - 1], str);
-        m_currSize += len;
+    StringBuffer& StringBuffer::append(const std::string& str)
+    {
+        m_string += str;
         return *this;
     }
 
-    StringBuffer& StringBuffer::append(const StringBuffer& other)
+    StringBuffer& StringBuffer::append(StringBuffer other)
     {
-        int len;
-
-        len = other.length();
-        growIfNeeded(len);
-        strcpy(&m_buf[m_currSize - 1], other.c_str());
-        m_currSize += len;
+        m_string += other.str();
         return *this;
     }
 
-    StringBuffer& StringBuffer::append(int val)
-    {
-        char str[64]; // Big enough
 
-        sprintf(str, "%d", val);
+    StringBuffer& StringBuffer::operator<<(const StringBuffer& other)
+    {
+        append(other);
+        return *this;
+    }
+
+    StringBuffer& StringBuffer::operator<<(const char* str)
+    {
         append(str);
         return *this;
     }
 
-    StringBuffer& StringBuffer::append(float val)
+    StringBuffer& StringBuffer::operator<<(int val)
     {
-        char str[64]; // Big enough
-
-        sprintf(str, "%f", val);
-        append(str);
+        append(val);
         return *this;
+
     }
 
-    StringBuffer& StringBuffer::append(char ch)
+    StringBuffer& StringBuffer::operator<<(float val)
     {
-        growIfNeeded(1);
-        m_buf[m_currSize - 1] = ch;
-        m_buf[m_currSize] = '\0';
-        m_currSize++;
+        append(val);
         return *this;
+
+    }
+
+    StringBuffer& StringBuffer::operator<<(char ch)
+    {
+        append(ch);
+        return *this;
+
     }
 
     StringBuffer& StringBuffer::operator=(const char* str)
     {
-        m_buf[0] = '\0';
-        m_currSize = 1;
-        append(str);
+        m_string = str;
         return *this;
     }
 
     StringBuffer& StringBuffer::operator=(const StringBuffer& other)
     {
-        m_buf[0] = '\0';
-        m_currSize = 1;
-        append(other.m_buf);
+        m_string = other.str();
         return *this;
     }
 
+
+
+
+
+
+
     void StringBuffer::takeOwnershipOfStringIn(StringBuffer& other)
     {
-        if (other.m_buf == other.m_internalBuf)
-        {
-            m_currSize = other.m_currSize;
-            strcpy(m_buf, other.c_str());
-        }
-        else
-        {
-            if (m_buf != m_internalBuf)
-            {
-                delete[] m_buf;
-            }
-            m_buf = other.m_buf;
-            m_currSize = other.m_currSize;
-            m_maxSize = other.m_maxSize;
-            other.m_buf = other.m_internalBuf;
-        }
-        other.m_maxSize = CONFIG4CPP_STRING_BUFFER_INTERNAL_BUF_SIZE;
-        other.m_buf[0] = '\0';
-        other.m_currSize = 1;
+        m_string = other.m_string;
+        other.empty();
     }
 
-    void StringBuffer::growIfNeeded(int len)
-    {
-        int newSize;
-        char* newBuf;
-
-        if (m_currSize + len < m_maxSize)
-        {
-            //--------
-            // It's already big enough
-            //--------
-            return;
-        }
-
-        //--------
-        // Have to re-allocate a larger buffer.
-        //--------
-        newSize = m_maxSize * 2;
-        if (newSize < m_currSize + len)
-        {
-            newSize = (m_currSize + len) * 2;
-        }
-        newBuf = new char[newSize];
-        m_maxSize = newSize;
-
-        //--------
-        // Copy old buffer contents to new buffer
-        // and delete the old buffer if it was heap allocated.
-        //--------
-        strcpy(newBuf, m_buf);
-        if (m_buf != m_internalBuf)
-        {
-            delete[] m_buf;
-        }
-        m_buf = newBuf;
-    }
 }
