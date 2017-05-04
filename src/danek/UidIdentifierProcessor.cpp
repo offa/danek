@@ -225,7 +225,7 @@ namespace danek
                 result.append(".");
             }
         }
-        buf.takeOwnershipOfStringIn(result);
+        buf = result.str();
         return buf.c_str();
     }
 

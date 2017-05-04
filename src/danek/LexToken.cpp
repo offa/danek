@@ -127,7 +127,7 @@ namespace danek
         m_type = type;
         m_lineNum = lineNum;
         m_funcType = FunctionType::None;
-        m_spelling.takeOwnershipOfStringIn(str);
+        m_spelling = str;
     }
 
     bool LexToken::isStringFunc()

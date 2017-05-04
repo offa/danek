@@ -64,6 +64,7 @@ namespace danek
         StringBuffer& operator=(const std::string& str);
 
         /** @deprecated */
+        [[deprecated]]
         void takeOwnershipOfStringIn(StringBuffer& other);
 
     private:
