@@ -32,9 +32,9 @@ namespace danek
     public:
         DefaultSecurity();
 
-        const char* getString() const
+        const std::string& getString() const
         {
-            return m_str.c_str();
+            return m_str;
         }
 
     private:
