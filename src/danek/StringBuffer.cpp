@@ -73,7 +73,7 @@ namespace danek
 
     void StringBuffer::deleteLastChar()
     {
-        m_string.erase(std::prev(m_string.cend()));
+        m_string.erase(std::prev(m_string.end()));
     }
 
     StringBuffer& StringBuffer::append(char value)
