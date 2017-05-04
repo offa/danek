@@ -24,6 +24,7 @@
 #include "danek/internal/SchemaTypeList.h"
 #include "danek/internal/Common.h"
 #include "danek/SchemaValidator.h"
+#include <assert.h>
 
 namespace danek
 {

@@ -40,16 +40,12 @@ namespace danek
     {
     }
 
-    StringBuffer::~StringBuffer()
-    {
-    }
-
     const char* StringBuffer::c_str() const
     {
         return m_string.c_str();
     }
 
-    std::size_t StringBuffer::length() const  // TODO: Fix type
+    std::size_t StringBuffer::length() const
     {
         return m_string.size();
     }
@@ -136,21 +132,18 @@ namespace danek
     {
         append(val);
         return *this;
-
     }
 
     StringBuffer& StringBuffer::operator<<(float val)
     {
         append(val);
         return *this;
-
     }
 
     StringBuffer& StringBuffer::operator<<(char ch)
     {
         append(ch);
         return *this;
-
     }
 
     StringBuffer& StringBuffer::operator=(const char* str)
@@ -164,11 +157,6 @@ namespace danek
         m_string = other.str();
         return *this;
     }
-
-
-
-
-
 
 
     void StringBuffer::takeOwnershipOfStringIn(StringBuffer& other)

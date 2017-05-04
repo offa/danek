@@ -24,10 +24,6 @@
 #pragma once
 
 #include <string>
-#include <sstream>
-#include <assert.h>
-
-#define CONFIG4CPP_STRING_BUFFER_INTERNAL_BUF_SIZE 32
 
 namespace danek
 {
@@ -37,7 +33,6 @@ namespace danek
         StringBuffer();
         explicit StringBuffer(const char* str);
         StringBuffer(const StringBuffer&);
-        ~StringBuffer();
 
         const char* c_str() const;
         std::size_t length() const;

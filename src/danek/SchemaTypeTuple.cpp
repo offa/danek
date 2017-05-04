@@ -23,6 +23,7 @@
 
 #include "danek/internal/SchemaTypeTuple.h"
 #include "danek/internal/Common.h"
+#include <assert.h>
 
 namespace danek
 {
