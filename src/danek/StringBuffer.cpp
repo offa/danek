@@ -143,11 +143,4 @@ namespace danek
         return *this;
     }
 
-
-    void StringBuffer::takeOwnershipOfStringIn(StringBuffer& other)
-    {
-        m_string = other.m_string;
-        other.empty();
-    }
-
 }
