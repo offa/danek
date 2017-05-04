@@ -56,7 +56,7 @@ namespace danek
         {
             const char* sep;
             cfg->mergeNames(scope, name, fullyScopedName);
-            if (errSuffix.length() == 0)
+            if (errSuffix.size() == 0)
             {
                 sep = "";
             }

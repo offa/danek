@@ -139,7 +139,7 @@ namespace danek
             sprintf(digits, "%09ld", m_count);
             m_count++;
             suffix = &(spelling.c_str()[4]); // deep copy
-            spelling.empty();
+            spelling.clear();
             spelling << "uid-" << digits << "-" << suffix;
             return;
         }
@@ -177,7 +177,7 @@ namespace danek
         sprintf(digits, "%09ld", m_count);
         m_count++;
         suffix = ptr; // deep copy just after "uid-<digits>-"
-        spelling.empty();
+        spelling.clear();
         spelling << "uid-" << digits << "-" << suffix;
     }
 
@@ -261,7 +261,7 @@ namespace danek
         StringBuffer suffix;
 
         suffix = (ptr + 1); // deep copy from just after "uid-<digits>-"
-        buf.empty();
+        buf.clear();
         buf << "uid-" << suffix;
         return buf.c_str();
     }

@@ -62,7 +62,7 @@ namespace danek
         }
         else
         {
-            fullyScopedName.empty();
+            fullyScopedName.clear();
             fullyScopedName << scope << "." << localName;
         }
     }

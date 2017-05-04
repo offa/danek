@@ -36,7 +36,7 @@ using namespace danek;
 void calculateRuleForName(const Configuration* cfg, const char* name, const char* uName,
     const StringVector& wildcardedNamesAndTypes, StringBuffer& rule)
 {
-    rule.empty();
+    rule.clear();
     int len = wildcardedNamesAndTypes.size();
     for (int i = 0; i < len; i += 3)
     {

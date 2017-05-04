@@ -103,7 +103,7 @@ namespace danek
             if (!ok)
             {
                 const char* sep;
-                if (errSuffix.length() == 0)
+                if (errSuffix.size() == 0)
                 {
                     sep = "";
                 }

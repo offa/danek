@@ -206,7 +206,7 @@ namespace danek
             case Configuration::SourceType::Exec:
                 if (strcmp(sourceDescription, "") == 0)
                 {
-                    m_fileName.empty();
+                    m_fileName.clear();
                     m_fileName << "exec#" << source;
                 }
                 else

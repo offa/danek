@@ -36,7 +36,7 @@ namespace danek
 
         /** @deprected */
         const char* c_str() const;
-        std::size_t length() const;
+        std::size_t size() const;
         char lastChar() const;
 
         char& operator[](std::size_t index);
@@ -44,7 +44,7 @@ namespace danek
 
         const std::string& str() const;
 
-        void empty();
+        void clear();
 
         void deleteLastChar();
 

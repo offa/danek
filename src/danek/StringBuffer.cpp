@@ -41,7 +41,7 @@ namespace danek
         return m_string.c_str();
     }
 
-    std::size_t StringBuffer::length() const
+    std::size_t StringBuffer::size() const
     {
         return m_string.size();
     }
@@ -66,7 +66,7 @@ namespace danek
         return m_string;
     }
 
-    void StringBuffer::empty()
+    void StringBuffer::clear()
     {
         std::string{}.swap(m_string);
     }

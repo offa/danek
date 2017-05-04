@@ -41,21 +41,21 @@ protected:
 TEST_F(StringBufferTest, emptyPerDefault)
 {
     StringBuffer sb;
-    EXPECT_EQ(0, sb.length());
+    EXPECT_EQ(0, sb.size());
     EXPECT_THAT(sb.str(), StrEq(""));
 }
 
 TEST_F(StringBufferTest, initializeWithString)
 {
     StringBuffer sb{"abc"};
-    EXPECT_EQ(3, sb.length());
+    EXPECT_EQ(3, sb.size());
     EXPECT_THAT(sb.str(), StrEq("abc"));
 }
 
 TEST_F(StringBufferTest, sizeMatchesElements)
 {
     StringBuffer sb{"xy"};
-    EXPECT_EQ(2, sb.length());
+    EXPECT_EQ(2, sb.size());
 }
 
 TEST_F(StringBufferTest, accessLastChar)
@@ -82,8 +82,8 @@ TEST_F(StringBufferTest, stringAccess)
 TEST_F(StringBufferTest, clearElements)
 {
     StringBuffer sb{"1234"};
-    sb.empty();
-    EXPECT_EQ(0, sb.length());
+    sb.clear();
+    EXPECT_EQ(0, sb.size());
 }
 
 TEST_F(StringBufferTest, deleteLastChar)

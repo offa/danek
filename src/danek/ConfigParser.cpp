@@ -128,7 +128,7 @@ namespace danek
             case Configuration::SourceType::Exec:
                 if (strcmp(sourceDescription, "") == 0)
                 {
-                    m_fileName.empty();
+                    m_fileName.clear();
                     m_fileName << "exec#" << source;
                 }
                 else
@@ -688,7 +688,7 @@ namespace danek
 
         accept(ConfigLex::LEX_COPY_FROM_SYM, "expecting '@copyFrom'");
         parseStringExpr(fromScopeName);
-        fromScopeNameLen = fromScopeName.length();
+        fromScopeNameLen = fromScopeName.size();
 
         //--------
         // Consume "@ifExists" if specified
@@ -1007,7 +1007,7 @@ namespace danek
         const char* constStr;
         ConfigItem* item;
 
-        str.empty();
+        str.clear();
         switch (m_token.type())
         {
             case ConfigLex::LEX_FUNC_SIBLING_SCOPE_SYM:
@@ -1200,7 +1200,7 @@ namespace danek
         accept(ConfigLex::LEX_FUNC_READ_FILE_SYM, "expecting 'read.file('");
         parseStringExpr(fileName);
         accept(ConfigLex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
-        str.empty();
+        str.clear();
         if (!file.open(fileName.c_str()))
         {
             msg << "error reading " << fileName << ": " << strerror(errno);
@@ -1234,7 +1234,7 @@ namespace danek
         parseStringExpr(separator);
         accept(ConfigLex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
 
-        str.empty();
+        str.clear();
         len = list.size();
         for (i = 0; i < len; i++)
         {
@@ -1270,7 +1270,7 @@ namespace danek
         accept(ConfigLex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
 
         result = "";
-        searchStrLen = searchStr.length();
+        searchStrLen = searchStr.size();
         int currStart = 0;
         p = strstr(origStr.c_str(), searchStr.c_str());
         while (p != 0)
@@ -1305,7 +1305,7 @@ namespace danek
         accept(ConfigLex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
 
         list.clear();
-        delimLen = delim.length();
+        delimLen = delim.size();
         int currStart = 0;
         p = strstr(str.c_str(), delim.c_str());
         while (p != 0)

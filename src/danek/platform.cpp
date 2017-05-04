@@ -51,7 +51,7 @@ namespace danek
         int len;
         int pcloseStatus;
 
-        output.empty();
+        output.clear();
 
         //--------
         // Execute the command with its stderr and stdout merged together.
@@ -78,7 +78,7 @@ namespace danek
                 output.append((char) ch);
             }
         }
-        len = output.length();
+        len = output.size();
         if (len > 0 && output[len - 1] == '\n')
         {
             output.deleteLastChar();
