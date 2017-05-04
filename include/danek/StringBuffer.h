@@ -54,6 +54,11 @@ namespace danek
         inline char operator[](int index) const;
         inline char& operator[](int index);
 
+        std::string str() const
+        {
+            return std::string(c_str());
+        }
+
         inline void empty();
         inline void deleteLastChar();
         StringBuffer& append(const StringBuffer& other);

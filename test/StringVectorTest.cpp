@@ -130,7 +130,7 @@ TEST_F(StringVectorTest, getCopyOfData)
     EXPECT_EQ(std::string{"3"}, data[0]);
 }
 
-TEST_F(StringVectorTest, lengthMatchesElements)
+TEST_F(StringVectorTest, sizeMatchesElements)
 {
     StringVector v;
     EXPECT_EQ(0, v.size());
@@ -140,7 +140,7 @@ TEST_F(StringVectorTest, lengthMatchesElements)
     EXPECT_EQ(2, v.size());
 }
 
-TEST_F(StringVectorTest, emptyClearsElements)
+TEST_F(StringVectorTest, clearsElements)
 {
     StringVector v;
     v.push_back("3");

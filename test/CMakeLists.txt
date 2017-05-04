@@ -22,6 +22,7 @@ _add_test(StringVectorTest StringVectorTest.cpp danek)
 _add_test(UtilTest UtilTest.cpp danek)
 _add_test(ConfigItemTest ConfigItemTest.cpp danek)
 _add_test(ToStringTest ToStringTest.cpp danek)
+_add_test(StringBufferTest StringBufferTest.cpp danek)
 
 
 add_custom_target(unittest ConfigurationExceptionTest
@@ -29,6 +30,7 @@ add_custom_target(unittest ConfigurationExceptionTest
                         COMMAND UtilTest
                         COMMAND ConfigItemTest
                         COMMAND ToStringTest
+                        COMMAND StringBufferTest
 
                         COMMENT "Running unittests\n\n"
                         VERBATIM
