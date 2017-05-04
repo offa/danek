@@ -137,7 +137,7 @@ namespace danek
         return *this;
     }
 
-    StringBuffer& StringBuffer::operator=(const char* str)
+    StringBuffer& StringBuffer::operator=(const std::string& str)
     {
         m_string = str;
         return *this;

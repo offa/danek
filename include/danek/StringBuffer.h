@@ -61,7 +61,7 @@ namespace danek
         StringBuffer& operator<<(float val);
         StringBuffer& operator<<(char ch);
 
-        StringBuffer& operator=(const char* str);
+        StringBuffer& operator=(const std::string& str);
 
         /** @deprecated */
         void takeOwnershipOfStringIn(StringBuffer& other);
