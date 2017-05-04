@@ -30,10 +30,13 @@ namespace danek
     class StringBuffer
     {
     public:
+
         StringBuffer();
-        explicit StringBuffer(const char* str);
+        explicit StringBuffer(const std::string& str);
+        /** @deprecated */
         StringBuffer(const StringBuffer&);
 
+        /** @deprected */
         const char* c_str() const;
         std::size_t length() const;
         char lastChar() const;
@@ -50,16 +53,16 @@ namespace danek
         StringBuffer& append(char value);
         StringBuffer& append(int value);
         StringBuffer& append(float value);
-        StringBuffer& append(const char* str);
         StringBuffer& append(const std::string& str);
         StringBuffer& append(StringBuffer other);
 
 
         StringBuffer& operator<<(const StringBuffer& other);
-        StringBuffer& operator<<(const char* str);
+        StringBuffer& operator<<(const std::string& str);
         StringBuffer& operator<<(int val);
         StringBuffer& operator<<(float val);
         StringBuffer& operator<<(char ch);
+
         StringBuffer& operator=(const char* str);
         StringBuffer& operator=(const StringBuffer& other);
 

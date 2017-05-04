@@ -32,7 +32,7 @@ namespace danek
     {
     }
 
-    StringBuffer::StringBuffer(const char* str) : m_string(str)
+    StringBuffer::StringBuffer(const std::string& str) : m_string(str)
     {
     }
 
@@ -98,11 +98,6 @@ namespace danek
         return *this;
     }
 
-    StringBuffer& StringBuffer::append(const char* str)
-    {
-        return append(std::string(str));
-    }
-
     StringBuffer& StringBuffer::append(const std::string& str)
     {
         m_string += str;
@@ -122,7 +117,7 @@ namespace danek
         return *this;
     }
 
-    StringBuffer& StringBuffer::operator<<(const char* str)
+    StringBuffer& StringBuffer::operator<<(const std::string& str)
     {
         append(str);
         return *this;
