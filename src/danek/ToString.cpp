@@ -32,13 +32,10 @@ namespace danek
 
     namespace
     {
-        void indent(std::ostream& s, std::size_t level)
+        std::string indent(std::size_t level)
         {
-            if( level > 0 )
-            {
-                constexpr std::size_t indentCount = 4;
-                s << std::string(level * indentCount, ' ');
-            }
+            constexpr std::size_t indentCount = 4;
+            return std::string(level * indentCount, ' ');
         }
 
         std::string escape(const std::string& str)
@@ -73,7 +70,7 @@ namespace danek
         const std::string nameStr = expandUid(name, expandUidNames);
         std::stringstream os;
 
-        indent(os, indentLevel);
+        os << indent(indentLevel);
 
         switch(item.type())
         {
@@ -103,8 +100,7 @@ namespace danek
                     os << nameStr << " {\n";
                     StringBuffer buffer;
                     item.scopeVal()->dump(buffer, expandUidNames, indentLevel + 1);
-                    indent(os, indentLevel);
-                    os << "}\n";
+                    os << indent(indentLevel) << "}\n";
                 }
                 break;
             default:
