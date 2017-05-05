@@ -88,7 +88,7 @@ namespace danek
 
                         std::for_each(std::next(values.cbegin()), values.cend(), [&os](const auto& v)
                         {
-                            os << ", \"" << v << "\"";
+                            os << ", \"" << escape(v) << "\"";
                         });
                     }
 

@@ -55,11 +55,11 @@ TEST_F(ToStringTest, toStringStringItem)
 
 TEST_F(ToStringTest, toStringListItem)
 {
-    const std::vector<std::string> v{"a", "b"};
+    const std::vector<std::string> v{"a", "b\n"};
     ConfigItem item{"name", v};
 
     const auto str = toString(item, "xyz", false);
-    EXPECT_THAT(str, StrEq("xyz = [\"a\", \"b\"];\n"));
+    EXPECT_THAT(str, StrEq("xyz = [\"a\", \"b%n\"];\n"));
 }
 
 TEST_F(ToStringTest, toStringListItemSingleElement)
