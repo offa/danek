@@ -46,10 +46,7 @@ int main(int argc, char** argv)
     StringVector badScopes;
     SchemaValidator fileSv;
     SchemaValidator testSv;
-    int totalCount = 0;
-    int passedCount = 0;
-    int i;
-    int len;
+    std::size_t passedCount = 0;
 
     setlocale(LC_ALL, "");
     parseCmdLineArgs(argc, argv, cfgFile, wantDiagnostics);
@@ -97,8 +94,7 @@ int main(int argc, char** argv)
     //--------
     // Schema validation should succeed for every sub-scope withinin "good".
     //--------
-    len = goodScopes.size();
-    for (i = 0; i < len; i++)
+    for ( std::size_t i = 0; i < goodScopes.size(); i++)
     {
         try
         {
@@ -123,8 +119,7 @@ int main(int argc, char** argv)
     //--------
     // Schema validation should fail for every sub-scope within "bad".
     //--------
-    len = badScopes.size();
-    for (i = 0; i < len; i++)
+    for ( std::size_t i = 0; i < badScopes.size(); i++)
     {
         try
         {
@@ -160,8 +155,8 @@ int main(int argc, char** argv)
         }
     }
 
-    totalCount = goodScopes.size() + badScopes.size();
-    printf("\n%d tests out of %d passed\n\n", passedCount, totalCount);
+    const auto totalCount = goodScopes.size() + badScopes.size();
+    printf("\n%d tests out of %d passed\n\n", static_cast<int>(passedCount), static_cast<int>(totalCount));
 
     cfg->destroy();
     return (int) (passedCount != totalCount);
