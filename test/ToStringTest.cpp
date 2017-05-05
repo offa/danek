@@ -62,6 +62,24 @@ TEST_F(ToStringTest, toStringListItem)
     EXPECT_THAT(str, StrEq("xyz = [\"a\", \"b\"];\n"));
 }
 
+TEST_F(ToStringTest, toStringListItemSingleElement)
+{
+    const std::vector<std::string> v{};
+    ConfigItem item{"name", v};
+
+    const auto str = toString(item, "xyz", false);
+    EXPECT_THAT(str, StrEq("xyz = [];\n"));
+}
+
+TEST_F(ToStringTest, toStringListItemIfEmpty)
+{
+    const std::vector<std::string> v{};
+    ConfigItem item{"name", v};
+
+    const auto str = toString(item, "xyz", false);
+    EXPECT_THAT(str, StrEq("xyz = [];\n"));
+}
+
 TEST_F(ToStringTest, toStringScopeItem)
 {
     const char c = '\0';
