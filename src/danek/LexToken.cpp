@@ -23,7 +23,6 @@
 
 #include "danek/internal/LexToken.h"
 #include "danek/internal/LexBase.h"
-#include <assert.h>
 
 namespace danek
 {

@@ -23,8 +23,6 @@
 
 #pragma once
 
-#include "danek/ConfigurationException.h"
-#include "danek/StringBuffer.h"
 #include "danek/internal/FunctionType.h"
 #include <string>
 #include <cstdint>
