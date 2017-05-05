@@ -32,63 +32,32 @@ namespace danek
     class LexToken
     {
     public:
-        //--------
-        // Ctor, dtor and assignment operator
-        //--------
+
         LexToken();
         LexToken(const LexToken& other);
         LexToken(short type, int lineNum, const char* spelling);
         virtual ~LexToken();
 
-        //--------
-        // Assignment operators
-        //--------
-        LexToken& operator=(const LexToken& other);
-
-        //--------
-        // Accessor functions
-        //--------
-        inline const char* spelling();
-        inline int lineNum();
-        inline short type();
+        const char* spelling();
+        int lineNum();
+        short type();
         const char* typeAsString();
+
         bool isStringFunc();
         bool isListFunc();
         bool isBoolFunc();
 
-        //--------
-        // Modifier function
-        //--------
         void reset(short type, int lineNum, const char* spelling);
-
         void reset(short type, int lineNum, const char* spelling, FunctionType funcType);
 
         void resetWithOwnership(short type, int lineNum, StringBuffer& str);
 
+        LexToken& operator=(const LexToken& other);
+
     protected:
-        //--------
-        // Instance variables
-        //--------
-        short m_type;
+        short m_type;   //  LexBaseSymbols
         StringBuffer m_spelling;
         int m_lineNum;
         FunctionType m_funcType;
     };
-
-    //--------
-    // Inline implementation of some operations
-    //--------
-
-    inline short LexToken::type()
-    {
-        return m_type;
-    }
-    inline const char* LexToken::spelling()
-    {
-        return m_spelling.str().c_str();
-    }
-    inline int LexToken::lineNum()
-    {
-        return m_lineNum;
-    }
 }

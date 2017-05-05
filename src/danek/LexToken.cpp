@@ -21,22 +21,12 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//--------
-// #include's
-//--------
-
 #include "danek/internal/LexToken.h"
 #include "danek/internal/LexBase.h"
 #include <assert.h>
 
 namespace danek
 {
-    //----------------------------------------------------------------------
-    // Function:	Constructor
-    //
-    // Description:
-    //----------------------------------------------------------------------
-
     LexToken::LexToken() : m_type(LexBase::LEX_UNKNOWN_SYM), m_lineNum(-1), m_funcType(FunctionType::None)
     {
     }
@@ -49,32 +39,14 @@ namespace danek
     {
     }
 
-    //----------------------------------------------------------------------
-    // Function:	Constructor
-    //
-    // Description:
-    //----------------------------------------------------------------------
-
     LexToken::LexToken(short type, int lineNum, const char* spelling)
         : m_type(type), m_spelling(spelling), m_lineNum(lineNum), m_funcType(FunctionType::None)
     {
     }
 
-    //----------------------------------------------------------------------
-    // Function:	Destructor
-    //
-    // Description:
-    //----------------------------------------------------------------------
-
     LexToken::~LexToken()
     {
     }
-
-    //----------------------------------------------------------------------
-    // Function:	operator=
-    //
-    // Description:
-    //----------------------------------------------------------------------
 
     LexToken& LexToken::operator=(const LexToken& other)
     {
@@ -88,12 +60,6 @@ namespace danek
         return *this;
     }
 
-    //----------------------------------------------------------------------
-    // Function:	reset()
-    //
-    // Description:	Modifier function
-    //----------------------------------------------------------------------
-
     void LexToken::reset(short type, int lineNum, const char* spelling)
     {
         m_type = type;
@@ -101,12 +67,6 @@ namespace danek
         m_spelling = spelling;
         m_funcType = FunctionType::None;
     }
-
-    //----------------------------------------------------------------------
-    // Function:	reset()
-    //
-    // Description:	Modifier function
-    //----------------------------------------------------------------------
 
     void LexToken::reset(short type, int lineNum, const char* spelling, FunctionType funcType)
     {
@@ -116,12 +76,6 @@ namespace danek
         m_funcType = funcType;
     }
 
-    //----------------------------------------------------------------------
-    // Function:	reset()
-    //
-    // Description:	Modifier function
-    //----------------------------------------------------------------------
-
     void LexToken::resetWithOwnership(short type, int lineNum, StringBuffer& str)
     {
         m_type = type;
@@ -130,14 +84,31 @@ namespace danek
         m_spelling = str;
     }
 
+    const char* LexToken::spelling()
+    {
+        return m_spelling.str().c_str();
+    }
+
+    int LexToken::lineNum()
+    {
+        return m_lineNum;
+    }
+
+    short LexToken::type()
+    {
+        return m_type;
+    }
+
     bool LexToken::isStringFunc()
     {
         return m_funcType == FunctionType::String;
     }
+
     bool LexToken::isListFunc()
     {
         return m_funcType == FunctionType::List;
     }
+
     bool LexToken::isBoolFunc()
     {
         return m_funcType == FunctionType::Bool;

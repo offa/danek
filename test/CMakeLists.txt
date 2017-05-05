@@ -23,6 +23,7 @@ _add_test(UtilTest UtilTest.cpp danek)
 _add_test(ConfigItemTest ConfigItemTest.cpp danek)
 _add_test(ToStringTest ToStringTest.cpp danek)
 _add_test(StringBufferTest StringBufferTest.cpp danek)
+_add_test(LexTokenTest LexTokenTest.cpp danek)
 
 
 add_custom_target(unittest ConfigurationExceptionTest
@@ -31,6 +32,7 @@ add_custom_target(unittest ConfigurationExceptionTest
                         COMMAND ConfigItemTest
                         COMMAND ToStringTest
                         COMMAND StringBufferTest
+                        COMMAND LexTokenTest
 
                         COMMENT "Running unittests\n\n"
                         VERBATIM
