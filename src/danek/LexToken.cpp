@@ -27,7 +27,7 @@
 
 namespace danek
 {
-    LexToken::LexToken() : m_type(LexBase::LEX_UNKNOWN_SYM), m_lineNum(-1), m_funcType(FunctionType::None)
+    LexToken::LexToken() : LexToken(LexBase::LEX_UNKNOWN_SYM, -1, "")
     {
     }
 
