@@ -60,7 +60,7 @@ before_install:
 script:
     - if [[ "$CXX" == clang* ]]; then export CXXFLAGS="-stdlib=libc++"; fi
     - mkdir build && cd build
-    - cmake -DCMAKE_BUILD_TYPE=Release -DDEMOS=ON ..
+    - cmake -DCMAKE_BUILD_TYPE=Release -DDEMOS=ON -DSCHMEA_TESTS=ON ..
     - make
     - make unittest
 
