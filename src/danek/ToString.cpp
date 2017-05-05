@@ -85,14 +85,14 @@ namespace danek
                     os << nameStr << " = [";
                     const auto values = item.listVal();
 
-                    for( std::size_t i=0; i<values.size(); ++i )
+                    if( values.empty() == false )
                     {
-                        os << "\"" << escape(values[i]) << "\"";
+                        os << "\"" << *values.cbegin() << "\"";
 
-                        if( i < values.size()-1 )
+                        std::for_each(std::next(values.cbegin()), values.cend(), [&os](const auto& v)
                         {
-                            os << ", ";
-                        }
+                            os << ", \"" << v << "\"";
+                        });
                     }
 
                     os << "];\n";
