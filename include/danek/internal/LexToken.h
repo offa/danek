@@ -35,7 +35,6 @@ namespace danek
 
         LexToken();
         LexToken(short type, int lineNum, const char* spelling);
-        virtual ~LexToken();
 
         const char* spelling();
         int lineNum();

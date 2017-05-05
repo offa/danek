@@ -36,10 +36,6 @@ namespace danek
     {
     }
 
-    LexToken::~LexToken()
-    {
-    }
-
     void LexToken::reset(short type, int lineNum, const char* spelling)
     {
         m_type = type;
