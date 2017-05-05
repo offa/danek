@@ -23,9 +23,6 @@
 
 #pragma once
 
-//--------
-// #include's and #define's
-//--------
 #include <wchar.h>
 #include "danek/Configuration.h"
 #include "danek/internal/FunctionType.h"

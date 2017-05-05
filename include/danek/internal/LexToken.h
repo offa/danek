@@ -23,9 +23,6 @@
 
 #pragma once
 
-//--------
-// #include's and #define's
-//--------
 #include "danek/ConfigurationException.h"
 #include "danek/StringBuffer.h"
 #include "danek/internal/FunctionType.h"

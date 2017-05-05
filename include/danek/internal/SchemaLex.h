@@ -23,9 +23,6 @@
 
 #pragma once
 
-//--------
-// #include's and #define's
-//--------
 #include "LexBase.h"
 
 namespace danek

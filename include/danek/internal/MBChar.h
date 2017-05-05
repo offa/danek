@@ -23,10 +23,6 @@
 
 #pragma once
 
-//--------
-// #include's and #define's
-//--------
-
 #include <limits.h>
 #include <stdlib.h>
 #include <wchar.h>
