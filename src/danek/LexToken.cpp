@@ -31,17 +31,16 @@ namespace danek
     {
     }
 
-    LexToken::LexToken(short type, int lineNum, const char* spelling)
-        : m_type(type), m_spelling(spelling), m_lineNum(lineNum), m_funcType(FunctionType::None)
+    LexToken::LexToken(short type, int lineNum, const char* spelling) : m_type(type),
+                                                                    m_spelling(spelling),
+                                                                    m_lineNum(lineNum),
+                                                                    m_funcType(FunctionType::None)
     {
     }
 
     void LexToken::reset(short type, int lineNum, const char* spelling)
     {
-        m_type = type;
-        m_lineNum = lineNum;
-        m_spelling = spelling;
-        m_funcType = FunctionType::None;
+        reset(type, lineNum, spelling, FunctionType::None);
     }
 
     void LexToken::reset(short type, int lineNum, const char* spelling, FunctionType funcType)
@@ -54,10 +53,7 @@ namespace danek
 
     void LexToken::resetWithOwnership(short type, int lineNum, StringBuffer& str)
     {
-        m_type = type;
-        m_lineNum = lineNum;
-        m_funcType = FunctionType::None;
-        m_spelling = str;
+        reset(type, lineNum, str.str().c_str(), FunctionType::None);
     }
 
     const char* LexToken::spelling()
