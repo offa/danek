@@ -84,12 +84,10 @@ namespace danek
 
                     if( values.empty() == false )
                     {
-                        os << "\"" << *values.cbegin() << "\"";
-
-                        std::for_each(std::next(values.cbegin()), values.cend(), [&os](const auto& v)
-                        {
-                            os << ", \"" << escape(v) << "\"";
-                        });
+                        using OItr = std::ostream_iterator<std::string>;
+                        const auto l = [](const auto& v) { return "\"" + escape(v) + "\""; };
+                        std::transform(values.cbegin(), std::prev(values.cend()), OItr{os, ", "}, l);
+                        std::transform(std::prev(values.cend()), values.cend(), OItr{os}, l);
                     }
 
                     os << "];\n";
