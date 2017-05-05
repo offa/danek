@@ -34,7 +34,6 @@ namespace danek
     public:
 
         LexToken();
-        LexToken(const LexToken& other);
         LexToken(short type, int lineNum, const char* spelling);
         virtual ~LexToken();
 
@@ -51,8 +50,6 @@ namespace danek
         void reset(short type, int lineNum, const char* spelling, FunctionType funcType);
 
         void resetWithOwnership(short type, int lineNum, StringBuffer& str);
-
-        LexToken& operator=(const LexToken& other);
 
     protected:
         short m_type;   //  LexBaseSymbols

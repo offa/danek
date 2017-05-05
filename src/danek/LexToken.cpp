@@ -31,14 +31,6 @@ namespace danek
     {
     }
 
-    LexToken::LexToken(const LexToken& other)
-        : m_type(other.m_type),
-          m_spelling(other.m_spelling),
-          m_lineNum(other.m_lineNum),
-          m_funcType(other.m_funcType)
-    {
-    }
-
     LexToken::LexToken(short type, int lineNum, const char* spelling)
         : m_type(type), m_spelling(spelling), m_lineNum(lineNum), m_funcType(FunctionType::None)
     {
@@ -46,18 +38,6 @@ namespace danek
 
     LexToken::~LexToken()
     {
-    }
-
-    LexToken& LexToken::operator=(const LexToken& other)
-    {
-        if (this != &other)
-        {
-            this->m_type = other.m_type;
-            this->m_lineNum = other.m_lineNum;
-            m_spelling = other.m_spelling;
-            m_funcType = other.m_funcType;
-        }
-        return *this;
     }
 
     void LexToken::reset(short type, int lineNum, const char* spelling)
