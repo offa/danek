@@ -51,11 +51,6 @@ namespace danek
         m_funcType = funcType;
     }
 
-    void LexToken::resetWithOwnership(short type, std::int32_t lineNum, StringBuffer& str)
-    {
-        reset(type, lineNum, str.str().c_str(), FunctionType::None);
-    }
-
     const std::string& LexToken::spelling() const
     {
         return m_spelling;

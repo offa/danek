@@ -566,11 +566,11 @@ namespace danek
                 try
                 {
                     m_uidIdentifierProcessor->expand(spelling);
-                    token.resetWithOwnership(LEX_IDENT_SYM, lineNum, spelling);
+                    token.reset(LEX_IDENT_SYM, lineNum, spelling.str());
                 }
                 catch (const ConfigurationException&)
                 {
-                    token.resetWithOwnership(LEX_ILLEGAL_IDENT_SYM, lineNum, spelling);
+                    token.reset(LEX_ILLEGAL_IDENT_SYM, lineNum, spelling.str());
                 }
             }
             return;
@@ -581,7 +581,7 @@ namespace danek
         //--------
         spelling << m_ch.c_str();
         nextChar();
-        token.reset(LEX_UNKNOWN_SYM, lineNum, spelling.str().c_str());
+        token.reset(LEX_UNKNOWN_SYM, lineNum, spelling.str());
     }
 
     //----------------------------------------------------------------------
@@ -628,7 +628,7 @@ namespace danek
         //--------
         // At the end of the string.
         //--------
-        token.resetWithOwnership(LEX_STRING_SYM, lineNum, spelling);
+        token.reset(LEX_STRING_SYM, lineNum, spelling.str());
         return;
     }
 
@@ -708,7 +708,7 @@ namespace danek
         //--------
         // At the end of the string.
         //--------
-        token.resetWithOwnership(LEX_STRING_SYM, lineNum, spelling);
+        token.reset(LEX_STRING_SYM, lineNum, spelling.str());
         return;
     }
 
