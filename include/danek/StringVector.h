@@ -84,7 +84,7 @@ namespace danek
         {
             m_data.clear();
         }
-        
+
         void erase(std::vector<std::string>::const_iterator itr)
         {
             m_data.erase(itr);

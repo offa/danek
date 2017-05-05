@@ -21,25 +21,16 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//--------
-// #include's
-//--------
 #include "danek/Configuration.h"
 #include "danek/SchemaValidator.h"
-using config4cpp::Configuration;
-using config4cpp::ConfigurationException;
-using config4cpp::SchemaValidator;
-using config4cpp::StringBuffer;
-using config4cpp::StringVector;
 #include <stdio.h>
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
 #include <locale.h>
 
-//--------
-// Forward declarations
-//--------
+using namespace danek;
+
 static void parseCmdLineArgs(int argc, char** argv, const char*& cfgFile, bool& wantDiagnostics);
 static void usage();
 
@@ -82,10 +73,20 @@ int main(int argc, char** argv)
         fileSv.validate(cfg, "", "");
 
         cfg->lookupList("testSchema", "", testSchema);
-        cfg->listFullyScopedNames("good", "", Configuration::CFG_SCOPE, false, goodScopes);
-        cfg->listFullyScopedNames("bad", "", Configuration::CFG_SCOPE, false, badScopes);
+        cfg->listFullyScopedNames("good", "", ConfType::Scope, false, goodScopes);
+        cfg->listFullyScopedNames("bad", "", ConfType::Scope, false, badScopes);
         testSv.wantDiagnostics(wantDiagnostics);
-        testSv.parseSchema(testSchema.c_array());
+
+        // Deprecated conversion
+        std::vector<const char*> v;
+        v.reserve(testSchema.size());
+
+        for( const auto& s : testSchema.get() )
+        {
+            v.push_back(s.c_str());
+        }
+
+        testSv.parseSchema(v.data());
     }
     catch (const ConfigurationException& ex)
     {
@@ -96,49 +97,49 @@ int main(int argc, char** argv)
     //--------
     // Schema validation should succeed for every sub-scope withinin "good".
     //--------
-    len = goodScopes.length();
+    len = goodScopes.size();
     for (i = 0; i < len; i++)
     {
         try
         {
-            testSv.validate(cfg, goodScopes[i], "");
+            testSv.validate(cfg, goodScopes[i].c_str(), "");
             passedCount++;
         }
         catch (const ConfigurationException& ex)
         {
             try
             {
-                cfg->dump(buf, true, goodScopes[i], "");
+                cfg->dump(buf, true, goodScopes[i].c_str(), "");
             }
             catch (const ConfigurationException& ex2)
             {
                 assert(0); // Bug!
             }
             printf("\n\n--------\n");
-            printf("%s\n\n%s--------\n\n", ex.c_str(), buf.c_str());
+            printf("%s\n\n%s--------\n\n", ex.c_str(), buf.str().c_str());
         }
     }
 
     //--------
     // Schema validation should fail for every sub-scope within "bad".
     //--------
-    len = badScopes.length();
+    len = badScopes.size();
     for (i = 0; i < len; i++)
     {
         try
         {
-            exPattern = cfg->lookupString(badScopes[i], "exception");
-            testSv.validate(cfg, badScopes[i], "");
+            exPattern = cfg->lookupString(badScopes[i].c_str(), "exception");
+            testSv.validate(cfg, badScopes[i].c_str(), "");
             try
             {
-                cfg->dump(buf, true, badScopes[i], "");
+                cfg->dump(buf, true, badScopes[i].c_str(), "");
             }
             catch (const ConfigurationException& ex2)
             {
                 assert(0); // Bug!
             }
             printf("\n\n--------\n");
-            printf("Validation succeeded for scope '%s'\n%s--------\n\n", badScopes[i], buf.c_str());
+            printf("Validation succeeded for scope '%s'\n%s--------\n\n", badScopes[i].c_str(), buf.str().c_str());
         }
         catch (const ConfigurationException& ex)
         {
@@ -152,14 +153,14 @@ int main(int argc, char** argv)
                 printf("Unexpected exception for scope \"%s\"\n"
                        "Pattern \"%s\" does not match "
                        "exception\n\"%s\"\n--------\n\n",
-                    badScopes[i],
+                    badScopes[i].c_str(),
                     exPattern,
                     ex.c_str());
             }
         }
     }
 
-    totalCount = goodScopes.length() + badScopes.length();
+    totalCount = goodScopes.size() + badScopes.size();
     printf("\n%d tests out of %d passed\n\n", passedCount, totalCount);
 
     cfg->destroy();
