@@ -38,12 +38,12 @@ namespace danek
     {
     }
 
-    void LexToken::reset(short type, std::int32_t lineNum, const char* spelling)
+    void LexToken::reset(short type, std::int32_t lineNum, const std::string& spelling)
     {
         reset(type, lineNum, spelling, FunctionType::None);
     }
 
-    void LexToken::reset(short type, std::int32_t lineNum, const char* spelling, FunctionType funcType)
+    void LexToken::reset(short type, std::int32_t lineNum, const std::string& spelling, FunctionType funcType)
     {
         m_type = type;
         m_lineNum = lineNum;

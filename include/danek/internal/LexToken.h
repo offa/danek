@@ -46,8 +46,8 @@ namespace danek
         bool isListFunc() const;
         bool isBoolFunc() const;
 
-        void reset(short type, std::int32_t lineNum, const char* spelling);
-        void reset(short type, std::int32_t lineNum, const char* spelling, FunctionType funcType);
+        void reset(short type, std::int32_t lineNum, const std::string& spelling);
+        void reset(short type, std::int32_t lineNum, const std::string& spelling, FunctionType funcType);
         void resetWithOwnership(short type, std::int32_t lineNum, StringBuffer& str);
 
     private:
