@@ -36,14 +36,14 @@ namespace danek
         LexToken();
         LexToken(short type, int lineNum, const char* spelling);
 
-        const char* spelling();
-        int lineNum();
-        short type();
+        const char* spelling() const;
+        int lineNum() const;
+        short type() const;
         const char* typeAsString();
 
-        bool isStringFunc();
-        bool isListFunc();
-        bool isBoolFunc();
+        bool isStringFunc() const;
+        bool isListFunc() const;
+        bool isBoolFunc() const;
 
         void reset(short type, int lineNum, const char* spelling);
         void reset(short type, int lineNum, const char* spelling, FunctionType funcType);

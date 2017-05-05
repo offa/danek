@@ -56,32 +56,32 @@ namespace danek
         reset(type, lineNum, str.str().c_str(), FunctionType::None);
     }
 
-    const char* LexToken::spelling()
+    const char* LexToken::spelling() const
     {
         return m_spelling.str().c_str();
     }
 
-    int LexToken::lineNum()
+    int LexToken::lineNum() const
     {
         return m_lineNum;
     }
 
-    short LexToken::type()
+    short LexToken::type() const
     {
         return m_type;
     }
 
-    bool LexToken::isStringFunc()
+    bool LexToken::isStringFunc() const
     {
         return m_funcType == FunctionType::String;
     }
 
-    bool LexToken::isListFunc()
+    bool LexToken::isListFunc() const
     {
         return m_funcType == FunctionType::List;
     }
 
-    bool LexToken::isBoolFunc()
+    bool LexToken::isBoolFunc() const
     {
         return m_funcType == FunctionType::Bool;
     }
