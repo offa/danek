@@ -47,10 +47,9 @@ namespace danek
 
         void reset(short type, int lineNum, const char* spelling);
         void reset(short type, int lineNum, const char* spelling, FunctionType funcType);
-
         void resetWithOwnership(short type, int lineNum, StringBuffer& str);
 
-    protected:
+    private:
         short m_type;   //  LexBaseSymbols
         StringBuffer m_spelling;
         int m_lineNum;
