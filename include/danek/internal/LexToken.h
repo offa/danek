@@ -41,7 +41,6 @@ namespace danek
         const std::string& spelling() const;
         std::int32_t lineNum() const;
         short type() const;
-        const char* typeAsString();
 
         bool isStringFunc() const;
         bool isListFunc() const;
