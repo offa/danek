@@ -47,7 +47,7 @@ namespace danek
             output = std::regex_replace(output, std::regex("\n"), "%n");
             output = std::regex_replace(output, std::regex("\""), "%\"");
 
-            return output;
+            return "\"" + output + "\"";
         }
 
 
@@ -75,7 +75,7 @@ namespace danek
         switch(item.type())
         {
             case ConfType::String:
-                os << nameStr << " = \"" << escape(item.stringVal()) << "\";\n";
+                os << nameStr << " = " << escape(item.stringVal()) << ";\n";
                 break;
             case ConfType::List:
                 {
@@ -85,9 +85,8 @@ namespace danek
                     if( values.empty() == false )
                     {
                         using OItr = std::ostream_iterator<std::string>;
-                        const auto l = [](const auto& v) { return "\"" + escape(v) + "\""; };
-                        std::transform(values.cbegin(), std::prev(values.cend()), OItr{os, ", "}, l);
-                        std::transform(std::prev(values.cend()), values.cend(), OItr{os}, l);
+                        std::transform(values.cbegin(), std::prev(values.cend()), OItr{os, ", "}, escape);
+                        std::transform(std::prev(values.cend()), values.cend(), OItr{os}, escape);
                     }
 
                     os << "];\n";
