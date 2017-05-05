@@ -31,10 +31,10 @@ namespace danek
     {
     }
 
-    LexToken::LexToken(short type, std::int32_t lineNum, const char* spelling) : m_type(type),
-                                                                    m_spelling(spelling),
-                                                                    m_lineNum(lineNum),
-                                                                    m_funcType(FunctionType::None)
+    LexToken::LexToken(short type, std::int32_t lineNum, const std::string& spelling) : m_type(type),
+                                                                                    m_spelling(spelling),
+                                                                                    m_lineNum(lineNum),
+                                                                                    m_funcType(FunctionType::None)
     {
     }
 
@@ -56,9 +56,9 @@ namespace danek
         reset(type, lineNum, str.str().c_str(), FunctionType::None);
     }
 
-    const char* LexToken::spelling() const
+    const std::string& LexToken::spelling() const
     {
-        return m_spelling.str().c_str();
+        return m_spelling;
     }
 
     std::int32_t LexToken::lineNum() const

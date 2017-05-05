@@ -840,7 +840,7 @@ namespace danek
         // Create the new scope and put it onto the stack
         //--------
         oldScope = m_config->getCurrScope();
-        m_config->ensureScopeExists(scopeName.spelling(), newScope);
+        m_config->ensureScopeExists(scopeName.spelling().c_str(), newScope);
         m_config->setCurrScope(newScope);
 
         //--------
@@ -871,7 +871,7 @@ namespace danek
         StringBuffer msg;
         bool doAssign;
 
-        switch (m_config->type(varName.spelling(), ""))
+        switch (m_config->type(varName.spelling().c_str(), ""))
         {
             case ConfType::String:
             case ConfType::List:
@@ -921,7 +921,7 @@ namespace danek
                 // of the variable (it is either a string or a list)
                 // in order to proceed with the parsing.
                 //--------
-                switch (m_config->type(m_token.spelling(), ""))
+                switch (m_config->type(m_token.spelling().c_str(), ""))
                 {
                     case ConfType::String:
                         varType = ConfType::String;
@@ -950,14 +950,14 @@ namespace danek
                 parseStringExpr(stringExpr);
                 if (doAssign)
                 {
-                    m_config->insertString("", varName.spelling(), stringExpr.str().c_str());
+                    m_config->insertString("", varName.spelling().c_str(), stringExpr.str().c_str());
                 }
                 break;
             case ConfType::List:
                 parseListExpr(listExpr);
                 if (doAssign)
                 {
-                    m_config->insertList(varName.spelling(), listExpr);
+                    m_config->insertList(varName.spelling().c_str(), listExpr);
                 }
                 break;
             default:
@@ -1091,7 +1091,7 @@ namespace danek
                 m_lex->nextToken(m_token);
                 break;
             case ConfigLex::LEX_IDENT_SYM:
-                m_config->stringValue(m_token.spelling(), m_token.spelling(), constStr, type);
+                m_config->stringValue(m_token.spelling().c_str(), m_token.spelling().c_str(), constStr, type);
                 switch (type)
                 {
                     case ConfType::String:
@@ -1434,7 +1434,7 @@ namespace danek
                 //--------
                 // ident_sym: make sure the identifier is a list
                 //--------
-                m_config->listValue(m_token.spelling(), m_token.spelling(), expr, type);
+                m_config->listValue(m_token.spelling().c_str(), m_token.spelling().c_str(), expr, type);
                 if (type != ConfType::List)
                 {
                     msg << "identifier '" << m_token.spelling() << "' is not a list";

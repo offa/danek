@@ -26,6 +26,7 @@
 #include "danek/ConfigurationException.h"
 #include "danek/StringBuffer.h"
 #include "danek/internal/FunctionType.h"
+#include <string>
 #include <cstdint>
 
 namespace danek
@@ -35,9 +36,9 @@ namespace danek
     public:
 
         LexToken();
-        LexToken(short type, std::int32_t lineNum, const char* spelling);
+        LexToken(short type, std::int32_t lineNum, const std::string& spelling);
 
-        const char* spelling() const;
+        const std::string& spelling() const;
         std::int32_t lineNum() const;
         short type() const;
         const char* typeAsString();
@@ -53,7 +54,7 @@ namespace danek
     private:
 
         short m_type;   //  LexBaseSymbols
-        StringBuffer m_spelling;
+        std::string m_spelling;
         std::int32_t m_lineNum;
         FunctionType m_funcType;
     };
