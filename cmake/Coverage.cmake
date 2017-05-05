@@ -43,6 +43,7 @@ add_custom_target(coverage ${CMAKE_COMMAND} -E make_directory ${COV_DIR}
 
                                 COMMAND ${LCOV}
                                 --remove ${COV_FILE} "*/test/*"
+                                --remove ${COV_FILE} "*/generated/*"
                                 --output-file ${COV_FILE}
 
                                 COMMAND ${LCOV_GENHTML} --legend ${COV_FILE}
