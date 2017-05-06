@@ -38,7 +38,7 @@ int main(int argc, char** argv)
 {
     Configuration* cfg = Configuration::create();
     const char* cfgFile;
-    const char* exPattern;
+    const char* exPattern = nullptr;
     bool wantDiagnostics;
     StringBuffer buf;
     StringVector testSchema;
