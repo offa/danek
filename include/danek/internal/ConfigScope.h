@@ -47,7 +47,7 @@ namespace danek
         ConfigScope(const ConfigScope&) = delete;
         ~ConfigScope();
 
-        const char* scopedName() const;
+        const std::string& scopedName() const;
 
         bool addOrReplaceString(const char* name, const char* str);
         bool addOrReplaceList(const char* name, const StringVector& list);

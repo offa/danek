@@ -706,7 +706,7 @@ namespace danek
         //--------
         // Sanity check: cannot copy from a parent scope
         //--------
-        toScopeName = m_config->getCurrScope()->scopedName();
+        toScopeName = m_config->getCurrScope()->scopedName().c_str();
         if (strcmp(toScopeName, fromScopeName.str().c_str()) == 0)
         {
             throw ConfigurationException("copy statement: cannot copy from own scope");
@@ -1178,7 +1178,7 @@ namespace danek
                 false);
             return;
         }
-        parentScopeName = currScope->parentScope()->scopedName();
+        parentScopeName = currScope->parentScope()->scopedName().c_str();
         parseStringExpr(siblingName);
         accept(ConfigLex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
         Configuration::mergeNames(parentScopeName, siblingName.str().c_str(), str);

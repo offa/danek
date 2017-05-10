@@ -64,9 +64,9 @@ namespace danek
         delete[] m_table;
     }
 
-    const char* ConfigScope::scopedName() const
+    const std::string& ConfigScope::scopedName() const
     {
-        return m_scopedName.str().c_str();
+        return m_scopedName.str();
     }
 
     ConfigScope* ConfigScope::parentScope() const
