@@ -49,9 +49,6 @@ namespace danek
         inline const char* scopedName() const;
 
         bool addOrReplaceString(const char* name, const char* str);
-
-        [[deprecated]]
-        bool addOrReplaceList(const char* name, const char** array, int size);
         bool addOrReplaceList(const char* name, const StringVector& list);
 
         bool ensureScopeExists(const char* name, ConfigScope*& scope);
