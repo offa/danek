@@ -88,8 +88,8 @@ namespace danek
         ConfigScope* m_parentScope;
         StringBuffer m_scopedName;
         ConfigScopeEntry* m_table;
-        int m_tableSize;
-        int m_numEntries;
+        std::size_t m_tableSize;
+        std::size_t m_numEntries;
     };
 
     inline void ConfigScope::listFullyScopedNames(

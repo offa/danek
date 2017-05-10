@@ -78,7 +78,7 @@ namespace danek
     {
         const ConfigScope* scope = this;
 
-        while (scope->m_parentScope != 0)
+        while (scope->m_parentScope != nullptr)
         {
             scope = scope->m_parentScope;
         }
@@ -98,14 +98,14 @@ namespace danek
         int index;
         ConfigScopeEntry* entry = findEntry(name, index);
 
-        if (entry != 0 && entry->type() == ConfType::Scope)
+        if (entry != nullptr && entry->type() == ConfType::Scope)
         {
             //--------
             // Fail because there is a scope with the same name.
             //--------
             return false;
         }
-        else if (entry != 0)
+        else if (entry != nullptr)
         {
             //--------
             // It already exists.
@@ -184,17 +184,14 @@ namespace danek
     bool ConfigScope::ensureScopeExists(const char* name, ConfigScope*& scope)
     {
         int index;
-        ConfigScopeEntry* entry;
-        ConfigScopeEntry* nextEntry;
-        ConfigScopeEntry* newEntry;
+        ConfigScopeEntry* entry = findEntry(name, index);
 
-        entry = findEntry(name, index);
         if (entry && entry->type() != ConfType::Scope)
         {
             //--------
             // Fail because it already exists, but not as a scope
             //--------
-            scope = 0;
+            scope = nullptr;
             return false;
         }
         else if (entry)
@@ -214,9 +211,9 @@ namespace danek
             growIfTooFull();
             index = hash(name);
             entry = &m_table[index];
-            nextEntry = entry->m_next;
+            ConfigScopeEntry* nextEntry = entry->m_next;
             ConfigItem* item = new ConfigItem(name, std::make_unique<ConfigScope>(this, name));
-            newEntry = new ConfigScopeEntry(name, item, nextEntry);
+            ConfigScopeEntry* newEntry = new ConfigScopeEntry(name, item, nextEntry);
             scope = item->scopeVal();
             entry->m_next = newEntry;
         }
@@ -233,13 +230,12 @@ namespace danek
 
     ConfigItem* ConfigScope::findItem(const char* name) const
     {
+        ConfigItem* result = nullptr;
         int index;
-        ConfigScopeEntry* entry;
-        ConfigItem* result;
 
-        result = 0;
-        entry = findEntry(name, index);
-        if (entry != 0)
+        ConfigScopeEntry* entry = findEntry(name, index);
+
+        if (entry != nullptr)
         {
             result = entry->m_item;
         }
@@ -257,10 +253,8 @@ namespace danek
 
     ConfigScopeEntry* ConfigScope::findEntry(const char* name, int& index) const
     {
-        ConfigScopeEntry* entry;
-
         index = hash(name);
-        entry = m_table[index].m_next;
+        ConfigScopeEntry* entry = m_table[index].m_next;
 
         //--------
         // Iterate over singly linked list,
@@ -280,17 +274,13 @@ namespace danek
         //--------
         // Not found.
         //--------
-        return 0;
+        return nullptr;
     }
 
     bool ConfigScope::removeItem(const char* name)
     {
-        ConfigScopeEntry* entry;
-        ConfigScopeEntry* victim;
-        int index;
-
-        index = hash(name);
-        entry = &m_table[index];
+        int index = hash(name);
+        ConfigScopeEntry* entry = &m_table[index];
         //--------
         // Iterate over singly linked list,
         // searching for the named entry.
@@ -302,7 +292,7 @@ namespace danek
                 //--------
                 // Found it!
                 //--------
-                victim = entry->m_next;
+                ConfigScopeEntry* victim = entry->m_next;
                 entry->m_next = victim->m_next;
                 victim->m_next = 0;
                 delete victim;
@@ -327,8 +317,7 @@ namespace danek
     bool ConfigScope::is_in_table(const char* name) const
     {
         int index;
-
-        return (findEntry(name, index) != 0);
+        return (findEntry(name, index) != nullptr);
     }
 
     //----------------------------------------------------------------------
@@ -339,10 +328,8 @@ namespace danek
 
     void ConfigScope::listLocalNames(ConfType typeMask, StringVector& vec) const
     {
-        int i;
-        int countWanted;
-        int countUnwanted;
-        ConfigScopeEntry* entry;
+        std::size_t countWanted = 0;
+        std::size_t countUnwanted = 0;
 
         //--------
         // Iterate over all the entries in the hash table and copy
@@ -350,17 +337,16 @@ namespace danek
         //--------
         vec.clear();
         vec.reserve(m_numEntries);
-        countWanted = 0;
-        countUnwanted = 0;
-        for (i = 0; i < m_tableSize; i++)
+
+        for (std::size_t i = 0; i < m_tableSize; ++i)
         {
-            entry = m_table[i].m_next;
+            ConfigScopeEntry* entry = m_table[i].m_next;
             while (entry)
             {
                 if (static_cast<int>(entry->type()) & static_cast<int>(typeMask))
                 {
                     vec.push_back(entry->name());
-                    countWanted++;
+                    ++countWanted;
                 }
                 else
                 {
@@ -381,8 +367,6 @@ namespace danek
     void ConfigScope::listScopedNamesHelper(const char* prefix, ConfType typeMask, bool recursive,
         const StringVector& filterPatterns, StringVector& vec) const
     {
-        int i;
-        ConfigScopeEntry* entry;
         StringBuffer scopedName;
 
         //--------
@@ -390,9 +374,9 @@ namespace danek
         // their locally-scoped names into the StringVector
         //--------
         vec.reserve(vec.size() + m_numEntries);
-        for (i = 0; i < m_tableSize; i++)
+        for (std::size_t i = 0; i < m_tableSize; i++)
         {
-            entry = m_table[i].m_next;
+            ConfigScopeEntry* entry = m_table[i].m_next;
             while (entry)
             {
                 scopedName = prefix;
@@ -423,19 +407,18 @@ namespace danek
 
     bool ConfigScope::listFilter(const char* name, const StringVector& filterPatterns) const
     {
-        int len;
-        const char* unexpandedName;
-        StringBuffer buf;
         UidIdentifierProcessor uidProc;
+        std::size_t len = filterPatterns.size();
 
-        len = filterPatterns.size();
         if (len == 0)
         {
             return true;
         }
 
-        unexpandedName = uidProc.unexpand(name, buf);
-        for (int i = 0; i < len; i++)
+        StringBuffer buf;
+        const char* unexpandedName = uidProc.unexpand(name, buf);
+
+        for (std::size_t i = 0; i < len; ++i)
         {
             const char* pattern = filterPatterns[i].c_str();
             if (Configuration::patternMatch(unexpandedName, pattern))
@@ -456,10 +439,7 @@ namespace danek
 
     void ConfigScope::dump(StringBuffer& buf, bool wantExpandedUidNames, int indentLevel) const
     {
-        int i;
-        int len;
         StringVector nameVec;
-        ConfigItem* item;
 
         //--------
         // First pass. Dump the variables
@@ -467,10 +447,9 @@ namespace danek
         listLocalNames(ConfType::Variables, nameVec);
         std::sort(nameVec.begin(), nameVec.end());
 
-        len = nameVec.size();
-        for (i = 0; i < len; i++)
+        for (std::size_t i = 0; i < nameVec.size(); i++)
         {
-            item = findItem(nameVec[i].c_str());
+            ConfigItem* item = findItem(nameVec[i].c_str());
             assert(static_cast<int>(item->type()) & static_cast<int>(ConfType::Variables));
 
             const auto str = toString(*item, item->name().c_str(), wantExpandedUidNames, indentLevel);
@@ -483,10 +462,9 @@ namespace danek
         listLocalNames(ConfType::Scope, nameVec);
         std::sort(nameVec.begin(), nameVec.end());
 
-        len = nameVec.size();
-        for (i = 0; i < len; i++)
+        for (std::size_t i = 0; i < nameVec.size(); i++)
         {
-            item = findItem(nameVec[i].c_str());
+            ConfigItem* item = findItem(nameVec[i].c_str());
             assert(item->type() == ConfType::Scope);
             const auto str = toString(*item, item->name().c_str(), wantExpandedUidNames, indentLevel);
             buf << str.c_str();
