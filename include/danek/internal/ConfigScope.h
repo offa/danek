@@ -49,17 +49,17 @@ namespace danek
 
         const std::string& scopedName() const;
 
-        bool addOrReplaceString(const std::string& name, const char* str);
+        bool addOrReplaceString(const std::string& name, const std::string& str);
         bool addOrReplaceList(const std::string& name, const StringVector& list);
 
-        bool ensureScopeExists(const char* name, ConfigScope*& scope);
+        bool ensureScopeExists(const std::string& name, ConfigScope*& scope);
 
-        bool removeItem(const char* name);
+        bool removeItem(const std::string& name);
 
         ConfigItem* findItem(const std::string& name) const;
         ConfigScopeEntry* findEntry(const std::string& name, int& index) const;
 
-        bool is_in_table(const char* name) const;
+        bool is_in_table(const std::string& name) const;
 
         inline void listFullyScopedNames(ConfType typeMask, bool recursive, StringVector& vec) const;
         inline void listFullyScopedNames(ConfType typeMask, bool recursive, const StringVector& filterPatterns, StringVector& vec) const;
@@ -81,8 +81,8 @@ namespace danek
         int hash(const std::string& name) const;
         void growIfTooFull();
         void listLocalNames(ConfType typeMask, StringVector& vec) const;
-        void listScopedNamesHelper(const char* prefix, ConfType typeMask, bool recursive, const StringVector& filterPatterns, StringVector& vec) const;
-        bool listFilter(const char* name, const StringVector& filterPatterns) const;
+        void listScopedNamesHelper(const std::string& prefix, ConfType typeMask, bool recursive, const StringVector& filterPatterns, StringVector& vec) const;
+        bool listFilter(const std::string& name, const StringVector& filterPatterns) const;
 
 
         ConfigScope* m_parentScope;

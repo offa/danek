@@ -94,7 +94,7 @@ namespace danek
     // Notes:	Replaces the previous entry with the same name, if any.
     //----------------------------------------------------------------------
 
-    bool ConfigScope::addOrReplaceString(const std::string& name, const char* str)
+    bool ConfigScope::addOrReplaceString(const std::string& name, const std::string& str)
     {
         int index;
         ConfigScopeEntry* entry = findEntry(name, index);
@@ -182,7 +182,7 @@ namespace danek
     // Description:
     //----------------------------------------------------------------------
 
-    bool ConfigScope::ensureScopeExists(const char* name, ConfigScope*& scope)
+    bool ConfigScope::ensureScopeExists(const std::string& name, ConfigScope*& scope)
     {
         int index;
         ConfigScopeEntry* entry = findEntry(name, index);
@@ -214,7 +214,7 @@ namespace danek
             entry = &m_table[index];
             ConfigScopeEntry* nextEntry = entry->m_next;
             ConfigItem* item = new ConfigItem(name, std::make_unique<ConfigScope>(this, name));
-            ConfigScopeEntry* newEntry = new ConfigScopeEntry(name, item, nextEntry);
+            ConfigScopeEntry* newEntry = new ConfigScopeEntry(name.c_str(), item, nextEntry);
             scope = item->scopeVal();
             entry->m_next = newEntry;
         }
@@ -278,7 +278,7 @@ namespace danek
         return nullptr;
     }
 
-    bool ConfigScope::removeItem(const char* name)
+    bool ConfigScope::removeItem(const std::string& name)
     {
         int index = hash(name);
         ConfigScopeEntry* entry = &m_table[index];
@@ -288,7 +288,7 @@ namespace danek
         //--------
         while (entry->m_next != 0)
         {
-            if (!strcmp(name, entry->m_next->name()))
+            if (!strcmp(name.c_str(), entry->m_next->name()))
             {
                 //--------
                 // Found it!
@@ -315,7 +315,7 @@ namespace danek
     //		Returns false otherwise.
     //----------------------------------------------------------------------
 
-    bool ConfigScope::is_in_table(const char* name) const
+    bool ConfigScope::is_in_table(const std::string& name) const
     {
         int index;
         return (findEntry(name, index) != nullptr);
@@ -365,7 +365,7 @@ namespace danek
     // Description:
     //----------------------------------------------------------------------
 
-    void ConfigScope::listScopedNamesHelper(const char* prefix, ConfType typeMask, bool recursive,
+    void ConfigScope::listScopedNamesHelper(const std::string& prefix, ConfType typeMask, bool recursive,
         const StringVector& filterPatterns, StringVector& vec) const
     {
         StringBuffer scopedName;
@@ -406,7 +406,7 @@ namespace danek
     // Description:
     //----------------------------------------------------------------------
 
-    bool ConfigScope::listFilter(const char* name, const StringVector& filterPatterns) const
+    bool ConfigScope::listFilter(const std::string& name, const StringVector& filterPatterns) const
     {
         UidIdentifierProcessor uidProc;
         std::size_t len = filterPatterns.size();
@@ -417,7 +417,7 @@ namespace danek
         }
 
         StringBuffer buf;
-        const char* unexpandedName = uidProc.unexpand(name, buf);
+        const char* unexpandedName = uidProc.unexpand(name.c_str(), buf);
 
         for (std::size_t i = 0; i < len; ++i)
         {
