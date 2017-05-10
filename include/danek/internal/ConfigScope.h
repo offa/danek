@@ -42,15 +42,10 @@ namespace danek
     class ConfigScope
     {
     public:
-        //--------
-        // Ctors & dtor
-        //--------
+
         ConfigScope(ConfigScope* parentScope, const char* name);
         ~ConfigScope();
 
-        //--------
-        // Operations.
-        //--------
         inline const char* scopedName() const;
 
         bool addOrReplaceString(const char* name, const char* str);
@@ -106,10 +101,6 @@ namespace danek
         int m_tableSize;
         int m_numEntries;
 
-        //--------
-        // Not implemented.
-        //--------
-        ConfigScope();
         ConfigScope(const ConfigScope&);
         ConfigScope& operator=(const ConfigScope&);
     };

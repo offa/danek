@@ -21,9 +21,6 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//--------
-// #include's
-//--------
 #include "danek/internal/ConfigScope.h"
 #include "danek/internal/UidIdentifierProcessor.h"
 #include "danek/internal/ToString.h"
@@ -35,11 +32,6 @@
 
 namespace danek
 {
-    //----------------------------------------------------------------------
-    // Function:	Constructor
-    //
-    // Description:
-    //----------------------------------------------------------------------
 
     ConfigScope::ConfigScope(ConfigScope* parentScope, const char* name)
     {
@@ -64,12 +56,6 @@ namespace danek
         }
         m_localName = name;
     }
-
-    //----------------------------------------------------------------------
-    // Function:	Destructor
-    //
-    // Description:
-    //----------------------------------------------------------------------
 
     ConfigScope::~ConfigScope()
     {
