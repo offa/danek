@@ -49,8 +49,8 @@ namespace danek
 
         const std::string& scopedName() const;
 
-        bool addOrReplaceString(const char* name, const char* str);
-        bool addOrReplaceList(const char* name, const StringVector& list);
+        bool addOrReplaceString(const std::string& name, const char* str);
+        bool addOrReplaceList(const std::string& name, const StringVector& list);
 
         bool ensureScopeExists(const char* name, ConfigScope*& scope);
 

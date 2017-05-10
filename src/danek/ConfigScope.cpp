@@ -94,7 +94,7 @@ namespace danek
     // Notes:	Replaces the previous entry with the same name, if any.
     //----------------------------------------------------------------------
 
-    bool ConfigScope::addOrReplaceString(const char* name, const char* str)
+    bool ConfigScope::addOrReplaceString(const std::string& name, const char* str)
     {
         int index;
         ConfigScopeEntry* entry = findEntry(name, index);
@@ -126,7 +126,7 @@ namespace danek
             index = hash(name);
             entry = &m_table[index];
             ConfigScopeEntry* nextEntry = entry->m_next;
-            ConfigScopeEntry* newEntry = new ConfigScopeEntry(name, new ConfigItem(name, str), nextEntry);
+            ConfigScopeEntry* newEntry = new ConfigScopeEntry(name.c_str(), new ConfigItem(name, str), nextEntry);
             entry->m_next = newEntry;
         }
         return true;
@@ -140,7 +140,7 @@ namespace danek
     // Notes:	Replaces the previous entry with the same name, if any.
     //----------------------------------------------------------------------
 
-    bool ConfigScope::addOrReplaceList(const char* name, const StringVector& list)
+    bool ConfigScope::addOrReplaceList(const std::string& name, const StringVector& list)
     {
         int index;
         ConfigScopeEntry* entry = findEntry(name, index);
@@ -170,7 +170,7 @@ namespace danek
             index = hash(name);
             entry = &m_table[index];
             ConfigScopeEntry* nextEntry = entry->m_next;
-            ConfigScopeEntry* newEntry = new ConfigScopeEntry(name, new ConfigItem(name, list.get()), nextEntry);
+            ConfigScopeEntry* newEntry = new ConfigScopeEntry(name.c_str(), new ConfigItem(name, list.get()), nextEntry);
             entry->m_next = newEntry;
         }
         return true;
