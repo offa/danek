@@ -55,6 +55,7 @@ namespace danek
 
         bool addOrReplaceString(const char* name, const char* str);
 
+        [[deprecated]]
         bool addOrReplaceList(const char* name, const char** array, int size);
         bool addOrReplaceList(const char* name, const StringVector& list);
 
@@ -67,14 +68,9 @@ namespace danek
 
         bool is_in_table(const char* name) const;
 
-        inline void listFullyScopedNames(
-            ConfType typeMask, bool recursive, StringVector& vec) const;
-
-        inline void listFullyScopedNames(ConfType typeMask, bool recursive,
-            const StringVector& filterPatterns, StringVector& vec) const;
-
-        inline void listLocallyScopedNames(ConfType typeMask, bool recursive,
-            const StringVector& filterPatterns, StringVector& vec) const;
+        inline void listFullyScopedNames(ConfType typeMask, bool recursive, StringVector& vec) const;
+        inline void listFullyScopedNames(ConfType typeMask, bool recursive, const StringVector& filterPatterns, StringVector& vec) const;
+        inline void listLocallyScopedNames(ConfType typeMask, bool recursive, const StringVector& filterPatterns, StringVector& vec) const;
 
         inline ConfigScope* parentScope() const;
         ConfigScope* rootScope() const;
