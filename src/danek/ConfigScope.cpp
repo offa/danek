@@ -76,9 +76,8 @@ namespace danek
 
     ConfigScope* ConfigScope::rootScope() const
     {
-        const ConfigScope* scope;
+        const ConfigScope* scope = this;
 
-        scope = this;
         while (scope->m_parentScope != 0)
         {
             scope = scope->m_parentScope;
@@ -97,11 +96,7 @@ namespace danek
     bool ConfigScope::addOrReplaceString(const char* name, const char* str)
     {
         int index;
-        ConfigScopeEntry* entry;
-        ConfigScopeEntry* nextEntry;
-        ConfigScopeEntry* newEntry;
-
-        entry = findEntry(name, index);
+        ConfigScopeEntry* entry = findEntry(name, index);
 
         if (entry != 0 && entry->type() == ConfType::Scope)
         {
@@ -129,8 +124,8 @@ namespace danek
             growIfTooFull();
             index = hash(name);
             entry = &m_table[index];
-            nextEntry = entry->m_next;
-            newEntry = new ConfigScopeEntry(name, new ConfigItem(name, str), nextEntry);
+            ConfigScopeEntry* nextEntry = entry->m_next;
+            ConfigScopeEntry* newEntry = new ConfigScopeEntry(name, new ConfigItem(name, str), nextEntry);
             entry->m_next = newEntry;
         }
         return true;
@@ -147,11 +142,8 @@ namespace danek
     bool ConfigScope::addOrReplaceList(const char* name, const StringVector& list)
     {
         int index;
-        ConfigScopeEntry* entry;
-        ConfigScopeEntry* nextEntry;
-        ConfigScopeEntry* newEntry;
+        ConfigScopeEntry* entry = findEntry(name, index);
 
-        entry = findEntry(name, index);
         if (entry && entry->type() == ConfType::Scope)
         {
             //--------
@@ -176,8 +168,8 @@ namespace danek
             growIfTooFull();
             index = hash(name);
             entry = &m_table[index];
-            nextEntry = entry->m_next;
-            newEntry = new ConfigScopeEntry(name, new ConfigItem(name, list.get()), nextEntry);
+            ConfigScopeEntry* nextEntry = entry->m_next;
+            ConfigScopeEntry* newEntry = new ConfigScopeEntry(name, new ConfigItem(name, list.get()), nextEntry);
             entry->m_next = newEntry;
         }
         return true;
