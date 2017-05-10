@@ -479,11 +479,9 @@ namespace danek
 
     int ConfigScope::hash(const char* name) const
     {
-        int result;
-        const char* p;
+        int result = 0;
 
-        result = 0;
-        for (p = name; *p != '\0'; p++)
+        for (const char* p = name; *p != '\0'; p++)
         {
             result += (*p);
         }
@@ -500,30 +498,23 @@ namespace danek
 
     void ConfigScope::growIfTooFull()
     {
-        int origTableSize;
-        int i;
-        int index;
-        ConfigScopeEntry* origTable;
-        ConfigScopeEntry* entry;
-        ConfigScopeEntry* nextEntry;
-
         if (m_numEntries * 2 < m_tableSize)
         {
             return;
         }
 
-        origTable = m_table;
-        origTableSize = m_tableSize;
+        ConfigScopeEntry* origTable = m_table;
+        std::size_t origTableSize = m_tableSize;
         m_tableSize = m_tableSize * 2;
         m_table = new ConfigScopeEntry[m_tableSize];
 
-        for (i = 0; i < origTableSize; i++)
+        for (std::size_t i = 0; i < origTableSize; i++)
         {
-            entry = origTable[i].m_next;
+            ConfigScopeEntry* entry = origTable[i].m_next;
             while (entry)
             {
-                index = hash(entry->name());
-                nextEntry = entry->m_next;
+                const auto index = hash(entry->name());
+                ConfigScopeEntry* nextEntry = entry->m_next;
                 entry->m_next = m_table[index].m_next;
                 m_table[index].m_next = entry;
                 entry = nextEntry;
