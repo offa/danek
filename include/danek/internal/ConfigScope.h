@@ -76,25 +76,15 @@ namespace danek
         //--------
         void dump(StringBuffer& buf, bool wantExpandedUidNames, int indentLevel = 0) const;
 
-    protected:
-        //--------
-        // Helper operations
-        //--------
+    private:
+
         int hash(const char* name) const;
-
         void growIfTooFull();
-
         void listLocalNames(ConfType typeMask, StringVector& vec) const;
-
-        void listScopedNamesHelper(const char* prefix, ConfType typeMask, bool recursive,
-            const StringVector& filterPatterns, StringVector& vec) const;
-
+        void listScopedNamesHelper(const char* prefix, ConfType typeMask, bool recursive, const StringVector& filterPatterns, StringVector& vec) const;
         bool listFilter(const char* name, const StringVector& filterPatterns) const;
 
-    protected:
-        //--------
-        // Instance variables
-        //--------
+
         ConfigScope* m_parentScope;
         StringBuffer m_scopedName;
         StringBuffer m_localName;
