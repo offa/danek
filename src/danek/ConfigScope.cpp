@@ -54,7 +54,6 @@ namespace danek
             }
             m_scopedName.append(name);
         }
-        m_localName = name;
     }
 
     ConfigScope::~ConfigScope()

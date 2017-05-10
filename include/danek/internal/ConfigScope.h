@@ -87,7 +87,6 @@ namespace danek
 
         ConfigScope* m_parentScope;
         StringBuffer m_scopedName;
-        StringBuffer m_localName;
         ConfigScopeEntry* m_table;
         int m_tableSize;
         int m_numEntries;
