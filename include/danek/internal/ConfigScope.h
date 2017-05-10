@@ -44,6 +44,7 @@ namespace danek
     public:
 
         ConfigScope(ConfigScope* parentScope, const char* name);
+        ConfigScope(const ConfigScope&) = delete;
         ~ConfigScope();
 
         inline const char* scopedName() const;
@@ -66,6 +67,9 @@ namespace danek
 
         inline ConfigScope* parentScope() const;
         ConfigScope* rootScope() const;
+
+
+        ConfigScope& operator=(const ConfigScope&) = delete;
 
         //--------
         // Debugging aids
@@ -97,9 +101,6 @@ namespace danek
         ConfigScopeEntry* m_table;
         int m_tableSize;
         int m_numEntries;
-
-        ConfigScope(const ConfigScope&);
-        ConfigScope& operator=(const ConfigScope&);
     };
 
     inline ConfigScope* ConfigScope::parentScope() const
