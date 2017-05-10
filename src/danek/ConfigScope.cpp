@@ -62,11 +62,15 @@ namespace danek
         delete[] m_table;
     }
 
-    //----------------------------------------------------------------------
-    // Function:	rootScope
-    //
-    // Description:
-    //----------------------------------------------------------------------
+    const char* ConfigScope::scopedName() const
+    {
+        return m_scopedName.str().c_str();
+    }
+
+    ConfigScope* ConfigScope::parentScope() const
+    {
+        return m_parentScope;
+    }
 
     ConfigScope* ConfigScope::rootScope() const
     {

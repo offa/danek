@@ -47,7 +47,7 @@ namespace danek
         ConfigScope(const ConfigScope&) = delete;
         ~ConfigScope();
 
-        inline const char* scopedName() const;
+        const char* scopedName() const;
 
         bool addOrReplaceString(const char* name, const char* str);
         bool addOrReplaceList(const char* name, const StringVector& list);
@@ -65,7 +65,7 @@ namespace danek
         inline void listFullyScopedNames(ConfType typeMask, bool recursive, const StringVector& filterPatterns, StringVector& vec) const;
         inline void listLocallyScopedNames(ConfType typeMask, bool recursive, const StringVector& filterPatterns, StringVector& vec) const;
 
-        inline ConfigScope* parentScope() const;
+        ConfigScope* parentScope() const;
         ConfigScope* rootScope() const;
 
 
@@ -92,16 +92,6 @@ namespace danek
         int m_tableSize;
         int m_numEntries;
     };
-
-    inline ConfigScope* ConfigScope::parentScope() const
-    {
-        return m_parentScope;
-    }
-
-    inline const char* ConfigScope::scopedName() const
-    {
-        return m_scopedName.str().c_str();
-    }
 
     inline void ConfigScope::listFullyScopedNames(
         ConfType typeMask, bool recursive, StringVector& vec) const
