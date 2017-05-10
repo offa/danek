@@ -33,7 +33,7 @@
 namespace danek
 {
 
-    ConfigScope::ConfigScope(ConfigScope* parentScope, const char* name)
+    ConfigScope::ConfigScope(ConfigScope* parentScope, const std::string& name)
     {
         m_parentScope = parentScope;
         m_tableSize = 16;
@@ -42,7 +42,10 @@ namespace danek
 
         if (m_parentScope == 0)
         {
-            assert(name[0] == '\0');
+            if( name.empty() == false )
+            {
+                throw std::invalid_argument("Name is invalid on root element");
+            }
             m_scopedName = "";
         }
         else

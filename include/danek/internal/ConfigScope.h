@@ -43,7 +43,7 @@ namespace danek
     {
     public:
 
-        ConfigScope(ConfigScope* parentScope, const char* name);
+        ConfigScope(ConfigScope* parentScope, const std::string& name);
         ConfigScope(const ConfigScope&) = delete;
         ~ConfigScope();
 

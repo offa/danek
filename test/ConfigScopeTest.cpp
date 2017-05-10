@@ -38,6 +38,11 @@ TEST_F(ConfigScopeTest, initRootElement)
     EXPECT_THAT(s.parentScope(), Eq(nullptr));
 }
 
+TEST_F(ConfigScopeTest, initRootElementThrowsIfNameIsPassed)
+{
+    EXPECT_THROW(ConfigScope(nullptr, "invalid"), std::invalid_argument);
+}
+
 TEST_F(ConfigScopeTest, initNodeElement)
 {
     ConfigScope root{nullptr, "\0"};
