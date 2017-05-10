@@ -56,8 +56,8 @@ namespace danek
 
         bool removeItem(const char* name);
 
-        ConfigItem* findItem(const char* name) const;
-        ConfigScopeEntry* findEntry(const char* name, int& index) const;
+        ConfigItem* findItem(const std::string& name) const;
+        ConfigScopeEntry* findEntry(const std::string& name, int& index) const;
 
         bool is_in_table(const char* name) const;
 
@@ -78,7 +78,7 @@ namespace danek
 
     private:
 
-        int hash(const char* name) const;
+        int hash(const std::string& name) const;
         void growIfTooFull();
         void listLocalNames(ConfType typeMask, StringVector& vec) const;
         void listScopedNamesHelper(const char* prefix, ConfType typeMask, bool recursive, const StringVector& filterPatterns, StringVector& vec) const;

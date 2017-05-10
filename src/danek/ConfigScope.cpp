@@ -26,6 +26,7 @@
 #include "danek/internal/ToString.h"
 #include "danek/Configuration.h"
 #include <algorithm>
+#include <numeric>
 #include <string.h>
 #include <assert.h>
 #include <stdlib.h>
@@ -228,7 +229,7 @@ namespace danek
     // Notes:	Returns a nil pointer on failure.
     //----------------------------------------------------------------------
 
-    ConfigItem* ConfigScope::findItem(const char* name) const
+    ConfigItem* ConfigScope::findItem(const std::string& name) const
     {
         ConfigItem* result = nullptr;
         int index;
@@ -251,7 +252,7 @@ namespace danek
     //		Always returns the index (both on success and failure).
     //----------------------------------------------------------------------
 
-    ConfigScopeEntry* ConfigScope::findEntry(const char* name, int& index) const
+    ConfigScopeEntry* ConfigScope::findEntry(const std::string& name, int& index) const
     {
         index = hash(name);
         ConfigScopeEntry* entry = m_table[index].m_next;
@@ -262,7 +263,7 @@ namespace danek
         //--------
         while (entry)
         {
-            if (!strcmp(name, entry->name()))
+            if (!strcmp(name.c_str(), entry->name()))
             {
                 //--------
                 // Found it!
@@ -477,17 +478,12 @@ namespace danek
     // Description:	Hashes the name to provide an integer value.
     //----------------------------------------------------------------------
 
-    int ConfigScope::hash(const char* name) const
+    int ConfigScope::hash(const std::string& name) const
     {
-        int result = 0;
+        const int result = std::accumulate(name.cbegin(), name.cend(), 0,
+                                [](auto init, auto value) { return init + value; });
 
-        for (const char* p = name; *p != '\0'; p++)
-        {
-            result += (*p);
-        }
-        result = result % m_tableSize;
-
-        return result;
+        return result % m_tableSize;
     }
 
     //----------------------------------------------------------------------
