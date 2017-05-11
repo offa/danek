@@ -121,7 +121,7 @@ namespace danek
             // It doesn't already exist.
             // Add a new entry into the list.
             //--------
-            m_numEntries++;
+            ++m_numEntries;
             growIfTooFull();
             index = hash(name);
             entry = &m_table[index];
@@ -165,7 +165,7 @@ namespace danek
             //--------
             // It doesn't already exist. Add a new entry into the list.
             //--------
-            m_numEntries++;
+            ++m_numEntries;
             growIfTooFull();
             index = hash(name);
             entry = &m_table[index];
@@ -208,7 +208,7 @@ namespace danek
             //--------
             // It doesn't already exist. Add a new entry into the list.
             //--------
-            m_numEntries++;
+            ++m_numEntries;
             growIfTooFull();
             index = hash(name);
             entry = &m_table[index];
@@ -351,7 +351,7 @@ namespace danek
                 }
                 else
                 {
-                    countUnwanted++;
+                    ++countUnwanted;
                 }
                 entry = entry->m_next;
             }
@@ -375,7 +375,7 @@ namespace danek
         // their locally-scoped names into the StringVector
         //--------
         vec.reserve(vec.size() + m_numEntries);
-        for (std::size_t i = 0; i < m_tableSize; i++)
+        for (std::size_t i = 0; i < m_tableSize; ++i)
         {
             ConfigScopeEntry* entry = m_table[i].m_next;
             while (entry)
@@ -448,7 +448,7 @@ namespace danek
         listLocalNames(ConfType::Variables, nameVec);
         std::sort(nameVec.begin(), nameVec.end());
 
-        for (std::size_t i = 0; i < nameVec.size(); i++)
+        for (std::size_t i = 0; i < nameVec.size(); ++i)
         {
             ConfigItem* item = findItem(nameVec[i].c_str());
             assert(static_cast<int>(item->type()) & static_cast<int>(ConfType::Variables));
@@ -463,7 +463,7 @@ namespace danek
         listLocalNames(ConfType::Scope, nameVec);
         std::sort(nameVec.begin(), nameVec.end());
 
-        for (std::size_t i = 0; i < nameVec.size(); i++)
+        for (std::size_t i = 0; i < nameVec.size(); ++i)
         {
             ConfigItem* item = findItem(nameVec[i].c_str());
             assert(item->type() == ConfType::Scope);
@@ -504,7 +504,7 @@ namespace danek
         m_tableSize = m_tableSize * 2;
         m_table = new ConfigScopeEntry[m_tableSize];
 
-        for (std::size_t i = 0; i < origTableSize; i++)
+        for (std::size_t i = 0; i < origTableSize; ++i)
         {
             ConfigScopeEntry* entry = origTable[i].m_next;
             while (entry)
