@@ -36,11 +36,6 @@ namespace danek
     {
     }
 
-    const char* StringBuffer::c_str() const
-    {
-        return m_string.c_str();
-    }
-
     std::size_t StringBuffer::size() const
     {
         return m_string.size();

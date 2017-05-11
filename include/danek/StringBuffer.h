@@ -34,9 +34,6 @@ namespace danek
         StringBuffer();
         explicit StringBuffer(const std::string& str);
 
-        /** @deprected */
-        [[deprecated]]
-        const char* c_str() const;
         std::size_t size() const;
 
         char& operator[](std::size_t index);
