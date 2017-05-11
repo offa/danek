@@ -92,23 +92,19 @@ namespace danek
         std::size_t m_numEntries;
     };
 
-    inline void ConfigScope::listFullyScopedNames(
-        ConfType typeMask, bool recursive, StringVector& vec) const
+    inline void ConfigScope::listFullyScopedNames(ConfType typeMask, bool recursive, StringVector& vec) const
     {
         StringVector filterPatterns;
-
         listScopedNamesHelper(m_scopedName.str().c_str(), typeMask, recursive, filterPatterns, vec);
     }
 
-    inline void ConfigScope::listFullyScopedNames(ConfType typeMask, bool recursive,
-        const StringVector& filterPatterns, StringVector& vec) const
+    inline void ConfigScope::listFullyScopedNames(ConfType typeMask, bool recursive, const StringVector& filterPatterns, StringVector& vec) const
     {
         vec.clear();
         listScopedNamesHelper(m_scopedName.str().c_str(), typeMask, recursive, filterPatterns, vec);
     }
 
-    inline void ConfigScope::listLocallyScopedNames(ConfType typeMask, bool recursive,
-        const StringVector& filterPatterns, StringVector& vec) const
+    inline void ConfigScope::listLocallyScopedNames(ConfType typeMask, bool recursive, const StringVector& filterPatterns, StringVector& vec) const
     {
         vec.clear();
         listScopedNamesHelper("", typeMask, recursive, filterPatterns, vec);
