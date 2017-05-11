@@ -65,8 +65,12 @@ TEST_F(ConfigScopeTest, rootScope)
     ConfigScope root{nullptr, "\0"};
     ConfigScope parent{&root, "xyz"};
     ConfigScope node{&parent, "abc"};
+    ConfigScope node2{&parent, "def"};
+    ConfigScope node3{&node2, "ghi"};
     EXPECT_THAT(parent.rootScope(), Eq(&root));
     EXPECT_THAT(node.rootScope(), Eq(&root));
+    EXPECT_THAT(node2.rootScope(), Eq(&root));
+    EXPECT_THAT(node3.rootScope(), Eq(&root));
 }
 
 TEST_F(ConfigScopeTest, rootScopeOnRootElement)
