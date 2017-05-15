@@ -36,7 +36,7 @@ namespace danek
     public:
 
         ConfigScopeEntry();
-        ConfigScopeEntry(ConfigItem* item, ConfigScopeEntry* next);
+        ConfigScopeEntry(ConfigItem* item);
         ConfigScopeEntry(const ConfigScopeEntry&) = delete;
         ~ConfigScopeEntry();
 
@@ -54,7 +54,6 @@ namespace danek
         friend class ConfigScope;
 
         ConfigItem* m_item;
-        ConfigScopeEntry* m_next;
 
     };
 

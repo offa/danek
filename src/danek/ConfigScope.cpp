@@ -88,7 +88,7 @@ namespace danek
         }
         else
         {
-            m_table.push_back(std::make_unique<ConfigScopeEntry>(new ConfigItem(name, str), nullptr));
+            m_table.push_back(std::make_unique<ConfigScopeEntry>(new ConfigItem(name, str)));
         }
 
         return true;
@@ -110,7 +110,7 @@ namespace danek
         }
         else
         {
-            m_table.push_back(std::make_unique<ConfigScopeEntry>(new ConfigItem(name, list.get()), nullptr));
+            m_table.push_back(std::make_unique<ConfigScopeEntry>(new ConfigItem(name, list.get())));
         }
 
         return true;
@@ -133,7 +133,7 @@ namespace danek
         else
         {
             ConfigItem* item = new ConfigItem(name, std::make_unique<ConfigScope>(this, name));
-            m_table.push_back(std::make_unique<ConfigScopeEntry>(item, nullptr));
+            m_table.push_back(std::make_unique<ConfigScopeEntry>(item));
             scope = item->scopeVal();
         }
 

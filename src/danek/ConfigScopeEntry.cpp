@@ -29,19 +29,17 @@
 
 namespace danek
 {
-    ConfigScopeEntry::ConfigScopeEntry() : ConfigScopeEntry(nullptr, nullptr)
+    ConfigScopeEntry::ConfigScopeEntry() : ConfigScopeEntry(nullptr)
     {
     }
 
-    ConfigScopeEntry::ConfigScopeEntry(ConfigItem* item, ConfigScopeEntry* next) : m_item(item),
-                                                                                m_next(next)
+    ConfigScopeEntry::ConfigScopeEntry(ConfigItem* item) : m_item(item)
     {
     }
 
     ConfigScopeEntry::~ConfigScopeEntry()
     {
         delete m_item;
-        delete m_next;
     }
 
     const std::string& ConfigScopeEntry::name() const

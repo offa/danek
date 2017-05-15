@@ -35,7 +35,7 @@ class ConfigScopeEntryTest : public testing::Test
 TEST_F(ConfigScopeEntryTest, values)
 {
     ConfigItem* item = new ConfigItem("item-name", "value");
-    ConfigScopeEntry entry{item, nullptr};
+    ConfigScopeEntry entry{item};
     EXPECT_THAT(entry.name(), StrEq("item-name"));
     EXPECT_THAT(entry.item(), Eq(item));
     EXPECT_THAT(entry.type(), Eq(item->type()));
@@ -45,7 +45,7 @@ TEST_F(ConfigScopeEntryTest, changeItem)
 {
     ConfigItem* itemOld = new ConfigItem("name", "value");
     ConfigItem* itemNew = new ConfigItem("new-name", "new-value");
-    ConfigScopeEntry entry{itemOld, nullptr};
+    ConfigScopeEntry entry{itemOld};
     entry.setItem(itemNew);
     EXPECT_THAT(entry.name(), StrEq("new-name"));
     EXPECT_THAT(entry.item(), Eq(itemNew));
