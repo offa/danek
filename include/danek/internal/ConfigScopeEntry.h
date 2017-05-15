@@ -40,6 +40,7 @@ namespace danek
 
         ConfigScopeEntry();
         ConfigScopeEntry(ConfigItem* item, ConfigScopeEntry* next);
+        ConfigScopeEntry(const ConfigScopeEntry&) = delete;
         ~ConfigScopeEntry();
 
         inline const char* name();
@@ -47,15 +48,16 @@ namespace danek
         inline ConfType type();
         void setItem(ConfigItem* item);
 
+
+        ConfigScopeEntry& operator=(const ConfigScopeEntry&) = delete;
+
+
     protected:
         friend class ConfigScope;
 
         ConfigItem* m_item;
         ConfigScopeEntry* m_next;
 
-    private:
-
-        ConfigScopeEntry& operator=(const ConfigScopeEntry&);
     };
 
     inline const char* ConfigScopeEntry::name()
