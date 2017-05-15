@@ -263,7 +263,7 @@ TEST_F(ConfigScopeTest, removeItemDoesNothingIfNotFound)
     EXPECT_TRUE(root.contains("n2"));
 }
 
-TEST_F(ConfigScopeTest, isInTableIfFound)
+TEST_F(ConfigScopeTest, containsIfFound)
 {
     ConfigScope root{nullptr, "\0"};
     root.addOrReplaceString("n1", "123");
@@ -273,7 +273,7 @@ TEST_F(ConfigScopeTest, isInTableIfFound)
     EXPECT_TRUE(result);
 }
 
-TEST_F(ConfigScopeTest, isInTableIfNotFound)
+TEST_F(ConfigScopeTest, containsIfNotFound)
 {
     ConfigScope root{nullptr, "\0"};
     root.addOrReplaceString("n1", "123");
