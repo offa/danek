@@ -29,16 +29,13 @@
 
 namespace danek
 {
-    ConfigScopeEntry::ConfigScopeEntry()
+    ConfigScopeEntry::ConfigScopeEntry() : ConfigScopeEntry(nullptr, nullptr)
     {
-        m_item = nullptr;
-        m_next = nullptr;
     }
 
-    ConfigScopeEntry::ConfigScopeEntry(ConfigItem* item, ConfigScopeEntry* next)
+    ConfigScopeEntry::ConfigScopeEntry(ConfigItem* item, ConfigScopeEntry* next) : m_item(item),
+                                                                                m_next(next)
     {
-        m_item = item;
-        m_next = next;
     }
 
     ConfigScopeEntry::~ConfigScopeEntry()
