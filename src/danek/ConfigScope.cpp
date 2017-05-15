@@ -152,18 +152,6 @@ namespace danek
         return nullptr;
     }
 
-    ConfigScopeEntry* ConfigScope::findEntry(const std::string& name) const
-    {
-        auto pos = std::find_if(m_table.begin(), m_table.end(), [&name](const auto& v) { return v->name() == name; });
-
-        if( pos != m_table.cend() )
-        {
-            return pos->get();
-        }
-
-        return nullptr;
-    }
-
     bool ConfigScope::removeItem(const std::string& name)
     {
         auto pos = std::find_if(m_table.begin(), m_table.end(), [&name](const auto& v) { return v->name() == name; });
@@ -177,9 +165,9 @@ namespace danek
         return false;
     }
 
-    bool ConfigScope::is_in_table(const std::string& name) const
+    bool ConfigScope::contains(const std::string& name) const
     {
-        return (findEntry(name) != nullptr);
+        return std::find_if(m_table.cbegin(), m_table.cend(), [&name](const auto& v) { return v->name() == name; }) != m_table.cend();
     }
 
     void ConfigScope::listFullyScopedNames(ConfType typeMask, bool recursive, StringVector& vec) const

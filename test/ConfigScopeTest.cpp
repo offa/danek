@@ -248,7 +248,7 @@ TEST_F(ConfigScopeTest, removeItemRemovesItem)
     const auto result = root.removeItem("n2");
 
     EXPECT_TRUE(result);
-    EXPECT_FALSE(root.is_in_table("n2"));
+    EXPECT_FALSE(root.contains("n2"));
 }
 
 TEST_F(ConfigScopeTest, removeItemDoesNothingIfNotFound)
@@ -259,8 +259,8 @@ TEST_F(ConfigScopeTest, removeItemDoesNothingIfNotFound)
     const auto result = root.removeItem("n3");
 
     EXPECT_FALSE(result);
-    EXPECT_TRUE(root.is_in_table("n1"));
-    EXPECT_TRUE(root.is_in_table("n2"));
+    EXPECT_TRUE(root.contains("n1"));
+    EXPECT_TRUE(root.contains("n2"));
 }
 
 TEST_F(ConfigScopeTest, isInTableIfFound)
@@ -269,7 +269,7 @@ TEST_F(ConfigScopeTest, isInTableIfFound)
     root.addOrReplaceString("n1", "123");
     root.addOrReplaceString("n2", "456");
 
-    const auto result = root.is_in_table("n2");
+    const auto result = root.contains("n2");
     EXPECT_TRUE(result);
 }
 
@@ -279,39 +279,8 @@ TEST_F(ConfigScopeTest, isInTableIfNotFound)
     root.addOrReplaceString("n1", "123");
     root.addOrReplaceString("n2", "456");
 
-    const auto result = root.is_in_table("n3");
+    const auto result = root.contains("n3");
     EXPECT_FALSE(result);
-}
-
-TEST_F(ConfigScopeTest, findEntryIfEmpty)
-{
-    ConfigScope root{nullptr, "\0"};
-    const auto entry = root.findEntry("x");
-    EXPECT_THAT(entry, Eq(nullptr));
-}
-
-TEST_F(ConfigScopeTest, findEntryIfFound)
-{
-    ConfigScope root{nullptr, "\0"};
-    root.addOrReplaceString("n1", "aa");
-    root.addOrReplaceString("n2", "bb");
-    root.addOrReplaceString("n3", "cc");
-
-    const auto entry = root.findEntry("n3");
-    EXPECT_THAT(entry->name(), StrEq("n3"));
-    EXPECT_THAT(entry->item()->stringVal(), StrEq("cc"));
-    EXPECT_THAT(entry->type(), Eq(ConfType::String));
-}
-
-TEST_F(ConfigScopeTest, findEntryIfNotFound)
-{
-    ConfigScope root{nullptr, "\0"};
-    root.addOrReplaceString("n1", "123");
-    root.addOrReplaceString("n2", "456");
-    root.addOrReplaceString("n3", "789");
-
-    const auto item = root.findEntry("not-found");
-    EXPECT_THAT(item, Eq(nullptr));
 }
 
 TEST_F(ConfigScopeTest, listFullyScopedNames)

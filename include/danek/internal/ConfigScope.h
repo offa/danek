@@ -57,9 +57,8 @@ namespace danek
         bool removeItem(const std::string& name);
 
         ConfigItem* findItem(const std::string& name) const;
-        ConfigScopeEntry* findEntry(const std::string& name) const;
 
-        bool is_in_table(const std::string& name) const;
+        bool contains(const std::string& name) const;
 
         void listFullyScopedNames(ConfType typeMask, bool recursive, StringVector& vec) const;
         void listFullyScopedNames(ConfType typeMask, bool recursive, const StringVector& filterPatterns, StringVector& vec) const;
