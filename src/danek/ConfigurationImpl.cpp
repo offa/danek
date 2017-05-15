@@ -48,9 +48,9 @@ namespace danek
     ConfigurationImpl::ConfigurationImpl()
     {
         m_fileName = "<no file>";
-        m_rootScope = new ConfigScope(0, "");
+        m_rootScope = new ConfigScope(nullptr, "");
         m_currScope = m_rootScope;
-        m_fallbackCfg = 0;
+        m_fallbackCfg = nullptr;
         m_amOwnerOfFallbackCfg = false;
         m_amOwnerOfSecurityCfg = false;
         m_securityCfg = &DefaultSecurityConfiguration::singleton;
@@ -241,7 +241,7 @@ namespace danek
 
         mergeNames(scope, localName, fullyScopedName);
         item = lookup(fullyScopedName.str().c_str(), localName);
-        if (item == 0)
+        if (item == nullptr)
         {
             result = ConfType::NoValue;
         }
@@ -265,10 +265,10 @@ namespace danek
         ConfigItem* item;
 
         item = lookup(fullyScopedName, localName);
-        if (item == 0)
+        if (item == nullptr)
         {
             type = ConfType::NoValue;
-            str = (const char*) 0;
+            str = (const char*) nullptr;
         }
         else
         {
@@ -279,7 +279,7 @@ namespace danek
             }
             else
             {
-                str = (const char*) 0;
+                str = (const char*) nullptr;
             }
         }
     }
@@ -296,7 +296,7 @@ namespace danek
         ConfigItem* item;
 
         item = lookup(fullyScopedName, localName);
-        if (item == 0)
+        if (item == nullptr)
         {
             type = ConfType::NoValue;
             list.clear();
@@ -324,7 +324,7 @@ namespace danek
     void ConfigurationImpl::listValue(const char* fullyScopedName, const char* localName, std::vector<std::string>& data, ConfType& type) const
     {
         ConfigItem* item = lookup(fullyScopedName, localName);
-        if (item == 0)
+        if (item == nullptr)
         {
             type = ConfType::NoValue;
             data = std::vector<std::string>{};
@@ -475,16 +475,16 @@ namespace danek
         for (i = 0; i < len - 1; i++)
         {
             item = scopeObj->findItem(vec[i].c_str());
-            if (item == 0 || item->type() != ConfType::Scope)
+            if (item == nullptr || item->type() != ConfType::Scope)
             {
                 msg << fileName() << ": '" << fullyScopedName << "' does not exist'";
                 throw ConfigurationException(msg.str());
             }
             scopeObj = item->scopeVal();
-            assert(scopeObj != 0);
+            assert(scopeObj != nullptr);
         }
         assert(i == len - 1);
-        assert(scopeObj != 0);
+        assert(scopeObj != nullptr);
         if (!scopeObj->removeItem(vec[i].c_str()))
         {
             msg << fileName() << ": '" << fullyScopedName << "' does not exist'";
@@ -502,7 +502,7 @@ namespace danek
     {
         delete m_rootScope;
         m_fileName = "<no file>";
-        m_rootScope = new ConfigScope(0, "");
+        m_rootScope = new ConfigScope(nullptr, "");
         m_currScope = m_rootScope;
     }
 
@@ -521,7 +521,7 @@ namespace danek
 
         if (fullyScopedName[0] == '\0')
         {
-            return 0;
+            return nullptr;
         }
         if (fullyScopedName[0] == '.')
         {
@@ -547,17 +547,17 @@ namespace danek
             vec = StringVector{util::splitScopes(fullyScopedName)};
             scope = m_currScope;
         }
-        item = 0;
-        while (scope != 0)
+        item = nullptr;
+        while (scope != nullptr)
         {
             item = lookupHelper(scope, vec);
-            if (item != 0)
+            if (item != nullptr)
             {
                 break;
             }
             scope = scope->parentScope();
         }
-        if (item == 0 && m_fallbackCfg != 0)
+        if (item == nullptr && m_fallbackCfg != nullptr)
         {
             item = m_fallbackCfg->lookup(localName, localName, true);
         }
@@ -574,15 +574,15 @@ namespace danek
         for (i = 0; i < len - 1; i++)
         {
             item = scope->findItem(vec[i].c_str());
-            if (item == 0 || item->type() != ConfType::Scope)
+            if (item == nullptr || item->type() != ConfType::Scope)
             {
-                return 0;
+                return nullptr;
             }
             scope = item->scopeVal();
-            assert(scope != 0);
+            assert(scope != nullptr);
         }
         assert(i == len - 1);
-        assert(scope != 0);
+        assert(scope != nullptr);
         item = scope->findItem(vec[i].c_str());
         return item;
     }
@@ -620,7 +620,7 @@ namespace danek
         else
         {
             ConfigItem* item = lookup(fullyScopedName.str().c_str(), localName, true);
-            if (item == 0)
+            if (item == nullptr)
             {
                 msg << fileName() << ": "
                     << "'" << fullyScopedName << "' is not an entry";
@@ -671,7 +671,7 @@ namespace danek
         else
         {
             item = lookup(fullyScopedName.str().c_str(), localName, true);
-            if (item == 0 || item->type() != ConfType::Scope)
+            if (item == nullptr || item->type() != ConfType::Scope)
             {
                 msg << fileName() << ": "
                     << "'" << fullyScopedName << "' is not a scope";
@@ -724,7 +724,7 @@ namespace danek
         else
         {
             item = lookup(fullyScopedName.str().c_str(), localName, true);
-            if (item == 0 || item->type() != ConfType::Scope)
+            if (item == nullptr || item->type() != ConfType::Scope)
             {
                 msg << fileName() << ": "
                     << "'" << fullyScopedName << "' is not a scope";
@@ -2435,7 +2435,7 @@ namespace danek
         std::size_t j;
         std::size_t len;
 
-        if (this == &DefaultSecurityConfiguration::singleton || m_securityCfg == 0)
+        if (this == &DefaultSecurityConfiguration::singleton || m_securityCfg == nullptr)
         {
             return false;
         }

@@ -40,7 +40,7 @@ int main(int argc, char** argv)
     ok = util.parseCmdLineArgs(argc, argv);
     if (ok)
     {
-        ok = util.generateFiles(0, 0);
+        ok = util.generateFiles(nullptr, 0);
     }
     exitStatus = (ok == false);
     return exitStatus;

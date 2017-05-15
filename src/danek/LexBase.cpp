@@ -49,7 +49,7 @@ namespace danek
     void LexBase::searchForKeyword(const char* spelling, bool& found, short& symbol)
     {
         LexBase::KeywordInfo searchItem;
-        LexBase::KeywordInfo* result = 0;
+        LexBase::KeywordInfo* result = nullptr;
 
         searchItem.m_spelling = spelling;
         if (m_keywordInfoArraySize == 0)
@@ -62,7 +62,7 @@ namespace danek
             m_keywordInfoArraySize,
             sizeof(searchItem),
             danek_keywordInfoCmp);
-        if (result == 0)
+        if (result == nullptr)
         {
             found = false;
         }
@@ -95,7 +95,7 @@ namespace danek
         searchItem.m_spelling = spelling;
         FuncInfo* result = static_cast<FuncInfo*>(bsearch(
             &searchItem, m_funcInfoArray, m_funcInfoArraySize, sizeof(searchItem), danek_funcInfoCmp_c));
-        if (result == 0)
+        if (result == nullptr)
         {
             found = false;
         }
@@ -123,9 +123,9 @@ namespace danek
         //--------
         memset(&m_mbtowcState, 0, sizeof(mbstate_t));
 
-        m_keywordInfoArray = 0;
+        m_keywordInfoArray = nullptr;
         m_keywordInfoArraySize = 0;
-        m_funcInfoArray = 0;
+        m_funcInfoArray = nullptr;
         m_funcInfoArraySize = 0;
 
         m_uidIdentifierProcessor = uidIdentifierProcessor;
@@ -133,7 +133,7 @@ namespace danek
         m_sourceType = sourceType;
         m_source = source;
         m_lineNum = 1;
-        m_ptr = 0;
+        m_ptr = nullptr;
         m_atEOF = false;
         switch (sourceType)
         {
@@ -178,9 +178,9 @@ namespace danek
         //--------
         memset(&m_mbtowcState, 0, sizeof(mbstate_t));
 
-        m_keywordInfoArray = 0;
+        m_keywordInfoArray = nullptr;
         m_keywordInfoArraySize = 0;
-        m_funcInfoArray = 0;
+        m_funcInfoArray = nullptr;
         m_funcInfoArraySize = 0;
 
         m_uidIdentifierProcessor = new UidIdentifierDummyProcessor();
@@ -557,7 +557,7 @@ namespace danek
             {
                 token.reset(LEX_SOLE_DOT_IDENT_SYM, lineNum, spelling.str().c_str());
             }
-            else if (strstr(spelling.str().c_str(), "..") != 0)
+            else if (strstr(spelling.str().c_str(), "..") != nullptr)
             {
                 token.reset(LEX_TWO_DOTS_IDENT_SYM, lineNum, spelling.str().c_str());
             }

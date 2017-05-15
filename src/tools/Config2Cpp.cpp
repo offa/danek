@@ -51,16 +51,16 @@ namespace danek
     Config2Cpp::Config2Cpp(const char* progName)
     {
         m_progName = stringCopy(progName);
-        m_cfgFileName = 0;
-        m_schemaOverrideCfg = 0;
+        m_cfgFileName = nullptr;
+        m_schemaOverrideCfg = nullptr;
         m_schemaOverrideScope = stringCopy("");
-        m_className = 0;
-        m_cppExt = 0;
-        m_hExt = 0;
+        m_className = nullptr;
+        m_cppExt = nullptr;
+        m_hExt = nullptr;
         m_wantSingleton = false;
         m_wantSchema = true;
         m_namespaceArraySize = 0;
-        m_namespaceArray = 0;
+        m_namespaceArray = nullptr;
     }
 
     //----------------------------------------------------------------------
@@ -186,17 +186,17 @@ namespace danek
                 return false;
             }
         }
-        if (m_className == 0 || m_cfgFileName == 0)
+        if (m_className == nullptr || m_cfgFileName == nullptr)
         {
             usage("");
             return false;
         }
 
-        if (m_cppExt == 0)
+        if (m_cppExt == nullptr)
         {
             m_cppExt = stringCopy(".cpp");
         }
-        if (m_hExt == 0)
+        if (m_hExt == nullptr)
         {
             m_hExt = stringCopy(".h");
         }
@@ -225,7 +225,7 @@ namespace danek
         // Open all the files
         //--------
         cfgFile = fopen(m_cfgFileName, "r");
-        if (cfgFile == 0)
+        if (cfgFile == nullptr)
         {
             msg = stringConcat("cannot open '", m_cfgFileName, "'");
             perror(msg);
@@ -235,7 +235,7 @@ namespace danek
             return false;
         }
         cppFile = fopen(cppFileName, "w");
-        if (cppFile == 0)
+        if (cppFile == nullptr)
         {
             msg = stringConcat("cannot open '", cppFileName, "'");
             perror(msg);
@@ -246,7 +246,7 @@ namespace danek
             return false;
         }
         hFile = fopen(hFileName, "w");
-        if (hFile == 0)
+        if (hFile == nullptr)
         {
             msg = stringConcat("cannot open '", hFileName, "'");
             perror(msg);
@@ -346,7 +346,7 @@ namespace danek
             // (or to '\0' if there are no more occurrances of ':')
             //--------
             colonAddr = strchr(str, ':');
-            if (colonAddr == 0)
+            if (colonAddr == nullptr)
             {
                 colonAddr = ns + len;
             }

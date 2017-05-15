@@ -54,12 +54,12 @@ namespace danek
         //--------
         // Common case optimizations
         //--------
-        if (strchr(spelling.str().c_str(), '.') == 0)
+        if (strchr(spelling.str().c_str(), '.') == nullptr)
         {
             expandOne(spelling);
             return;
         }
-        if (strstr(spelling.str().c_str(), "uid-") == 0)
+        if (strstr(spelling.str().c_str(), "uid-") == nullptr)
         {
             return;
         }
@@ -187,11 +187,11 @@ namespace danek
         //--------
         // Common case optimizations
         //--------
-        if (strchr(spelling, '.') == 0)
+        if (strchr(spelling, '.') == nullptr)
         {
             return unexpandOne(spelling, buf);
         }
-        if (strstr(spelling, "uid-") == 0)
+        if (strstr(spelling, "uid-") == nullptr)
         {
             return spelling;
         }

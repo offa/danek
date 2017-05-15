@@ -41,7 +41,7 @@ namespace danek
         m_table = new ConfigScopeEntry[m_tableSize];
         m_numEntries = 0;
 
-        if (m_parentScope == 0)
+        if (m_parentScope == nullptr)
         {
             if( name.empty() == false )
             {
@@ -52,7 +52,7 @@ namespace danek
         else
         {
             m_scopedName = m_parentScope->m_scopedName;
-            if (m_parentScope->m_parentScope != 0)
+            if (m_parentScope->m_parentScope != nullptr)
             {
                 m_scopedName.append(".");
             }
@@ -286,7 +286,7 @@ namespace danek
         // Iterate over singly linked list,
         // searching for the named entry.
         //--------
-        while (entry->m_next != 0)
+        while (entry->m_next != nullptr)
         {
             if (!strcmp(name.c_str(), entry->m_next->name()))
             {
@@ -295,7 +295,7 @@ namespace danek
                 //--------
                 ConfigScopeEntry* victim = entry->m_next;
                 entry->m_next = victim->m_next;
-                victim->m_next = 0;
+                victim->m_next = nullptr;
                 delete victim;
                 m_numEntries--;
                 return true;
@@ -515,7 +515,7 @@ namespace danek
                 m_table[index].m_next = entry;
                 entry = nextEntry;
             }
-            origTable[i].m_next = 0;
+            origTable[i].m_next = nullptr;
         }
         delete[] origTable;
     }

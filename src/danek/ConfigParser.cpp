@@ -156,7 +156,7 @@ namespace danek
         }
         catch (const ConfigurationException&)
         {
-            m_lex = 0;
+            m_lex = nullptr;
             if (ifExistsIsSpecified)
             {
                 return;
@@ -185,7 +185,7 @@ namespace danek
         catch (const ConfigurationException& ex)
         {
             delete m_lex;
-            m_lex = 0;
+            m_lex = nullptr;
             m_config->popIncludedFilename(m_fileName.str().c_str());
             if (m_errorInIncludedFile)
             {
@@ -361,7 +361,7 @@ namespace danek
         // violation for include "exec#..." now instead of later from
         // inside a recursive call to the parser.
         //--------
-        execSource = 0; // prevent warning about it possibly being uninitialized
+        execSource = nullptr; // prevent warning about it possibly being uninitialized
         if (startsWith(source.str().c_str(), "exec#"))
         {
             execSource = source.str().c_str() + strlen("exec#");
@@ -617,7 +617,7 @@ namespace danek
             parseStringExpr(str1);
             accept(ConfigLex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
             FILE* file = fopen(str1.str().c_str(), "r");
-            if (file == 0)
+            if (file == nullptr)
             {
                 return false;
             }
@@ -722,13 +722,13 @@ namespace danek
         // then we short-circuit the rest of this function.
         //--------
         item = m_config->lookup(fromScopeName.str().c_str(), fromScopeName.str().c_str(), true);
-        if (item == 0 && ifExistsIsSpecified)
+        if (item == nullptr && ifExistsIsSpecified)
         {
             accept(ConfigLex::LEX_SEMICOLON_SYM, "expecting ';'");
             return;
         }
 
-        if (item == 0)
+        if (item == nullptr)
         {
             msg << "copy statement: scope '" << fromScopeName << "' does not exist";
             throw ConfigurationException(msg.str());
@@ -739,7 +739,7 @@ namespace danek
             throw ConfigurationException(msg.str());
         }
         fromScope = item->scopeVal();
-        assert(fromScope != 0);
+        assert(fromScope != nullptr);
 
         //--------
         // Get a recursive listing of all the items in fromScopeName
@@ -754,7 +754,7 @@ namespace danek
         {
             const char* newName = &fromNamesVec[i][fromScopeNameLen + 1];
             item = m_config->lookup(fromNamesVec[i].c_str(), fromNamesVec[i].c_str(), true);
-            assert(item != 0);
+            assert(item != nullptr);
             switch (item->type())
             {
                 case ConfType::String:
@@ -793,7 +793,7 @@ namespace danek
         accept(ConfigLex::LEX_REMOVE_SYM, "expecting 'remove'");
         identName = m_token.spelling();
         accept(ConfigLex::LEX_IDENT_SYM, "expecting an identifier");
-        if (strchr(identName.str().c_str(), '.') != 0)
+        if (strchr(identName.str().c_str(), '.') != nullptr)
         {
             msg << m_fileName << ": can remove entries from only the "
                 << "current scope";
@@ -1059,7 +1059,7 @@ namespace danek
                 parseStringExpr(name);
                 accept(ConfigLex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
                 item = m_config->lookup(name.str().c_str(), name.str().c_str());
-                if (item == 0)
+                if (item == nullptr)
                 {
                     type = ConfType::NoValue;
                 }
@@ -1150,11 +1150,11 @@ namespace danek
         }
         accept(ConfigLex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
         val = getenv(envVarName.str().c_str());
-        if (val == 0 && hasDefaultStr)
+        if (val == nullptr && hasDefaultStr)
         {
             val = defaultStr.str().c_str();
         }
-        if (val == 0)
+        if (val == nullptr)
         {
             msg << "cannot access the '" << envVarName << "' environment variable";
             throw ConfigurationException(msg.str());
@@ -1273,7 +1273,7 @@ namespace danek
         searchStrLen = searchStr.size();
         int currStart = 0;
         p = strstr(origStr.str().c_str(), searchStr.str().c_str());
-        while (p != 0)
+        while (p != nullptr)
         {
             int currEnd = p - origStr.str().c_str();
             origStr[currEnd] = '\0';
@@ -1308,7 +1308,7 @@ namespace danek
         delimLen = delim.size();
         int currStart = 0;
         p = strstr(str.str().c_str(), delim.str().c_str());
-        while (p != 0)
+        while (p != nullptr)
         {
             int currEnd = p - str.str().c_str();
             str[currEnd] = '\0';

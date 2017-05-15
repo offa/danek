@@ -148,7 +148,7 @@ void calculateSchema(const Configuration* cfg, const StringVector& namesList,
     for (int i = 0; i < len; i++)
     {
         const char* name = namesList[i].c_str();
-        if (strstr(name, "uid-") == 0)
+        if (strstr(name, "uid-") == nullptr)
         {
             calculateRuleForName(cfg, name, name, wildcardedNamesAndTypes, rule);
             schema.push_back(rule.str());
@@ -229,7 +229,7 @@ int main(int argc, char** argv)
         {
             cfg->parse(util.cfgFileName());
             cfg->listFullyScopedNames("", "", ConfType::ScopesAndVars, true, namesList);
-            if (util.schemaOverrideCfg() != 0)
+            if (util.schemaOverrideCfg() != nullptr)
             {
                 const char* overrideSchema[] = {
                     "@typedef keyword = enum[\"@optional\", \"@required\"]",
@@ -237,7 +237,7 @@ int main(int argc, char** argv)
                     "wildcarded_names_and_types = table[keyword,keyword, "
                     "string,wildcarded-name, string,type]",
                     "ignore_rules = list[string]",
-                    0 // null-terminated array
+                    nullptr // null-terminated array
                 };
 
                 schemaCfg->parse(util.schemaOverrideCfg());

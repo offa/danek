@@ -108,7 +108,7 @@ int main(int argc, char** argv)
 
     try
     {
-        if (secSource != 0)
+        if (secSource != nullptr)
         {
             secCfg->parse(secSource);
             cfg->setSecurityConfiguration(secCfg, secScope);
@@ -294,15 +294,15 @@ static void parseCmdLineArgs(int argc, char** argv, const char*& cmd, bool& isRe
     int i;
     StringBuffer msg;
 
-    cmd = 0;
+    cmd = nullptr;
     wantExpandedUidNames = true;
     scope = "";
     name = "";
-    cfgSource = 0;
-    secSource = 0;
+    cfgSource = nullptr;
+    secSource = nullptr;
     secScope = "";
-    schemaSource = 0;
-    schemaName = 0;
+    schemaSource = nullptr;
+    schemaName = nullptr;
     wantDiagnostics = false;
     forceMode = SchemaValidator::ForceMode::None;
     isRecursive = true;
@@ -480,26 +480,26 @@ static void parseCmdLineArgs(int argc, char** argv, const char*& cmd, bool& isRe
             usage(argv[i]);
         }
     }
-    if (cfgSource == 0)
+    if (cfgSource == nullptr)
     {
         fprintf(stderr, "\nYou must specify -cfg <source>\n\n");
         usage("");
     }
-    if (cmd == 0)
+    if (cmd == nullptr)
     {
         fprintf(stderr, "\nYou must specify a command\n\n");
         usage("");
     }
     if (strcmp(cmd, "validate") == 0)
     {
-        if (schemaSource == 0)
+        if (schemaSource == nullptr)
         {
             fprintf(stderr,
                 "\nThe validate command requires "
                 "-schemaCfg <source>\n\n");
             usage("");
         }
-        if (schemaName == 0)
+        if (schemaName == nullptr)
         {
             fprintf(stderr,
                 "\nThe validate command requires "

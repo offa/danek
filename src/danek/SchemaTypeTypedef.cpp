@@ -71,7 +71,7 @@ namespace danek
         assert(typeArgs.size() == 0);
         const char* baseTypeName = m_baseTypeName.str().c_str();
         SchemaType* baseTypeDef = findType(sv, baseTypeName);
-        assert(baseTypeDef != 0);
+        assert(baseTypeDef != nullptr);
         bool result =
             callIsA(baseTypeDef, sv, cfg, value, baseTypeName, m_baseTypeArgs, indentLevel + 1, errSuffix);
         return result;

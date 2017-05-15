@@ -43,7 +43,7 @@ namespace danek
     SchemaParser::SchemaParser(SchemaValidator* sv)
     {
         m_sv = sv;
-        m_lex = 0;
+        m_lex = nullptr;
         m_cfg = Configuration::create();
     }
 
@@ -73,14 +73,14 @@ namespace danek
         m_sv->m_idRules = new SchemaIdRuleInfo*[schemaSize];
         for (int i = 0; i < m_sv->m_idRulesMaxSize; i++)
         {
-            m_sv->m_idRules[i] = 0;
+            m_sv->m_idRules[i] = nullptr;
         }
         m_sv->m_ignoreRulesMaxSize = schemaSize;
         m_sv->m_ignoreRulesCurrSize = 0;
         m_sv->m_ignoreRules = new SchemaIgnoreRuleInfo*[schemaSize];
         for (int i = 0; i < m_sv->m_ignoreRulesMaxSize; i++)
         {
-            m_sv->m_ignoreRules[i] = 0;
+            m_sv->m_ignoreRules[i] = nullptr;
         }
 
         m_sv->sortTypes();
@@ -186,7 +186,7 @@ namespace danek
         {
             const char* name = ruleInfo->m_locallyScopedName.str().c_str();
             const char* ptr = strrchr(name, '.');
-            if (ptr == 0)
+            if (ptr == nullptr)
             {
                 ptr = name;
             }
@@ -208,7 +208,7 @@ namespace danek
         accept(SchemaLex::LEX_IDENT_SYM, rule, "expecting an identifier");
 
         typeDef = m_sv->findType(ruleInfo->m_typeName.str().c_str());
-        if (typeDef == 0)
+        if (typeDef == nullptr)
         {
             msg << "Unknown type '" << ruleInfo->m_typeName << "' in rule '" << rule << "'";
             throw ConfigurationException(msg.str());
@@ -293,7 +293,7 @@ namespace danek
         accept(SchemaLex::LEX_IDENT_SYM, str, "expecting an identifier");
 
         baseTypeDef = m_sv->findType(baseTypeName.str().c_str());
-        if (baseTypeDef == 0)
+        if (baseTypeDef == nullptr)
         {
             msg << "Unknown type '" << baseTypeName << "' in user-type definition '" << str << "'";
             throw ConfigurationException(msg.str());

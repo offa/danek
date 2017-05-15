@@ -54,7 +54,7 @@ namespace danek
         //--------
         listElementTypeName = typeArgs[0].c_str();
         typeDef = findType(sv, listElementTypeName);
-        if (typeDef == 0)
+        if (typeDef == nullptr)
         {
             msg << "unknown type '" << listElementTypeName << "' in rule '" << rule << "'";
             throw ConfigurationException(msg.str());

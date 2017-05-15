@@ -52,7 +52,7 @@ namespace danek
         {
             const char* elemType = typeArgs[i + 0].c_str();
             SchemaType* typeDef = findType(sv, elemType);
-            if (typeDef == 0)
+            if (typeDef == nullptr)
             {
                 msg << "unknown type '" << elemType << "' in rule '" << rule << "'";
                 throw ConfigurationException(msg.str());

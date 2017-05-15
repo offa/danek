@@ -102,9 +102,9 @@ namespace danek
             m_idRulesCurrSize,
             sizeof(SchemaIdRuleInfo*),
             danek_compareSchemaIdRuleInfo_c);
-        if (result == 0)
+        if (result == nullptr)
         {
-            return 0;
+            return nullptr;
         }
         return *result;
     }
@@ -124,11 +124,11 @@ namespace danek
             SchemaType* searchPtr = &search;
             SchemaType** result = (SchemaType**) bsearch(
                 &searchPtr, m_types, m_typesCurrSize, sizeof(SchemaType*), danek_compareSchemaType_c);
-            if (result == 0)
+            if (result == nullptr)
             {
-                return 0;
+                return nullptr;
             }
-            assert(*result != 0);
+            assert(*result != nullptr);
             return *result;
         }
         else
@@ -138,12 +138,12 @@ namespace danek
                 SchemaType* typeDef = m_types[i];
                 if (strcmp(typeDef->typeName(), name) == 0)
                 {
-                    assert(typeDef != 0);
+                    assert(typeDef != nullptr);
                     return typeDef;
                 }
             }
         }
-        return 0;
+        return nullptr;
     }
 
     //----------------------------------------------------------------------
@@ -159,10 +159,10 @@ namespace danek
             m_wantDiagnostics = false;
             m_idRulesCurrSize = 0;
             m_idRulesMaxSize = 0;
-            m_idRules = 0;
+            m_idRules = nullptr;
             m_ignoreRulesCurrSize = 0;
             m_ignoreRulesMaxSize = 0;
-            m_ignoreRules = 0;
+            m_ignoreRules = nullptr;
             m_typesMaxSize = 25; // can grow bigger, if necessary
             m_types = new SchemaType*[m_typesMaxSize];
             m_typesCurrSize = 0;
@@ -289,7 +289,7 @@ namespace danek
     {
         int size;
 
-        for (size = 0; nullTerminatedRulesArray[size] != 0; size++)
+        for (size = 0; nullTerminatedRulesArray[size] != nullptr; size++)
         {
         }
         parseSchema(nullTerminatedRulesArray, size);
@@ -373,7 +373,7 @@ namespace danek
                 continue;
             }
             SchemaIdRuleInfo* idRule = findIdRule(unexpandedName);
-            if (idRule == 0)
+            if (idRule == nullptr)
             {
                 //--------
                 // Can't find an idRule for the entry
@@ -406,7 +406,7 @@ namespace danek
             //--------
             const char* typeName = idRule->m_typeName.str().c_str();
             SchemaType* typeDef = findType(typeName);
-            assert(typeDef != 0);
+            assert(typeDef != nullptr);
             try
             {
                 callValidate(typeDef, cfg, fullyScopedName.str().c_str(), iName, typeName, typeName, idRule->m_args, 1);
@@ -450,7 +450,7 @@ namespace danek
                 continue;
             }
             const char* nameInRule = idRule->m_locallyScopedName.str().c_str();
-            if (strstr(nameInRule, "uid-") != 0)
+            if (strstr(nameInRule, "uid-") != nullptr)
             {
                 validateRequiredUidEntry(cfg, fullyScopedName.str().c_str(), idRule);
             }
@@ -481,9 +481,9 @@ namespace danek
         const char* ptr;
 
         nameInRule = idRule->m_locallyScopedName.str().c_str();
-        assert(strstr(nameInRule, "uid-") != 0);
+        assert(strstr(nameInRule, "uid-") != nullptr);
         lastDot = strrchr(nameInRule, '.');
-        if (lastDot == 0 || strstr(lastDot + 1, "uid-") != 0)
+        if (lastDot == nullptr || strstr(lastDot + 1, "uid-") != nullptr)
         {
             return;
         }
@@ -551,7 +551,7 @@ namespace danek
                     break;
             }
             const char* nameAfterPrefix = unexpandedName + len + 1;
-            bool hasDotAfterPrefix = (strchr(nameAfterPrefix, '.') != 0);
+            bool hasDotAfterPrefix = (strchr(nameAfterPrefix, '.') != nullptr);
             try
             {
                 cfgType = cfg->type(scope, expandedName);

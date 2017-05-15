@@ -199,12 +199,12 @@ namespace danek
 
     BufferedFileReader::BufferedFileReader()
     {
-        m_file = 0;
+        m_file = nullptr;
     }
 
     BufferedFileReader::~BufferedFileReader()
     {
-        if (m_file != 0)
+        if (m_file != nullptr)
         {
             fclose(m_file);
         }
@@ -212,9 +212,9 @@ namespace danek
 
     bool BufferedFileReader::open(const char* fileName)
     {
-        assert(m_file == 0);
+        assert(m_file == nullptr);
         m_file = fopen(fileName, "r");
-        return (m_file != 0);
+        return (m_file != nullptr);
     }
 
     bool BufferedFileReader::close()
@@ -227,7 +227,7 @@ namespace danek
 
     int BufferedFileReader::getChar()
     {
-        assert(m_file != 0);
+        assert(m_file != nullptr);
         return fgetc(m_file);
     }
 

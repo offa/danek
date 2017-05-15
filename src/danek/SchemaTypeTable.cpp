@@ -54,7 +54,7 @@ namespace danek
         {
             const char* columnType = typeArgs[i + 0].c_str();
             SchemaType* typeDef = findType(sv, columnType);
-            if (typeDef == 0)
+            if (typeDef == nullptr)
             {
                 msg << "unknown type '" << columnType << "' in rule '" << rule << "'";
                 throw ConfigurationException(msg.str());
