@@ -26,9 +26,6 @@
 #include "danek/internal/ToString.h"
 #include "danek/Configuration.h"
 #include <algorithm>
-#include <numeric>
-#include <string.h>
-#include <stdlib.h>
 
 namespace danek
 {
