@@ -427,4 +427,23 @@ TEST_F(ConfigScopeTest, listFullyScopedNamesOfMultipleNodesRecursiveScope)
     EXPECT_THAT(v.get(), UnorderedElementsAre("sn0.sn1"));
 }
 
+TEST_F(ConfigScopeTest, listFullyScopedNamesOfMultipleNodesRecursiveWithFilter)
+{
+    ConfigScope root{nullptr, "\0"};
+    ConfigScope scope0{&root, "s0"};
+    ConfigScope* ptr0 = &scope0;
+    ConfigScope scope1{ptr0, "s1"};
+    ConfigScope* ptr1 = &scope1;
+
+    root.ensureScopeExists("sn0", ptr0);
+    ptr0->addOrReplaceString("a", "b");
+    ptr0->ensureScopeExists("sn1", ptr1);
+    ptr1->addOrReplaceString("x", "y");
+
+    StringVector v;
+    StringVector filter{{"sn0.sn1*"}};
+    ptr0->listFullyScopedNames(ConfType::ScopesAndVars, true, filter, v);
+
+    EXPECT_THAT(v.get(), UnorderedElementsAre("sn0.sn1", "sn0.sn1.x"));
+}
 
