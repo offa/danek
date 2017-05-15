@@ -30,7 +30,6 @@ class ConfigScopeTest : public testing::Test
 {
 };
 
-
 TEST_F(ConfigScopeTest, initRootElement)
 {
     ConfigScope s{nullptr, "\0"};
