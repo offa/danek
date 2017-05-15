@@ -587,3 +587,65 @@ TEST_F(ConfigScopeTest, listLocallyScopedNamesOfMultipleNodesRecursiveScope)
     EXPECT_THAT(v.get(), UnorderedElementsAre("sn1"));
 }
 
+
+
+TEST_F(ConfigScopeTest, dumpRoot)
+{
+    ConfigScope root{nullptr, "\0"};
+    StringBuffer buffer;
+    root.dump(buffer, true);
+    EXPECT_THAT(buffer.str(), StrEq(""));
+}
+
+TEST_F(ConfigScopeTest, dumpStringNode)
+{
+    ConfigScope root{nullptr, "\0"};
+    ConfigScope node{&root, "abc"};
+    node.addOrReplaceString("x", "y");
+    node.addOrReplaceString("1", "2");
+    StringBuffer buffer;
+    node.dump(buffer, true);
+    EXPECT_THAT(buffer.str(), StrEq("1 = \"2\";\nx = \"y\";\n"));
+}
+
+TEST_F(ConfigScopeTest, dumpStringNodeWithIndention)
+{
+    ConfigScope root{nullptr, "\0"};
+    ConfigScope node{&root, "abc"};
+    node.addOrReplaceString("x", "y");
+    node.addOrReplaceString("1", "2");
+    StringBuffer buffer;
+    node.dump(buffer, true, 1);
+    EXPECT_THAT(buffer.str(), StrEq("    1 = \"2\";\n    x = \"y\";\n"));
+}
+
+TEST_F(ConfigScopeTest, dumpScopeNode)
+{
+    ConfigScope root{nullptr, "\0"};
+    ConfigScope scope{&root, "xy"};
+    ConfigScope* ptr = &scope;
+
+    root.ensureScopeExists("scope-name", ptr);
+    StringBuffer buffer;
+    root.dump(buffer, true);
+    EXPECT_THAT(buffer.str(), StrEq("scope-name {\n}\n"));
+}
+
+TEST_F(ConfigScopeTest, dumpMixedType)
+{
+    ConfigScope root{nullptr, "\0"};
+    ConfigScope scope0{&root, "s0"};
+    ConfigScope* ptr0 = &scope0;
+    ConfigScope scope1{ptr0, "s1"};
+    ConfigScope* ptr1 = &scope1;
+
+    root.ensureScopeExists("sn0", ptr0);
+    ptr0->addOrReplaceString("a", "b");
+    ptr0->ensureScopeExists("sn1", ptr1);
+    ptr1->addOrReplaceString("x", "y");
+
+    StringBuffer buffer;
+    root.dump(buffer, true);
+    EXPECT_THAT(buffer.str(), StrEq("sn0 {\n    a = \"b\";\n    sn1 {\n            x = \"y\";\n}\n}\n"));
+}
+
