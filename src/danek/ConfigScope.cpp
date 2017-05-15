@@ -34,13 +34,8 @@
 namespace danek
 {
 
-    ConfigScope::ConfigScope(ConfigScope* parentScope, const std::string& name)
+    ConfigScope::ConfigScope(ConfigScope* parentScope, const std::string& name) : m_parentScope(parentScope)
     {
-        m_parentScope = parentScope;
-        m_tableSize = 16;
-        m_table = new ConfigScopeEntry[m_tableSize];
-        m_numEntries = 0;
-
         if (m_parentScope == nullptr)
         {
             if( name.empty() == false )
@@ -58,11 +53,6 @@ namespace danek
             }
             m_scopedName.append(name);
         }
-    }
-
-    ConfigScope::~ConfigScope()
-    {
-        delete[] m_table;
     }
 
     const std::string& ConfigScope::scopedName() const
@@ -96,39 +86,23 @@ namespace danek
 
     bool ConfigScope::addOrReplaceString(const std::string& name, const std::string& str)
     {
-        int index;
-        ConfigScopeEntry* entry = findEntry(name, index);
+        auto pos = std::find_if(m_table.begin(), m_table.end(), [&name](const auto& v) { return v->name() == name; });
 
-        if (entry != nullptr && entry->type() == ConfType::Scope)
+        if( pos != m_table.cend() )
         {
-            //--------
-            // Fail because there is a scope with the same name.
-            //--------
-            return false;
-        }
-        else if (entry != nullptr)
-        {
-            //--------
-            // It already exists.
-            // Replace the existing item
-            //--------
-            delete entry->m_item;
-            entry->m_item = new ConfigItem(name, str);
+            if( (*pos)->type() == ConfType::Scope )
+            {
+                return false;
+            }
+
+            delete (*pos)->m_item;
+            (*pos)->m_item = new ConfigItem(name, str);
         }
         else
         {
-            //--------
-            // It doesn't already exist.
-            // Add a new entry into the list.
-            //--------
-            ++m_numEntries;
-            growIfTooFull();
-            index = hash(name);
-            entry = &m_table[index];
-            ConfigScopeEntry* nextEntry = entry->m_next;
-            ConfigScopeEntry* newEntry = new ConfigScopeEntry(new ConfigItem(name, str), nextEntry);
-            entry->m_next = newEntry;
+            m_table.push_back(std::make_unique<ConfigScopeEntry>(new ConfigItem(name, str), nullptr));
         }
+
         return true;
     }
 
@@ -142,37 +116,23 @@ namespace danek
 
     bool ConfigScope::addOrReplaceList(const std::string& name, const StringVector& list)
     {
-        int index;
-        ConfigScopeEntry* entry = findEntry(name, index);
+        auto pos = std::find_if(m_table.begin(), m_table.end(), [&name](const auto& v) { return v->name() == name; });
 
-        if (entry && entry->type() == ConfType::Scope)
+        if( pos != m_table.cend() )
         {
-            //--------
-            // Fail because there is a scope with the same name.
-            //--------
-            return false;
-        }
-        else if (entry)
-        {
-            //--------
-            // It already exists. Replace the existing item
-            //--------
-            delete entry->m_item;
-            entry->m_item = new ConfigItem(name, list.get());
+            if( (*pos)->type() == ConfType::Scope )
+            {
+                return false;
+            }
+
+            delete (*pos)->m_item;
+            (*pos)->m_item = new ConfigItem(name, list.get());
         }
         else
         {
-            //--------
-            // It doesn't already exist. Add a new entry into the list.
-            //--------
-            ++m_numEntries;
-            growIfTooFull();
-            index = hash(name);
-            entry = &m_table[index];
-            ConfigScopeEntry* nextEntry = entry->m_next;
-            ConfigScopeEntry* newEntry = new ConfigScopeEntry(new ConfigItem(name, list.get()), nextEntry);
-            entry->m_next = newEntry;
+            m_table.push_back(std::make_unique<ConfigScopeEntry>(new ConfigItem(name, list.get()), nullptr));
         }
+
         return true;
     }
 
@@ -184,40 +144,25 @@ namespace danek
 
     bool ConfigScope::ensureScopeExists(const std::string& name, ConfigScope*& scope)
     {
-        int index;
-        ConfigScopeEntry* entry = findEntry(name, index);
+        auto pos = std::find_if(m_table.begin(), m_table.end(), [&name](const auto& v) { return v->name() == name; });
 
-        if (entry && entry->type() != ConfType::Scope)
+        if( pos != m_table.cend() )
         {
-            //--------
-            // Fail because it already exists, but not as a scope
-            //--------
-            scope = nullptr;
-            return false;
-        }
-        else if (entry)
-        {
-            //--------
-            // It already exists.
-            //--------
-            scope = entry->item()->scopeVal();
-            return true;
+            if( (*pos)->type() != ConfType::Scope )
+            {
+                scope = nullptr;
+                return false;
+            }
+
+            scope = (*pos)->item()->scopeVal();
         }
         else
         {
-            //--------
-            // It doesn't already exist. Add a new entry into the list.
-            //--------
-            ++m_numEntries;
-            growIfTooFull();
-            index = hash(name);
-            entry = &m_table[index];
-            ConfigScopeEntry* nextEntry = entry->m_next;
             ConfigItem* item = new ConfigItem(name, std::make_unique<ConfigScope>(this, name));
-            ConfigScopeEntry* newEntry = new ConfigScopeEntry(item, nextEntry);
+            m_table.push_back(std::make_unique<ConfigScopeEntry>(item, nullptr));
             scope = item->scopeVal();
-            entry->m_next = newEntry;
         }
+
         return true;
     }
 
@@ -231,16 +176,14 @@ namespace danek
 
     ConfigItem* ConfigScope::findItem(const std::string& name) const
     {
-        ConfigItem* result = nullptr;
-        int index;
+        auto pos = std::find_if(m_table.begin(), m_table.end(), [&name](const auto& v) { return v->name() == name; });
 
-        ConfigScopeEntry* entry = findEntry(name, index);
-
-        if (entry != nullptr)
+        if( pos != m_table.end() )
         {
-            result = entry->m_item;
+            return (*pos)->m_item;
         }
-        return result;
+
+        return nullptr;
     }
 
     //----------------------------------------------------------------------
@@ -249,62 +192,30 @@ namespace danek
     // Description:	Returns the named entry if it exists.
     //
     // Notes:	Returns a nil pointer on failure.
-    //		Always returns the index (both on success and failure).
     //----------------------------------------------------------------------
 
-    ConfigScopeEntry* ConfigScope::findEntry(const std::string& name, int& index) const
+    ConfigScopeEntry* ConfigScope::findEntry(const std::string& name) const
     {
-        index = hash(name);
-        ConfigScopeEntry* entry = m_table[index].m_next;
+        auto pos = std::find_if(m_table.begin(), m_table.end(), [&name](const auto& v) { return v->name() == name; });
 
-        //--------
-        // Iterate over singly linked list,
-        // searching for the named entry.
-        //--------
-        while (entry)
+        if( pos != m_table.cend() )
         {
-            if (!strcmp(name.c_str(), entry->name().c_str()))
-            {
-                //--------
-                // Found it!
-                //--------
-                return entry;
-            }
-            entry = entry->m_next;
+            return pos->get();
         }
-        //--------
-        // Not found.
-        //--------
+
         return nullptr;
     }
 
     bool ConfigScope::removeItem(const std::string& name)
     {
-        int index = hash(name);
-        ConfigScopeEntry* entry = &m_table[index];
-        //--------
-        // Iterate over singly linked list,
-        // searching for the named entry.
-        //--------
-        while (entry->m_next != nullptr)
+        auto pos = std::find_if(m_table.begin(), m_table.end(), [&name](const auto& v) { return v->name() == name; });
+
+        if( pos != m_table.end() )
         {
-            if (!strcmp(name.c_str(), entry->m_next->name().c_str()))
-            {
-                //--------
-                // Found it!
-                //--------
-                ConfigScopeEntry* victim = entry->m_next;
-                entry->m_next = victim->m_next;
-                victim->m_next = nullptr;
-                delete victim;
-                m_numEntries--;
-                return true;
-            }
-            entry = entry->m_next;
+            m_table.erase(pos);
+            return true;
         }
-        //--------
-        // Not found.
-        //--------
+
         return false;
     }
 
@@ -317,8 +228,7 @@ namespace danek
 
     bool ConfigScope::is_in_table(const std::string& name) const
     {
-        int index;
-        return (findEntry(name, index) != nullptr);
+        return (findEntry(name) != nullptr);
     }
 
     void ConfigScope::listFullyScopedNames(ConfType typeMask, bool recursive, StringVector& vec) const
@@ -341,34 +251,17 @@ namespace danek
 
     void ConfigScope::listLocalNames(ConfType typeMask, StringVector& vec) const
     {
-        std::size_t countWanted = 0;
-        std::size_t countUnwanted = 0;
-
-        //--------
-        // Iterate over all the entries in the hash table and copy
-        // their names into the StringVector
-        //--------
         vec.clear();
-        vec.reserve(m_numEntries);
+        vec.reserve(m_table.size());
 
-        for (std::size_t i = 0; i < m_tableSize; ++i)
+        // TODO: Fix captures
+        std::for_each(m_table.cbegin(), m_table.cend(), [&](const auto& v)
         {
-            ConfigScopeEntry* entry = m_table[i].m_next;
-            while (entry)
+            if( static_cast<int>(v->type()) & static_cast<int>(typeMask) )
             {
-                if (static_cast<int>(entry->type()) & static_cast<int>(typeMask))
-                {
-                    vec.push_back(entry->name());
-                    ++countWanted;
-                }
-                else
-                {
-                    ++countUnwanted;
-                }
-                entry = entry->m_next;
+                vec.push_back(v->name());
             }
-        }
-        assert(countWanted + countUnwanted == m_numEntries);
+        });
     }
 
     //----------------------------------------------------------------------
@@ -377,39 +270,34 @@ namespace danek
     // Description:
     //----------------------------------------------------------------------
 
-    void ConfigScope::listScopedNamesHelper(const std::string& prefix, ConfType typeMask, bool recursive,
-        const StringVector& filterPatterns, StringVector& vec) const
+    void ConfigScope::listScopedNamesHelper(const std::string& prefix, ConfType typeMask, bool recursive, const StringVector& filterPatterns, StringVector& vec) const
     {
         StringBuffer scopedName;
 
-        //--------
-        // Iterate over all the entries in the hash table and copy
-        // their locally-scoped names into the StringVector
-        //--------
-        vec.reserve(vec.size() + m_numEntries);
-        for (std::size_t i = 0; i < m_tableSize; ++i)
+        vec.reserve(vec.size() + m_table.size());
+
+        // TODO: Fix captures
+        std::for_each(m_table.begin(), m_table.end(), [&](const auto& v)
         {
-            ConfigScopeEntry* entry = m_table[i].m_next;
-            while (entry)
+            scopedName = prefix;
+
+            if( prefix.empty() == false )
             {
-                scopedName = prefix;
-                if (prefix[0] != '\0')
-                {
-                    scopedName.append(".");
-                }
-                scopedName.append(entry->name());
-                if ((static_cast<int>(entry->type()) & static_cast<int>(typeMask)) && listFilter(scopedName.str().c_str(), filterPatterns))
-                {
-                    vec.push_back(scopedName.str());
-                }
-                if (recursive && entry->type() == ConfType::Scope)
-                {
-                    entry->item()->scopeVal()->listScopedNamesHelper(
-                        scopedName.str().c_str(), typeMask, true, filterPatterns, vec);
-                }
-                entry = entry->m_next;
+                scopedName.append(".");
             }
-        }
+            scopedName.append(v->name());
+
+            if ((static_cast<int>(v->type()) & static_cast<int>(typeMask)) && this->listFilter(scopedName.str().c_str(), filterPatterns))
+            {
+                vec.push_back(scopedName.str());
+            }
+
+            if (recursive && v->type() == ConfType::Scope)
+            {
+                v->item()->scopeVal()->listScopedNamesHelper(scopedName.str().c_str(), typeMask, true, filterPatterns, vec);
+            }
+
+        });
     }
 
     //----------------------------------------------------------------------
@@ -421,7 +309,7 @@ namespace danek
     bool ConfigScope::listFilter(const std::string& name, const StringVector& filterPatterns) const
     {
         UidIdentifierProcessor uidProc;
-        std::size_t len = filterPatterns.size();
+        const std::size_t len = filterPatterns.size();
 
         if (len == 0)
         {
@@ -482,53 +370,5 @@ namespace danek
             const auto str = toString(*item, item->name().c_str(), wantExpandedUidNames, indentLevel);
             buf << str.c_str();
         }
-    }
-
-    //----------------------------------------------------------------------
-    // Function:	hash()
-    //
-    // Description:	Hashes the name to provide an integer value.
-    //----------------------------------------------------------------------
-
-    int ConfigScope::hash(const std::string& name) const
-    {
-        const int result = std::accumulate(name.cbegin(), name.cend(), 0,
-                                [](auto init, auto value) { return init + value; });
-
-        return result % m_tableSize;
-    }
-
-    //----------------------------------------------------------------------
-    // Function:	growIfTooFull()
-    //
-    // Description:
-    //----------------------------------------------------------------------
-
-    void ConfigScope::growIfTooFull()
-    {
-        if (m_numEntries * 2 < m_tableSize)
-        {
-            return;
-        }
-
-        ConfigScopeEntry* origTable = m_table;
-        std::size_t origTableSize = m_tableSize;
-        m_tableSize = m_tableSize * 2;
-        m_table = new ConfigScopeEntry[m_tableSize];
-
-        for (std::size_t i = 0; i < origTableSize; ++i)
-        {
-            ConfigScopeEntry* entry = origTable[i].m_next;
-            while (entry)
-            {
-                const auto index = hash(entry->name());
-                ConfigScopeEntry* nextEntry = entry->m_next;
-                entry->m_next = m_table[index].m_next;
-                m_table[index].m_next = entry;
-                entry = nextEntry;
-            }
-            origTable[i].m_next = nullptr;
-        }
-        delete[] origTable;
     }
 }

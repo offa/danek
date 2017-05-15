@@ -30,6 +30,7 @@
 #include "danek/StringVector.h"
 #include "danek/StringBuffer.h"
 #include "ConfigScopeEntry.h"
+#include <vector>
 
 namespace danek
 {
@@ -45,7 +46,6 @@ namespace danek
 
         ConfigScope(ConfigScope* parentScope, const std::string& name);
         ConfigScope(const ConfigScope&) = delete;
-        ~ConfigScope();
 
         const std::string& scopedName() const;
 
@@ -57,7 +57,7 @@ namespace danek
         bool removeItem(const std::string& name);
 
         ConfigItem* findItem(const std::string& name) const;
-        ConfigScopeEntry* findEntry(const std::string& name, int& index) const;
+        ConfigScopeEntry* findEntry(const std::string& name) const;
 
         bool is_in_table(const std::string& name) const;
 
@@ -78,8 +78,6 @@ namespace danek
 
     private:
 
-        int hash(const std::string& name) const;
-        void growIfTooFull();
         void listLocalNames(ConfType typeMask, StringVector& vec) const;
         void listScopedNamesHelper(const std::string& prefix, ConfType typeMask, bool recursive, const StringVector& filterPatterns, StringVector& vec) const;
         bool listFilter(const std::string& name, const StringVector& filterPatterns) const;
@@ -87,8 +85,6 @@ namespace danek
 
         ConfigScope* m_parentScope;
         std::string m_scopedName;
-        ConfigScopeEntry* m_table;
-        std::size_t m_tableSize;
-        std::size_t m_numEntries;
+        std::vector<std::unique_ptr<ConfigScopeEntry>> m_table;
     };
 }

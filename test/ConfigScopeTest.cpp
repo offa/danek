@@ -286,8 +286,7 @@ TEST_F(ConfigScopeTest, isInTableIfNotFound)
 TEST_F(ConfigScopeTest, findEntryIfEmpty)
 {
     ConfigScope root{nullptr, "\0"};
-    int index = 0;
-    const auto entry = root.findEntry("x", index);
+    const auto entry = root.findEntry("x");
     EXPECT_THAT(entry, Eq(nullptr));
 }
 
@@ -298,8 +297,7 @@ TEST_F(ConfigScopeTest, findEntryIfFound)
     root.addOrReplaceString("n2", "bb");
     root.addOrReplaceString("n3", "cc");
 
-    int index = 0;
-    const auto entry = root.findEntry("n3", index);
+    const auto entry = root.findEntry("n3");
     EXPECT_THAT(entry->name(), StrEq("n3"));
     EXPECT_THAT(entry->item()->stringVal(), StrEq("cc"));
     EXPECT_THAT(entry->type(), Eq(ConfType::String));
@@ -312,8 +310,7 @@ TEST_F(ConfigScopeTest, findEntryIfNotFound)
     root.addOrReplaceString("n2", "456");
     root.addOrReplaceString("n3", "789");
 
-    int index = 0;
-    const auto item = root.findEntry("not-found", index);
+    const auto item = root.findEntry("not-found");
     EXPECT_THAT(item, Eq(nullptr));
 }
 
