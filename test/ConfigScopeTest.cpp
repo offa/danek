@@ -369,3 +369,62 @@ TEST_F(ConfigScopeTest, listFullyScopedNamesWithScope)
 
     EXPECT_THAT(v.get(), UnorderedElementsAre("sn-0", "sn-1"));
 }
+
+TEST_F(ConfigScopeTest, listFullyScopedNamesOfMultipleNodes)
+{
+    ConfigScope root{nullptr, "\0"};
+    ConfigScope scope0{&root, "s0"};
+    ConfigScope* ptr0 = &scope0;
+    ConfigScope scope1{ptr0, "s1"};
+    ConfigScope* ptr1 = &scope1;
+
+    root.ensureScopeExists("sn0", ptr0);
+    ptr0->addOrReplaceString("a", "b");
+    ptr0->ensureScopeExists("sn1", ptr1);
+    ptr1->addOrReplaceString("x", "y");
+
+    StringVector v;
+    ptr1->listFullyScopedNames(ConfType::ScopesAndVars, false, v);
+
+    EXPECT_THAT(v.get(), UnorderedElementsAre("sn0.sn1.x"));
+}
+
+TEST_F(ConfigScopeTest, listFullyScopedNamesOfMultipleNodesRecursive)
+{
+    ConfigScope root{nullptr, "\0"};
+    ConfigScope scope0{&root, "s0"};
+    ConfigScope* ptr0 = &scope0;
+    ConfigScope scope1{ptr0, "s1"};
+    ConfigScope* ptr1 = &scope1;
+
+    root.ensureScopeExists("sn0", ptr0);
+    ptr0->addOrReplaceString("a", "b");
+    ptr0->ensureScopeExists("sn1", ptr1);
+    ptr1->addOrReplaceString("x", "y");
+
+    StringVector v;
+    ptr0->listFullyScopedNames(ConfType::ScopesAndVars, true, v);
+
+    EXPECT_THAT(v.get(), UnorderedElementsAre("sn0.a", "sn0.sn1", "sn0.sn1.x"));
+}
+
+TEST_F(ConfigScopeTest, listFullyScopedNamesOfMultipleNodesRecursiveScope)
+{
+    ConfigScope root{nullptr, "\0"};
+    ConfigScope scope0{&root, "s0"};
+    ConfigScope* ptr0 = &scope0;
+    ConfigScope scope1{ptr0, "s1"};
+    ConfigScope* ptr1 = &scope1;
+
+    root.ensureScopeExists("sn0", ptr0);
+    ptr0->addOrReplaceString("a", "b");
+    ptr0->ensureScopeExists("sn1", ptr1);
+    ptr1->addOrReplaceString("x", "y");
+
+    StringVector v;
+    ptr0->listFullyScopedNames(ConfType::Scope, true, v);
+
+    EXPECT_THAT(v.get(), UnorderedElementsAre("sn0.sn1"));
+}
+
+
