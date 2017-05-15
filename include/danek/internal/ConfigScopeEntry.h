@@ -37,9 +37,7 @@ namespace danek
     class ConfigScopeEntry
     {
     public:
-        //--------
-        // Ctors & dtor
-        //--------
+
         ConfigScopeEntry();
         ConfigScopeEntry(const char* name, ConfigItem* item, ConfigScopeEntry* next);
         ~ConfigScopeEntry();
@@ -52,22 +50,13 @@ namespace danek
     protected:
         friend class ConfigScope;
 
-        //--------
-        // Instance variables
-        //--------
         ConfigItem* m_item;
         ConfigScopeEntry* m_next;
 
     private:
-        //--------
-        // Constructors and operators that are not suported
-        //--------
+
         ConfigScopeEntry& operator=(const ConfigScopeEntry&);
     };
-
-    //--------
-    // Inline implementation of operations
-    //--------
 
     inline const char* ConfigScopeEntry::name()
     {
