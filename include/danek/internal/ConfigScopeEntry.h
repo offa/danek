@@ -39,7 +39,7 @@ namespace danek
     public:
 
         ConfigScopeEntry();
-        ConfigScopeEntry(const char* name, ConfigItem* item, ConfigScopeEntry* next);
+        ConfigScopeEntry(ConfigItem* item, ConfigScopeEntry* next);
         ~ConfigScopeEntry();
 
         inline const char* name();

@@ -126,7 +126,7 @@ namespace danek
             index = hash(name);
             entry = &m_table[index];
             ConfigScopeEntry* nextEntry = entry->m_next;
-            ConfigScopeEntry* newEntry = new ConfigScopeEntry(name.c_str(), new ConfigItem(name, str), nextEntry);
+            ConfigScopeEntry* newEntry = new ConfigScopeEntry(new ConfigItem(name, str), nextEntry);
             entry->m_next = newEntry;
         }
         return true;
@@ -170,7 +170,7 @@ namespace danek
             index = hash(name);
             entry = &m_table[index];
             ConfigScopeEntry* nextEntry = entry->m_next;
-            ConfigScopeEntry* newEntry = new ConfigScopeEntry(name.c_str(), new ConfigItem(name, list.get()), nextEntry);
+            ConfigScopeEntry* newEntry = new ConfigScopeEntry(new ConfigItem(name, list.get()), nextEntry);
             entry->m_next = newEntry;
         }
         return true;
@@ -214,7 +214,7 @@ namespace danek
             entry = &m_table[index];
             ConfigScopeEntry* nextEntry = entry->m_next;
             ConfigItem* item = new ConfigItem(name, std::make_unique<ConfigScope>(this, name));
-            ConfigScopeEntry* newEntry = new ConfigScopeEntry(name.c_str(), item, nextEntry);
+            ConfigScopeEntry* newEntry = new ConfigScopeEntry(item, nextEntry);
             scope = item->scopeVal();
             entry->m_next = newEntry;
         }

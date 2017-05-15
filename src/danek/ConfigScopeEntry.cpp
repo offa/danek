@@ -44,10 +44,8 @@ namespace danek
         m_next = nullptr;
     }
 
-    ConfigScopeEntry::ConfigScopeEntry(const char* name, ConfigItem* item, ConfigScopeEntry* next)
+    ConfigScopeEntry::ConfigScopeEntry(ConfigItem* item, ConfigScopeEntry* next)
     {
-        unused(name);
-
         m_item = item;
         m_next = next;
     }
