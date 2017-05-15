@@ -281,15 +281,12 @@ namespace danek
         //--------
         // Helper operations
         //--------
-        ConfigItem* lookup(
-            const char* fullyScopedName, const char* localName, bool startInRoot = false) const;
-        ConfigItem* lookupHelper(ConfigScope* scope, const StringVector& vec) const;
-        void stringValue(
-            const char* fullyScopedName, const char* localName, const char*& str, ConfType& type) const;
+        const ConfigItem* lookup(const char* fullyScopedName, const char* localName, bool startInRoot = false) const;
+        const ConfigItem* lookupHelper(ConfigScope* scope, const StringVector& vec) const;
+        void stringValue(const char* fullyScopedName, const char* localName, const char*& str, ConfType& type) const;
         void listValue(const char* fullyScopedName, const char* localName, StringVector& list, ConfType& type) const;
         void listValue(const char* fullyScopedName, const char* localName, std::vector<std::string>& list, ConfType& type) const;
-        virtual bool enumVal(
-            const char* description, const EnumNameAndValue* enumInfo, int numEnums, int& val) const;
+        virtual bool enumVal(const char* description, const EnumNameAndValue* enumInfo, int numEnums, int& val) const;
 
         void pushIncludedFilename(const char* fileName);
         void popIncludedFilename(const char* fileName);

@@ -29,13 +29,12 @@
 
 namespace danek
 {
-    ConfigScopeEntry::ConfigScopeEntry(ConfigItem* item) : m_item(item)
+    ConfigScopeEntry::ConfigScopeEntry(std::unique_ptr<ConfigItem> item) : m_item(std::move(item))
     {
     }
 
     ConfigScopeEntry::~ConfigScopeEntry()
     {
-        delete m_item;
     }
 
     const std::string& ConfigScopeEntry::name() const
@@ -45,7 +44,7 @@ namespace danek
 
     const ConfigItem* ConfigScopeEntry::item() const
     {
-        return m_item;
+        return m_item.get();
     }
 
     ConfType ConfigScopeEntry::type() const
@@ -53,10 +52,9 @@ namespace danek
         return m_item->type();
     }
 
-    void ConfigScopeEntry::setItem(ConfigItem* item)
+    void ConfigScopeEntry::setItem(std::unique_ptr<ConfigItem> item)
     {
-        delete m_item;
-        m_item = item;
+        m_item = std::move(item);
     }
 
 }

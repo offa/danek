@@ -56,7 +56,7 @@ namespace danek
 
         bool removeItem(const std::string& name);
 
-        ConfigItem* findItem(const std::string& name) const;
+        const ConfigItem* findItem(const std::string& name) const;
 
         bool contains(const std::string& name) const;
 

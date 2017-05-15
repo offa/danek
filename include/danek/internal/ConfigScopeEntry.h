@@ -24,6 +24,7 @@
 #pragma once
 
 #include "danek/internal/ConfigItem.h"
+#include <memory>
 
 namespace danek
 {
@@ -35,14 +36,14 @@ namespace danek
     {
     public:
 
-        ConfigScopeEntry(ConfigItem* item);
+        ConfigScopeEntry(std::unique_ptr<ConfigItem> item);
         ConfigScopeEntry(const ConfigScopeEntry&) = delete;
         ~ConfigScopeEntry();
 
         const std::string& name() const;
         const ConfigItem* item() const;
         ConfType type() const;
-        void setItem(ConfigItem* item);
+        void setItem(std::unique_ptr<ConfigItem> item);
 
 
         ConfigScopeEntry& operator=(const ConfigScopeEntry&) = delete;
@@ -52,7 +53,7 @@ namespace danek
 
         friend class ConfigScope;
 
-        ConfigItem* m_item;
+        std::unique_ptr<ConfigItem> m_item;
 
     };
 

@@ -679,7 +679,6 @@ namespace danek
         const char* toScopeName;
         StringBuffer msg;
         StringVector fromNamesVec;
-        ConfigItem* item;
         ConfigScope* fromScope;
         ConfigScope* dummyScope;
         int len;
@@ -721,7 +720,7 @@ namespace danek
         // If the scope does not exist and if "@ifExists" was specified
         // then we short-circuit the rest of this function.
         //--------
-        item = m_config->lookup(fromScopeName.str().c_str(), fromScopeName.str().c_str(), true);
+        const ConfigItem* item = m_config->lookup(fromScopeName.str().c_str(), fromScopeName.str().c_str(), true);
         if (item == nullptr && ifExistsIsSpecified)
         {
             accept(ConfigLex::LEX_SEMICOLON_SYM, "expecting ';'");
@@ -1005,7 +1004,6 @@ namespace danek
         StringBuffer msg;
         StringBuffer name;
         const char* constStr;
-        ConfigItem* item;
 
         str.clear();
         switch (m_token.type())
@@ -1055,35 +1053,37 @@ namespace danek
                 str = m_fileName;
                 break;
             case ConfigLex::LEX_FUNC_CONFIG_TYPE_SYM:
-                m_lex->nextToken(m_token);
-                parseStringExpr(name);
-                accept(ConfigLex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
-                item = m_config->lookup(name.str().c_str(), name.str().c_str());
-                if (item == nullptr)
                 {
-                    type = ConfType::NoValue;
-                }
-                else
-                {
-                    type = item->type();
-                }
-                switch (type)
-                {
-                    case ConfType::String:
-                        str = "string";
-                        break;
-                    case ConfType::List:
-                        str = "list";
-                        break;
-                    case ConfType::Scope:
-                        str = "scope";
-                        break;
-                    case ConfType::NoValue:
-                        str = "no_value";
-                        break;
-                    default:
-                        assert(0); // Bug!
-                        break;
+                    m_lex->nextToken(m_token);
+                    parseStringExpr(name);
+                    accept(ConfigLex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
+                    const ConfigItem* item = m_config->lookup(name.str().c_str(), name.str().c_str());
+                    if (item == nullptr)
+                    {
+                        type = ConfType::NoValue;
+                    }
+                    else
+                    {
+                        type = item->type();
+                    }
+                    switch (type)
+                    {
+                        case ConfType::String:
+                            str = "string";
+                            break;
+                        case ConfType::List:
+                            str = "list";
+                            break;
+                        case ConfType::Scope:
+                            str = "scope";
+                            break;
+                        case ConfType::NoValue:
+                            str = "no_value";
+                            break;
+                        default:
+                            assert(0); // Bug!
+                            break;
+                    }
                 }
                 break;
             case ConfigLex::LEX_STRING_SYM:

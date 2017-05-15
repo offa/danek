@@ -235,12 +235,11 @@ namespace danek
 
     ConfType ConfigurationImpl::type(const char* scope, const char* localName) const
     {
-        ConfigItem* item;
         ConfType result;
         StringBuffer fullyScopedName;
 
         mergeNames(scope, localName, fullyScopedName);
-        item = lookup(fullyScopedName.str().c_str(), localName);
+        const ConfigItem* item = lookup(fullyScopedName.str().c_str(), localName);
         if (item == nullptr)
         {
             result = ConfType::NoValue;
@@ -262,9 +261,7 @@ namespace danek
     void ConfigurationImpl::stringValue(
         const char* fullyScopedName, const char* localName, const char*& str, ConfType& type) const
     {
-        ConfigItem* item;
-
-        item = lookup(fullyScopedName, localName);
+        const ConfigItem* item = lookup(fullyScopedName, localName);
         if (item == nullptr)
         {
             type = ConfType::NoValue;
@@ -293,9 +290,7 @@ namespace danek
 
     void ConfigurationImpl::listValue(const char* fullyScopedName, const char* localName, StringVector& list, ConfType& type) const
     {
-        ConfigItem* item;
-
-        item = lookup(fullyScopedName, localName);
+        const ConfigItem* item = lookup(fullyScopedName, localName);
         if (item == nullptr)
         {
             type = ConfType::NoValue;
@@ -323,7 +318,7 @@ namespace danek
 
     void ConfigurationImpl::listValue(const char* fullyScopedName, const char* localName, std::vector<std::string>& data, ConfType& type) const
     {
-        ConfigItem* item = lookup(fullyScopedName, localName);
+        const ConfigItem* item = lookup(fullyScopedName, localName);
         if (item == nullptr)
         {
             type = ConfType::NoValue;
@@ -464,7 +459,6 @@ namespace danek
         StringBuffer fullyScopedName;
         StringBuffer msg;
         ConfigScope* scopeObj;
-        ConfigItem* item;
         int i;
         int len;
 
@@ -474,7 +468,7 @@ namespace danek
         len = vec.size();
         for (i = 0; i < len - 1; i++)
         {
-            item = scopeObj->findItem(vec[i].c_str());
+            const ConfigItem* item = scopeObj->findItem(vec[i].c_str());
             if (item == nullptr || item->type() != ConfType::Scope)
             {
                 msg << fileName() << ": '" << fullyScopedName << "' does not exist'";
@@ -512,12 +506,10 @@ namespace danek
     // Description:
     //----------------------------------------------------------------------
 
-    ConfigItem* ConfigurationImpl::lookup(
-        const char* fullyScopedName, const char* localName, bool startInRoot) const
+    const ConfigItem* ConfigurationImpl::lookup(const char* fullyScopedName, const char* localName, bool startInRoot) const
     {
         StringVector vec;
         ConfigScope* scope;
-        ConfigItem* item;
 
         if (fullyScopedName[0] == '\0')
         {
@@ -547,7 +539,7 @@ namespace danek
             vec = StringVector{util::splitScopes(fullyScopedName)};
             scope = m_currScope;
         }
-        item = nullptr;
+        const ConfigItem* item = nullptr;
         while (scope != nullptr)
         {
             item = lookupHelper(scope, vec);
@@ -564,16 +556,15 @@ namespace danek
         return item;
     }
 
-    ConfigItem* ConfigurationImpl::lookupHelper(ConfigScope* scope, const StringVector& vec) const
+    const ConfigItem* ConfigurationImpl::lookupHelper(ConfigScope* scope, const StringVector& vec) const
     {
         int len;
         int i;
-        ConfigItem* item;
 
         len = vec.size();
         for (i = 0; i < len - 1; i++)
         {
-            item = scope->findItem(vec[i].c_str());
+            const ConfigItem* item = scope->findItem(vec[i].c_str());
             if (item == nullptr || item->type() != ConfType::Scope)
             {
                 return nullptr;
@@ -583,8 +574,7 @@ namespace danek
         }
         assert(i == len - 1);
         assert(scope != nullptr);
-        item = scope->findItem(vec[i].c_str());
-        return item;
+        return scope->findItem(vec[i].c_str());
     }
 
     //----------------------------------------------------------------------
@@ -619,7 +609,7 @@ namespace danek
         }
         else
         {
-            ConfigItem* item = lookup(fullyScopedName.str().c_str(), localName, true);
+            const ConfigItem* item = lookup(fullyScopedName.str().c_str(), localName, true);
             if (item == nullptr)
             {
                 msg << fileName() << ": "
@@ -660,7 +650,6 @@ namespace danek
     {
         StringBuffer fullyScopedName;
         StringBuffer msg;
-        ConfigItem* item;
         ConfigScope* scopeObj;
 
         mergeNames(scope, localName, fullyScopedName);
@@ -670,7 +659,7 @@ namespace danek
         }
         else
         {
-            item = lookup(fullyScopedName.str().c_str(), localName, true);
+            const ConfigItem* item = lookup(fullyScopedName.str().c_str(), localName, true);
             if (item == nullptr || item->type() != ConfType::Scope)
             {
                 msg << fileName() << ": "
@@ -713,7 +702,6 @@ namespace danek
     {
         StringBuffer fullyScopedName;
         StringBuffer msg;
-        ConfigItem* item;
         ConfigScope* scopeObj;
 
         mergeNames(scope, localName, fullyScopedName);
@@ -723,7 +711,7 @@ namespace danek
         }
         else
         {
-            item = lookup(fullyScopedName.str().c_str(), localName, true);
+            const ConfigItem* item = lookup(fullyScopedName.str().c_str(), localName, true);
             if (item == nullptr || item->type() != ConfType::Scope)
             {
                 msg << fileName() << ": "

@@ -34,21 +34,16 @@ class ConfigScopeEntryTest : public testing::Test
 
 TEST_F(ConfigScopeEntryTest, values)
 {
-    ConfigItem* item = new ConfigItem("item-name", "value");
-    ConfigScopeEntry entry{item};
+    ConfigScopeEntry entry{std::make_unique<ConfigItem>("item-name", "value")};
     EXPECT_THAT(entry.name(), StrEq("item-name"));
-    EXPECT_THAT(entry.item(), Eq(item));
-    EXPECT_THAT(entry.type(), Eq(item->type()));
+    EXPECT_THAT(entry.type(), Eq(ConfType::String));
 }
 
 TEST_F(ConfigScopeEntryTest, changeItem)
 {
-    ConfigItem* itemOld = new ConfigItem("name", "value");
-    ConfigItem* itemNew = new ConfigItem("new-name", "new-value");
-    ConfigScopeEntry entry{itemOld};
-    entry.setItem(itemNew);
+    ConfigScopeEntry entry{std::make_unique<ConfigItem>("name", "value")};
+    entry.setItem(std::make_unique<ConfigItem>("new-name", "new-value"));
     EXPECT_THAT(entry.name(), StrEq("new-name"));
-    EXPECT_THAT(entry.item(), Eq(itemNew));
-    EXPECT_THAT(entry.type(), Eq(itemNew->type()));
+    EXPECT_THAT(entry.type(), Eq(ConfType::String));
 }
 

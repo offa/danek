@@ -83,12 +83,11 @@ namespace danek
                 return false;
             }
 
-            delete (*pos)->m_item;
-            (*pos)->m_item = new ConfigItem(name, str);
+            (*pos)->setItem(std::make_unique<ConfigItem>(name, str));
         }
         else
         {
-            m_table.push_back(std::make_unique<ConfigScopeEntry>(new ConfigItem(name, str)));
+            m_table.push_back(std::make_unique<ConfigScopeEntry>(std::make_unique<ConfigItem>(name, str)));
         }
 
         return true;
@@ -105,12 +104,11 @@ namespace danek
                 return false;
             }
 
-            delete (*pos)->m_item;
-            (*pos)->m_item = new ConfigItem(name, list.get());
+            (*pos)->setItem(std::make_unique<ConfigItem>(name, list.get()));
         }
         else
         {
-            m_table.push_back(std::make_unique<ConfigScopeEntry>(new ConfigItem(name, list.get())));
+            m_table.push_back(std::make_unique<ConfigScopeEntry>(std::make_unique<ConfigItem>(name, list.get())));
         }
 
         return true;
@@ -132,21 +130,21 @@ namespace danek
         }
         else
         {
-            ConfigItem* item = new ConfigItem(name, std::make_unique<ConfigScope>(this, name));
-            m_table.push_back(std::make_unique<ConfigScopeEntry>(item));
+            auto item = std::make_unique<ConfigItem>(name, std::make_unique<ConfigScope>(this, name));
             scope = item->scopeVal();
+            m_table.push_back(std::make_unique<ConfigScopeEntry>(std::move(item)));
         }
 
         return true;
     }
 
-    ConfigItem* ConfigScope::findItem(const std::string& name) const
+    const ConfigItem* ConfigScope::findItem(const std::string& name) const
     {
         auto pos = std::find_if(m_table.begin(), m_table.end(), [&name](const auto& v) { return v->name() == name; });
 
         if( pos != m_table.end() )
         {
-            return (*pos)->m_item;
+            return (*pos)->item();
         }
 
         return nullptr;
@@ -277,7 +275,7 @@ namespace danek
 
         for (std::size_t i = 0; i < nameVec.size(); ++i)
         {
-            ConfigItem* item = findItem(nameVec[i].c_str());
+            const ConfigItem* item = findItem(nameVec[i].c_str());
             const auto str = toString(*item, item->name().c_str(), wantExpandedUidNames, indentLevel);
             buf << str.c_str();
         }
@@ -290,7 +288,7 @@ namespace danek
 
         for (std::size_t i = 0; i < nameVec.size(); ++i)
         {
-            ConfigItem* item = findItem(nameVec[i].c_str());
+            const ConfigItem* item = findItem(nameVec[i].c_str());
             const auto str = toString(*item, item->name().c_str(), wantExpandedUidNames, indentLevel);
             buf << str.c_str();
         }
