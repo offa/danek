@@ -321,11 +321,23 @@ namespace danek
         return (findEntry(name, index) != nullptr);
     }
 
-    //----------------------------------------------------------------------
-    // Function:	listLocalNames()
-    //
-    // Description:
-    //----------------------------------------------------------------------
+    void ConfigScope::listFullyScopedNames(ConfType typeMask, bool recursive, StringVector& vec) const
+    {
+        StringVector filterPatterns;
+        listScopedNamesHelper(m_scopedName.str().c_str(), typeMask, recursive, filterPatterns, vec);
+    }
+
+    void ConfigScope::listFullyScopedNames(ConfType typeMask, bool recursive, const StringVector& filterPatterns, StringVector& vec) const
+    {
+        vec.clear();
+        listScopedNamesHelper(m_scopedName.str().c_str(), typeMask, recursive, filterPatterns, vec);
+    }
+
+    void ConfigScope::listLocallyScopedNames(ConfType typeMask, bool recursive, const StringVector& filterPatterns, StringVector& vec) const
+    {
+        vec.clear();
+        listScopedNamesHelper("", typeMask, recursive, filterPatterns, vec);
+    }
 
     void ConfigScope::listLocalNames(ConfType typeMask, StringVector& vec) const
     {

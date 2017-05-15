@@ -61,9 +61,9 @@ namespace danek
 
         bool is_in_table(const std::string& name) const;
 
-        inline void listFullyScopedNames(ConfType typeMask, bool recursive, StringVector& vec) const;
-        inline void listFullyScopedNames(ConfType typeMask, bool recursive, const StringVector& filterPatterns, StringVector& vec) const;
-        inline void listLocallyScopedNames(ConfType typeMask, bool recursive, const StringVector& filterPatterns, StringVector& vec) const;
+        void listFullyScopedNames(ConfType typeMask, bool recursive, StringVector& vec) const;
+        void listFullyScopedNames(ConfType typeMask, bool recursive, const StringVector& filterPatterns, StringVector& vec) const;
+        void listLocallyScopedNames(ConfType typeMask, bool recursive, const StringVector& filterPatterns, StringVector& vec) const;
 
         ConfigScope* parentScope() const;
         ConfigScope* rootScope() const;
@@ -91,22 +91,4 @@ namespace danek
         std::size_t m_tableSize;
         std::size_t m_numEntries;
     };
-
-    inline void ConfigScope::listFullyScopedNames(ConfType typeMask, bool recursive, StringVector& vec) const
-    {
-        StringVector filterPatterns;
-        listScopedNamesHelper(m_scopedName.str().c_str(), typeMask, recursive, filterPatterns, vec);
-    }
-
-    inline void ConfigScope::listFullyScopedNames(ConfType typeMask, bool recursive, const StringVector& filterPatterns, StringVector& vec) const
-    {
-        vec.clear();
-        listScopedNamesHelper(m_scopedName.str().c_str(), typeMask, recursive, filterPatterns, vec);
-    }
-
-    inline void ConfigScope::listLocallyScopedNames(ConfType typeMask, bool recursive, const StringVector& filterPatterns, StringVector& vec) const
-    {
-        vec.clear();
-        listScopedNamesHelper("", typeMask, recursive, filterPatterns, vec);
-    }
 }
