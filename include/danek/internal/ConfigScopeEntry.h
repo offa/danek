@@ -44,15 +44,16 @@ namespace danek
         ~ConfigScopeEntry();
 
         const std::string& name() const;
-        inline const ConfigItem* item();
-        inline ConfType type();
+        const ConfigItem* item() const;
+        ConfType type() const;
         void setItem(ConfigItem* item);
 
 
         ConfigScopeEntry& operator=(const ConfigScopeEntry&) = delete;
 
 
-    protected:
+    private:
+
         friend class ConfigScope;
 
         ConfigItem* m_item;
@@ -60,13 +61,4 @@ namespace danek
 
     };
 
-    inline const ConfigItem* ConfigScopeEntry::item()
-    {
-        return m_item;
-    }
-
-    inline ConfType ConfigScopeEntry::type()
-    {
-        return m_item->type();
-    }
 }

@@ -67,6 +67,16 @@ namespace danek
         return m_item->name();
     }
 
+    const ConfigItem* ConfigScopeEntry::item() const
+    {
+        return m_item;
+    }
+
+    ConfType ConfigScopeEntry::type() const
+    {
+        return m_item->type();
+    }
+
     void ConfigScopeEntry::setItem(ConfigItem* item)
     {
         delete m_item;
