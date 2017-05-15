@@ -21,9 +21,6 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//--------
-// #include's
-//--------
 #include "danek/internal/ConfigScopeEntry.h"
 #include "danek/internal/ConfigScope.h"
 #include "danek/internal/Common.h"
@@ -32,12 +29,6 @@
 
 namespace danek
 {
-    //----------------------------------------------------------------------
-    // Function:	Constructor (overloaded)
-    //
-    // Description:
-    //----------------------------------------------------------------------
-
     ConfigScopeEntry::ConfigScopeEntry()
     {
         m_item = nullptr;
@@ -49,12 +40,6 @@ namespace danek
         m_item = item;
         m_next = next;
     }
-
-    //----------------------------------------------------------------------
-    // Function:	Destructor
-    //
-    // Description:
-    //----------------------------------------------------------------------
 
     ConfigScopeEntry::~ConfigScopeEntry()
     {

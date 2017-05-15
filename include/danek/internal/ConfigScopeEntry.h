@@ -23,16 +23,13 @@
 
 #pragma once
 
-//--------
-// #include's
-//--------
-
-#include "ConfigItem.h"
-#include <assert.h>
+#include "danek/internal/ConfigItem.h"
 
 namespace danek
 {
     class ConfigScope;
+    class ConfigItem;
+
 
     class ConfigScopeEntry
     {
