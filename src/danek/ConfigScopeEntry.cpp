@@ -62,9 +62,15 @@ namespace danek
         delete m_next;
     }
 
+    const std::string& ConfigScopeEntry::name() const
+    {
+        return m_item->name();
+    }
+
     void ConfigScopeEntry::setItem(ConfigItem* item)
     {
         delete m_item;
         m_item = item;
     }
+
 }

@@ -263,7 +263,7 @@ namespace danek
         //--------
         while (entry)
         {
-            if (!strcmp(name.c_str(), entry->name()))
+            if (!strcmp(name.c_str(), entry->name().c_str()))
             {
                 //--------
                 // Found it!
@@ -288,7 +288,7 @@ namespace danek
         //--------
         while (entry->m_next != nullptr)
         {
-            if (!strcmp(name.c_str(), entry->m_next->name()))
+            if (!strcmp(name.c_str(), entry->m_next->name().c_str()))
             {
                 //--------
                 // Found it!

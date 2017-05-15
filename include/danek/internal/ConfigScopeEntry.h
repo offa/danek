@@ -43,7 +43,7 @@ namespace danek
         ConfigScopeEntry(const ConfigScopeEntry&) = delete;
         ~ConfigScopeEntry();
 
-        inline const char* name();
+        const std::string& name() const;
         inline const ConfigItem* item();
         inline ConfType type();
         void setItem(ConfigItem* item);
@@ -59,11 +59,6 @@ namespace danek
         ConfigScopeEntry* m_next;
 
     };
-
-    inline const char* ConfigScopeEntry::name()
-    {
-        return m_item->name().c_str();
-    }
 
     inline const ConfigItem* ConfigScopeEntry::item()
     {
