@@ -29,10 +29,6 @@
 
 namespace danek
 {
-    ConfigScopeEntry::ConfigScopeEntry() : ConfigScopeEntry(nullptr)
-    {
-    }
-
     ConfigScopeEntry::ConfigScopeEntry(ConfigItem* item) : m_item(item)
     {
     }

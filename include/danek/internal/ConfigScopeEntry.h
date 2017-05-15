@@ -31,11 +31,11 @@ namespace danek
     class ConfigItem;
 
 
+    /** @deprecated Possible to integrate this fully into the ConfigScope */
     class ConfigScopeEntry
     {
     public:
 
-        ConfigScopeEntry();
         ConfigScopeEntry(ConfigItem* item);
         ConfigScopeEntry(const ConfigScopeEntry&) = delete;
         ~ConfigScopeEntry();
