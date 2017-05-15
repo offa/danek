@@ -72,14 +72,6 @@ namespace danek
         return (ConfigScope*) scope;
     }
 
-    //----------------------------------------------------------------------
-    // Function:	addOrReplaceString()
-    //
-    // Description:	Add an entry to the hash table.
-    //
-    // Notes:	Replaces the previous entry with the same name, if any.
-    //----------------------------------------------------------------------
-
     bool ConfigScope::addOrReplaceString(const std::string& name, const std::string& str)
     {
         auto pos = std::find_if(m_table.begin(), m_table.end(), [&name](const auto& v) { return v->name() == name; });
@@ -102,14 +94,6 @@ namespace danek
         return true;
     }
 
-    //----------------------------------------------------------------------
-    // Function:	addOrReplaceList()
-    //
-    // Description:	Add an entry to the hash table.
-    //
-    // Notes:	Replaces the previous entry with the same name, if any.
-    //----------------------------------------------------------------------
-
     bool ConfigScope::addOrReplaceList(const std::string& name, const StringVector& list)
     {
         auto pos = std::find_if(m_table.begin(), m_table.end(), [&name](const auto& v) { return v->name() == name; });
@@ -131,12 +115,6 @@ namespace danek
 
         return true;
     }
-
-    //----------------------------------------------------------------------
-    // Function:	ensureScopeExists()
-    //
-    // Description:
-    //----------------------------------------------------------------------
 
     bool ConfigScope::ensureScopeExists(const std::string& name, ConfigScope*& scope)
     {
@@ -162,14 +140,6 @@ namespace danek
         return true;
     }
 
-    //----------------------------------------------------------------------
-    // Function:	findItem()
-    //
-    // Description:	Returns the named item if it exists.
-    //
-    // Notes:	Returns a nil pointer on failure.
-    //----------------------------------------------------------------------
-
     ConfigItem* ConfigScope::findItem(const std::string& name) const
     {
         auto pos = std::find_if(m_table.begin(), m_table.end(), [&name](const auto& v) { return v->name() == name; });
@@ -181,14 +151,6 @@ namespace danek
 
         return nullptr;
     }
-
-    //----------------------------------------------------------------------
-    // Function:	findEntry()
-    //
-    // Description:	Returns the named entry if it exists.
-    //
-    // Notes:	Returns a nil pointer on failure.
-    //----------------------------------------------------------------------
 
     ConfigScopeEntry* ConfigScope::findEntry(const std::string& name) const
     {
@@ -214,13 +176,6 @@ namespace danek
 
         return false;
     }
-
-    //----------------------------------------------------------------------
-    // Function:	is_in_table()
-    //
-    // Description:	Returns true if the specified entry exists in the table.
-    //		Returns false otherwise.
-    //----------------------------------------------------------------------
 
     bool ConfigScope::is_in_table(const std::string& name) const
     {
@@ -260,12 +215,6 @@ namespace danek
         });
     }
 
-    //----------------------------------------------------------------------
-    // Function:	listScopedNamesHelper()
-    //
-    // Description:
-    //----------------------------------------------------------------------
-
     void ConfigScope::listScopedNamesHelper(const std::string& prefix, ConfType typeMask, bool recursive, const StringVector& filterPatterns, StringVector& vec) const
     {
         StringBuffer scopedName;
@@ -295,12 +244,6 @@ namespace danek
 
         });
     }
-
-    //----------------------------------------------------------------------
-    // Function:	listFilter()
-    //
-    // Description:
-    //----------------------------------------------------------------------
 
     bool ConfigScope::listFilter(const std::string& name, const StringVector& filterPatterns) const
     {
