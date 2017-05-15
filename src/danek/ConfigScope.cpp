@@ -28,7 +28,6 @@
 #include <algorithm>
 #include <numeric>
 #include <string.h>
-#include <assert.h>
 #include <stdlib.h>
 
 namespace danek
@@ -351,8 +350,6 @@ namespace danek
         for (std::size_t i = 0; i < nameVec.size(); ++i)
         {
             ConfigItem* item = findItem(nameVec[i].c_str());
-            assert(static_cast<int>(item->type()) & static_cast<int>(ConfType::Variables));
-
             const auto str = toString(*item, item->name().c_str(), wantExpandedUidNames, indentLevel);
             buf << str.c_str();
         }
@@ -366,7 +363,6 @@ namespace danek
         for (std::size_t i = 0; i < nameVec.size(); ++i)
         {
             ConfigItem* item = findItem(nameVec[i].c_str());
-            assert(item->type() == ConfType::Scope);
             const auto str = toString(*item, item->name().c_str(), wantExpandedUidNames, indentLevel);
             buf << str.c_str();
         }
