@@ -28,7 +28,6 @@
 namespace danek
 {
     class ConfigScope;
-    class ConfigItem;
 
 
     /** @deprecated Possible to integrate this fully into the ConfigScope */
