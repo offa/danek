@@ -329,6 +329,18 @@ TEST_F(ConfigScopeTest, listFullyScopedNames)
     EXPECT_THAT(v.get(), UnorderedElementsAre("n1", "n2"));
 }
 
+TEST_F(ConfigScopeTest, listFullyScopedNamesWithFilter)
+{
+    ConfigScope root{nullptr, "\0"};
+    root.addOrReplaceString("n1", "1");
+    root.addOrReplaceString("n2", "2");
+
+    StringVector v;
+    StringVector filter{{"n2"}};
+    root.listFullyScopedNames(ConfType::String, false, filter, v);
+    EXPECT_THAT(v.get(), UnorderedElementsAre("n2"));
+}
+
 TEST_F(ConfigScopeTest, listFullyScopedNamesOfMixedType)
 {
     const std::vector<std::string> elements = {"a", "b"};
@@ -445,5 +457,133 @@ TEST_F(ConfigScopeTest, listFullyScopedNamesOfMultipleNodesRecursiveWithFilter)
     ptr0->listFullyScopedNames(ConfType::ScopesAndVars, true, filter, v);
 
     EXPECT_THAT(v.get(), UnorderedElementsAre("sn0.sn1", "sn0.sn1.x"));
+}
+
+TEST_F(ConfigScopeTest, listLocallyScopedNames)
+{
+    ConfigScope root{nullptr, "\0"};
+    root.addOrReplaceString("n1", "1");
+    root.addOrReplaceString("n2", "2");
+
+    StringVector v;
+    StringVector filter{{}};
+    root.listLocallyScopedNames(ConfType::String, false, filter, v);
+    EXPECT_THAT(v.get(), UnorderedElementsAre("n1", "n2"));
+}
+
+TEST_F(ConfigScopeTest, listLocallyScopedNamesWithFilter)
+{
+    ConfigScope root{nullptr, "\0"};
+    root.addOrReplaceString("n1", "1");
+    root.addOrReplaceString("n2", "2");
+
+    StringVector v;
+    StringVector filter{{"n2"}};
+    root.listLocallyScopedNames(ConfType::String, false, filter, v);
+    EXPECT_THAT(v.get(), UnorderedElementsAre("n2"));
+}
+
+TEST_F(ConfigScopeTest, listLocallyScopedNamesOfMixedType)
+{
+    const std::vector<std::string> elements = {"a", "b"};
+    ConfigScope root{nullptr, "\0"};
+    root.addOrReplaceString("n1", "1");
+    root.addOrReplaceString("n2", "2");
+    root.addOrReplaceList("n3", StringVector{elements});
+
+    StringVector v;
+    StringVector filter{{"n*"}};
+    root.listLocallyScopedNames(ConfType::Variables, false, filter, v);
+    EXPECT_THAT(v.get(), UnorderedElementsAre("n1", "n2", "n3"));
+}
+
+TEST_F(ConfigScopeTest, listLocallyScopedNamesFiltersElements)
+{
+    ConfigScope root{nullptr, "\0"};
+    root.addOrReplaceString("n1", "1");
+    root.addOrReplaceString("n2", "2");
+
+    StringVector v;
+    StringVector filter{{"n*"}};
+    root.listLocallyScopedNames(ConfType::List, false, filter, v);
+    EXPECT_THAT(v.get(), IsEmpty());
+}
+
+TEST_F(ConfigScopeTest, listLocallyScopedNamesWithScope)
+{
+    ConfigScope root{nullptr, "\0"};
+    ConfigScope scope0{&root, "s0"};
+    ConfigScope* ptr0 = &scope0;
+    ConfigScope scope1{&root, "s1"};
+    ConfigScope* ptr1 = &scope1;
+
+    root.ensureScopeExists("sn-0", ptr0);
+    root.ensureScopeExists("sn-1", ptr1);
+
+    StringVector v;
+    StringVector filter{{"*"}};
+    root.listLocallyScopedNames(ConfType::ScopesAndVars, false, filter, v);
+
+    EXPECT_THAT(v.get(), UnorderedElementsAre("sn-0", "sn-1"));
+}
+
+TEST_F(ConfigScopeTest, listLocallyScopedNamesOfMultipleNodes)
+{
+    ConfigScope root{nullptr, "\0"};
+    ConfigScope scope0{&root, "s0"};
+    ConfigScope* ptr0 = &scope0;
+    ConfigScope scope1{ptr0, "s1"};
+    ConfigScope* ptr1 = &scope1;
+
+    root.ensureScopeExists("sn0", ptr0);
+    ptr0->addOrReplaceString("a", "b");
+    ptr0->ensureScopeExists("sn1", ptr1);
+    ptr1->addOrReplaceString("x", "y");
+
+    StringVector v;
+    StringVector filter{{"*"}};
+    ptr1->listLocallyScopedNames(ConfType::ScopesAndVars, false, filter, v);
+
+    EXPECT_THAT(v.get(), UnorderedElementsAre("x"));
+}
+
+TEST_F(ConfigScopeTest, listLocallyScopedNamesOfMultipleNodesRecursive)
+{
+    ConfigScope root{nullptr, "\0"};
+    ConfigScope scope0{&root, "s0"};
+    ConfigScope* ptr0 = &scope0;
+    ConfigScope scope1{ptr0, "s1"};
+    ConfigScope* ptr1 = &scope1;
+
+    root.ensureScopeExists("sn0", ptr0);
+    ptr0->addOrReplaceString("a", "b");
+    ptr0->ensureScopeExists("sn1", ptr1);
+    ptr1->addOrReplaceString("x", "y");
+
+    StringVector v;
+    StringVector filter{{"*"}};
+    ptr0->listLocallyScopedNames(ConfType::ScopesAndVars, true, filter, v);
+
+    EXPECT_THAT(v.get(), UnorderedElementsAre("a", "sn1", "sn1.x"));
+}
+
+TEST_F(ConfigScopeTest, listLocallyScopedNamesOfMultipleNodesRecursiveScope)
+{
+    ConfigScope root{nullptr, "\0"};
+    ConfigScope scope0{&root, "s0"};
+    ConfigScope* ptr0 = &scope0;
+    ConfigScope scope1{ptr0, "s1"};
+    ConfigScope* ptr1 = &scope1;
+
+    root.ensureScopeExists("sn0", ptr0);
+    ptr0->addOrReplaceString("a", "b");
+    ptr0->ensureScopeExists("sn1", ptr1);
+    ptr1->addOrReplaceString("x", "y");
+
+    StringVector v;
+    StringVector filter{{"*"}};
+    ptr0->listLocallyScopedNames(ConfType::Scope, true, filter, v);
+
+    EXPECT_THAT(v.get(), UnorderedElementsAre("sn1"));
 }
 
