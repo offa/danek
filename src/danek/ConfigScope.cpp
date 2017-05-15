@@ -67,7 +67,7 @@ namespace danek
 
     const std::string& ConfigScope::scopedName() const
     {
-        return m_scopedName.str();
+        return m_scopedName;
     }
 
     ConfigScope* ConfigScope::parentScope() const
@@ -324,13 +324,13 @@ namespace danek
     void ConfigScope::listFullyScopedNames(ConfType typeMask, bool recursive, StringVector& vec) const
     {
         StringVector filterPatterns;
-        listScopedNamesHelper(m_scopedName.str().c_str(), typeMask, recursive, filterPatterns, vec);
+        listScopedNamesHelper(m_scopedName.c_str(), typeMask, recursive, filterPatterns, vec);
     }
 
     void ConfigScope::listFullyScopedNames(ConfType typeMask, bool recursive, const StringVector& filterPatterns, StringVector& vec) const
     {
         vec.clear();
-        listScopedNamesHelper(m_scopedName.str().c_str(), typeMask, recursive, filterPatterns, vec);
+        listScopedNamesHelper(m_scopedName.c_str(), typeMask, recursive, filterPatterns, vec);
     }
 
     void ConfigScope::listLocallyScopedNames(ConfType typeMask, bool recursive, const StringVector& filterPatterns, StringVector& vec) const

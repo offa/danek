@@ -86,7 +86,7 @@ namespace danek
 
 
         ConfigScope* m_parentScope;
-        StringBuffer m_scopedName;
+        std::string m_scopedName;
         ConfigScopeEntry* m_table;
         std::size_t m_tableSize;
         std::size_t m_numEntries;
