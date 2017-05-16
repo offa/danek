@@ -509,7 +509,7 @@ namespace danek
     const ConfigItem* ConfigurationImpl::lookup(const char* fullyScopedName, const char* localName, bool startInRoot) const
     {
         StringVector vec;
-        ConfigScope* scope;
+        const ConfigScope* scope;
 
         if (fullyScopedName[0] == '\0')
         {
@@ -556,7 +556,7 @@ namespace danek
         return item;
     }
 
-    const ConfigItem* ConfigurationImpl::lookupHelper(ConfigScope* scope, const StringVector& vec) const
+    const ConfigItem* ConfigurationImpl::lookupHelper(const ConfigScope* scope, const StringVector& vec) const
     {
         int len;
         int i;

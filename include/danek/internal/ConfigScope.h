@@ -61,7 +61,7 @@ namespace danek
         void listFullyScopedNames(ConfType typeMask, bool recursive, const StringVector& filterPatterns, StringVector& vec) const;
         void listLocallyScopedNames(ConfType typeMask, bool recursive, const StringVector& filterPatterns, StringVector& vec) const;
 
-        ConfigScope* parentScope() const;
+        const ConfigScope* parentScope() const;
         const ConfigScope* rootScope() const;
 
 

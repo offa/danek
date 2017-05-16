@@ -56,7 +56,7 @@ namespace danek
         return m_scopedName;
     }
 
-    ConfigScope* ConfigScope::parentScope() const
+    const ConfigScope* ConfigScope::parentScope() const
     {
         return m_parentScope;
     }
