@@ -83,11 +83,11 @@ namespace danek
                 return false;
             }
 
-            (*pos)->setItem(std::make_unique<ConfigItem>(name, str));
+            *pos = std::make_unique<ConfigItem>(name, str);
         }
         else
         {
-            m_table.push_back(std::make_unique<ConfigScopeEntry>(std::make_unique<ConfigItem>(name, str)));
+            m_table.push_back(std::make_unique<ConfigItem>(name, str));
         }
 
         return true;
@@ -104,11 +104,11 @@ namespace danek
                 return false;
             }
 
-            (*pos)->setItem(std::make_unique<ConfigItem>(name, list.get()));
+            *pos = std::make_unique<ConfigItem>(name, list.get());
         }
         else
         {
-            m_table.push_back(std::make_unique<ConfigScopeEntry>(std::make_unique<ConfigItem>(name, list.get())));
+            m_table.push_back(std::make_unique<ConfigItem>(name, list.get()));
         }
 
         return true;
@@ -126,13 +126,13 @@ namespace danek
                 return false;
             }
 
-            scope = (*pos)->item()->scopeVal();
+            scope = (*pos)->scopeVal();
         }
         else
         {
             auto item = std::make_unique<ConfigItem>(name, std::make_unique<ConfigScope>(this, name));
             scope = item->scopeVal();
-            m_table.push_back(std::make_unique<ConfigScopeEntry>(std::move(item)));
+            m_table.push_back(std::move(item));
         }
 
         return true;
@@ -144,7 +144,7 @@ namespace danek
 
         if( pos != m_table.cend() )
         {
-            return (*pos)->item();
+            return pos->get();
         }
 
         return nullptr;
@@ -225,7 +225,7 @@ namespace danek
 
             if (recursive && v->type() == ConfType::Scope)
             {
-                v->item()->scopeVal()->listScopedNamesHelper(scopedName.str().c_str(), typeMask, true, filterPatterns, vec);
+                v->scopeVal()->listScopedNamesHelper(scopedName.str().c_str(), typeMask, true, filterPatterns, vec);
             }
 
         });

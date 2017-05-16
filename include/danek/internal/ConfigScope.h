@@ -81,6 +81,6 @@ namespace danek
 
         ConfigScope* m_parentScope;
         std::string m_scopedName;
-        std::vector<std::unique_ptr<ConfigScopeEntry>> m_table;
+        std::vector<std::unique_ptr<ConfigItem>> m_table;
     };
 }
