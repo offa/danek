@@ -62,7 +62,7 @@ namespace danek
         void listLocallyScopedNames(ConfType typeMask, bool recursive, const StringVector& filterPatterns, StringVector& vec) const;
 
         ConfigScope* parentScope() const;
-        ConfigScope* rootScope() const;
+        const ConfigScope* rootScope() const;
 
 
         ConfigScope& operator=(const ConfigScope&) = delete;
