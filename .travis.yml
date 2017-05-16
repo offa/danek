@@ -52,5 +52,5 @@ before_install:
 
 script:
     - if [[ "$CXX" == clang* ]]; then export CXXFLAGS="-stdlib=libc++"; fi
-    - script/travis_build.sh
+    - script/ci_build.sh
 
