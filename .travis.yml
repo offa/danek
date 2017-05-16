@@ -48,12 +48,9 @@ matrix:
           sources: *sources
 
 before_install:
-    - script/travis_install.sh
+    - script/ci_install.sh
 
 script:
     - if [[ "$CXX" == clang* ]]; then export CXXFLAGS="-stdlib=libc++"; fi
-    - mkdir build && cd build
-    - cmake -DCMAKE_BUILD_TYPE=Release -DDEMOS=ON -DSCHEMA_TESTS=ON ..
-    - make
-    - make unittest
+    - script/travis_build.sh
 
