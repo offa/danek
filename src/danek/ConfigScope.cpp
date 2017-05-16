@@ -118,7 +118,7 @@ namespace danek
 
     bool ConfigScope::ensureScopeExists(const std::string& name, ConfigScope*& scope)
     {
-        auto pos = std::find_if(m_table.begin(), m_table.end(), [&name](const auto& v) { return v->name() == name; });
+        auto pos = std::find_if(m_table.cbegin(), m_table.cend(), [&name](const auto& v) { return v->name() == name; });
 
         if( pos != m_table.cend() )
         {
@@ -173,13 +173,13 @@ namespace danek
     void ConfigScope::listFullyScopedNames(ConfType typeMask, bool recursive, StringVector& vec) const
     {
         StringVector filterPatterns;
-        listScopedNamesHelper(m_scopedName.c_str(), typeMask, recursive, filterPatterns, vec);
+        listScopedNamesHelper(m_scopedName, typeMask, recursive, filterPatterns, vec);
     }
 
     void ConfigScope::listFullyScopedNames(ConfType typeMask, bool recursive, const StringVector& filterPatterns, StringVector& vec) const
     {
         vec.clear();
-        listScopedNamesHelper(m_scopedName.c_str(), typeMask, recursive, filterPatterns, vec);
+        listScopedNamesHelper(m_scopedName, typeMask, recursive, filterPatterns, vec);
     }
 
     void ConfigScope::listLocallyScopedNames(ConfType typeMask, bool recursive, const StringVector& filterPatterns, StringVector& vec) const
@@ -274,8 +274,7 @@ namespace danek
         for (std::size_t i = 0; i < variables.size(); ++i)
         {
             const ConfigItem* item = findItem(variables[i]);
-            const auto str = toString(*item, item->name(), wantExpandedUidNames, indentLevel);
-            buf << str;
+            buf << toString(*item, item->name(), wantExpandedUidNames, indentLevel);
         }
 
         //--------
@@ -287,8 +286,7 @@ namespace danek
         for (std::size_t i = 0; i < scopes.size(); ++i)
         {
             const ConfigItem* item = findItem(scopes[i].c_str());
-            const auto str = toString(*item, item->name(), wantExpandedUidNames, indentLevel);
-            buf << str;
+            buf << toString(*item, item->name(), wantExpandedUidNames, indentLevel);
         }
     }
 }
