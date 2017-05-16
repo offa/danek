@@ -22,6 +22,7 @@
 // SOFTWARE.
 
 #include "danek/internal/ConfigScope.h"
+#include "danek/internal/ConfigItem.h"
 #include "danek/internal/UidIdentifierProcessor.h"
 #include "danek/internal/ToString.h"
 #include "danek/Configuration.h"

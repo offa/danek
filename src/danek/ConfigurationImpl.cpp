@@ -21,15 +21,13 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//--------
-// #include's
-//--------
 #include "danek/internal/ConfigurationImpl.h"
 #include "danek/internal/Util.h"
 #include "danek/internal/platform.h"
 #include "danek/internal/DefaultSecurityConfiguration.h"
 #include "danek/internal/ConfigParser.h"
 #include "danek/internal/ToString.h"
+#include "danek/internal/ConfigItem.h"
 #include "danek/internal/Common.h"
 #include <algorithm>
 #include <stdlib.h>

@@ -21,6 +21,7 @@
 // SOFTWARE.
 
 #include "danek/internal/ConfigScope.h"
+#include "danek/internal/ConfigItem.h"
 #include <gmock/gmock.h>
 
 using namespace danek;

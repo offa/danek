@@ -26,11 +26,14 @@
 #include "danek/ConfigurationException.h"
 #include "danek/StringVector.h"
 #include "danek/StringBuffer.h"
-#include "ConfigScopeEntry.h"
+#include "danek/ConfType.h"
 #include <vector>
+#include <memory>
 
 namespace danek
 {
+    class ConfigItem;
+
     //----------------------------------------------------------------------
     // Class:	ConfigScope
     //

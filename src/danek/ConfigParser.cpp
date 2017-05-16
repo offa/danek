@@ -80,6 +80,7 @@
 //--------
 #include "danek/internal/ConfigParser.h"
 #include "danek/internal/platform.h"
+#include "danek/internal/ConfigItem.h"
 #include <assert.h>
 #include <stdlib.h>
 #include <ctype.h>
