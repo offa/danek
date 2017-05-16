@@ -69,7 +69,7 @@ namespace danek
         {
             scope = scope->m_parentScope;
         }
-        return (ConfigScope*) scope;
+        return scope;
     }
 
     bool ConfigScope::addOrReplaceString(const std::string& name, const std::string& str)
