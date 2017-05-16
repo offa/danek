@@ -9,7 +9,6 @@ add_library(danek SchemaLex.cpp
                 ConfigParser.cpp
                 UidIdentifierProcessor.cpp
                 ConfigScope.cpp
-                ConfigScopeEntry.cpp
                 ConfigItem.cpp
                 LexToken.cpp
                 LexBase.cpp
