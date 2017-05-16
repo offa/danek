@@ -46,13 +46,6 @@ matrix:
             - clang-3.8
             - libc++-dev
           sources: *sources
-    - env: CXX=clang++-3.7 CC=clang-3.7
-      addons:
-        apt:
-          packages:
-            - clang-3.7
-            - libc++-dev
-          sources: *sources
 
 before_install:
     - script/travis_install.sh
