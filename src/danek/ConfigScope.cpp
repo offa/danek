@@ -192,8 +192,7 @@ namespace danek
         vec.clear();
         vec.reserve(m_table.size());
 
-        // TODO: Fix captures
-        std::for_each(m_table.cbegin(), m_table.cend(), [&](const auto& v)
+        std::for_each(m_table.cbegin(), m_table.cend(), [typeMask, &vec](const auto& v)
         {
             if( static_cast<int>(v->type()) & static_cast<int>(typeMask) )
             {
