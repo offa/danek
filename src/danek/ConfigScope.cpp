@@ -204,11 +204,9 @@ namespace danek
     void ConfigScope::listScopedNamesHelper(const std::string& prefix, ConfType typeMask, bool recursive, const StringVector& filterPatterns, StringVector& vec) const
     {
         StringBuffer scopedName;
-
         vec.reserve(vec.size() + m_table.size());
 
-        // TODO: Fix captures
-        std::for_each(m_table.begin(), m_table.end(), [&](const auto& v)
+        std::for_each(m_table.begin(), m_table.end(), [this, typeMask, &filterPatterns, &scopedName, &prefix, &vec, recursive](const auto& v)
         {
             scopedName = prefix;
 
