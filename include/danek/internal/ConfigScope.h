@@ -23,7 +23,6 @@
 
 #pragma once
 
-#include "danek/ConfigurationException.h"
 #include "danek/StringVector.h"
 #include "danek/StringBuffer.h"
 #include "danek/ConfType.h"
