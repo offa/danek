@@ -140,9 +140,9 @@ namespace danek
 
     const ConfigItem* ConfigScope::findItem(const std::string& name) const
     {
-        auto pos = std::find_if(m_table.begin(), m_table.end(), [&name](const auto& v) { return v->name() == name; });
+        auto pos = std::find_if(m_table.cbegin(), m_table.cend(), [&name](const auto& v) { return v->name() == name; });
 
-        if( pos != m_table.end() )
+        if( pos != m_table.cend() )
         {
             return (*pos)->item();
         }
@@ -152,9 +152,9 @@ namespace danek
 
     bool ConfigScope::removeItem(const std::string& name)
     {
-        auto pos = std::find_if(m_table.begin(), m_table.end(), [&name](const auto& v) { return v->name() == name; });
+        auto pos = std::find_if(m_table.cbegin(), m_table.cend(), [&name](const auto& v) { return v->name() == name; });
 
-        if( pos != m_table.end() )
+        if( pos != m_table.cend() )
         {
             m_table.erase(pos);
             return true;
