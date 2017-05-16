@@ -188,9 +188,9 @@ namespace danek
         listScopedNamesHelper("", typeMask, recursive, filterPatterns, vec);
     }
 
-    void ConfigScope::listLocalNames(ConfType typeMask, StringVector& vec) const
+    std::vector<std::string> ConfigScope::listLocalNames(ConfType typeMask) const
     {
-        vec.clear();
+        std::vector<std::string> vec;
         vec.reserve(m_table.size());
 
         std::for_each(m_table.cbegin(), m_table.cend(), [typeMask, &vec](const auto& v)
@@ -200,6 +200,8 @@ namespace danek
                 vec.push_back(v->name());
             }
         });
+
+        return vec;
     }
 
     void ConfigScope::listScopedNamesHelper(const std::string& prefix, ConfType typeMask, bool recursive, const StringVector& filterPatterns, StringVector& vec) const
@@ -263,17 +265,15 @@ namespace danek
 
     void ConfigScope::dump(StringBuffer& buf, bool wantExpandedUidNames, int indentLevel) const
     {
-        StringVector nameVec;
-
         //--------
         // First pass. Dump the variables
         //--------
-        listLocalNames(ConfType::Variables, nameVec);
-        std::sort(nameVec.begin(), nameVec.end());
+        auto variables = listLocalNames(ConfType::Variables);
+        std::sort(variables.begin(), variables.end());
 
-        for (std::size_t i = 0; i < nameVec.size(); ++i)
+        for (std::size_t i = 0; i < variables.size(); ++i)
         {
-            const ConfigItem* item = findItem(nameVec[i].c_str());
+            const ConfigItem* item = findItem(variables[i].c_str());
             const auto str = toString(*item, item->name().c_str(), wantExpandedUidNames, indentLevel);
             buf << str.c_str();
         }
@@ -281,12 +281,12 @@ namespace danek
         //--------
         // Second pass. Dump the nested scopes
         //--------
-        listLocalNames(ConfType::Scope, nameVec);
-        std::sort(nameVec.begin(), nameVec.end());
+        auto scopes = listLocalNames(ConfType::Scope);
+        std::sort(scopes.begin(), scopes.end());
 
-        for (std::size_t i = 0; i < nameVec.size(); ++i)
+        for (std::size_t i = 0; i < scopes.size(); ++i)
         {
-            const ConfigItem* item = findItem(nameVec[i].c_str());
+            const ConfigItem* item = findItem(scopes[i].c_str());
             const auto str = toString(*item, item->name().c_str(), wantExpandedUidNames, indentLevel);
             buf << str.c_str();
         }

@@ -76,12 +76,12 @@ namespace danek
 
     private:
 
-        void listLocalNames(ConfType typeMask, StringVector& vec) const;
+        std::vector<std::string> listLocalNames(ConfType typeMask) const;
         void listScopedNamesHelper(const std::string& prefix, ConfType typeMask, bool recursive, const StringVector& filterPatterns, StringVector& vec) const;
         bool listFilter(const std::string& name, const StringVector& filterPatterns) const;
 
 
-        ConfigScope* m_parentScope;
+        const ConfigScope* m_parentScope;
         std::string m_scopedName;
         std::vector<std::unique_ptr<ConfigItem>> m_table;
     };
