@@ -219,14 +219,14 @@ namespace danek
             }
             scopedName << v->name();
 
-            if ((static_cast<int>(v->type()) & static_cast<int>(typeMask)) && this->listFilter(scopedName.str().c_str(), filterPatterns))
+            if ((static_cast<int>(v->type()) & static_cast<int>(typeMask)) && this->listFilter(scopedName.str(), filterPatterns))
             {
                 vec.push_back(scopedName.str());
             }
 
             if (recursive && v->type() == ConfType::Scope)
             {
-                v->scopeVal()->listScopedNamesHelper(scopedName.str().c_str(), typeMask, true, filterPatterns, vec);
+                v->scopeVal()->listScopedNamesHelper(scopedName.str(), typeMask, true, filterPatterns, vec);
             }
         });
     }
@@ -273,9 +273,9 @@ namespace danek
 
         for (std::size_t i = 0; i < variables.size(); ++i)
         {
-            const ConfigItem* item = findItem(variables[i].c_str());
-            const auto str = toString(*item, item->name().c_str(), wantExpandedUidNames, indentLevel);
-            buf << str.c_str();
+            const ConfigItem* item = findItem(variables[i]);
+            const auto str = toString(*item, item->name(), wantExpandedUidNames, indentLevel);
+            buf << str;
         }
 
         //--------
@@ -287,8 +287,8 @@ namespace danek
         for (std::size_t i = 0; i < scopes.size(); ++i)
         {
             const ConfigItem* item = findItem(scopes[i].c_str());
-            const auto str = toString(*item, item->name().c_str(), wantExpandedUidNames, indentLevel);
-            buf << str.c_str();
+            const auto str = toString(*item, item->name(), wantExpandedUidNames, indentLevel);
+            buf << str;
         }
     }
 }
