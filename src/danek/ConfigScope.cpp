@@ -208,7 +208,7 @@ namespace danek
     {
         vec.reserve(vec.size() + m_table.size());
 
-        std::for_each(m_table.begin(), m_table.end(), [this, typeMask, &filterPatterns, &prefix, &vec, recursive](const auto& v)
+        std::for_each(m_table.cbegin(), m_table.cend(), [this, typeMask, &filterPatterns, &prefix, &vec, recursive](const auto& v)
         {
             std::stringstream scopedName;
             scopedName << prefix;
