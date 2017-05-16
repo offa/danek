@@ -27,6 +27,7 @@
 #include "danek/internal/ToString.h"
 #include "danek/Configuration.h"
 #include <algorithm>
+#include <sstream>
 
 namespace danek
 {
@@ -207,13 +208,14 @@ namespace danek
 
         std::for_each(m_table.begin(), m_table.end(), [this, typeMask, &filterPatterns, &prefix, &vec, recursive](const auto& v)
         {
-            StringBuffer scopedName{prefix};
+            std::stringstream scopedName;
+            scopedName << prefix;
 
             if( prefix.empty() == false )
             {
-                scopedName.append(".");
+                scopedName << ".";
             }
-            scopedName.append(v->name());
+            scopedName << v->name();
 
             if ((static_cast<int>(v->type()) & static_cast<int>(typeMask)) && this->listFilter(scopedName.str().c_str(), filterPatterns))
             {
@@ -224,7 +226,6 @@ namespace danek
             {
                 v->scopeVal()->listScopedNamesHelper(scopedName.str().c_str(), typeMask, true, filterPatterns, vec);
             }
-
         });
     }
 
