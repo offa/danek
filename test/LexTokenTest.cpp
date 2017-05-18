@@ -34,7 +34,7 @@ class LexTokenTest : public testing::Test
 
 TEST_F(LexTokenTest, initWithDefaultValues)
 {
-    LexToken t;
+    const LexToken t;
     EXPECT_THAT(t.type(), Eq(LexBase::LEX_UNKNOWN_SYM));
     EXPECT_THAT(t.lineNum(), Eq(-1));
     EXPECT_THAT(t.spelling(), StrEq(""));
@@ -45,7 +45,7 @@ TEST_F(LexTokenTest, initWithDefaultValues)
 
 TEST_F(LexTokenTest, initWithValues)
 {
-    LexToken t{LexBase::LEX_PLUS_SYM, 15, "abc"};
+    const LexToken t{LexBase::LEX_PLUS_SYM, 15, "abc"};
     EXPECT_THAT(t.type(), Eq(LexBase::LEX_PLUS_SYM));
     EXPECT_THAT(t.lineNum(), Eq(15));
     EXPECT_THAT(t.spelling(), StrEq("abc"));
