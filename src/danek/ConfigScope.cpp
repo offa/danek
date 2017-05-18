@@ -95,7 +95,7 @@ namespace danek
         return true;
     }
 
-    bool ConfigScope::addOrReplaceList(const std::string& name, const StringVector& list)
+    bool ConfigScope::addOrReplaceList(const std::string& name, const std::vector<std::string>& list)
     {
         auto pos = std::find_if(m_table.begin(), m_table.end(), [&name](const auto& v) { return v->name() == name; });
 
@@ -106,11 +106,11 @@ namespace danek
                 return false;
             }
 
-            *pos = std::make_unique<ConfigItem>(name, list.get());
+            *pos = std::make_unique<ConfigItem>(name, list);
         }
         else
         {
-            m_table.push_back(std::make_unique<ConfigItem>(name, list.get()));
+            m_table.push_back(std::make_unique<ConfigItem>(name, list));
         }
 
         return true;

@@ -30,6 +30,7 @@
 #include "danek/internal/ConfigItem.h"
 #include "danek/internal/Common.h"
 #include <algorithm>
+#include <sstream>
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
@@ -390,19 +391,19 @@ namespace danek
 
     void ConfigurationImpl::insertList(const char* scope, const char* localName, std::vector<std::string> data) throw(ConfigurationException)
     {
-        int len;
         ConfigScope* scopeObj;
-        StringBuffer msg;
         StringBuffer fullyScopedName;
 
         mergeNames(scope, localName, fullyScopedName);
         StringVector vec{util::splitScopes(fullyScopedName.str())};
-        len = vec.size();
+        const auto len = vec.size();
         ensureScopeExists(vec, 0, len - 2, scopeObj);
-        if (!scopeObj->addOrReplaceList(vec[len - 1].c_str(), StringVector{data}))
+
+        if (!scopeObj->addOrReplaceList(vec[len - 1].c_str(), data))
         {
+            std::stringstream msg;
             msg << fileName() << ": "
-                << "variable '" << fullyScopedName << "' was previously used as a scope";
+                << "variable '" << fullyScopedName.str() << "' was previously used as a scope";
             throw ConfigurationException(msg.str());
         }
     }
@@ -428,18 +429,17 @@ namespace danek
     // Notes:	Overwrites an existing entry of the same name.
     //----------------------------------------------------------------------
 
-    void ConfigurationImpl::insertList(const char* name, const StringVector& list) throw(
-        ConfigurationException)
+    void ConfigurationImpl::insertList(const char* name, const StringVector& list) throw(ConfigurationException)
     {
-        int len;
         ConfigScope* scope;
-        StringBuffer msg;
 
         StringVector vec{util::splitScopes(name)};
-        len = vec.size();
+        const auto len = vec.size();
         ensureScopeExists(vec, 0, len - 2, scope);
-        if (!scope->addOrReplaceList(vec[len - 1].c_str(), list))
+
+        if (!scope->addOrReplaceList(vec[len - 1].c_str(), list.get()))
         {
+            std::stringstream msg;
             msg << fileName() << ": "
                 << "variable '" << name << "' was previously used as a scope";
             throw ConfigurationException(msg.str());

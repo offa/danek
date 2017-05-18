@@ -148,7 +148,7 @@ TEST_F(ConfigScopeTest, addListItemAddsNewElement)
 {
     const std::vector<std::string> v = {"a", "b"};
     ConfigScope root{nullptr, "\0"};
-    const auto result = root.addOrReplaceList("el", StringVector{v});
+    const auto result = root.addOrReplaceList("el", v);
 
     EXPECT_TRUE(result);
     const auto found = root.findItem("el");
@@ -162,8 +162,8 @@ TEST_F(ConfigScopeTest, addListItemReplacesExistingItemOfSameName)
     const std::vector<std::string> old = {"1", "2"};
     const std::vector<std::string> v = {"4", "5"};
     ConfigScope root{nullptr, "\0"};
-    root.addOrReplaceList("el", StringVector{old});
-    const auto result = root.addOrReplaceList("el", StringVector{v});
+    root.addOrReplaceList("el", old);
+    const auto result = root.addOrReplaceList("el", v);
 
     EXPECT_TRUE(result);
     const auto found = root.findItem("el");
@@ -180,7 +180,7 @@ TEST_F(ConfigScopeTest, addListItemDoesNothingIfExistingScopeOfSameName)
     ConfigScope* ptr = &scope;
     root.ensureScopeExists("scope-name", ptr);
 
-    const auto result = root.addOrReplaceList("scope-name", StringVector{v});
+    const auto result = root.addOrReplaceList("scope-name", v);
     EXPECT_FALSE(result);
 }
 
@@ -189,7 +189,7 @@ TEST_F(ConfigScopeTest, addItemReplacesElementOfSameName)
     const std::vector<std::string> v = {"4", "5"};
     ConfigScope root{nullptr, "\0"};
 
-    EXPECT_TRUE(root.addOrReplaceList("name", StringVector{v}));
+    EXPECT_TRUE(root.addOrReplaceList("name", v));
     EXPECT_TRUE(root.addOrReplaceString("name", "abc"));
 
     const auto found = root.findItem("name");
@@ -311,7 +311,7 @@ TEST_F(ConfigScopeTest, listFullyScopedNamesOfMixedType)
     ConfigScope root{nullptr, "\0"};
     root.addOrReplaceString("n1", "1");
     root.addOrReplaceString("n2", "2");
-    root.addOrReplaceList("n3", StringVector{elements});
+    root.addOrReplaceList("n3", elements);
 
     const auto v = root.listFullyScopedNames(ConfType::Variables, false);
     EXPECT_THAT(v, UnorderedElementsAre("n1", "n2", "n3"));
@@ -439,7 +439,7 @@ TEST_F(ConfigScopeTest, listLocallyScopedNamesOfMixedType)
     ConfigScope root{nullptr, "\0"};
     root.addOrReplaceString("n1", "1");
     root.addOrReplaceString("n2", "2");
-    root.addOrReplaceList("n3", StringVector{elements});
+    root.addOrReplaceList("n3", elements);
 
     std::vector<std::string> filter{"n*"};
     const auto v = root.listLocallyScopedNames(ConfType::Variables, false, filter);
