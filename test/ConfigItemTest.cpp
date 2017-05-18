@@ -33,7 +33,7 @@ class ConfigItemTest : public testing::Test
 
 TEST_F(ConfigItemTest, stringItem)
 {
-    ConfigItem item{"name_s", "value"};
+    const ConfigItem item{"name_s", "value"};
     EXPECT_EQ(ConfType::String, item.type());
     EXPECT_THAT(item.name(), StrEq("name_s"));
     EXPECT_THAT(item.stringVal(), StrEq("value"));
@@ -41,7 +41,7 @@ TEST_F(ConfigItemTest, stringItem)
 
 TEST_F(ConfigItemTest, stringItemThrowsOnInvalidTypeAccess)
 {
-    ConfigItem item{"bad", std::vector<std::string>{}};
+    const ConfigItem item{"bad", std::vector<std::string>{}};
     EXPECT_THROW(item.stringVal(), std::domain_error);
 }
 
@@ -59,14 +59,14 @@ TEST_F(ConfigItemTest, stringListItem)
 
 TEST_F(ConfigItemTest, stringListItemThrowsOnInvalidTypeAccess)
 {
-    ConfigItem item{"bad", "value"};
+    const ConfigItem item{"bad", "value"};
     EXPECT_THROW(item.listVal(), std::domain_error);
 }
 
 TEST_F(ConfigItemTest, scopeItem)
 {
     const char c = '\0';
-    ConfigItem item{"name_cs", std::make_unique<ConfigScope>(nullptr, &c)};
+    const ConfigItem item{"name_cs", std::make_unique<ConfigScope>(nullptr, &c)};
     EXPECT_EQ(ConfType::Scope, item.type());
     EXPECT_THAT(item.name(), StrEq("name_cs"));
     EXPECT_THAT(item.scopeVal(), Not(nullptr));
@@ -74,7 +74,7 @@ TEST_F(ConfigItemTest, scopeItem)
 
 TEST_F(ConfigItemTest, scopeItemThrowsOnInvalidTypeAccess)
 {
-    ConfigItem item{"bad", "value"};
+    const ConfigItem item{"bad", "value"};
     EXPECT_THROW(item.scopeVal(), std::domain_error);
 }
 
