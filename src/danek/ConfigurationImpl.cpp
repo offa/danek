@@ -666,7 +666,7 @@ namespace danek
             }
             scopeObj = item->scopeVal();
         }
-        scopeObj->listFullyScopedNames(typeMask, recursive, filterPatterns, names);
+        scopeObj->listFullyScopedNames(typeMask, recursive, filterPatterns.get(), names);
 
         std::sort(names.begin(), names.end());
     }
@@ -718,7 +718,7 @@ namespace danek
             }
             scopeObj = item->scopeVal();
         }
-        scopeObj->listLocallyScopedNames(typeMask, recursive, filterPatterns, names);
+        scopeObj->listLocallyScopedNames(typeMask, recursive, filterPatterns.get(), names);
         std::sort(names.begin(), names.end());
     }
 
