@@ -34,21 +34,21 @@ class ToStringTest : public testing::Test
 
 TEST_F(ToStringTest, toStringEscapesSpecialCharacters)
 {
-    ConfigItem item{"name", "value\t_\n_%_\"_"};
+    const ConfigItem item{"name", "value\t_\n_%_\"_"};
     const auto str = toString(item, "xyz", false);
     EXPECT_THAT(str, StrEq("xyz = \"value%t_%n_%%_%\"_\";\n"));
 }
 
 TEST_F(ToStringTest, toStringWithIndention)
 {
-    ConfigItem item{"name", "value"};
+    const ConfigItem item{"name", "value"};
     const auto str = toString(item, "xyz", false, 2);
     EXPECT_THAT(str, StrEq("        xyz = \"value\";\n"));
 }
 
 TEST_F(ToStringTest, toStringStringItem)
 {
-    ConfigItem item{"name", "value"};
+    const ConfigItem item{"name", "value"};
     const auto str = toString(item, "xyz", false);
     EXPECT_THAT(str, StrEq("xyz = \"value\";\n"));
 }
@@ -56,7 +56,7 @@ TEST_F(ToStringTest, toStringStringItem)
 TEST_F(ToStringTest, toStringListItem)
 {
     const std::vector<std::string> v{"a", "b\n"};
-    ConfigItem item{"name", v};
+    const ConfigItem item{"name", v};
 
     const auto str = toString(item, "xyz", false);
     EXPECT_THAT(str, StrEq("xyz = [\"a\", \"b%n\"];\n"));
@@ -65,7 +65,7 @@ TEST_F(ToStringTest, toStringListItem)
 TEST_F(ToStringTest, toStringListItemSingleElement)
 {
     const std::vector<std::string> v{};
-    ConfigItem item{"name", v};
+    const ConfigItem item{"name", v};
 
     const auto str = toString(item, "xyz", false);
     EXPECT_THAT(str, StrEq("xyz = [];\n"));
@@ -74,7 +74,7 @@ TEST_F(ToStringTest, toStringListItemSingleElement)
 TEST_F(ToStringTest, toStringListItemIfEmpty)
 {
     const std::vector<std::string> v{};
-    ConfigItem item{"name", v};
+    const ConfigItem item{"name", v};
 
     const auto str = toString(item, "xyz", false);
     EXPECT_THAT(str, StrEq("xyz = [];\n"));
@@ -83,7 +83,7 @@ TEST_F(ToStringTest, toStringListItemIfEmpty)
 TEST_F(ToStringTest, toStringScopeItem)
 {
     const char c = '\0';
-    ConfigItem item{"name", std::make_unique<ConfigScope>(nullptr, &c)};
+    const ConfigItem item{"name", std::make_unique<ConfigScope>(nullptr, &c)};
     const auto str = toString(item, "xyz", false);
     EXPECT_THAT(str, StrEq("xyz {\n}\n"));
 }

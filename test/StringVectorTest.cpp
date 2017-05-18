@@ -25,6 +25,7 @@
 #include <gmock/gmock.h>
 
 using danek::StringVector;
+using namespace testing;
 
 class StringVectorTest : public testing::Test
 {
@@ -50,7 +51,7 @@ TEST_F(StringVectorTest, copyInitialize)
 
     StringVector v(toAdd);
     EXPECT_EQ(1, v.size());
-    EXPECT_EQ(std::string{"a"}, v[0]);
+    EXPECT_THAT(v[0], StrEq("a"));
 }
 
 TEST_F(StringVectorTest, copyAssign)
@@ -61,7 +62,7 @@ TEST_F(StringVectorTest, copyAssign)
     StringVector v;
     v = toAdd;
     EXPECT_EQ(1, v.size());
-    EXPECT_EQ(std::string{"a"}, v[0]);
+    EXPECT_THAT(v[0], StrEq("a"));
 }
 
 TEST_F(StringVectorTest, copyAssignOverwritesExistingElements)
@@ -73,7 +74,7 @@ TEST_F(StringVectorTest, copyAssignOverwritesExistingElements)
     v.push_back("should-remove");
     v = toAdd;
     EXPECT_EQ(1, v.size());
-    EXPECT_EQ(std::string{"a"}, v[0]);
+    EXPECT_THAT(v[0], StrEq("a"));
 }
 
 TEST_F(StringVectorTest, addString)
@@ -81,7 +82,7 @@ TEST_F(StringVectorTest, addString)
     StringVector v;
     v.push_back("abc");
     EXPECT_EQ(1, v.size());
-    EXPECT_EQ(std::string{"abc"}, v[0]);
+    EXPECT_THAT(v[0], StrEq("abc"));
 }
 
 TEST_F(StringVectorTest, addStringKeepsOrder)
@@ -91,9 +92,9 @@ TEST_F(StringVectorTest, addStringKeepsOrder)
     v.push_back("b");
     v.push_back("c");
     EXPECT_EQ(3, v.size());
-    EXPECT_EQ(std::string{"a"}, v[0]);
-    EXPECT_EQ(std::string{"b"}, v[1]);
-    EXPECT_EQ(std::string{"c"}, v[2]);
+    EXPECT_THAT(v[0], StrEq("a"));
+    EXPECT_THAT(v[1], StrEq("b"));
+    EXPECT_THAT(v[2], StrEq("c"));
 }
 
 TEST_F(StringVectorTest, addStringVector)
@@ -109,8 +110,9 @@ TEST_F(StringVectorTest, addStringVector)
         v.push_back(str);
     }
     EXPECT_EQ(2, v.size());
-    EXPECT_EQ(std::string{"a"}, v[0]);
-    EXPECT_EQ(std::string{"b"}, v[1]);
+
+    EXPECT_THAT(v[0], StrEq("a"));
+    EXPECT_THAT(v[1], StrEq("b"));
 }
 
 TEST_F(StringVectorTest, elementAccessByIndex)
@@ -118,7 +120,7 @@ TEST_F(StringVectorTest, elementAccessByIndex)
     StringVector v;
     v.push_back("abc");
     v.push_back("def");
-    EXPECT_EQ(std::string{"abc"}, v[0]);
+    EXPECT_THAT(v[0], StrEq("abc"));
 }
 
 TEST_F(StringVectorTest, getCopyOfData)
@@ -127,7 +129,7 @@ TEST_F(StringVectorTest, getCopyOfData)
     v.push_back("3");
     const auto data = v.get();
     EXPECT_EQ(v.size(), data.size());
-    EXPECT_EQ(std::string{"3"}, data[0]);
+    EXPECT_THAT(v[0], StrEq("3"));
 }
 
 TEST_F(StringVectorTest, sizeMatchesElements)
@@ -155,6 +157,6 @@ TEST_F(StringVectorTest, removeLastRemovesLastElement)
     v.push_back("y");
     v.erase(v.end() - 1);
     EXPECT_EQ(1, v.size());
-    EXPECT_EQ(std::string{"x"}, v[v.size() - 1]);
+    EXPECT_THAT(v[v.size() - 1], StrEq("x"));
 }
 
