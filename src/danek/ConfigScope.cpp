@@ -233,18 +233,16 @@ namespace danek
 
     bool ConfigScope::listFilter(const std::string& name, const std::vector<std::string>& filterPatterns) const
     {
-        UidIdentifierProcessor uidProc;
-        const std::size_t len = filterPatterns.size();
-
-        if (len == 0)
+        if (filterPatterns.empty() == true)
         {
             return true;
         }
 
         StringBuffer buf;
+        UidIdentifierProcessor uidProc;
         const char* unexpandedName = uidProc.unexpand(name.c_str(), buf);
 
-        for (std::size_t i = 0; i < len; ++i)
+        for (std::size_t i = 0; i < filterPatterns.size(); ++i)
         {
             const char* pattern = filterPatterns[i].c_str();
             if (Configuration::patternMatch(unexpandedName, pattern))
