@@ -38,14 +38,30 @@ namespace danek
             return std::string(level * indentCount, ' ');
         }
 
+
+        void replaceInplace(std::string& input, const std::string& str, const std::string& replacement)
+        {
+            if( str.empty() == false )
+            {
+                std::size_t pos = 0;
+
+                while( ( pos = input.find(str, pos) ) != std::string::npos )
+                {
+                    input.replace(pos, str.size(), replacement);
+                    pos += replacement.size();
+                }
+            }
+        }
+
+
         std::string escape(const std::string& str)
         {
-            std::string output = str;
+            auto output = str;
 
-            output = std::regex_replace(output, std::regex("%"), "%%");
-            output = std::regex_replace(output, std::regex("\t"), "%t");
-            output = std::regex_replace(output, std::regex("\n"), "%n");
-            output = std::regex_replace(output, std::regex("\""), "%\"");
+            replaceInplace(output, "%", "%%");
+            replaceInplace(output, "\t", "%t");
+            replaceInplace(output, "\n", "%n");
+            replaceInplace(output, "\"", "%\"");
 
             return "\"" + output + "\"";
         }
