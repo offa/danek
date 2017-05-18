@@ -24,6 +24,7 @@
 #include <gmock/gmock.h>
 
 using danek::ConfigurationException;
+using namespace testing;
 
 class ConfigurationExceptionTest : public testing::Test
 {
@@ -31,8 +32,8 @@ class ConfigurationExceptionTest : public testing::Test
 
 TEST_F(ConfigurationExceptionTest, message)
 {
-    ConfigurationException ex("abc");
-    EXPECT_STREQ("abc", ex.c_str());
-    EXPECT_STREQ("abc", ex.what());
-    EXPECT_EQ(std::string{"abc"}, ex.message());
+    const ConfigurationException ex("abc");
+    EXPECT_THAT(ex.c_str(), StrEq("abc"));
+    EXPECT_THAT(ex.what(), StrEq("abc"));
+    EXPECT_THAT(ex.message(), StrEq("abc"));
 }
