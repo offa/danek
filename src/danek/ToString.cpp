@@ -24,8 +24,9 @@
 #include "danek/internal/ConfigItem.h"
 #include "danek/internal/ConfigScope.h"
 #include "danek/internal/UidIdentifierProcessor.h"
+#include <algorithm>
+#include <iterator>
 #include <sstream>
-#include <regex>
 
 namespace danek
 {
