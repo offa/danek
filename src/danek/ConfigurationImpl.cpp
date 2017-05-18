@@ -88,7 +88,6 @@ namespace danek
         const char* sourceDescription) throw(ConfigurationException)
     {
         Configuration* cfg;
-        StringBuffer msg;
 
         cfg = Configuration::create();
         try
@@ -98,7 +97,8 @@ namespace danek
         catch (const ConfigurationException& ex)
         {
             cfg->destroy();
-            msg << "cannot set default configuration: " << ex.c_str();
+            std::stringstream msg;
+            msg << "cannot set default configuration: " << ex.message();
             throw ConfigurationException(msg.str());
         }
 
@@ -119,7 +119,6 @@ namespace danek
         Configuration* cfg, bool takeOwnership, const char* scope) throw(ConfigurationException)
     {
         StringVector dummyList;
-        StringBuffer msg;
 
         try
         {
@@ -129,7 +128,8 @@ namespace danek
         }
         catch (const ConfigurationException& ex)
         {
-            msg << "cannot set security configuration: " << ex.c_str();
+            std::stringstream msg;
+            msg << "cannot set security configuration: " << ex.message();
             throw ConfigurationException(msg.str());
         }
 
@@ -143,7 +143,6 @@ namespace danek
     {
         Configuration* cfg;
         StringVector dummyList;
-        StringBuffer msg;
 
         cfg = Configuration::create();
         try
@@ -156,7 +155,8 @@ namespace danek
         catch (const ConfigurationException& ex)
         {
             cfg->destroy();
-            msg << "cannot set security configuration: " << ex.c_str();
+            std::stringstream msg;
+            msg << "cannot set security configuration: " << ex.message();
             throw ConfigurationException(msg.str());
         }
 
@@ -185,7 +185,6 @@ namespace danek
         const char* sourceDescription) throw(ConfigurationException)
     {
         StringBuffer trustedCmdLine;
-        StringBuffer msg;
 
         switch (sourceType)
         {
@@ -214,6 +213,7 @@ namespace danek
                 }
                 if (!isExecAllowed(source, trustedCmdLine))
                 {
+                    std::stringstream msg;
                     msg << "cannot parse output of executing \"" << source << "\" "
                         << "due to security restrictions";
                     throw ConfigurationException(msg.str());
@@ -264,7 +264,7 @@ namespace danek
         if (item == nullptr)
         {
             type = ConfType::NoValue;
-            str = (const char*) nullptr;
+            str = nullptr;
         }
         else
         {
@@ -275,7 +275,7 @@ namespace danek
             }
             else
             {
-                str = (const char*) nullptr;
+                str = nullptr;
             }
         }
     }
@@ -348,19 +348,18 @@ namespace danek
     void ConfigurationImpl::insertString(const char* scope, const char* localName, const char* str) throw(
         ConfigurationException)
     {
-        int len;
         ConfigScope* scopeObj;
-        StringBuffer msg;
         StringBuffer fullyScopedName;
 
         mergeNames(scope, localName, fullyScopedName);
         StringVector vec{util::splitScopes(fullyScopedName.str())};
-        len = vec.size();
+        const auto len = vec.size();
         ensureScopeExists(vec, 0, len - 2, scopeObj);
         if (!scopeObj->addOrReplaceString(vec[len - 1].c_str(), str))
         {
+            std::stringstream msg;
             msg << fileName() << ": "
-                << "variable '" << fullyScopedName << "' was previously used as a scope";
+                << "variable '" << fullyScopedName.str() << "' was previously used as a scope";
             throw ConfigurationException(msg.str());
         }
     }
@@ -455,7 +454,6 @@ namespace danek
     void ConfigurationImpl::remove(const char* scope, const char* localName) throw(ConfigurationException)
     {
         StringBuffer fullyScopedName;
-        StringBuffer msg;
         ConfigScope* scopeObj;
         int i;
         int len;
@@ -469,7 +467,8 @@ namespace danek
             const ConfigItem* item = scopeObj->findItem(vec[i].c_str());
             if (item == nullptr || item->type() != ConfType::Scope)
             {
-                msg << fileName() << ": '" << fullyScopedName << "' does not exist'";
+                std::stringstream msg;
+                msg << fileName() << ": '" << fullyScopedName.str() << "' does not exist'";
                 throw ConfigurationException(msg.str());
             }
             scopeObj = item->scopeVal();
@@ -479,7 +478,8 @@ namespace danek
         assert(scopeObj != nullptr);
         if (!scopeObj->removeItem(vec[i].c_str()))
         {
-            msg << fileName() << ": '" << fullyScopedName << "' does not exist'";
+            std::stringstream msg;
+            msg << fileName() << ": '" << fullyScopedName.str() << "' does not exist'";
             throw ConfigurationException(msg.str());
         }
     }
@@ -596,7 +596,6 @@ namespace danek
     void ConfigurationImpl::dump(StringBuffer& buf, bool wantExpandedUidNames, const char* scope,
         const char* localName) const throw(ConfigurationException)
     {
-        StringBuffer msg;
         StringBuffer fullyScopedName;
 
         buf = "";
@@ -610,8 +609,9 @@ namespace danek
             const ConfigItem* item = lookup(fullyScopedName.str().c_str(), localName, true);
             if (item == nullptr)
             {
+                std::stringstream msg;
                 msg << fileName() << ": "
-                    << "'" << fullyScopedName << "' is not an entry";
+                    << "'" << fullyScopedName.str() << "' is not an entry";
                 throw ConfigurationException(msg.str());
             }
 
@@ -647,7 +647,6 @@ namespace danek
         throw(ConfigurationException)
     {
         StringBuffer fullyScopedName;
-        StringBuffer msg;
         ConfigScope* scopeObj;
 
         mergeNames(scope, localName, fullyScopedName);
@@ -660,8 +659,9 @@ namespace danek
             const ConfigItem* item = lookup(fullyScopedName.str().c_str(), localName, true);
             if (item == nullptr || item->type() != ConfType::Scope)
             {
+                std::stringstream msg;
                 msg << fileName() << ": "
-                    << "'" << fullyScopedName << "' is not a scope";
+                    << "'" << fullyScopedName.str() << "' is not a scope";
                 throw ConfigurationException(msg.str());
             }
             scopeObj = item->scopeVal();
@@ -699,7 +699,6 @@ namespace danek
         throw(ConfigurationException)
     {
         StringBuffer fullyScopedName;
-        StringBuffer msg;
         ConfigScope* scopeObj;
 
         mergeNames(scope, localName, fullyScopedName);
@@ -712,8 +711,9 @@ namespace danek
             const ConfigItem* item = lookup(fullyScopedName.str().c_str(), localName, true);
             if (item == nullptr || item->type() != ConfType::Scope)
             {
+                std::stringstream msg;
                 msg << fileName() << ": "
-                    << "'" << fullyScopedName << "' is not a scope";
+                    << "'" << fullyScopedName.str() << "' is not a scope";
                 throw ConfigurationException(msg.str());
             }
             scopeObj = item->scopeVal();
@@ -727,7 +727,7 @@ namespace danek
         const char* scope, const char* localName, const char* defaultVal) const throw(ConfigurationException)
     {
         ConfType type;
-        StringBuffer msg;
+        std::stringstream msg;
         const char* str;
         StringBuffer fullyScopedName;
 
@@ -741,10 +741,10 @@ namespace danek
                 str = defaultVal;
                 break;
             case ConfType::Scope:
-                msg << fileName() << ": '" << fullyScopedName << "' is a scope instead of a string";
+                msg << fileName() << ": '" << fullyScopedName.str() << "' is a scope instead of a string";
                 throw ConfigurationException(msg.str());
             case ConfType::List:
-                msg << fileName() << ": '" << fullyScopedName << "' is a list instead of a string";
+                msg << fileName() << ": '" << fullyScopedName.str() << "' is a list instead of a string";
                 throw ConfigurationException(msg.str());
             default:
                 assert(0); // Bug
@@ -756,7 +756,7 @@ namespace danek
         throw(ConfigurationException)
     {
         ConfType type;
-        StringBuffer msg;
+        std::stringstream msg;
         const char* str;
         StringBuffer fullyScopedName;
 
@@ -767,14 +767,14 @@ namespace danek
             case ConfType::String:
                 break;
             case ConfType::NoValue:
-                msg << fileName() << ": no value specified for '" << fullyScopedName << "'";
+                msg << fileName() << ": no value specified for '" << fullyScopedName.str() << "'";
                 throw ConfigurationException(msg.str());
             case ConfType::Scope:
-                msg << fileName() << ": '" << fullyScopedName << "' is a scope instead of a string";
+                msg << fileName() << ": '" << fullyScopedName.str() << "' is a scope instead of a string";
                 throw ConfigurationException(msg.str());
             case ConfType::List:
                 msg << fileName() << ": "
-                    << "'" << fullyScopedName << "' is a list instead of a string";
+                    << "'" << fullyScopedName.str() << "' is a list instead of a string";
                 throw ConfigurationException(msg.str());
             default:
                 assert(0); // Bug
@@ -786,7 +786,7 @@ namespace danek
         throw(ConfigurationException)
     {
         ConfType type;
-        StringBuffer msg;
+        std::stringstream msg;
         StringBuffer fullyScopedName;
 
         mergeNames(scope, localName, fullyScopedName);
@@ -804,11 +804,11 @@ namespace danek
                 break;
             case ConfType::Scope:
                 msg << fileName() << ": "
-                    << "'" << fullyScopedName << "' is a scope instead of a list";
+                    << "'" << fullyScopedName.str() << "' is a scope instead of a list";
                 throw ConfigurationException(msg.str());
             case ConfType::String:
                 msg << fileName() << ": "
-                    << "'" << fullyScopedName << "' is a string instead of a list";
+                    << "'" << fullyScopedName.str() << "' is a string instead of a list";
                 throw ConfigurationException(msg.str());
             default:
                 assert(0); // Bug
@@ -818,7 +818,7 @@ namespace danek
     void ConfigurationImpl::lookupList(const char* scope, const char* localName, std::vector<std::string>& data) const throw(ConfigurationException)
     {
         ConfType type;
-        StringBuffer msg;
+        std::stringstream msg;
         StringBuffer fullyScopedName;
 
         mergeNames(scope, localName, fullyScopedName);
@@ -828,14 +828,14 @@ namespace danek
             case ConfType::List:
                 break;
             case ConfType::NoValue:
-                msg << fileName() << ": no value specified for '" << fullyScopedName << "'";
+                msg << fileName() << ": no value specified for '" << fullyScopedName.str() << "'";
                 throw ConfigurationException(msg.str());
             case ConfType::Scope:
-                msg << fileName() << ": '" << fullyScopedName << "' is a scope instead of a list";
+                msg << fileName() << ": '" << fullyScopedName.str() << "' is a scope instead of a list";
                 throw ConfigurationException(msg.str());
             case ConfType::String:
                 msg << fileName() << ": "
-                    << "'" << fullyScopedName << "' is a string instead of a list";
+                    << "'" << fullyScopedName.str() << "' is a string instead of a list";
                 throw ConfigurationException(msg.str());
             default:
                 assert(0); // Bug
@@ -846,7 +846,7 @@ namespace danek
         const StringVector& defaultList) const throw(ConfigurationException)
     {
         ConfType type;
-        StringBuffer msg;
+        std::stringstream msg;
         StringBuffer fullyScopedName;
         std::vector<std::string> data;
 
@@ -861,10 +861,10 @@ namespace danek
                 list = defaultList;
                 break;
             case ConfType::Scope:
-                msg << fileName() << ": '" << fullyScopedName << "' is a scope instead of a list";
+                msg << fileName() << ": '" << fullyScopedName.str() << "' is a scope instead of a list";
                 throw ConfigurationException(msg.str());
             case ConfType::String:
-                msg << fileName() << ": '" << fullyScopedName << "' is a string instead of a list";
+                msg << fileName() << ": '" << fullyScopedName.str() << "' is a string instead of a list";
                 throw ConfigurationException(msg.str());
             default:
                 assert(0); // Bug
@@ -875,7 +875,7 @@ namespace danek
         throw(ConfigurationException)
     {
         ConfType type;
-        StringBuffer msg;
+        std::stringstream msg;
         StringBuffer fullyScopedName;
         std::vector<std::string> data;
 
@@ -887,15 +887,15 @@ namespace danek
                 list = StringVector{data};
                 break;
             case ConfType::NoValue:
-                msg << fileName() << ": no value specified for '" << fullyScopedName << "'";
+                msg << fileName() << ": no value specified for '" << fullyScopedName.str() << "'";
                 throw ConfigurationException(msg.str());
                 break;
             case ConfType::Scope:
-                msg << fileName() << ": '" << fullyScopedName << "' is a scope instead of a list";
+                msg << fileName() << ": '" << fullyScopedName.str() << "' is a scope instead of a list";
                 throw ConfigurationException(msg.str());
             case ConfType::String:
                 msg << fileName() << ": "
-                    << "'" << fullyScopedName << "' is a string instead of a list";
+                    << "'" << fullyScopedName.str() << "' is a string instead of a list";
                 throw ConfigurationException(msg.str());
             default:
                 assert(0); // Bug
@@ -906,9 +906,9 @@ namespace danek
         const EnumNameAndValue* enumInfo, int numEnums, const char* defaultVal) const
         throw(ConfigurationException)
     {
-        StringBuffer msg;
         int result;
         StringBuffer fullyScopedName;
+        std::stringstream msg;
 
         const char* strValue = lookupString(scope, localName, defaultVal);
 
@@ -919,7 +919,7 @@ namespace danek
         {
             mergeNames(scope, localName, fullyScopedName);
             msg << fileName() << ": bad " << typeName << " value ('" << strValue << "') specified for '"
-                << fullyScopedName << "'; should be one of:";
+                << fullyScopedName.str() << "'; should be one of:";
             for (int i = 0; i < numEnums; i++)
             {
                 if (i < numEnums - 1)
@@ -939,7 +939,6 @@ namespace danek
     int ConfigurationImpl::lookupEnum(const char* scope, const char* localName, const char* typeName,
         const EnumNameAndValue* enumInfo, int numEnums, int defaultVal) const throw(ConfigurationException)
     {
-        StringBuffer msg;
         int result;
         StringBuffer fullyScopedName;
 
@@ -955,9 +954,10 @@ namespace danek
         //--------
         if (!enumVal(strValue, enumInfo, numEnums, result))
         {
+            std::stringstream msg;
             mergeNames(scope, localName, fullyScopedName);
             msg << fileName() << ": bad " << typeName << " value ('" << strValue << "') specified for '"
-                << fullyScopedName << "'; should be one of:";
+                << fullyScopedName.str() << "'; should be one of:";
             for (int i = 0; i < numEnums; i++)
             {
                 if (i < numEnums - 1)
@@ -977,7 +977,6 @@ namespace danek
     int ConfigurationImpl::lookupEnum(const char* scope, const char* localName, const char* typeName,
         const EnumNameAndValue* enumInfo, int numEnums) const throw(ConfigurationException)
     {
-        StringBuffer msg;
         int result;
         StringBuffer fullyScopedName;
 
@@ -988,9 +987,10 @@ namespace danek
         //--------
         if (!enumVal(strValue, enumInfo, numEnums, result))
         {
+            std::stringstream msg;
             mergeNames(scope, localName, fullyScopedName);
             msg << fileName() << ": bad " << typeName << " value ('" << strValue << "') specified for '"
-                << fullyScopedName << "'; should be one of:";
+                << fullyScopedName.str() << "'; should be one of:";
             for (int i = 0; i < numEnums; i++)
             {
                 if (i < numEnums - 1)
@@ -1110,7 +1110,6 @@ namespace danek
         int result;
         char dummy;
         int i;
-        StringBuffer msg;
         StringBuffer fullyScopedName;
 
         //--------
@@ -1123,7 +1122,8 @@ namespace danek
             // The number is badly formatted. Report an error.
             //--------
             mergeNames(scope, localName, fullyScopedName);
-            msg << fileName() << ": non-integer value for '" << fullyScopedName << "'";
+            std::stringstream msg;
+            msg << fileName() << ": non-integer value for '" << fullyScopedName.str() << "'";
             throw ConfigurationException(msg.str());
         }
         return result;
@@ -1145,7 +1145,6 @@ namespace danek
         float result;
         char dummy;
         int i;
-        StringBuffer msg;
         StringBuffer fullyScopedName;
 
         //--------
@@ -1158,7 +1157,8 @@ namespace danek
             // The number is badly formatted. Report an error.
             //--------
             mergeNames(scope, localName, fullyScopedName);
-            msg << fileName() << ": non-numeric value for '" << fullyScopedName << "'";
+            std::stringstream msg;
+            msg << fileName() << ": non-numeric value for '" << fullyScopedName.str() << "'";
             throw ConfigurationException(msg.str());
         }
         return result;
@@ -1185,7 +1185,6 @@ namespace danek
     int ConfigurationImpl::stringToEnum(const char* scope, const char* localName, const char* typeName,
         const char* str, const EnumNameAndValue* enumInfo, int numEnums) const throw(ConfigurationException)
     {
-        StringBuffer msg;
         StringBuffer fullyScopedName;
         int result;
 
@@ -1195,7 +1194,8 @@ namespace danek
         if (!enumVal(str, enumInfo, numEnums, result))
         {
             mergeNames(scope, localName, fullyScopedName);
-            msg << fileName() << ": bad " << typeName << " value specified for '" << fullyScopedName
+            std::stringstream msg;
+            msg << fileName() << ": bad " << typeName << " value specified for '" << fullyScopedName.str()
                 << "'; should be one of:";
             for (int i = 0; i < numEnums; i++)
             {
@@ -1374,8 +1374,8 @@ namespace danek
         char* unitSpelling;
         int i;
         int intVal;
-        StringBuffer msg;
         StringBuffer fullyScopedName;
+        std::stringstream msg;
 
         //--------
         // See if the string is in the form "<int> <units>"
@@ -1387,7 +1387,7 @@ namespace danek
             delete[] unitSpelling;
             mergeNames(scope, localName, fullyScopedName);
             msg << fileName() << ": invalid " << typeName << " ('" << str << "') specified for '"
-                << fullyScopedName << "': should be"
+                << fullyScopedName.str() << "': should be"
                 << " '<int> <units>' where <units> are";
             for (i = 0; i < allowedUnitsSize; i++)
             {
@@ -1424,7 +1424,7 @@ namespace danek
         delete[] unitSpelling;
         mergeNames(scope, localName, fullyScopedName);
         msg << fileName() << ": invalid " << typeName << " ('" << str << "') specified for '"
-            << fullyScopedName << "': should be"
+            << fullyScopedName.str() << "': should be"
             << " '<int> <units>' where <units> are";
         for (i = 0; i < allowedUnitsSize; i++)
         {
@@ -1513,9 +1513,9 @@ namespace danek
         const char* typeName, const char* str, const char** allowedUnits, int allowedUnitsSize,
         int& intResult, const char*& unitsResult) const throw(ConfigurationException)
     {
-        StringBuffer msg;
         StringBuffer fullyScopedName;
         int maxUnitsLen = 0;
+        std::stringstream msg;
 
         for (int index = 0; index < allowedUnitsSize; index++)
         {
@@ -1554,7 +1554,7 @@ namespace danek
         delete[] formatStr;
         mergeNames(scope, localName, fullyScopedName);
         msg << fileName() << ": invalid " << typeName << " ('" << str << "') specified for '"
-            << fullyScopedName << "': should be"
+            << fullyScopedName.str() << "': should be"
             << " '<units> <int>' where <units> are";
         for (int i = 0; i < allowedUnitsSize; i++)
         {
@@ -1771,7 +1771,7 @@ namespace danek
         const char* typeName, const char* str, const char** allowedUnits, int allowedUnitsSize,
         float& floatResult, const char*& unitsResult) const throw(ConfigurationException)
     {
-        StringBuffer msg;
+        std::stringstream msg;
         StringBuffer fullyScopedName;
 
         int maxUnitsLen = 0;
@@ -1812,7 +1812,7 @@ namespace danek
         delete[] formatStr;
         mergeNames(scope, localName, fullyScopedName);
         msg << fileName() << ": invalid " << typeName << " ('" << str << "') specified for '"
-            << fullyScopedName << "': should be"
+            << fullyScopedName.str() << "': should be"
             << " '<units> <float>' where <units> are";
         for (int i = 0; i < allowedUnitsSize; i++)
         {
@@ -1832,8 +1832,8 @@ namespace danek
         char* unitSpelling;
         int i;
         float fVal;
-        StringBuffer msg;
         StringBuffer fullyScopedName;
+        std::stringstream msg;
 
         //--------
         // See if the string is in the form "<float> <units>"
@@ -1845,7 +1845,7 @@ namespace danek
             delete[] unitSpelling;
             mergeNames(scope, localName, fullyScopedName);
             msg << fileName() << ": invalid " << typeName << " ('" << str << "') specified for '"
-                << fullyScopedName << "': should be"
+                << fullyScopedName.str() << "': should be"
                 << " '<float> <units>' where <units> are";
             for (i = 0; i < allowedUnitsSize; i++)
             {
@@ -1882,7 +1882,7 @@ namespace danek
         delete[] unitSpelling;
         mergeNames(scope, localName, fullyScopedName);
         msg << fileName() << ": invalid " << typeName << " ('" << str << "') specified for '"
-            << fullyScopedName << "': should be"
+            << fullyScopedName.str() << "': should be"
             << " '<float> <units>' where <units> are";
         for (i = 0; i < allowedUnitsSize; i++)
         {
@@ -1900,7 +1900,6 @@ namespace danek
     {
         float floatVal;
         const char* units;
-        StringBuffer msg;
         int i;
         int result;
         int unitsVal;
@@ -1929,8 +1928,8 @@ namespace danek
         }
         catch (const ConfigurationException& ex)
         {
-            msg = ex.c_str();
-            msg << "; alternatively, you can use 'infinite'";
+            std::stringstream msg;
+            msg << ex.message() << "; alternatively, you can use 'infinite'";
             throw ConfigurationException(msg.str());
         }
         assert(countDurationMicrosecondsInfo == countAllowedDurationMicrosecondsUnits);
@@ -1953,7 +1952,6 @@ namespace danek
     {
         float floatVal;
         const char* units;
-        StringBuffer msg;
         int i;
         int result;
         int unitsVal;
@@ -1982,8 +1980,8 @@ namespace danek
         }
         catch (const ConfigurationException& ex)
         {
-            msg = ex.c_str();
-            msg << "; alternatively, you can use 'infinite'";
+            std::stringstream msg;
+            msg << ex.message() << "; alternatively, you can use 'infinite'";
             throw ConfigurationException(msg.str());
         }
         assert(countDurationMillisecondsInfo == countAllowedDurationMillisecondsUnits);
@@ -2006,7 +2004,6 @@ namespace danek
     {
         float floatVal;
         const char* units;
-        StringBuffer msg;
         int i;
         int result;
         int unitsVal;
@@ -2035,8 +2032,8 @@ namespace danek
         }
         catch (const ConfigurationException& ex)
         {
-            msg = ex.c_str();
-            msg << "; alternatively, you can use 'infinite'";
+            std::stringstream msg;
+            msg << ex.message() << "; alternatively, you can use 'infinite'";
             throw ConfigurationException(msg.str());
         }
         assert(countDurationSecondsInfo == countAllowedDurationSecondsUnits);
@@ -2153,7 +2150,6 @@ namespace danek
     {
         float floatVal;
         const char* units;
-        StringBuffer msg;
         int i;
         int result;
         int unitsVal;
@@ -2296,7 +2292,7 @@ namespace danek
     void ConfigurationImpl::lookupScope(const char* scope, const char* localName) const
         throw(ConfigurationException)
     {
-        StringBuffer msg;
+        std::stringstream msg;
         StringBuffer fullyScopedName;
 
         mergeNames(scope, localName, fullyScopedName);
@@ -2306,13 +2302,13 @@ namespace danek
                 // Okay
                 break;
             case ConfType::String:
-                msg << fileName() << ": '" << fullyScopedName << "' is a string instead of a scope";
+                msg << fileName() << ": '" << fullyScopedName.str() << "' is a string instead of a scope";
                 throw ConfigurationException(msg.str());
             case ConfType::List:
-                msg << fileName() << ": '" << fullyScopedName << "' is a list instead of a scope";
+                msg << fileName() << ": '" << fullyScopedName.str() << "' is a list instead of a scope";
                 throw ConfigurationException(msg.str());
             case ConfType::NoValue:
-                msg << fileName() << ": scope '" << fullyScopedName << "' does not exist";
+                msg << fileName() << ": scope '" << fullyScopedName.str() << "' does not exist";
                 throw ConfigurationException(msg.str());
             default:
                 assert(0); // Bug
@@ -2338,15 +2334,12 @@ namespace danek
     void ConfigurationImpl::checkForCircularIncludes(const char* file, int includeLineNum) throw(
         ConfigurationException)
     {
-        int size;
-        int i;
-        StringBuffer msg;
-
-        size = m_fileNameStack.size();
-        for (i = 0; i < size; i++)
+        const auto size = m_fileNameStack.size();
+        for (std::size_t i = 0; i < size; i++)
         {
             if (strcmp(m_fileNameStack[i].c_str(), file) == 0)
             {
+                std::stringstream msg;
                 msg << fileName() << ": line " << includeLineNum << ", circular include of '" << file << "'";
                 throw ConfigurationException(msg.str());
             }
@@ -2387,7 +2380,7 @@ namespace danek
     {
         int i;
         int j;
-        StringBuffer msg;
+        std::stringstream msg;
 
         scope = m_currScope;
         for (i = firstIndex; i <= lastIndex; i++)
