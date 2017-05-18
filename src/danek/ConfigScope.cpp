@@ -170,22 +170,19 @@ namespace danek
         return std::find_if(m_table.cbegin(), m_table.cend(), [&name](const auto& v) { return v->name() == name; }) != m_table.cend();
     }
 
-    void ConfigScope::listFullyScopedNames(ConfType typeMask, bool recursive, StringVector& vec) const
+    std::vector<std::string> ConfigScope::listFullyScopedNames(ConfType typeMask, bool recursive) const
     {
-        std::vector<std::string> filterPatterns;
-        listScopedNamesHelper(m_scopedName, typeMask, recursive, filterPatterns, vec);
+        return listScopedNamesHelper(m_scopedName, typeMask, recursive, { });
     }
 
-    void ConfigScope::listFullyScopedNames(ConfType typeMask, bool recursive, const std::vector<std::string>& filterPatterns, StringVector& vec) const
+    std::vector<std::string> ConfigScope::listFullyScopedNames(ConfType typeMask, bool recursive, const std::vector<std::string>& filterPatterns) const
     {
-        vec.clear();
-        listScopedNamesHelper(m_scopedName, typeMask, recursive, filterPatterns, vec);
+        return listScopedNamesHelper(m_scopedName, typeMask, recursive, filterPatterns);
     }
 
-    void ConfigScope::listLocallyScopedNames(ConfType typeMask, bool recursive, const std::vector<std::string>& filterPatterns, StringVector& vec) const
+    std::vector<std::string> ConfigScope::listLocallyScopedNames(ConfType typeMask, bool recursive, const std::vector<std::string>& filterPatterns) const
     {
-        vec.clear();
-        listScopedNamesHelper("", typeMask, recursive, filterPatterns, vec);
+        return listScopedNamesHelper("", typeMask, recursive, filterPatterns);
     }
 
     std::vector<std::string> ConfigScope::listLocalNames(ConfType typeMask) const
@@ -204,9 +201,10 @@ namespace danek
         return vec;
     }
 
-    void ConfigScope::listScopedNamesHelper(const std::string& prefix, ConfType typeMask, bool recursive, const std::vector<std::string>& filterPatterns, StringVector& vec) const
+    std::vector<std::string> ConfigScope::listScopedNamesHelper(const std::string& prefix, ConfType typeMask, bool recursive, const std::vector<std::string>& filterPatterns) const
     {
-        vec.reserve(vec.size() + m_table.size());
+        std::vector<std::string> vec;
+        vec.reserve(m_table.size());
 
         std::for_each(m_table.cbegin(), m_table.cend(), [this, typeMask, &filterPatterns, &prefix, &vec, recursive](const auto& v)
         {
@@ -226,9 +224,12 @@ namespace danek
 
             if (recursive && v->type() == ConfType::Scope)
             {
-                v->scopeVal()->listScopedNamesHelper(scopedName.str(), typeMask, true, filterPatterns, vec);
+                const auto result = v->scopeVal()->listScopedNamesHelper(scopedName.str(), typeMask, true, filterPatterns);
+                vec.insert(vec.cend(), result.cbegin(), result.cend());
             }
         });
+
+        return vec;
     }
 
     bool ConfigScope::listFilter(const std::string& name, const std::vector<std::string>& filterPatterns) const

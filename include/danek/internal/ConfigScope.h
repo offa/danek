@@ -59,9 +59,9 @@ namespace danek
 
         bool contains(const std::string& name) const;
 
-        void listFullyScopedNames(ConfType typeMask, bool recursive, StringVector& vec) const;
-        void listFullyScopedNames(ConfType typeMask, bool recursive, const std::vector<std::string>& filterPatterns, StringVector& vec) const;
-        void listLocallyScopedNames(ConfType typeMask, bool recursive, const std::vector<std::string>& filterPatterns, StringVector& vec) const;
+        std::vector<std::string> listFullyScopedNames(ConfType typeMask, bool recursive) const;
+        std::vector<std::string> listFullyScopedNames(ConfType typeMask, bool recursive, const std::vector<std::string>& filterPatterns) const;
+        std::vector<std::string> listLocallyScopedNames(ConfType typeMask, bool recursive, const std::vector<std::string>& filterPatterns) const;
 
         const ConfigScope* parentScope() const;
         const ConfigScope* rootScope() const;
@@ -77,7 +77,7 @@ namespace danek
     private:
 
         std::vector<std::string> listLocalNames(ConfType typeMask) const;
-        void listScopedNamesHelper(const std::string& prefix, ConfType typeMask, bool recursive, const std::vector<std::string>& filterPatterns, StringVector& vec) const;
+        std::vector<std::string> listScopedNamesHelper(const std::string& prefix, ConfType typeMask, bool recursive, const std::vector<std::string>& filterPatterns) const;
         bool listFilter(const std::string& name, const std::vector<std::string>& filterPatterns) const;
 
 

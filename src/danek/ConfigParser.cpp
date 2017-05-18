@@ -679,16 +679,13 @@ namespace danek
         StringBuffer prefix;
         const char* toScopeName;
         StringBuffer msg;
-        StringVector fromNamesVec;
         ConfigScope* fromScope;
         ConfigScope* dummyScope;
-        int len;
-        int fromScopeNameLen;
         bool ifExistsIsSpecified;
 
         accept(ConfigLex::LEX_COPY_FROM_SYM, "expecting '@copyFrom'");
         parseStringExpr(fromScopeName);
-        fromScopeNameLen = fromScopeName.size();
+        const auto fromScopeNameLen = fromScopeName.size();
 
         //--------
         // Consume "@ifExists" if specified
@@ -744,13 +741,12 @@ namespace danek
         //--------
         // Get a recursive listing of all the items in fromScopeName
         //--------
-        fromScope->listFullyScopedNames(ConfType::ScopesAndVars, true, fromNamesVec);
+        const auto fromNamesVec = fromScope->listFullyScopedNames(ConfType::ScopesAndVars, true);
 
         //--------
         // Copy all the items into the current scope
         //--------
-        len = fromNamesVec.size();
-        for (int i = 0; i < len; i++)
+        for (std::size_t i = 0; i < fromNamesVec.size(); ++i)
         {
             const char* newName = &fromNamesVec[i][fromScopeNameLen + 1];
             item = m_config->lookup(fromNamesVec[i].c_str(), fromNamesVec[i].c_str(), true);

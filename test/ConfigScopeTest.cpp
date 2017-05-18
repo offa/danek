@@ -290,9 +290,8 @@ TEST_F(ConfigScopeTest, listFullyScopedNames)
     root.addOrReplaceString("n1", "1");
     root.addOrReplaceString("n2", "2");
 
-    StringVector v;
-    root.listFullyScopedNames(ConfType::String, false, v);
-    EXPECT_THAT(v.get(), UnorderedElementsAre("n1", "n2"));
+    const auto v = root.listFullyScopedNames(ConfType::String, false);
+    EXPECT_THAT(v, UnorderedElementsAre("n1", "n2"));
 }
 
 TEST_F(ConfigScopeTest, listFullyScopedNamesWithFilter)
@@ -301,10 +300,9 @@ TEST_F(ConfigScopeTest, listFullyScopedNamesWithFilter)
     root.addOrReplaceString("n1", "1");
     root.addOrReplaceString("n2", "2");
 
-    StringVector v;
-    std::vector<std::string> filter{{"n2"}};
-    root.listFullyScopedNames(ConfType::String, false, filter, v);
-    EXPECT_THAT(v.get(), UnorderedElementsAre("n2"));
+    std::vector<std::string> filter{"n2"};
+    const auto v = root.listFullyScopedNames(ConfType::String, false, filter);
+    EXPECT_THAT(v, UnorderedElementsAre("n2"));
 }
 
 TEST_F(ConfigScopeTest, listFullyScopedNamesOfMixedType)
@@ -315,9 +313,8 @@ TEST_F(ConfigScopeTest, listFullyScopedNamesOfMixedType)
     root.addOrReplaceString("n2", "2");
     root.addOrReplaceList("n3", StringVector{elements});
 
-    StringVector v;
-    root.listFullyScopedNames(ConfType::Variables, false, v);
-    EXPECT_THAT(v.get(), UnorderedElementsAre("n1", "n2", "n3"));
+    const auto v = root.listFullyScopedNames(ConfType::Variables, false);
+    EXPECT_THAT(v, UnorderedElementsAre("n1", "n2", "n3"));
 }
 
 TEST_F(ConfigScopeTest, listFullyScopedNamesFiltersElements)
@@ -326,9 +323,8 @@ TEST_F(ConfigScopeTest, listFullyScopedNamesFiltersElements)
     root.addOrReplaceString("n1", "1");
     root.addOrReplaceString("n2", "2");
 
-    StringVector v;
-    root.listFullyScopedNames(ConfType::List, false, v);
-    EXPECT_THAT(v.get(), IsEmpty());
+    const auto v = root.listFullyScopedNames(ConfType::List, false);
+    EXPECT_THAT(v, IsEmpty());
 }
 
 TEST_F(ConfigScopeTest, listFullyScopedNamesWithScope)
@@ -342,10 +338,8 @@ TEST_F(ConfigScopeTest, listFullyScopedNamesWithScope)
     root.ensureScopeExists("sn-0", ptr0);
     root.ensureScopeExists("sn-1", ptr1);
 
-    StringVector v;
-    root.listFullyScopedNames(ConfType::ScopesAndVars, false, v);
-
-    EXPECT_THAT(v.get(), UnorderedElementsAre("sn-0", "sn-1"));
+    const auto v = root.listFullyScopedNames(ConfType::ScopesAndVars, false);
+    EXPECT_THAT(v, UnorderedElementsAre("sn-0", "sn-1"));
 }
 
 TEST_F(ConfigScopeTest, listFullyScopedNamesOfMultipleNodes)
@@ -361,10 +355,8 @@ TEST_F(ConfigScopeTest, listFullyScopedNamesOfMultipleNodes)
     ptr0->ensureScopeExists("sn1", ptr1);
     ptr1->addOrReplaceString("x", "y");
 
-    StringVector v;
-    ptr1->listFullyScopedNames(ConfType::ScopesAndVars, false, v);
-
-    EXPECT_THAT(v.get(), UnorderedElementsAre("sn0.sn1.x"));
+    const auto v = ptr1->listFullyScopedNames(ConfType::ScopesAndVars, false);
+    EXPECT_THAT(v, UnorderedElementsAre("sn0.sn1.x"));
 }
 
 TEST_F(ConfigScopeTest, listFullyScopedNamesOfMultipleNodesRecursive)
@@ -380,10 +372,8 @@ TEST_F(ConfigScopeTest, listFullyScopedNamesOfMultipleNodesRecursive)
     ptr0->ensureScopeExists("sn1", ptr1);
     ptr1->addOrReplaceString("x", "y");
 
-    StringVector v;
-    ptr0->listFullyScopedNames(ConfType::ScopesAndVars, true, v);
-
-    EXPECT_THAT(v.get(), UnorderedElementsAre("sn0.a", "sn0.sn1", "sn0.sn1.x"));
+    const auto v = ptr0->listFullyScopedNames(ConfType::ScopesAndVars, true);
+    EXPECT_THAT(v, UnorderedElementsAre("sn0.a", "sn0.sn1", "sn0.sn1.x"));
 }
 
 TEST_F(ConfigScopeTest, listFullyScopedNamesOfMultipleNodesRecursiveScope)
@@ -399,10 +389,8 @@ TEST_F(ConfigScopeTest, listFullyScopedNamesOfMultipleNodesRecursiveScope)
     ptr0->ensureScopeExists("sn1", ptr1);
     ptr1->addOrReplaceString("x", "y");
 
-    StringVector v;
-    ptr0->listFullyScopedNames(ConfType::Scope, true, v);
-
-    EXPECT_THAT(v.get(), UnorderedElementsAre("sn0.sn1"));
+    const auto v = ptr0->listFullyScopedNames(ConfType::Scope, true);
+    EXPECT_THAT(v, UnorderedElementsAre("sn0.sn1"));
 }
 
 TEST_F(ConfigScopeTest, listFullyScopedNamesOfMultipleNodesRecursiveWithFilter)
@@ -418,11 +406,9 @@ TEST_F(ConfigScopeTest, listFullyScopedNamesOfMultipleNodesRecursiveWithFilter)
     ptr0->ensureScopeExists("sn1", ptr1);
     ptr1->addOrReplaceString("x", "y");
 
-    StringVector v;
-    std::vector<std::string> filter{{"sn0.sn1*"}};
-    ptr0->listFullyScopedNames(ConfType::ScopesAndVars, true, filter, v);
-
-    EXPECT_THAT(v.get(), UnorderedElementsAre("sn0.sn1", "sn0.sn1.x"));
+    std::vector<std::string> filter{"sn0.sn1*"};
+    const auto v = ptr0->listFullyScopedNames(ConfType::ScopesAndVars, true, filter);
+    EXPECT_THAT(v, UnorderedElementsAre("sn0.sn1", "sn0.sn1.x"));
 }
 
 TEST_F(ConfigScopeTest, listLocallyScopedNames)
@@ -431,10 +417,9 @@ TEST_F(ConfigScopeTest, listLocallyScopedNames)
     root.addOrReplaceString("n1", "1");
     root.addOrReplaceString("n2", "2");
 
-    StringVector v;
     std::vector<std::string> filter{};
-    root.listLocallyScopedNames(ConfType::String, false, filter, v);
-    EXPECT_THAT(v.get(), UnorderedElementsAre("n1", "n2"));
+    const auto v = root.listLocallyScopedNames(ConfType::String, false, filter);
+    EXPECT_THAT(v, UnorderedElementsAre("n1", "n2"));
 }
 
 TEST_F(ConfigScopeTest, listLocallyScopedNamesWithFilter)
@@ -443,10 +428,9 @@ TEST_F(ConfigScopeTest, listLocallyScopedNamesWithFilter)
     root.addOrReplaceString("n1", "1");
     root.addOrReplaceString("n2", "2");
 
-    StringVector v;
-    std::vector<std::string> filter{{"n2"}};
-    root.listLocallyScopedNames(ConfType::String, false, filter, v);
-    EXPECT_THAT(v.get(), UnorderedElementsAre("n2"));
+    std::vector<std::string> filter{"n2"};
+    const auto v = root.listLocallyScopedNames(ConfType::String, false, filter);
+    EXPECT_THAT(v, UnorderedElementsAre("n2"));
 }
 
 TEST_F(ConfigScopeTest, listLocallyScopedNamesOfMixedType)
@@ -457,10 +441,9 @@ TEST_F(ConfigScopeTest, listLocallyScopedNamesOfMixedType)
     root.addOrReplaceString("n2", "2");
     root.addOrReplaceList("n3", StringVector{elements});
 
-    StringVector v;
-    std::vector<std::string> filter{{"n*"}};
-    root.listLocallyScopedNames(ConfType::Variables, false, filter, v);
-    EXPECT_THAT(v.get(), UnorderedElementsAre("n1", "n2", "n3"));
+    std::vector<std::string> filter{"n*"};
+    const auto v = root.listLocallyScopedNames(ConfType::Variables, false, filter);
+    EXPECT_THAT(v, UnorderedElementsAre("n1", "n2", "n3"));
 }
 
 TEST_F(ConfigScopeTest, listLocallyScopedNamesFiltersElements)
@@ -469,10 +452,9 @@ TEST_F(ConfigScopeTest, listLocallyScopedNamesFiltersElements)
     root.addOrReplaceString("n1", "1");
     root.addOrReplaceString("n2", "2");
 
-    StringVector v;
-    std::vector<std::string> filter{{"n*"}};
-    root.listLocallyScopedNames(ConfType::List, false, filter, v);
-    EXPECT_THAT(v.get(), IsEmpty());
+    std::vector<std::string> filter{"n*"};
+    const auto v = root.listLocallyScopedNames(ConfType::List, false, filter);
+    EXPECT_THAT(v, IsEmpty());
 }
 
 TEST_F(ConfigScopeTest, listLocallyScopedNamesWithScope)
@@ -486,11 +468,10 @@ TEST_F(ConfigScopeTest, listLocallyScopedNamesWithScope)
     root.ensureScopeExists("sn-0", ptr0);
     root.ensureScopeExists("sn-1", ptr1);
 
-    StringVector v;
-    std::vector<std::string> filter{{"*"}};
-    root.listLocallyScopedNames(ConfType::ScopesAndVars, false, filter, v);
+    std::vector<std::string> filter{"*"};
+    const auto v = root.listLocallyScopedNames(ConfType::ScopesAndVars, false, filter);
 
-    EXPECT_THAT(v.get(), UnorderedElementsAre("sn-0", "sn-1"));
+    EXPECT_THAT(v, UnorderedElementsAre("sn-0", "sn-1"));
 }
 
 TEST_F(ConfigScopeTest, listLocallyScopedNamesOfMultipleNodes)
@@ -506,11 +487,10 @@ TEST_F(ConfigScopeTest, listLocallyScopedNamesOfMultipleNodes)
     ptr0->ensureScopeExists("sn1", ptr1);
     ptr1->addOrReplaceString("x", "y");
 
-    StringVector v;
-    std::vector<std::string> filter{{"*"}};
-    ptr1->listLocallyScopedNames(ConfType::ScopesAndVars, false, filter, v);
+    std::vector<std::string> filter{"*"};
+    const auto v = ptr1->listLocallyScopedNames(ConfType::ScopesAndVars, false, filter);
 
-    EXPECT_THAT(v.get(), UnorderedElementsAre("x"));
+    EXPECT_THAT(v, UnorderedElementsAre("x"));
 }
 
 TEST_F(ConfigScopeTest, listLocallyScopedNamesOfMultipleNodesRecursive)
@@ -526,11 +506,10 @@ TEST_F(ConfigScopeTest, listLocallyScopedNamesOfMultipleNodesRecursive)
     ptr0->ensureScopeExists("sn1", ptr1);
     ptr1->addOrReplaceString("x", "y");
 
-    StringVector v;
-    std::vector<std::string> filter{{"*"}};
-    ptr0->listLocallyScopedNames(ConfType::ScopesAndVars, true, filter, v);
+    std::vector<std::string> filter{"*"};
+    const auto v = ptr0->listLocallyScopedNames(ConfType::ScopesAndVars, true, filter);
 
-    EXPECT_THAT(v.get(), UnorderedElementsAre("a", "sn1", "sn1.x"));
+    EXPECT_THAT(v, UnorderedElementsAre("a", "sn1", "sn1.x"));
 }
 
 TEST_F(ConfigScopeTest, listLocallyScopedNamesOfMultipleNodesRecursiveScope)
@@ -546,14 +525,11 @@ TEST_F(ConfigScopeTest, listLocallyScopedNamesOfMultipleNodesRecursiveScope)
     ptr0->ensureScopeExists("sn1", ptr1);
     ptr1->addOrReplaceString("x", "y");
 
-    StringVector v;
-    std::vector<std::string> filter{{"*"}};
-    ptr0->listLocallyScopedNames(ConfType::Scope, true, filter, v);
+    std::vector<std::string> filter{"*"};
+    const auto v = ptr0->listLocallyScopedNames(ConfType::Scope, true, filter);
 
-    EXPECT_THAT(v.get(), UnorderedElementsAre("sn1"));
+    EXPECT_THAT(v, UnorderedElementsAre("sn1"));
 }
-
-
 
 TEST_F(ConfigScopeTest, dumpRoot)
 {

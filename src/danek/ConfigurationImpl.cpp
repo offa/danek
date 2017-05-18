@@ -666,9 +666,9 @@ namespace danek
             }
             scopeObj = item->scopeVal();
         }
-        scopeObj->listFullyScopedNames(typeMask, recursive, filterPatterns.get(), names);
-
-        std::sort(names.begin(), names.end());
+        auto v = scopeObj->listFullyScopedNames(typeMask, recursive, filterPatterns.get());
+        std::sort(v.begin(), v.end());
+        names = StringVector{v};
     }
 
     //----------------------------------------------------------------------
@@ -718,8 +718,9 @@ namespace danek
             }
             scopeObj = item->scopeVal();
         }
-        scopeObj->listLocallyScopedNames(typeMask, recursive, filterPatterns.get(), names);
-        std::sort(names.begin(), names.end());
+        auto v = scopeObj->listLocallyScopedNames(typeMask, recursive, filterPatterns.get());
+        std::sort(v.begin(), v.end());
+        names = StringVector{v};
     }
 
     const char* ConfigurationImpl::lookupString(
