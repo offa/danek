@@ -40,7 +40,7 @@ RecipeFileParser::~RecipeFileParser()
     m_cfg->destroy();
 }
 
-void RecipeFileParser::parse(const char* recipeFilename, const char* scope) throw(RecipeFileParserException)
+void RecipeFileParser::parse(const char* recipeFilename, const char* scope)
 {
     SchemaValidator sv;
     StringBuffer filter;
@@ -76,7 +76,7 @@ void RecipeFileParser::listRecipeScopes(StringVector& vec)
     vec = m_recipeScopeNames;
 }
 
-const char* RecipeFileParser::getRecipeName(const char* recipeScope) throw(RecipeFileParserException)
+const char* RecipeFileParser::getRecipeName(const char* recipeScope)
 {
     assert(m_parseCalled);
     try
@@ -89,8 +89,7 @@ const char* RecipeFileParser::getRecipeName(const char* recipeScope) throw(Recip
     }
 }
 
-void RecipeFileParser::getRecipeIngredients(const char* recipeScope, StringVector& result) throw(
-    RecipeFileParserException)
+void RecipeFileParser::getRecipeIngredients(const char* recipeScope, StringVector& result)
 {
     assert(m_parseCalled);
     try
@@ -103,8 +102,7 @@ void RecipeFileParser::getRecipeIngredients(const char* recipeScope, StringVecto
     }
 }
 
-void RecipeFileParser::getRecipeSteps(const char* recipeScope, StringVector& result) throw(
-    RecipeFileParserException)
+void RecipeFileParser::getRecipeSteps(const char* recipeScope, StringVector& result)
 {
     int len;
     StringVector namesVec;

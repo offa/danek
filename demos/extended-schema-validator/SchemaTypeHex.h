@@ -40,8 +40,7 @@ public:
     }
     virtual ~SchemaTypeHex();
 
-    static int lookupHex(const Configuration* cfg, const char* scope, const char* localName)
-        ConfigurationException);
+    static int lookupHex(const Configuration* cfg, const char* scope, const char* localName);
 
     static int lookupHex(const Configuration* cfg, const char* scope, const char* localName,
         int defaultVal);

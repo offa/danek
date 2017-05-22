@@ -31,7 +31,7 @@ SchemaTypeHex::~SchemaTypeHex()
 }
 
 void SchemaTypeHex::checkRule(const SchemaValidator* sv, const Configuration* cfg, const char* typeName,
-    const StringVector& typeArgs, const char* rule) const throw(ConfigurationException)
+    const StringVector& typeArgs, const char* rule) const
 {
     (void) sv;
     StringBuffer msg;
@@ -70,7 +70,7 @@ void SchemaTypeHex::checkRule(const SchemaValidator* sv, const Configuration* cf
 
 void SchemaTypeHex::validate(const SchemaValidator* sv, const Configuration* cfg, const char* scope,
     const char* name, const char* typeName, const char* origTypeName, const StringVector& typeArgs,
-    int indentLevel) const throw(ConfigurationException)
+    int indentLevel) const
 {
     (void) sv;
     (void) cfg;
@@ -109,8 +109,7 @@ bool SchemaTypeHex::isA(const SchemaValidator* sv, const Configuration* cfg, con
     return true;
 }
 
-int SchemaTypeHex::lookupHex(const Configuration* cfg, const char* scope, const char* localName) throw(
-    ConfigurationException)
+int SchemaTypeHex::lookupHex(const Configuration* cfg, const char* scope, const char* localName)
 {
     const char* str;
 
@@ -119,7 +118,7 @@ int SchemaTypeHex::lookupHex(const Configuration* cfg, const char* scope, const 
 }
 
 int SchemaTypeHex::lookupHex(const Configuration* cfg, const char* scope, const char* localName,
-    int defaultVal) throw(ConfigurationException)
+    int defaultVal)
 {
     const char* str;
 
@@ -132,7 +131,7 @@ int SchemaTypeHex::lookupHex(const Configuration* cfg, const char* scope, const 
 }
 
 int SchemaTypeHex::stringToHex(const Configuration* cfg, const char* scope, const char* localName,
-    const char* str, const char* typeName) throw(ConfigurationException)
+    const char* str, const char* typeName)
 {
     unsigned int value;
     int status;

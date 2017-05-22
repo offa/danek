@@ -71,7 +71,7 @@ FooConfiguration::~FooConfiguration()
     ((Configuration*) m_cfg)->destroy();
 }
 
-void FooConfiguration::parse(const char* cfgSource, const char* scope) throw(FooConfigurationException)
+void FooConfiguration::parse(const char* cfgSource, const char* scope)
 {
     Configuration* cfg = (Configuration*) m_cfg;
 
@@ -91,7 +91,7 @@ void FooConfiguration::parse(const char* cfgSource, const char* scope) throw(Foo
     }
 }
 
-const char* FooConfiguration::lookupString(const char* name) const throw(FooConfigurationException)
+const char* FooConfiguration::lookupString(const char* name) const
 {
     Configuration* cfg = (Configuration*) m_cfg;
     try
@@ -105,7 +105,7 @@ const char* FooConfiguration::lookupString(const char* name) const throw(FooConf
 }
 
 void FooConfiguration::lookupList(const char* name, std::vector<std::string>& data) const
-    throw(FooConfigurationException)
+
 {
     Configuration* cfg = (Configuration*) m_cfg;
     try
@@ -118,7 +118,7 @@ void FooConfiguration::lookupList(const char* name, std::vector<std::string>& da
     }
 }
 
-int FooConfiguration::lookupInt(const char* name) const throw(FooConfigurationException)
+int FooConfiguration::lookupInt(const char* name) const
 {
     Configuration* cfg = (Configuration*) m_cfg;
     try
@@ -131,7 +131,7 @@ int FooConfiguration::lookupInt(const char* name) const throw(FooConfigurationEx
     }
 }
 
-float FooConfiguration::lookupFloat(const char* name) const throw(FooConfigurationException)
+float FooConfiguration::lookupFloat(const char* name) const
 {
     Configuration* cfg = (Configuration*) m_cfg;
     try
@@ -144,7 +144,7 @@ float FooConfiguration::lookupFloat(const char* name) const throw(FooConfigurati
     }
 }
 
-bool FooConfiguration::lookupBoolean(const char* name) const throw(FooConfigurationException)
+bool FooConfiguration::lookupBoolean(const char* name) const
 {
     Configuration* cfg = (Configuration*) m_cfg;
     try
@@ -157,7 +157,7 @@ bool FooConfiguration::lookupBoolean(const char* name) const throw(FooConfigurat
     }
 }
 
-int FooConfiguration::lookupDurationMilliseconds(const char* name) const throw(FooConfigurationException)
+int FooConfiguration::lookupDurationMilliseconds(const char* name) const
 {
     Configuration* cfg = (Configuration*) m_cfg;
     try
@@ -170,7 +170,7 @@ int FooConfiguration::lookupDurationMilliseconds(const char* name) const throw(F
     }
 }
 
-int FooConfiguration::lookupDurationSeconds(const char* name) const throw(FooConfigurationException)
+int FooConfiguration::lookupDurationSeconds(const char* name) const
 {
     Configuration* cfg = (Configuration*) m_cfg;
     try

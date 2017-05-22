@@ -80,7 +80,7 @@ FooConfiguration::~FooConfiguration()
 }
 
 void FooConfiguration::parse(const char* cfgInput, const char* scope, const char* secInput,
-    const char* secScope) throw(FooConfigurationException)
+    const char* secScope)
 {
     StringBuffer localName;
     StringVector strList;

@@ -80,7 +80,7 @@ FooConfiguration::~FooConfiguration()
 }
 
 void FooConfiguration::parse(const char* cfgInput, const char* cfgScope, const char* secInput,
-    const char* secScope) throw(FooConfigurationException)
+    const char* secScope)
 {
     Configuration* cfg = (Configuration*) m_cfg;
     SchemaValidator sv;
