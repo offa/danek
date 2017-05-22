@@ -31,7 +31,7 @@ using danek::SchemaValidator;
 class ExtendedSchemaValidator : public SchemaValidator
 {
 public:
-    ExtendedSchemaValidator() throw(ConfigurationException)
+    ExtendedSchemaValidator()
     {
         registerType(new SchemaTypeHex());
     }

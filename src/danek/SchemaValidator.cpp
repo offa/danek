@@ -236,7 +236,7 @@ namespace danek
         registerType(new SchemaTypeMemorySizeMB());
     }
 
-    void SchemaValidator::registerType(SchemaType* type) throw(ConfigurationException)
+    void SchemaValidator::registerType(SchemaType* type)
     {
         checkTypeDoesNotExist(type->typeName());
         ensureSpaceInTypesArray();
@@ -246,7 +246,7 @@ namespace danek
     }
 
     void SchemaValidator::registerTypedef(const char* typeName, ConfType cfgType,
-        const char* baseTypeName, const StringVector& baseTypeArgs) throw(ConfigurationException)
+        const char* baseTypeName, const StringVector& baseTypeArgs)
     {
         checkTypeDoesNotExist(typeName);
         ensureSpaceInTypesArray();
@@ -285,7 +285,7 @@ namespace danek
         }
     }
 
-    void SchemaValidator::parseSchema(const char** nullTerminatedRulesArray) throw(ConfigurationException)
+    void SchemaValidator::parseSchema(const char** nullTerminatedRulesArray)
     {
         int size;
 
@@ -295,7 +295,7 @@ namespace danek
         parseSchema(nullTerminatedRulesArray, size);
     }
 
-    void SchemaValidator::parseSchema(const char** schema, int schemaSize) throw(ConfigurationException)
+    void SchemaValidator::parseSchema(const char** schema, int schemaSize)
     {
         SchemaParser schemaParser(this);
         const char* prefix = "---- danek::SchemaValidator::parseSchema()";
@@ -324,7 +324,7 @@ namespace danek
 
     void SchemaValidator::validate(const Configuration* cfg, const char* scope, const char* localName,
         bool recurseIntoSubscopes, ConfType typeMask, ForceMode forceMode) const
-        throw(ConfigurationException)
+
     {
         StringBuffer fullyScopedName;
         StringVector itemNames;
@@ -342,7 +342,7 @@ namespace danek
     }
 
     void SchemaValidator::validate(const Configuration* cfg, const char* scope, const char* localName,
-        const StringVector& itemNames, ForceMode forceMode) const throw(ConfigurationException)
+        const StringVector& itemNames, ForceMode forceMode) const
     {
         StringBuffer fullyScopedName;
         StringBuffer unlistedName;
@@ -430,7 +430,7 @@ namespace danek
     }
 
     void SchemaValidator::validateForceMode(const Configuration* cfg, const char* scope,
-        const char* localName, ForceMode forceMode) const throw(ConfigurationException)
+        const char* localName, ForceMode forceMode) const
     {
         StringBuffer fullyScopedName;
         StringBuffer nameOfMissingEntry;
@@ -469,7 +469,7 @@ namespace danek
     }
 
     void SchemaValidator::validateRequiredUidEntry(const Configuration* cfg, const char* fullScope,
-        SchemaIdRuleInfo* idRule) const throw(ConfigurationException)
+        SchemaIdRuleInfo* idRule) const
     {
         const char* nameInRule;
         const char* lastDot;

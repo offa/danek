@@ -67,7 +67,7 @@ namespace danek
         //--------
         ConfigParser(Configuration::SourceType sourceType, const char* source, const char* trustedCmdLine,
             const char* sourceDescription, ConfigurationImpl* config,
-            bool ifExistsIsSpecified = false) throw(ConfigurationException);
+            bool ifExistsIsSpecified = false);
         ~ConfigParser();
 
         //--------

@@ -50,7 +50,7 @@ namespace danek
         //--------
         // Constructors and destructor
         //--------
-        explicit SchemaLex(const char* str) throw(ConfigurationException);
+        explicit SchemaLex(const char* str);
         virtual ~SchemaLex();
 
     private:

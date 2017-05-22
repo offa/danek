@@ -56,7 +56,7 @@ public:
     ~FooConfiguration();
 
     void parse(const char* cfgInput, const char* cfgScope = "", const char* secInput = "",
-        const char* secScope = "") throw(FooConfigurationException);
+        const char* secScope = "");
     //--------
     // Public operations
     //--------

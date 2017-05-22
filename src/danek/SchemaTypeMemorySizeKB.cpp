@@ -28,7 +28,7 @@ namespace danek
 {
     void SchemaTypeMemorySizeKB::checkRule(const SchemaValidator* sv, const Configuration* cfg,
         const char* typeName, const StringVector& typeArgs, const char* rule) const
-        throw(ConfigurationException)
+
     {
         unused(sv);
 

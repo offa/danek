@@ -38,18 +38,18 @@ public:
     // Parse a recipies file in Config4* format and check
     // that all the recipes have their required details.
     //--------
-    void parse(const char* recipeFilename, const char* scope) throw(RecipeFileParserException);
+    void parse(const char* recipeFilename, const char* scope);
 
     //--------
     // Operations to query information about recipes
     //--------
     void listRecipeScopes(StringVector& vec);
 
-    const char* getRecipeName(const char* recipeScope) throw(RecipeFileParserException);
+    const char* getRecipeName(const char* recipeScope);
 
-    void getRecipeIngredients(const char* recipeScope, StringVector& vec) throw(RecipeFileParserException);
+    void getRecipeIngredients(const char* recipeScope, StringVector& vec);
 
-    void getRecipeSteps(const char* recipeScope, StringVector& vec) throw(RecipeFileParserException);
+    void getRecipeSteps(const char* recipeScope, StringVector& vec);
 
 private:
     //--------

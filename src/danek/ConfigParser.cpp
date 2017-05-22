@@ -102,7 +102,7 @@ namespace danek
 
     ConfigParser::ConfigParser(Configuration::SourceType sourceType, const char* source,
         const char* trustedCmdLine, const char* sourceDescription, ConfigurationImpl* config,
-        bool ifExistsIsSpecified) throw(ConfigurationException)
+        bool ifExistsIsSpecified)
     {
         StringBuffer msg;
 

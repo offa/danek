@@ -96,8 +96,8 @@ namespace danek
         // Constructors and destructor
         //--------
         LexBase(Configuration::SourceType sourceType, const char* source,
-            UidIdentifierProcessor* uidIdentifierProcessor) throw(ConfigurationException);
-        explicit LexBase(const char* str) throw(ConfigurationException);
+            UidIdentifierProcessor* uidIdentifierProcessor);
+        explicit LexBase(const char* str);
         virtual ~LexBase();
 
         //--------
@@ -117,7 +117,7 @@ namespace danek
 
         void searchForFunction(const char* spelling, bool& found, FunctionType& funcType, short& symbol);
 
-        void nextChar() throw(ConfigurationException);
+        void nextChar();
         char nextByte();
         void consumeString(LexToken& token);
         void consumeBlockString(LexToken& token);

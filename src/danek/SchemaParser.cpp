@@ -59,7 +59,7 @@ namespace danek
         m_cfg->destroy();
     }
 
-    void SchemaParser::parse(const char** schema, int schemaSize) throw(ConfigurationException)
+    void SchemaParser::parse(const char** schema, int schemaSize)
     {
         StringBuffer name;
         StringBuffer msg;
@@ -134,7 +134,7 @@ namespace danek
             if (strcmp(s1, s2) == 0)
             {
                 msg << "There are multiple rules for '" << s1 << "'";
-                throw ConfigurationException(msg.str());
+
             }
         }
     }
@@ -154,7 +154,7 @@ namespace danek
     //                    | STRING
     //----------------------------------------------------------------------
 
-    void SchemaParser::parseIdRule(const char* rule, SchemaIdRuleInfo* ruleInfo) throw(ConfigurationException)
+    void SchemaParser::parseIdRule(const char* rule, SchemaIdRuleInfo* ruleInfo)
     {
         StringBuffer msg;
         SchemaType* typeDef;
@@ -198,7 +198,7 @@ namespace danek
             {
                 msg << "Use of '@required' is incompatible with the uid- entry ('" << ptr << "') in rule '"
                     << rule << "'";
-                throw ConfigurationException(msg.str());
+
             }
         }
 
@@ -211,7 +211,7 @@ namespace danek
         if (typeDef == nullptr)
         {
             msg << "Unknown type '" << ruleInfo->m_typeName << "' in rule '" << rule << "'";
-            throw ConfigurationException(msg.str());
+
         }
         if (m_token.type() == SchemaLex::LEX_EOF_SYM)
         {
@@ -255,8 +255,7 @@ namespace danek
     //  locallyScopedName = IDENT
     //----------------------------------------------------------------------
 
-    void SchemaParser::parseIgnoreRule(const char* rule, SchemaIgnoreRuleInfo* ruleInfo) throw(
-        ConfigurationException)
+    void SchemaParser::parseIgnoreRule(const char* rule, SchemaIgnoreRuleInfo* ruleInfo)
     {
         ruleInfo->m_symbol = m_token.type();
         m_lex->nextToken(m_token); // consume the "@ignore<something>" keyword
@@ -277,7 +276,7 @@ namespace danek
     //                    | STRING
     //----------------------------------------------------------------------
 
-    void SchemaParser::parseUserTypeDef(const char* str) throw(ConfigurationException)
+    void SchemaParser::parseUserTypeDef(const char* str)
     {
         StringBuffer msg;
         SchemaType* baseTypeDef;
@@ -296,7 +295,7 @@ namespace danek
         if (baseTypeDef == nullptr)
         {
             msg << "Unknown type '" << baseTypeName << "' in user-type definition '" << str << "'";
-            throw ConfigurationException(msg.str());
+
         }
 
         if (m_token.type() == SchemaLex::LEX_EOF_SYM)
@@ -345,8 +344,7 @@ namespace danek
         m_sv->registerTypedef(typeName.str().c_str(), baseTypeDef->cfgType(), baseTypeName.str().c_str(), baseTypeArgs);
     }
 
-    void SchemaParser::accept(short sym, const char* rule, const char* msgPrefix) throw(
-        ConfigurationException)
+    void SchemaParser::accept(short sym, const char* rule, const char* msgPrefix)
     {
         StringBuffer msg;
 
@@ -358,7 +356,7 @@ namespace danek
         {
             msg << "error in validation rule '" << rule << "': " << msgPrefix << " near '"
                 << m_token.spelling() << "'";
-            throw ConfigurationException(msg.str());
+
         }
     }
 }

@@ -57,19 +57,19 @@ namespace danek
         //--------
         inline void wantDiagnostics(bool value);
         inline bool wantDiagnostics();
-        void parseSchema(const char** schema, int schemaSize) throw(ConfigurationException);
-        void parseSchema(const char** nullTerminatedSchema) throw(ConfigurationException);
+        void parseSchema(const char** schema, int schemaSize);
+        void parseSchema(const char** nullTerminatedSchema);
         inline void validate(const Configuration* cfg, const char* scope, const char* localName,
-            ForceMode forceMode = ForceMode::None) const throw(ConfigurationException);
+            ForceMode forceMode = ForceMode::None) const;
         void validate(const Configuration* cfg, const char* scope, const char* localName,
             bool recurseIntoSubscopes, ConfType typeMask, ForceMode forceMode = ForceMode::None) const
-            throw(ConfigurationException);
+           ;
 
     protected:
         //--------
         // Operations that can be called by a subclass.
         //--------
-        void registerType(SchemaType* type) throw(ConfigurationException);
+        void registerType(SchemaType* type);
 
     private:
         friend int compareSchemaIdRuleInfo(const void*, const void*);
@@ -83,11 +83,11 @@ namespace danek
         SchemaType* findType(const char* name) const;
 
         void validate(const Configuration* cfg, const char* scope, const char* localName,
-            const StringVector& itemNames, ForceMode forceMode) const throw(ConfigurationException);
+            const StringVector& itemNames, ForceMode forceMode) const;
         void validateForceMode(const Configuration* cfg, const char* scope, const char* localName,
-            ForceMode forceMode) const throw(ConfigurationException);
+            ForceMode forceMode) const;
         void validateRequiredUidEntry(const Configuration* cfg, const char* fullScope,
-            SchemaIdRuleInfo* idRule) const throw(ConfigurationException);
+            SchemaIdRuleInfo* idRule) const;
 
         void callCheckRule(const SchemaType* target, const Configuration* cfg, const char* typeName,
             const StringVector& typeArgs, const char* rule, int indentLevel) const;
@@ -112,7 +112,7 @@ namespace danek
 
         void registerTypedef( // called by the SchemaParser class
             const char* typeName, ConfType cfgType, const char* baseTypeName,
-            const StringVector& baseTypeArgs) throw(ConfigurationException);
+            const StringVector& baseTypeArgs);
 
         SchemaIdRuleInfo* findIdRule(const char* name) const;
         bool shouldIgnore(const Configuration* cfg, const char* scope, const char* expandedName,
@@ -147,7 +147,7 @@ namespace danek
     //--------
 
     inline void SchemaValidator::validate(const Configuration* cfg, const char* scope, const char* localName,
-        ForceMode forceMode) const throw(ConfigurationException)
+        ForceMode forceMode) const
     {
         validate(cfg, scope, localName, true, ConfType::ScopesAndVars, forceMode);
     }

@@ -28,7 +28,7 @@
 namespace danek
 {
     void SchemaTypeTuple::checkRule(const SchemaValidator* sv, const Configuration* cfg, const char* typeName,
-        const StringVector& typeArgs, const char* rule) const throw(ConfigurationException)
+        const StringVector& typeArgs, const char* rule) const
     {
         unused(cfg);
 
@@ -77,7 +77,7 @@ namespace danek
 
     void SchemaTypeTuple::validate(const SchemaValidator* sv, const Configuration* cfg, const char* scope,
         const char* name, const char* typeName, const char* origTypeName, const StringVector& typeArgs,
-        int indentLevel) const throw(ConfigurationException)
+        int indentLevel) const
     {
         unused(origTypeName);
 

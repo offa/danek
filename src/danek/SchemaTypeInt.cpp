@@ -27,7 +27,7 @@
 namespace danek
 {
     void SchemaTypeInt::checkRule(const SchemaValidator* sv, const Configuration* cfg, const char* typeName,
-        const StringVector& typeArgs, const char* rule) const throw(ConfigurationException)
+        const StringVector& typeArgs, const char* rule) const
     {
         unused(sv);
 

@@ -40,23 +40,23 @@ public:
     }
     virtual ~SchemaTypeHex();
 
-    static int lookupHex(const Configuration* cfg, const char* scope, const char* localName) throw(
+    static int lookupHex(const Configuration* cfg, const char* scope, const char* localName)
         ConfigurationException);
 
     static int lookupHex(const Configuration* cfg, const char* scope, const char* localName,
-        int defaultVal) throw(ConfigurationException);
+        int defaultVal);
     static int stringToHex(const Configuration* cfg, const char* scope, const char* localName,
-        const char* str, const char* typeName = "hex") throw(ConfigurationException);
+        const char* str, const char* typeName = "hex");
 
     static bool isHex(const char* str);
 
 protected:
     virtual void checkRule(const SchemaValidator* sv, const Configuration* cfg, const char* typeName,
-        const StringVector& typeArgs, const char* rule) const throw(ConfigurationException);
+        const StringVector& typeArgs, const char* rule) const;
 
     virtual void validate(const SchemaValidator* sv, const Configuration* cfg, const char* scope,
         const char* name, const char* typeName, const char* origTypeName, const StringVector& typeArgs,
-        int indentLevel) const throw(ConfigurationException);
+        int indentLevel) const;
 
     virtual bool isA(const SchemaValidator* sv, const Configuration* cfg, const char* value,
         const char* typeName, const StringVector& typeArgs, int indentlevel, StringBuffer& errSuffix) const;

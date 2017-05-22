@@ -49,7 +49,7 @@ namespace danek
     // where "<foo>" does NOT start with a digit or "-"
     //----------------------------------------------------------------------
 
-    void UidIdentifierProcessor::expand(StringBuffer& spelling) throw(ConfigurationException)
+    void UidIdentifierProcessor::expand(StringBuffer& spelling)
     {
         //--------
         // Common case optimizations
@@ -97,7 +97,7 @@ namespace danek
         spelling = result;
     }
 
-    void UidIdentifierProcessor::expandOne(StringBuffer& spelling) throw(ConfigurationException)
+    void UidIdentifierProcessor::expandOne(StringBuffer& spelling)
     {
         int count;
         const char* ptr;
@@ -182,7 +182,7 @@ namespace danek
     }
 
     const char* UidIdentifierProcessor::unexpand(const char* spelling, StringBuffer& buf) const
-        throw(ConfigurationException)
+
     {
         //--------
         // Common case optimizations
@@ -230,7 +230,7 @@ namespace danek
     }
 
     const char* UidIdentifierProcessor::unexpandOne(const char* spelling, StringBuffer& buf) const
-        throw(ConfigurationException)
+
     {
         int count;
         const char* ptr;

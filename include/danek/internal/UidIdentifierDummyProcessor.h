@@ -43,12 +43,12 @@ namespace danek
         {
         }
 
-        virtual void expand(StringBuffer& spelling) throw(ConfigurationException)
+        virtual void expand(StringBuffer& spelling)
         {
             StringBuffer dummy = spelling;
             UidIdentifierProcessor::expand(dummy);
         }
-        virtual const char* unexpand(const char* spelling, StringBuffer&) const throw(ConfigurationException)
+        virtual const char* unexpand(const char* spelling, StringBuffer&) const
         {
             StringBuffer dummyBuf{spelling};
             (void) UidIdentifierProcessor::unexpand(spelling, dummyBuf);

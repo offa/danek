@@ -114,7 +114,7 @@ namespace danek
     //----------------------------------------------------------------------
 
     LexBase::LexBase(Configuration::SourceType sourceType, const char* source,
-        UidIdentifierProcessor* uidIdentifierProcessor) throw(ConfigurationException)
+        UidIdentifierProcessor* uidIdentifierProcessor)
     {
         StringBuffer msg;
 
@@ -169,7 +169,7 @@ namespace danek
     // Description:
     //----------------------------------------------------------------------
 
-    LexBase::LexBase(const char* str) throw(ConfigurationException)
+    LexBase::LexBase(const char* str)
     {
         StringBuffer msg;
 
@@ -253,7 +253,7 @@ namespace danek
     // Description:	Read the next char from the input file
     //----------------------------------------------------------------------
 
-    void LexBase::nextChar() throw(ConfigurationException)
+    void LexBase::nextChar()
     {
         m_ch.reset();
         int status = -1;

@@ -41,10 +41,10 @@ namespace danek
         UidIdentifierProcessor();
         virtual ~UidIdentifierProcessor();
 
-        virtual void expand(StringBuffer& spelling) throw(ConfigurationException);
+        virtual void expand(StringBuffer& spelling);
 
         virtual const char* unexpand(const char* spelling, StringBuffer& buf) const
-            throw(ConfigurationException);
+           ;
 
     private:
         //--------
@@ -58,8 +58,8 @@ namespace danek
         //--------
         // Helper functions
         //--------
-        void expandOne(StringBuffer& spelling) throw(ConfigurationException);
-        const char* unexpandOne(const char* spelling, StringBuffer& buf) const throw(ConfigurationException);
+        void expandOne(StringBuffer& spelling);
+        const char* unexpandOne(const char* spelling, StringBuffer& buf) const;
 
         //--------
         // The following are not implemented

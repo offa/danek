@@ -47,19 +47,18 @@ namespace danek
         //--------
         // Public API
         //--------
-        void parse(const char** schema, int schemaSize) throw(ConfigurationException);
+        void parse(const char** schema, int schemaSize);
 
     private:
         //--------
         // Helper operations.
         //--------
-        void parseIdRule(const char* rule, SchemaIdRuleInfo* SchemaIdRuleInfo) throw(ConfigurationException);
-        void parseIgnoreRule(const char* rule, SchemaIgnoreRuleInfo* SchemaIgnoreRuleInfo) throw(
-            ConfigurationException);
+        void parseIdRule(const char* rule, SchemaIdRuleInfo* SchemaIdRuleInfo);
+        void parseIgnoreRule(const char* rule, SchemaIgnoreRuleInfo* SchemaIgnoreRuleInfo);
 
-        void parseUserTypeDef(const char* str) throw(ConfigurationException);
+        void parseUserTypeDef(const char* str);
 
-        void accept(short sym, const char* rule, const char* msg) throw(ConfigurationException);
+        void accept(short sym, const char* rule, const char* msg);
 
         //--------
         // Instance variables
