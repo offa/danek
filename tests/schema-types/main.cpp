@@ -24,7 +24,6 @@
 #include "danek/Configuration.h"
 #include "danek/SchemaValidator.h"
 #include <stdio.h>
-#include <assert.h>
 #include <stdlib.h>
 #include <string.h>
 #include <locale.h>
@@ -109,7 +108,7 @@ int main(int argc, char** argv)
             }
             catch (const ConfigurationException& ex2)
             {
-                assert(0); // Bug!
+                throw; // Bug!
             }
             printf("\n\n--------\n");
             printf("%s\n\n%s--------\n\n", ex.c_str(), buf.str().c_str());
@@ -131,7 +130,7 @@ int main(int argc, char** argv)
             }
             catch (const ConfigurationException& ex2)
             {
-                assert(0); // Bug!
+                throw; // Bug!
             }
             printf("\n\n--------\n");
             printf("Validation succeeded for scope '%s'\n%s--------\n\n", badScopes[i].c_str(), buf.str().c_str());
