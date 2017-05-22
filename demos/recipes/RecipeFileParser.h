@@ -34,6 +34,9 @@ public:
     RecipeFileParser();
     ~RecipeFileParser();
 
+    RecipeFileParser& operator=(const RecipeFileParser&) = delete;
+    RecipeFileParser(const RecipeFileParser&) = delete;
+
     //--------
     // Parse a recipies file in Config4* format and check
     // that all the recipes have their required details.
@@ -52,17 +55,10 @@ public:
     void getRecipeSteps(const char* recipeScope, StringVector& vec);
 
 private:
-    //--------
-    // Instance variables
-    //--------
+
     danek::Configuration* m_cfg;
     StringBuffer m_scope;
     bool m_parseCalled;
     StringVector m_recipeScopeNames;
 
-    //--------
-    // The following are not implemented
-    //--------
-    RecipeFileParser& operator=(const RecipeFileParser&);
-    RecipeFileParser(const RecipeFileParser&);
 };
