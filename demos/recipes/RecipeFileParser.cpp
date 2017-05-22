@@ -23,8 +23,8 @@
 
 #include "RecipeFileParser.h"
 #include "danek/SchemaValidator.h"
+#include <stdexcept>
 #include <stdio.h>
-#include <assert.h>
 #include <stdlib.h>
 
 using danek::Configuration;
@@ -45,7 +45,11 @@ void RecipeFileParser::parse(const char* recipeFilename, const char* scope)
     SchemaValidator sv;
     StringBuffer filter;
 
-    assert(!m_parseCalled);
+    if( m_parseCalled == true )
+    {
+        throw std::logic_error{"Already parsed"};
+    }
+
     m_cfg = Configuration::create();
     m_scope = scope;
     Configuration::mergeNames(scope, "uid-recipe", filter);
@@ -72,13 +76,14 @@ void RecipeFileParser::parse(const char* recipeFilename, const char* scope)
 
 void RecipeFileParser::listRecipeScopes(StringVector& vec)
 {
-    assert(m_parseCalled);
+    checkState();
     vec = m_recipeScopeNames;
 }
 
 const char* RecipeFileParser::getRecipeName(const char* recipeScope)
 {
-    assert(m_parseCalled);
+    checkState();
+
     try
     {
         return m_cfg->lookupString(recipeScope, "name");
@@ -91,7 +96,8 @@ const char* RecipeFileParser::getRecipeName(const char* recipeScope)
 
 void RecipeFileParser::getRecipeIngredients(const char* recipeScope, StringVector& result)
 {
-    assert(m_parseCalled);
+    checkState();
+
     try
     {
         m_cfg->lookupList(recipeScope, "ingredients", result);
@@ -107,7 +113,8 @@ void RecipeFileParser::getRecipeSteps(const char* recipeScope, StringVector& res
     int len;
     StringVector namesVec;
 
-    assert(m_parseCalled);
+    checkState();
+
     try
     {
         m_cfg->listLocallyScopedNames(
@@ -123,7 +130,12 @@ void RecipeFileParser::getRecipeSteps(const char* recipeScope, StringVector& res
     {
         for (int i = 0; i < len; i++)
         {
-            assert(m_cfg->uidEquals("uid-step", namesVec[i].c_str()));
+
+            if( m_cfg->uidEquals("uid-step", namesVec[i].c_str()) == false )
+            {
+                throw std::invalid_argument{"Invalid uid"};
+            }
+
             const char* str = m_cfg->lookupString(recipeScope, namesVec[i].c_str());
             result.push_back(str);
         }
@@ -133,3 +145,12 @@ void RecipeFileParser::getRecipeSteps(const char* recipeScope, StringVector& res
         abort(); // Bug!
     }
 }
+
+void RecipeFileParser::checkState() const
+{
+    if( m_parseCalled == false )
+    {
+        throw std::logic_error{"Not parsed yet"};
+    }
+}
+

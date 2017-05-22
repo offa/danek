@@ -56,6 +56,8 @@ public:
 
 private:
 
+    void checkState() const;
+
     danek::Configuration* m_cfg;
     StringBuffer m_scope;
     bool m_parseCalled;
