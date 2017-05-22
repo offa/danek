@@ -219,7 +219,7 @@ namespace danek
                 }
                 break;
             default:
-                assert(0); // Bug!
+                throw std::exception{}; // Bug!
                 break;
         }
         ConfigParser parser(sourceType, source, trustedCmdLine.str().c_str(), m_fileName.str().c_str(), this);
@@ -744,7 +744,7 @@ namespace danek
                 msg << fileName() << ": '" << fullyScopedName.str() << "' is a list instead of a string";
                 throw ConfigurationException(msg.str());
             default:
-                assert(0); // Bug
+                throw std::exception{}; // Bug
         }
         return str;
     }
@@ -774,7 +774,7 @@ namespace danek
                     << "'" << fullyScopedName.str() << "' is a list instead of a string";
                 throw ConfigurationException(msg.str());
             default:
-                assert(0); // Bug
+                throw std::exception{}; // Bug
         }
         return str;
     }
@@ -808,7 +808,7 @@ namespace danek
                     << "'" << fullyScopedName.str() << "' is a string instead of a list";
                 throw ConfigurationException(msg.str());
             default:
-                assert(0); // Bug
+                throw std::exception{}; // Bug
         }
     }
 
@@ -835,7 +835,7 @@ namespace danek
                     << "'" << fullyScopedName.str() << "' is a string instead of a list";
                 throw ConfigurationException(msg.str());
             default:
-                assert(0); // Bug
+                throw std::exception{}; // Bug
         }
     }
 
@@ -864,7 +864,7 @@ namespace danek
                 msg << fileName() << ": '" << fullyScopedName.str() << "' is a string instead of a list";
                 throw ConfigurationException(msg.str());
             default:
-                assert(0); // Bug
+                throw std::exception{}; // Bug
         }
     }
 
@@ -895,7 +895,7 @@ namespace danek
                     << "'" << fullyScopedName.str() << "' is a string instead of a list";
                 throw ConfigurationException(msg.str());
             default:
-                assert(0); // Bug
+                throw std::exception{}; // Bug
         }
     }
 
@@ -2308,7 +2308,7 @@ namespace danek
                 msg << fileName() << ": scope '" << fullyScopedName.str() << "' does not exist";
                 throw ConfigurationException(msg.str());
             default:
-                assert(0); // Bug
+                throw std::exception{}; // Bug
         }
     }
 

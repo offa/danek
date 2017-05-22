@@ -156,7 +156,7 @@ namespace danek
                 m_ptr = m_execOutput.str().c_str();
                 break;
             default:
-                assert(0); // Bug!
+                throw std::exception{}; // Bug!
                 break;
         }
 

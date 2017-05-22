@@ -70,7 +70,7 @@ namespace danek
                         << "tuple in rule '" << rule << "'";
                     throw ConfigurationException(msg.str());
                 default:
-                    assert(0); // Bug!
+                    throw std::exception{}; // Bug!
             }
         }
     }

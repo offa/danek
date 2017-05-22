@@ -139,7 +139,7 @@ namespace danek
                 source = trustedCmdLine;
                 break;
             default:
-                assert(0); // Bug!
+                throw std::exception{}; // Bug!
                 break;
         }
 
@@ -763,7 +763,7 @@ namespace danek
                     m_config->ensureScopeExists(newName, dummyScope);
                     break;
                 default:
-                    assert(0); // Bug!
+                    throw std::exception{}; // Bug!
                     break;
             }
         }
@@ -957,7 +957,7 @@ namespace danek
                 }
                 break;
             default:
-                assert(0); // Bug
+                throw std::exception{}; // Bug
                 break;
         }
     }
@@ -1078,7 +1078,7 @@ namespace danek
                             str = "no_value";
                             break;
                         default:
-                            assert(0); // Bug!
+                            throw std::exception{}; // Bug!
                             break;
                     }
                 }
@@ -1107,7 +1107,7 @@ namespace danek
                         error(msg.str().c_str(), false);
                         return;
                     default:
-                        assert(0); // Bug
+                        throw std::exception{}; // Bug
                         return;
                 }
                 m_lex->nextToken(m_token);

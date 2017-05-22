@@ -171,7 +171,7 @@ namespace danek
         }
         catch (const ConfigurationException&)
         {
-            assert(0); // Bug!
+            throw std::exception{}; // Bug!
         }
     }
 
@@ -391,7 +391,7 @@ namespace danek
                             << "the '" << unlistedName << "' variable is unknown.";
                         break;
                     default:
-                        assert(0); // Bug!
+                        throw std::exception{}; // Bug!
                 }
                 if (m_wantDiagnostics)
                 {
@@ -547,7 +547,7 @@ namespace danek
                 case SchemaLex::LEX_IGNORE_VARIABLES_IN_SYM:
                     break;
                 default:
-                    assert(0); // Bug!
+                    throw std::exception{}; // Bug!
                     break;
             }
             const char* nameAfterPrefix = unexpandedName + len + 1;
@@ -558,7 +558,7 @@ namespace danek
             }
             catch (const ConfigurationException& ex)
             {
-                assert(0); // Bug!
+                throw std::exception{}; // Bug!
             }
             if (symbol == SchemaLex::LEX_IGNORE_VARIABLES_IN_SYM)
             {
