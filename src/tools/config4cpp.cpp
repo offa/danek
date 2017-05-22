@@ -30,7 +30,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <assert.h>
 #include <locale.h>
 
 using danek::Configuration;
@@ -202,7 +201,7 @@ int main(int argc, char** argv)
                 printf("no_value\n");
                 break;
             default:
-                assert(0); // Bug!
+                throw std::exception{}; // Bug!
                 break;
         }
     }
@@ -233,7 +232,7 @@ int main(int argc, char** argv)
                     fprintf(stderr, "'%s' does not exist\n", fullyScopedName.str().c_str());
                     break;
                 default:
-                    assert(0); // Bug!
+                    throw std::exception{}; // Bug!
                     break;
             }
         }
@@ -273,7 +272,7 @@ int main(int argc, char** argv)
     }
     else
     {
-        assert(0); // Bug!
+        throw std::exception{}; // Bug!
     }
 
     //--------
