@@ -25,6 +25,12 @@ matrix:
           packages:
             - g++-5
           sources: *sources
+    - env: CXX=g++-7 CC=gcc-7
+      addons:
+        apt:
+          packages:
+            - g++-7
+          sources: *sources
     - env: CXX=clang++-4.0 CC=clang-4.0
       addons:
         apt:
