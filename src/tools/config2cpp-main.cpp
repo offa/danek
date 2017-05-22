@@ -126,7 +126,7 @@ bool doesVectorcontainString(const StringVector& vec, const char* str)
 
 void calculateSchema(const Configuration* cfg, const StringVector& namesList,
     const StringVector& recipeUserTypes, const StringVector& wildcardedNamesAndTypes,
-    const StringVector& recipeIgnoreRules, StringVector& schema) throw(ConfigurationException)
+    const StringVector& recipeIgnoreRules, StringVector& schema)
 {
     StringBuffer rule;
     StringBuffer buf;
@@ -185,7 +185,7 @@ bool doesPatternMatchAnyUnexpandedNameInList(
 
 void checkForUnmatchedPatterns(const Configuration* cfg, const StringVector& namesList,
     const StringVector& wildcardedNamesAndTypes,
-    StringVector& unmatchedPatterns) throw(ConfigurationException)
+    StringVector& unmatchedPatterns)
 {
     unmatchedPatterns.clear();
     //--------
