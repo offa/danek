@@ -22,7 +22,7 @@
 // SOFTWARE.
 
 #include "danek/internal/platform.h"
-#include <assert.h>
+#include "danek/internal/Compat.h"
 #include <stdlib.h>
 #include "danek/StringBuffer.h"
 #ifdef P_STDIO_HAS_LIMITED_FDS
@@ -153,7 +153,7 @@ namespace danek
 
     bool BufferedFileReader::open(const char* fileName)
     {
-        assert(m_fd == -1);
+        compat::checkAssertion(m_fd == -1);
         m_fd = ::open(fileName, O_RDONLY);
         m_bufIndex = 0;
         m_bufLen = 0;
@@ -164,7 +164,7 @@ namespace danek
     {
         int result;
 
-        assert(m_fd != -1);
+        compat::checkAssertion(m_fd != -1);
         result = ::close(m_fd);
         if (result != -1)
         {
@@ -177,7 +177,7 @@ namespace danek
     {
         int result;
 
-        assert(m_fd != -1);
+        compat::checkAssertion(m_fd != -1);
         if (m_bufIndex == m_bufLen)
         {
             int size = ::read(m_fd, m_buf, BUFFERED_FILE_READER_BUF_SIZE);
@@ -189,7 +189,7 @@ namespace danek
                 return EOF;
             }
         }
-        assert(m_bufIndex < m_bufLen);
+        compat::checkAssertion(m_bufIndex < m_bufLen);
         result = m_buf[m_bufIndex];
         m_bufIndex++;
         return result;
@@ -212,7 +212,7 @@ namespace danek
 
     bool BufferedFileReader::open(const char* fileName)
     {
-        assert(m_file == nullptr);
+        compat::checkAssertion(m_file == nullptr);
         m_file = fopen(fileName, "r");
         return (m_file != nullptr);
     }
@@ -227,7 +227,7 @@ namespace danek
 
     int BufferedFileReader::getChar()
     {
-        assert(m_file != nullptr);
+        compat::checkAssertion(m_file != nullptr);
         return fgetc(m_file);
     }
 
