@@ -33,7 +33,7 @@ namespace danek
 {
     UidIdentifierProcessor::UidIdentifierProcessor() : m_count(0)
     {
-        assert(sizeof(long) >= 4); // at least 32-bits
+        static_assert(sizeof(long) >= 4, "At least 32-bits");
     }
 
     UidIdentifierProcessor::~UidIdentifierProcessor()
