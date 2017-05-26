@@ -27,8 +27,8 @@
 #include "danek/Configuration.h"
 #include "danek/internal/ConfigurationImpl.h"
 #include "danek/internal/MBChar.h"
+#include "danek/internal/Compat.h"
 #include <string.h>
-#include <assert.h>
 #include <stdlib.h>
 
 namespace danek
@@ -137,12 +137,12 @@ namespace danek
         strLen = strlen(str);
         wStr = new wchar_t[strLen + 1];
         wStrLen = mbstowcs(wStr, str, strLen + 1);
-        assert(wStrLen != -1);
+        compat::checkAssertion(wStrLen != -1);
 
         patternLen = strlen(pattern);
         wPattern = new wchar_t[patternLen + 1];
         wPatternLen = mbstowcs(wPattern, pattern, patternLen + 1);
-        assert(wPatternLen != -1);
+        compat::checkAssertion(wPatternLen != -1);
 
         result = patternMatchInternal(wStr, 0, wStrLen, wPattern, 0, wPatternLen);
         delete[] wStr;

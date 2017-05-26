@@ -48,10 +48,10 @@
 #include "danek/internal/SchemaTypeTypedef.h"
 #include "danek/internal/SchemaTypeUnitsWithFloat.h"
 #include "danek/internal/SchemaTypeUnitsWithInt.h"
+#include "danek/internal/Compat.h"
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
-#include <assert.h>
 
 namespace danek
 {
@@ -128,7 +128,7 @@ namespace danek
             {
                 return nullptr;
             }
-            assert(*result != nullptr);
+            compat::checkAssertion(*result != nullptr);
             return *result;
         }
         else
@@ -138,7 +138,7 @@ namespace danek
                 SchemaType* typeDef = m_types[i];
                 if (strcmp(typeDef->typeName(), name) == 0)
                 {
-                    assert(typeDef != nullptr);
+                    compat::checkAssertion(typeDef != nullptr);
                     return typeDef;
                 }
             }
@@ -406,7 +406,7 @@ namespace danek
             //--------
             const char* typeName = idRule->m_typeName.str().c_str();
             SchemaType* typeDef = findType(typeName);
-            assert(typeDef != nullptr);
+            compat::checkAssertion(typeDef != nullptr);
             try
             {
                 callValidate(typeDef, cfg, fullyScopedName.str().c_str(), iName, typeName, typeName, idRule->m_args, 1);
@@ -481,7 +481,7 @@ namespace danek
         const char* ptr;
 
         nameInRule = idRule->m_locallyScopedName.str().c_str();
-        assert(strstr(nameInRule, "uid-") != nullptr);
+        compat::checkAssertion(strstr(nameInRule, "uid-") != nullptr);
         lastDot = strrchr(nameInRule, '.');
         if (lastDot == nullptr || strstr(lastDot + 1, "uid-") != nullptr)
         {
@@ -585,7 +585,7 @@ namespace danek
                 }
             }
 
-            assert(symbol == SchemaLex::LEX_IGNORE_SCOPES_IN_SYM);
+            compat::checkAssertion(symbol == SchemaLex::LEX_IGNORE_SCOPES_IN_SYM);
             if (hasDotAfterPrefix)
             {
                 //--------

@@ -23,7 +23,7 @@
 
 #include "danek/internal/SchemaTypeTuple.h"
 #include "danek/internal/Common.h"
-#include <assert.h>
+#include "danek/internal/Compat.h"
 
 namespace danek
 {
@@ -90,8 +90,8 @@ namespace danek
         // Check the length of the list matches the size of the tuple
         //--------
         int typeArgsSize = typeArgs.size();
-        assert(typeArgsSize != 0);
-        assert(typeArgsSize % 2 == 0);
+        compat::checkAssertion(typeArgsSize != 0);
+        compat::checkAssertion(typeArgsSize % 2 == 0);
         std::size_t numElems = typeArgsSize / 2;
         std::vector<std::string> data;
         cfg->lookupList(scope, name, data);

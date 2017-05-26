@@ -23,7 +23,7 @@
 
 #include "danek/internal/SchemaTypeDurationMilliseconds.h"
 #include "danek/internal/Common.h"
-#include <assert.h>
+#include "danek/internal/Compat.h"
 
 namespace danek
 {
@@ -143,7 +143,7 @@ namespace danek
         //--------
         if (min == -1)
         {
-            assert(max == -1);
+            compat::checkAssertion(max == -1);
             ok = (val == -1);
         }
         else if (val == -1 && max == -1)

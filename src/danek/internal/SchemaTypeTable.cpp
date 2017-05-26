@@ -23,7 +23,7 @@
 
 #include "danek/internal/SchemaTypeTable.h"
 #include "danek/internal/Common.h"
-#include <assert.h>
+#include "danek/internal/Compat.h"
 
 namespace danek
 {
@@ -93,8 +93,8 @@ namespace danek
         // of columns in the table.
         //--------
         int typeArgsSize = typeArgs.size();
-        assert(typeArgsSize != 0);
-        assert(typeArgsSize % 2 == 0);
+        compat::checkAssertion(typeArgsSize != 0);
+        compat::checkAssertion(typeArgsSize % 2 == 0);
         int numColumns = typeArgsSize / 2;
         std::vector<std::string> data;
         cfg->lookupList(scope, name, data);

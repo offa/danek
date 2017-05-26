@@ -81,7 +81,7 @@
 #include "danek/internal/ConfigParser.h"
 #include "danek/internal/platform.h"
 #include "danek/internal/ConfigItem.h"
-#include <assert.h>
+#include "danek/internal/Compat.h"
 #include <stdlib.h>
 #include <ctype.h>
 #include <errno.h>
@@ -736,7 +736,7 @@ namespace danek
             throw ConfigurationException(msg.str());
         }
         fromScope = item->scopeVal();
-        assert(fromScope != nullptr);
+        compat::checkAssertion(fromScope != nullptr);
 
         //--------
         // Get a recursive listing of all the items in fromScopeName
@@ -750,7 +750,7 @@ namespace danek
         {
             const char* newName = &fromNamesVec[i][fromScopeNameLen + 1];
             item = m_config->lookup(fromNamesVec[i].c_str(), fromNamesVec[i].c_str(), true);
-            assert(item != nullptr);
+            compat::checkAssertion(item != nullptr);
             switch (item->type())
             {
                 case ConfType::String:
@@ -1371,7 +1371,7 @@ namespace danek
         }
         else
         {
-            assert(execStatus == true);
+            compat::checkAssertion(execStatus == true);
         }
 
         accept(ConfigLex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
@@ -1490,7 +1490,7 @@ namespace danek
             // Case 3. "/tmp/foo.cfg"  ->  "/tmp"  (UNIX and Windows)
             // Or:     "C:\foo.cfg"    ->  "C:\."  (Windows only)
             //--------
-            assert(i > 0);
+            compat::checkAssertion(i > 0);
             result = "";
             for (j = 0; j < i; j++)
             {

@@ -29,11 +29,11 @@
 #include "danek/internal/ToString.h"
 #include "danek/internal/ConfigItem.h"
 #include "danek/internal/Common.h"
+#include "danek/internal/Compat.h"
 #include <algorithm>
 #include <sstream>
 #include <stdlib.h>
 #include <string.h>
-#include <assert.h>
 #include <ctype.h>
 
 namespace danek
@@ -469,10 +469,10 @@ namespace danek
                 throw ConfigurationException(msg.str());
             }
             scopeObj = item->scopeVal();
-            assert(scopeObj != nullptr);
+            compat::checkAssertion(scopeObj != nullptr);
         }
-        assert(i == len - 1);
-        assert(scopeObj != nullptr);
+        compat::checkAssertion(i == len - 1);
+        compat::checkAssertion(scopeObj != nullptr);
         if (!scopeObj->removeItem(vec[i].c_str()))
         {
             std::stringstream msg;
@@ -565,10 +565,10 @@ namespace danek
                 return nullptr;
             }
             scope = item->scopeVal();
-            assert(scope != nullptr);
+            compat::checkAssertion(scope != nullptr);
         }
-        assert(i == len - 1);
-        assert(scope != nullptr);
+        compat::checkAssertion(i == len - 1);
+        compat::checkAssertion(scope != nullptr);
         return scope->findItem(vec[i].c_str());
     }
 
@@ -1929,7 +1929,7 @@ namespace danek
             msg << ex.message() << "; alternatively, you can use 'infinite'";
             throw ConfigurationException(msg.str());
         }
-        assert(countDurationMicrosecondsInfo == countAllowedDurationMicrosecondsUnits);
+        compat::checkAssertion(countDurationMicrosecondsInfo == countAllowedDurationMicrosecondsUnits);
         result = -1; // avoid compiler warning about an unitialized variable
         for (i = 0; i < countDurationMicrosecondsInfo; i++)
         {
@@ -1940,7 +1940,7 @@ namespace danek
                 break;
             }
         }
-        assert(i < countDurationMicrosecondsInfo);
+        compat::checkAssertion(i < countDurationMicrosecondsInfo);
         return result;
     }
 
@@ -1981,7 +1981,7 @@ namespace danek
             msg << ex.message() << "; alternatively, you can use 'infinite'";
             throw ConfigurationException(msg.str());
         }
-        assert(countDurationMillisecondsInfo == countAllowedDurationMillisecondsUnits);
+        compat::checkAssertion(countDurationMillisecondsInfo == countAllowedDurationMillisecondsUnits);
         result = -1; // avoid compiler warning about an unitialized variable
         for (i = 0; i < countDurationMillisecondsInfo; i++)
         {
@@ -1992,7 +1992,7 @@ namespace danek
                 break;
             }
         }
-        assert(i < countDurationMillisecondsInfo);
+        compat::checkAssertion(i < countDurationMillisecondsInfo);
         return result;
     }
 
@@ -2033,7 +2033,7 @@ namespace danek
             msg << ex.message() << "; alternatively, you can use 'infinite'";
             throw ConfigurationException(msg.str());
         }
-        assert(countDurationSecondsInfo == countAllowedDurationSecondsUnits);
+        compat::checkAssertion(countDurationSecondsInfo == countAllowedDurationSecondsUnits);
         result = -1; // avoid compiler warning about an unitialized variable
         for (i = 0; i < countDurationSecondsInfo; i++)
         {
@@ -2044,7 +2044,7 @@ namespace danek
                 break;
             }
         }
-        assert(i < countDurationSecondsInfo);
+        compat::checkAssertion(i < countDurationSecondsInfo);
         return result;
     }
 
@@ -2162,7 +2162,7 @@ namespace danek
                 break;
             }
         }
-        assert(i < unitsInfoSize);
+        compat::checkAssertion(i < unitsInfoSize);
         return result;
     }
 
@@ -2323,8 +2323,8 @@ namespace danek
 
         int size = m_fileNameStack.size();
         unused(size); // Prevent build failure in release builds
-        assert(size > 0);
-        assert(strcmp(m_fileNameStack[size - 1].c_str(), fileName) == 0);
+        compat::checkAssertion(size > 0);
+        compat::checkAssertion(strcmp(m_fileNameStack[size - 1].c_str(), fileName) == 0);
         m_fileNameStack.erase(m_fileNameStack.end() - 1);
     }
 

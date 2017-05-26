@@ -23,11 +23,11 @@
 
 #include "danek/internal/UidIdentifierProcessor.h"
 #include "danek/internal/Util.h"
+#include "danek/internal/Compat.h"
 #include "danek/StringVector.h"
 #include <string.h>
 #include <ctype.h>
 #include <stdio.h>
-#include <assert.h>
 
 namespace danek
 {
@@ -135,7 +135,7 @@ namespace danek
             //--------
             // "uid-foo"  --> "uid-<digits>-foo"
             //--------
-            assert(m_count < 1000 * 1000 * 1000);
+            compat::checkAssertion(m_count < 1000 * 1000 * 1000);
             sprintf(digits, "%09ld", m_count);
             m_count++;
             suffix = &(spelling.str().c_str()[4]); // deep copy
@@ -151,7 +151,7 @@ namespace danek
             ptr++;
             count++;
         }
-        assert(count > 0);
+        compat::checkAssertion(count > 0);
         if (*ptr == '\0' || *ptr != '-')
         {
             // illegal: "uid-<digits>" or "uid-<digits>foo"
@@ -173,7 +173,7 @@ namespace danek
             // illegal: "uid-<digits>-<digits>foo"
             throw ConfigurationException(msg.str());
         }
-        assert(m_count < 1000 * 1000 * 1000);
+        compat::checkAssertion(m_count < 1000 * 1000 * 1000);
         sprintf(digits, "%09ld", m_count);
         m_count++;
         suffix = ptr; // deep copy just after "uid-<digits>-"

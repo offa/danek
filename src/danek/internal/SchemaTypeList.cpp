@@ -24,7 +24,7 @@
 #include "danek/internal/SchemaTypeList.h"
 #include "danek/internal/Common.h"
 #include "danek/SchemaValidator.h"
-#include <assert.h>
+#include "danek/internal/Compat.h"
 
 namespace danek
 {
@@ -89,10 +89,10 @@ namespace danek
         StringVector emptyArgs;
         std::vector<std::string> data;
 
-        assert(typeArgs.size() == 1);
+        compat::checkAssertion(typeArgs.size() == 1);
         const char* elemTypeName = typeArgs[0].c_str();
         SchemaType* elemTypeDef = findType(sv, elemTypeName);
-        assert(elemTypeDef->cfgType() == ConfType::String);
+        compat::checkAssertion(elemTypeDef->cfgType() == ConfType::String);
 
         cfg->lookupList(scope, name, data);
         for (std::size_t i = 0; i < data.size(); i++)

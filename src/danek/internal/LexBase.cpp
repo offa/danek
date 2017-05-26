@@ -26,7 +26,7 @@
 //--------
 #include "danek/internal/LexBase.h"
 #include "danek/internal/UidIdentifierDummyProcessor.h"
-#include <assert.h>
+#include "danek/internal/Compat.h"
 #include <stdlib.h>
 #include <errno.h>
 #include <string.h>
@@ -644,7 +644,7 @@ namespace danek
         StringBuffer spelling;
         StringBuffer msg;
 
-        assert(m_ch == '"');
+        compat::checkAssertion(m_ch == '"');
 
         //--------
         // Note the line number at the start of the string
