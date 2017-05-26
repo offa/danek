@@ -13,7 +13,8 @@ macro(_add_test _name _src _lib)
                                 )
     target_link_libraries(${_name} ${GTest_LIBRARIES}
                                     ${CMAKE_THREAD_LIBS_INIT}
-                                    ${_lib}
+                                    danek-internal
+                                    danek
                                     )
 endmacro()
 
