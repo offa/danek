@@ -44,7 +44,7 @@ namespace danek
          *          are replaced, this function (and the thrown Excption) are
          *          removed. Both are used for compatibility only (see #21).
          */
-        constexpr void checkAssertion(bool condition)
+        inline void checkAssertion(bool condition)
         {
             if( condition == false )
             {
