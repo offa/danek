@@ -3,8 +3,12 @@ find_package(Threads REQUIRED)
 find_package(GTest REQUIRED)
 
 
-macro(_add_test _name _src _lib)
-    add_executable(${_name} ${_src})
+macro(_add_test_suite _name)
+    foreach( arg ${ARGN} )
+        list(APPEND source_list ${arg})
+    endforeach()
+
+    add_executable(${_name} ${source_list})
     add_test(NAME ${_name} COMMAND ${_name})
 
     target_include_directories(${_name} SYSTEM PUBLIC
@@ -13,29 +17,42 @@ macro(_add_test _name _src _lib)
                                 )
     target_link_libraries(${_name} ${GTest_LIBRARIES}
                                     ${CMAKE_THREAD_LIBS_INIT}
-                                    danek-internal
-                                    danek
                                     )
 endmacro()
 
-_add_test(ConfigurationExceptionTest ConfigurationExceptionTest.cpp danek)
-_add_test(StringVectorTest StringVectorTest.cpp danek)
-_add_test(UtilTest UtilTest.cpp danek)
-_add_test(ConfigItemTest ConfigItemTest.cpp danek)
-_add_test(ToStringTest ToStringTest.cpp danek)
-_add_test(StringBufferTest StringBufferTest.cpp danek)
-_add_test(LexTokenTest LexTokenTest.cpp danek)
-_add_test(ConfigScopeTest ConfigScopeTest.cpp danek)
 
+_add_test_suite(CommonTests ConfigurationExceptionTest.cpp
+                            StringVectorTest.cpp
+                            StringBufferTest.cpp
 
-add_custom_target(unittest ConfigurationExceptionTest
-                        COMMAND StringVectorTest
-                        COMMAND UtilTest
-                        COMMAND ConfigItemTest
-                        COMMAND ToStringTest
-                        COMMAND StringBufferTest
-                        COMMAND LexTokenTest
-                        COMMAND ConfigScopeTest
+                            $<TARGET_OBJECTS:danek-public-types>
+                            )
+
+_add_test_suite(MiscTests ToStringTest.cpp
+                        UtilTest.cpp
+
+                        $<TARGET_OBJECTS:danek-misc>
+                        $<TARGET_OBJECTS:danek-config>
+
+                        # TODO: Dependency to these should be avoided (#61)
+                        $<TARGET_OBJECTS:danek-public>
+                        $<TARGET_OBJECTS:danek-schematypes>
+                        $<TARGET_OBJECTS:danek-security>
+                        $<TARGET_OBJECTS:danek-lexparser>
+                        $<TARGET_OBJECTS:DefaultSecurity>
+                        )
+
+_add_test_suite(ConfigTests ConfigItemTest.cpp
+                            ConfigScopeTest.cpp
+                            )
+
+_add_test_suite(LexParserTests LexTokenTest.cpp
+                            )
+
+add_custom_target(unittest CommonTests
+                        COMMAND MiscTests
+                        COMMAND ConfigTests
+                        COMMAND LexParserTests
 
                         COMMENT "Running unittests\n\n"
                         VERBATIM

@@ -1,4 +1,4 @@
-add_library(danek-schematypes SchemaTypeBoolean.cpp
+add_library(danek-schematypes OBJECT SchemaTypeBoolean.cpp
                             SchemaTypeDurationMicroseconds.cpp
                             SchemaTypeDurationMilliseconds.cpp
                             SchemaTypeDurationSeconds.cpp
@@ -20,14 +20,14 @@ add_library(danek-schematypes SchemaTypeBoolean.cpp
                             SchemaTypeTypedef.cpp
                             )
 
-add_library(danek-misc platform.cpp
+add_library(danek-misc OBJECT platform.cpp
                         UidIdentifierProcessor.cpp
                         Util.cpp
                         ToString.cpp
                         MBChar.cpp
                         )
 
-add_library(danek-lexparser SchemaLex.cpp
+add_library(danek-lexparser OBJECT SchemaLex.cpp
                         SchemaParser.cpp
                         ConfigParser.cpp
                         LexToken.cpp
@@ -35,14 +35,11 @@ add_library(danek-lexparser SchemaLex.cpp
                         ConfigLex.cpp
                         )
 
-add_library(danek-internal DefaultSecurityConfiguration.cpp
-                        ConfigurationImpl.cpp
+add_library(danek-config OBJECT ConfigurationImpl.cpp
                         ConfigScope.cpp
                         ConfigItem.cpp
-                        $<TARGET_OBJECTS:DefaultSecurity>
                         )
-target_link_libraries(danek-internal danek-schematypes
-                                    danek-lexparser
-                                    danek-misc
-                                    )
+
+add_library(danek-security OBJECT DefaultSecurityConfiguration.cpp
+                        )
 
