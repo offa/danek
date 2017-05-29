@@ -187,18 +187,7 @@ namespace danek
 
     std::vector<std::string> ConfigScope::listLocalNames(ConfType typeMask) const
     {
-        std::vector<std::string> vec;
-        vec.reserve(m_table.size());
-
-        std::for_each(m_table.cbegin(), m_table.cend(), [typeMask, &vec](const auto& v)
-        {
-            if( static_cast<int>(v->type()) & static_cast<int>(typeMask) )
-            {
-                vec.push_back(v->name());
-            }
-        });
-
-        return vec;
+        return listScopedNamesHelper("", typeMask, false, {});
     }
 
     std::vector<std::string> ConfigScope::listScopedNamesHelper(const std::string& prefix, ConfType typeMask, bool recursive, const std::vector<std::string>& filterPatterns) const

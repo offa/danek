@@ -69,7 +69,6 @@ namespace danek
         ConfigScope& operator=(const ConfigScope&) = delete;
 
 
-        // TODO: Used for toString() implementation only
         std::vector<std::string> listLocalNames(ConfType typeMask) const;
 
 
