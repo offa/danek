@@ -143,6 +143,6 @@ TEST_F(ToStringTest, dumpMixedType)
     ptr1->addOrReplaceString("x", "y");
 
     const auto str = toString(root, true);
-    EXPECT_THAT(str, StrEq("sn0 {\n    a = \"b\";\n    sn1 {\n            x = \"y\";\n}\n}\n"));
+    EXPECT_THAT(str, StrEq("sn0 {\n    a = \"b\";\n    sn1 {\n        x = \"y\";\n    }\n}\n"));
 }
 
