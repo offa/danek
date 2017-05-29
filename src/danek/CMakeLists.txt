@@ -10,7 +10,8 @@ add_library(danek-public-misc OBJECT StringBuffer.cpp
 
 add_library(danek $<TARGET_OBJECTS:danek-public>
                     $<TARGET_OBJECTS:danek-public-misc>
-                    $<TARGET_OBJECTS:danek-config>
+                    $<TARGET_OBJECTS:danek-config-types>
+                    $<TARGET_OBJECTS:danek-config-impl>
                     $<TARGET_OBJECTS:danek-schematypes>
                     $<TARGET_OBJECTS:danek-lexparser>
                     $<TARGET_OBJECTS:danek-misc>

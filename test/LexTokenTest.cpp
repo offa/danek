@@ -22,7 +22,7 @@
 
 
 #include "danek/internal/LexToken.h"
-#include "danek/internal/LexBase.h"
+#include "danek/internal/LexBaseSymbols.h"
 #include <gmock/gmock.h>
 
 using namespace danek;
@@ -35,7 +35,7 @@ class LexTokenTest : public testing::Test
 TEST_F(LexTokenTest, initWithDefaultValues)
 {
     const LexToken t;
-    EXPECT_THAT(t.type(), Eq(LexBase::LEX_UNKNOWN_SYM));
+    EXPECT_THAT(t.type(), Eq(lex::LEX_UNKNOWN_SYM));
     EXPECT_THAT(t.lineNum(), Eq(-1));
     EXPECT_THAT(t.spelling(), StrEq(""));
     EXPECT_FALSE(t.isStringFunc());
@@ -45,8 +45,8 @@ TEST_F(LexTokenTest, initWithDefaultValues)
 
 TEST_F(LexTokenTest, initWithValues)
 {
-    const LexToken t{LexBase::LEX_PLUS_SYM, 15, "abc"};
-    EXPECT_THAT(t.type(), Eq(LexBase::LEX_PLUS_SYM));
+    const LexToken t{lex::LEX_PLUS_SYM, 15, "abc"};
+    EXPECT_THAT(t.type(), Eq(lex::LEX_PLUS_SYM));
     EXPECT_THAT(t.lineNum(), Eq(15));
     EXPECT_THAT(t.spelling(), StrEq("abc"));
     EXPECT_FALSE(t.isStringFunc());
@@ -57,7 +57,7 @@ TEST_F(LexTokenTest, initWithValues)
 TEST_F(LexTokenTest, stringFunction)
 {
     LexToken t;
-    t.reset(LexBase::LEX_PLUS_SYM, 0, "", FunctionType::String);
+    t.reset(lex::LEX_PLUS_SYM, 0, "", FunctionType::String);
     EXPECT_TRUE(t.isStringFunc());
     EXPECT_FALSE(t.isListFunc());
     EXPECT_FALSE(t.isBoolFunc());
@@ -66,7 +66,7 @@ TEST_F(LexTokenTest, stringFunction)
 TEST_F(LexTokenTest, listFunction)
 {
     LexToken t;
-    t.reset(LexBase::LEX_PLUS_SYM, 0, "", FunctionType::List);
+    t.reset(lex::LEX_PLUS_SYM, 0, "", FunctionType::List);
     EXPECT_FALSE(t.isStringFunc());
     EXPECT_TRUE(t.isListFunc());
     EXPECT_FALSE(t.isBoolFunc());
@@ -75,7 +75,7 @@ TEST_F(LexTokenTest, listFunction)
 TEST_F(LexTokenTest, boolFunction)
 {
     LexToken t;
-    t.reset(LexBase::LEX_PLUS_SYM, 0, "", FunctionType::Bool);
+    t.reset(lex::LEX_PLUS_SYM, 0, "", FunctionType::Bool);
     EXPECT_FALSE(t.isStringFunc());
     EXPECT_FALSE(t.isListFunc());
     EXPECT_TRUE(t.isBoolFunc());
@@ -84,7 +84,7 @@ TEST_F(LexTokenTest, boolFunction)
 TEST_F(LexTokenTest, noneFunctionType)
 {
     LexToken t;
-    t.reset(LexBase::LEX_PLUS_SYM, 0, "", FunctionType::None);
+    t.reset(lex::LEX_PLUS_SYM, 0, "", FunctionType::None);
     EXPECT_FALSE(t.isStringFunc());
     EXPECT_FALSE(t.isListFunc());
     EXPECT_FALSE(t.isBoolFunc());
@@ -92,9 +92,9 @@ TEST_F(LexTokenTest, noneFunctionType)
 
 TEST_F(LexTokenTest, reset)
 {
-    LexToken t{LexBase::LEX_PLUS_SYM, 15, "abc"};
-    t.reset(LexBase::LEX_UNKNOWN_SYM, 9, "aaa", FunctionType::None);
-    EXPECT_THAT(t.type(), Eq(LexBase::LEX_UNKNOWN_SYM));
+    LexToken t{lex::LEX_PLUS_SYM, 15, "abc"};
+    t.reset(lex::LEX_UNKNOWN_SYM, 9, "aaa", FunctionType::None);
+    EXPECT_THAT(t.type(), Eq(lex::LEX_UNKNOWN_SYM));
     EXPECT_THAT(t.lineNum(), Eq(9));
     EXPECT_THAT(t.spelling(), StrEq("aaa"));
     EXPECT_FALSE(t.isStringFunc());
@@ -104,9 +104,9 @@ TEST_F(LexTokenTest, reset)
 
 TEST_F(LexTokenTest, resetWithFunctionType)
 {
-    LexToken t{LexBase::LEX_PLUS_SYM, 15, "abc"};
-    t.reset(LexBase::LEX_UNKNOWN_SYM, 8, "xyz", FunctionType::Bool);
-    EXPECT_THAT(t.type(), Eq(LexBase::LEX_UNKNOWN_SYM));
+    LexToken t{lex::LEX_PLUS_SYM, 15, "abc"};
+    t.reset(lex::LEX_UNKNOWN_SYM, 8, "xyz", FunctionType::Bool);
+    EXPECT_THAT(t.type(), Eq(lex::LEX_UNKNOWN_SYM));
     EXPECT_THAT(t.lineNum(), Eq(8));
     EXPECT_THAT(t.spelling(), StrEq("xyz"));
     EXPECT_TRUE(t.isBoolFunc());

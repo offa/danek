@@ -182,7 +182,7 @@ namespace danek
         try
         {
             parseStmtList();
-            accept(ConfigLex::LEX_EOF_SYM, "expecting identifier");
+            accept(lex::LEX_EOF_SYM, "expecting identifier");
         }
         catch (const ConfigurationException& ex)
         {
@@ -225,7 +225,7 @@ namespace danek
 
     void ConfigParser::parseStmtList()
     {
-        while (m_token.type() == ConfigLex::LEX_IDENT_SYM || m_token.type() == ConfigLex::LEX_INCLUDE_SYM
+        while (m_token.type() == lex::LEX_IDENT_SYM || m_token.type() == ConfigLex::LEX_INCLUDE_SYM
                || m_token.type() == ConfigLex::LEX_IF_SYM
                || m_token.type() == ConfigLex::LEX_REMOVE_SYM
                || m_token.type() == ConfigLex::LEX_ERROR_SYM
@@ -276,29 +276,29 @@ namespace danek
             return;
         }
 
-        if (identName.type() == ConfigLex::LEX_IDENT_SYM && identName.spelling()[0] == '.')
+        if (identName.type() == lex::LEX_IDENT_SYM && identName.spelling()[0] == '.')
         {
             error("cannot use '.' at start of the declaration of a "
                   "variable or scope,");
             return;
         }
-        accept(ConfigLex::LEX_IDENT_SYM, "expecting identifier or 'include'");
+        accept(lex::LEX_IDENT_SYM, "expecting identifier or 'include'");
 
         switch (m_token.type())
         {
-            case ConfigLex::LEX_EQUALS_SYM:
-            case ConfigLex::LEX_QUESTION_EQUALS_SYM:
+            case lex::LEX_EQUALS_SYM:
+            case lex::LEX_QUESTION_EQUALS_SYM:
                 assignmentType = m_token.type();
                 m_lex->nextToken(m_token);
                 parseRhsAssignStmt(identName, assignmentType);
-                accept(ConfigLex::LEX_SEMICOLON_SYM, "expecting ';' or '+'");
+                accept(lex::LEX_SEMICOLON_SYM, "expecting ';' or '+'");
                 break;
-            case ConfigLex::LEX_OPEN_BRACE_SYM:
+            case lex::LEX_OPEN_BRACE_SYM:
                 parseScope(identName);
                 //--------
                 // Consume an optional ";"
                 //--------
-                if (m_token.type() == ConfigLex::LEX_SEMICOLON_SYM)
+                if (m_token.type() == lex::LEX_SEMICOLON_SYM)
                 {
                     m_lex->nextToken(m_token);
                 }
@@ -424,7 +424,7 @@ namespace danek
         //--------
         // Consume the terminating ';'
         //--------
-        accept(ConfigLex::LEX_SEMICOLON_SYM, "expecting ';' or '@ifExists'");
+        accept(lex::LEX_SEMICOLON_SYM, "expecting ';' or '@ifExists'");
     }
 
     //----------------------------------------------------------------------
@@ -441,14 +441,14 @@ namespace danek
         // Parse the "if ( Condition ) { StmtList }" clause
         //--------
         accept(ConfigLex::LEX_IF_SYM, "expecting 'if'");
-        accept(ConfigLex::LEX_OPEN_PAREN_SYM, "expecting '('");
+        accept(lex::LEX_OPEN_PAREN_SYM, "expecting '('");
         condition = parseCondition();
-        accept(ConfigLex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
-        accept(ConfigLex::LEX_OPEN_BRACE_SYM, "expecting '{'");
+        accept(lex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
+        accept(lex::LEX_OPEN_BRACE_SYM, "expecting '{'");
         if (condition)
         {
             parseStmtList();
-            accept(ConfigLex::LEX_CLOSE_BRACE_SYM, "expecting '}'");
+            accept(lex::LEX_CLOSE_BRACE_SYM, "expecting '}'");
         }
         else
         {
@@ -461,14 +461,14 @@ namespace danek
         while (m_token.type() == ConfigLex::LEX_ELSE_IF_SYM)
         {
             m_lex->nextToken(m_token);
-            accept(ConfigLex::LEX_OPEN_PAREN_SYM, "expecting '('");
+            accept(lex::LEX_OPEN_PAREN_SYM, "expecting '('");
             bool condition2 = parseCondition();
-            accept(ConfigLex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
-            accept(ConfigLex::LEX_OPEN_BRACE_SYM, "expecting '{'");
+            accept(lex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
+            accept(lex::LEX_OPEN_BRACE_SYM, "expecting '{'");
             if (!condition && condition2)
             {
                 parseStmtList();
-                accept(ConfigLex::LEX_CLOSE_BRACE_SYM, "expecting '}'");
+                accept(lex::LEX_CLOSE_BRACE_SYM, "expecting '}'");
             }
             else
             {
@@ -483,11 +483,11 @@ namespace danek
         if (m_token.type() == ConfigLex::LEX_ELSE_SYM)
         {
             m_lex->nextToken(m_token);
-            accept(ConfigLex::LEX_OPEN_BRACE_SYM, "expecting '{'");
+            accept(lex::LEX_OPEN_BRACE_SYM, "expecting '{'");
             if (!condition)
             {
                 parseStmtList();
-                accept(ConfigLex::LEX_CLOSE_BRACE_SYM, "expecting '}'");
+                accept(lex::LEX_CLOSE_BRACE_SYM, "expecting '}'");
             }
             else
             {
@@ -498,7 +498,7 @@ namespace danek
         //--------
         // Consume an optional ";"
         //--------
-        if (m_token.type() == ConfigLex::LEX_SEMICOLON_SYM)
+        if (m_token.type() == lex::LEX_SEMICOLON_SYM)
         {
             m_lex->nextToken(m_token);
         }
@@ -513,13 +513,13 @@ namespace danek
         {
             switch (m_token.type())
             {
-                case ConfigLex::LEX_OPEN_BRACE_SYM:
+                case lex::LEX_OPEN_BRACE_SYM:
                     countOpenBraces++;
                     break;
-                case ConfigLex::LEX_CLOSE_BRACE_SYM:
+                case lex::LEX_CLOSE_BRACE_SYM:
                     countOpenBraces--;
                     break;
-                case ConfigLex::LEX_EOF_SYM:
+                case lex::LEX_EOF_SYM:
                     error("expecting '}'");
                     break;
                 default:
@@ -549,7 +549,7 @@ namespace danek
     bool ConfigParser::parseOrCondition()
     {
         bool result = parseAndCondition();
-        while (m_token.type() == ConfigLex::LEX_OR_SYM)
+        while (m_token.type() == lex::LEX_OR_SYM)
         {
             m_lex->nextToken(m_token);
             bool result2 = parseAndCondition();
@@ -567,7 +567,7 @@ namespace danek
     bool ConfigParser::parseAndCondition()
     {
         bool result = parseTerminalCondition();
-        while (m_token.type() == ConfigLex::LEX_AND_SYM)
+        while (m_token.type() == lex::LEX_AND_SYM)
         {
             m_lex->nextToken(m_token);
             bool result2 = parseTerminalCondition();
@@ -598,26 +598,26 @@ namespace danek
         int i;
 
         result = false;
-        if (m_token.type() == ConfigLex::LEX_NOT_SYM)
+        if (m_token.type() == lex::LEX_NOT_SYM)
         {
             m_lex->nextToken(m_token);
-            accept(ConfigLex::LEX_OPEN_PAREN_SYM, "expecting '('");
+            accept(lex::LEX_OPEN_PAREN_SYM, "expecting '('");
             result = !parseCondition();
-            accept(ConfigLex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
+            accept(lex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
             return result;
         }
-        if (m_token.type() == ConfigLex::LEX_OPEN_PAREN_SYM)
+        if (m_token.type() == lex::LEX_OPEN_PAREN_SYM)
         {
             m_lex->nextToken(m_token);
             result = parseCondition();
-            accept(ConfigLex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
+            accept(lex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
             return result;
         }
         if (m_token.type() == ConfigLex::LEX_FUNC_IS_FILE_READABLE_SYM)
         {
             m_lex->nextToken(m_token);
             parseStringExpr(str1);
-            accept(ConfigLex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
+            accept(lex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
             FILE* file = fopen(str1.str().c_str(), "r");
             if (file == nullptr)
             {
@@ -632,12 +632,12 @@ namespace danek
         parseStringExpr(str1);
         switch (m_token.type())
         {
-            case ConfigLex::LEX_EQUALS_EQUALS_SYM:
+            case lex::LEX_EQUALS_EQUALS_SYM:
                 m_lex->nextToken(m_token);
                 parseStringExpr(str2);
                 result = (strcmp(str1.str().c_str(), str2.str().c_str()) == 0);
                 break;
-            case ConfigLex::LEX_NOT_EQUALS_SYM:
+            case lex::LEX_NOT_EQUALS_SYM:
                 m_lex->nextToken(m_token);
                 parseStringExpr(str2);
                 result = (strcmp(str1.str().c_str(), str2.str().c_str()) != 0);
@@ -722,7 +722,7 @@ namespace danek
         const ConfigItem* item = m_config->lookup(fromScopeName.str().c_str(), fromScopeName.str().c_str(), true);
         if (item == nullptr && ifExistsIsSpecified)
         {
-            accept(ConfigLex::LEX_SEMICOLON_SYM, "expecting ';'");
+            accept(lex::LEX_SEMICOLON_SYM, "expecting ';'");
             return;
         }
 
@@ -772,7 +772,7 @@ namespace danek
         //--------
         // Consume the terminating ';'
         //--------
-        accept(ConfigLex::LEX_SEMICOLON_SYM, "expecting ';' or '@ifExists'");
+        accept(lex::LEX_SEMICOLON_SYM, "expecting ';' or '@ifExists'");
     }
 
     //----------------------------------------------------------------------
@@ -789,7 +789,7 @@ namespace danek
 
         accept(ConfigLex::LEX_REMOVE_SYM, "expecting 'remove'");
         identName = m_token.spelling();
-        accept(ConfigLex::LEX_IDENT_SYM, "expecting an identifier");
+        accept(lex::LEX_IDENT_SYM, "expecting an identifier");
         if (strchr(identName.str().c_str(), '.') != nullptr)
         {
             msg << m_fileName << ": can remove entries from only the "
@@ -802,7 +802,7 @@ namespace danek
             msg << m_fileName << ": '" << identName << "' does not exist in the current scope";
             throw ConfigurationException(msg.str());
         }
-        accept(ConfigLex::LEX_SEMICOLON_SYM, "expecting ';'");
+        accept(lex::LEX_SEMICOLON_SYM, "expecting ';'");
     }
 
     //----------------------------------------------------------------------
@@ -817,7 +817,7 @@ namespace danek
 
         accept(ConfigLex::LEX_ERROR_SYM, "expecting 'error'");
         parseStringExpr(msg);
-        accept(ConfigLex::LEX_SEMICOLON_SYM, "expecting ';'");
+        accept(lex::LEX_SEMICOLON_SYM, "expecting ';'");
         throw ConfigurationException(msg.str());
     }
 
@@ -843,9 +843,9 @@ namespace danek
         //--------
         // Do the actual parsing
         //--------
-        accept(ConfigLex::LEX_OPEN_BRACE_SYM, "expecting '{'");
+        accept(lex::LEX_OPEN_BRACE_SYM, "expecting '{'");
         parseStmtList();
-        accept(ConfigLex::LEX_CLOSE_BRACE_SYM, "expecting an identifier or '}'");
+        accept(lex::LEX_CLOSE_BRACE_SYM, "expecting an identifier or '}'");
 
         //--------
         // Finally, pop the scope from the stack
@@ -872,7 +872,7 @@ namespace danek
         {
             case ConfType::String:
             case ConfType::List:
-                if (assignmentType == ConfigLex::LEX_QUESTION_EQUALS_SYM)
+                if (assignmentType == lex::LEX_QUESTION_EQUALS_SYM)
                 {
                     doAssign = false;
                 }
@@ -892,7 +892,7 @@ namespace danek
         //--------
         switch (m_token.type())
         {
-            case ConfigLex::LEX_OPEN_BRACKET_SYM:
+            case lex::LEX_OPEN_BRACKET_SYM:
             case ConfigLex::LEX_FUNC_SPLIT_SYM:
                 varType = ConfType::List;
                 break;
@@ -908,10 +908,10 @@ namespace danek
             case ConfigLex::LEX_FUNC_FILE_TO_DIR_SYM:
             case ConfigLex::LEX_FUNC_CONFIG_FILE_SYM:
             case ConfigLex::LEX_FUNC_CONFIG_TYPE_SYM:
-            case ConfigLex::LEX_STRING_SYM:
+            case lex::LEX_STRING_SYM:
                 varType = ConfType::String;
                 break;
-            case ConfigLex::LEX_IDENT_SYM:
+            case lex::LEX_IDENT_SYM:
                 //--------
                 // This identifier (hopefully) denotes an already
                 // existing variable. We have to determine the type
@@ -974,7 +974,7 @@ namespace danek
         StringBuffer expr2;
 
         parseString(expr);
-        while (m_token.type() == ConfigLex::LEX_PLUS_SYM)
+        while (m_token.type() == lex::LEX_PLUS_SYM)
         {
             m_lex->nextToken(m_token); // consume the '+'
             parseString(expr2);
@@ -1027,34 +1027,34 @@ namespace danek
             case ConfigLex::LEX_FUNC_OS_TYPE_SYM:
                 str = CONFIG4CPP_OS_TYPE;
                 m_lex->nextToken(m_token);
-                accept(ConfigLex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
+                accept(lex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
                 break;
             case ConfigLex::LEX_FUNC_OS_DIR_SEP_SYM:
                 str = CONFIG4CPP_DIR_SEP;
                 m_lex->nextToken(m_token);
-                accept(ConfigLex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
+                accept(lex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
                 break;
             case ConfigLex::LEX_FUNC_OS_PATH_SEP_SYM:
                 str = CONFIG4CPP_PATH_SEP;
                 m_lex->nextToken(m_token);
-                accept(ConfigLex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
+                accept(lex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
                 break;
             case ConfigLex::LEX_FUNC_FILE_TO_DIR_SYM:
                 m_lex->nextToken(m_token);
                 parseStringExpr(name);
-                accept(ConfigLex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
+                accept(lex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
                 getDirectoryOfFile(name.str().c_str(), str);
                 break;
             case ConfigLex::LEX_FUNC_CONFIG_FILE_SYM:
                 m_lex->nextToken(m_token);
-                accept(ConfigLex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
+                accept(lex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
                 str = m_fileName;
                 break;
             case ConfigLex::LEX_FUNC_CONFIG_TYPE_SYM:
                 {
                     m_lex->nextToken(m_token);
                     parseStringExpr(name);
-                    accept(ConfigLex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
+                    accept(lex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
                     const ConfigItem* item = m_config->lookup(name.str().c_str(), name.str().c_str());
                     if (item == nullptr)
                     {
@@ -1084,11 +1084,11 @@ namespace danek
                     }
                 }
                 break;
-            case ConfigLex::LEX_STRING_SYM:
+            case lex::LEX_STRING_SYM:
                 str = m_token.spelling();
                 m_lex->nextToken(m_token);
                 break;
-            case ConfigLex::LEX_IDENT_SYM:
+            case lex::LEX_IDENT_SYM:
                 m_config->stringValue(m_token.spelling().c_str(), m_token.spelling().c_str(), constStr, type);
                 switch (type)
                 {
@@ -1136,9 +1136,9 @@ namespace danek
 
         accept(ConfigLex::LEX_FUNC_GETENV_SYM, "expecting 'getenv('");
         parseStringExpr(envVarName);
-        if (m_token.type() == ConfigLex::LEX_COMMA_SYM)
+        if (m_token.type() == lex::LEX_COMMA_SYM)
         {
-            accept(ConfigLex::LEX_COMMA_SYM, "expecting ','");
+            accept(lex::LEX_COMMA_SYM, "expecting ','");
             parseStringExpr(defaultStr);
             hasDefaultStr = true;
         }
@@ -1146,7 +1146,7 @@ namespace danek
         {
             hasDefaultStr = false;
         }
-        accept(ConfigLex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
+        accept(lex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
         val = getenv(envVarName.str().c_str());
         if (val == nullptr && hasDefaultStr)
         {
@@ -1178,7 +1178,7 @@ namespace danek
         }
         parentScopeName = currScope->parentScope()->scopedName().c_str();
         parseStringExpr(siblingName);
-        accept(ConfigLex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
+        accept(lex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
         Configuration::mergeNames(parentScopeName, siblingName.str().c_str(), str);
     }
 
@@ -1197,7 +1197,7 @@ namespace danek
 
         accept(ConfigLex::LEX_FUNC_READ_FILE_SYM, "expecting 'read.file('");
         parseStringExpr(fileName);
-        accept(ConfigLex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
+        accept(lex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
         str.clear();
         if (!file.open(fileName.str().c_str()))
         {
@@ -1228,9 +1228,9 @@ namespace danek
 
         accept(ConfigLex::LEX_FUNC_JOIN_SYM, "expecting 'join('");
         parseListExpr(list);
-        accept(ConfigLex::LEX_COMMA_SYM, "expecting ','");
+        accept(lex::LEX_COMMA_SYM, "expecting ','");
         parseStringExpr(separator);
-        accept(ConfigLex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
+        accept(lex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
 
         str.clear();
         len = list.size();
@@ -1261,11 +1261,11 @@ namespace danek
 
         accept(ConfigLex::LEX_FUNC_REPLACE_SYM, "expecting 'replace('");
         parseStringExpr(origStr);
-        accept(ConfigLex::LEX_COMMA_SYM, "expecting ','");
+        accept(lex::LEX_COMMA_SYM, "expecting ','");
         parseStringExpr(searchStr);
-        accept(ConfigLex::LEX_COMMA_SYM, "expecting ','");
+        accept(lex::LEX_COMMA_SYM, "expecting ','");
         parseStringExpr(replacementStr);
-        accept(ConfigLex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
+        accept(lex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
 
         result = "";
         searchStrLen = searchStr.size();
@@ -1298,9 +1298,9 @@ namespace danek
 
         accept(ConfigLex::LEX_FUNC_SPLIT_SYM, "expecting 'split('");
         parseStringExpr(str);
-        accept(ConfigLex::LEX_COMMA_SYM, "expecting ','");
+        accept(lex::LEX_COMMA_SYM, "expecting ','");
         parseStringExpr(delim);
-        accept(ConfigLex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
+        accept(lex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
 
         list.clear();
         delimLen = delim.size();
@@ -1338,9 +1338,9 @@ namespace danek
         //--------
         accept(ConfigLex::LEX_FUNC_EXEC_SYM, "expecting 'os.exec('");
         parseStringExpr(cmd);
-        if (m_token.type() == ConfigLex::LEX_COMMA_SYM)
+        if (m_token.type() == lex::LEX_COMMA_SYM)
         {
-            accept(ConfigLex::LEX_COMMA_SYM, "expecting ','");
+            accept(lex::LEX_COMMA_SYM, "expecting ','");
             parseStringExpr(defaultStr);
             hasDefaultStr = true;
         }
@@ -1375,7 +1375,7 @@ namespace danek
             compat::checkAssertion(execStatus == true);
         }
 
-        accept(ConfigLex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
+        accept(lex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
     }
 
     //----------------------------------------------------------------------
@@ -1390,7 +1390,7 @@ namespace danek
 
         expr.clear();
         parseList(expr);
-        while (m_token.type() == ConfigLex::LEX_PLUS_SYM)
+        while (m_token.type() == lex::LEX_PLUS_SYM)
         {
             m_lex->nextToken(m_token); // consume the '+'
             parseList(expr2);
@@ -1420,15 +1420,15 @@ namespace danek
             case ConfigLex::LEX_FUNC_SPLIT_SYM:
                 parseSplit(expr);
                 break;
-            case ConfigLex::LEX_OPEN_BRACKET_SYM:
+            case lex::LEX_OPEN_BRACKET_SYM:
                 //--------
                 // '[' StringExprList [ ',' ] ']'
                 //--------
                 m_lex->nextToken(m_token); // consume the open bracket
                 parseStringExprList(expr);
-                accept(ConfigLex::LEX_CLOSE_BRACKET_SYM, "expecting ']'");
+                accept(lex::LEX_CLOSE_BRACKET_SYM, "expecting ']'");
                 break;
-            case ConfigLex::LEX_IDENT_SYM:
+            case lex::LEX_IDENT_SYM:
                 //--------
                 // ident_sym: make sure the identifier is a list
                 //--------
@@ -1518,21 +1518,21 @@ namespace danek
 
         list.clear();
         type = m_token.type();
-        if (type == ConfigLex::LEX_CLOSE_BRACKET_SYM)
+        if (type == lex::LEX_CLOSE_BRACKET_SYM)
         {
             return; // empty list
         }
-        if (!m_token.isStringFunc() && type != ConfigLex::LEX_STRING_SYM && type != ConfigLex::LEX_IDENT_SYM)
+        if (!m_token.isStringFunc() && type != lex::LEX_STRING_SYM && type != lex::LEX_IDENT_SYM)
         {
             error("expecting a string or ']'");
         }
 
         parseStringExpr(str);
         list.push_back(str.str());
-        while (m_token.type() == ConfigLex::LEX_COMMA_SYM)
+        while (m_token.type() == lex::LEX_COMMA_SYM)
         {
             m_lex->nextToken(m_token);
-            if (m_token.type() == ConfigLex::LEX_CLOSE_BRACKET_SYM)
+            if (m_token.type() == lex::LEX_CLOSE_BRACKET_SYM)
             {
                 return;
             }
@@ -1580,24 +1580,24 @@ namespace danek
         // msg << "line " << m_token.lineNum() << ": ";
         switch (m_token.type())
         {
-            case ConfigLex::LEX_UNKNOWN_FUNC_SYM:
+            case lex::LEX_UNKNOWN_FUNC_SYM:
                 msg << "'" << m_token.spelling() << "' "
                     << "is not a built-in function";
                 throw ConfigurationException(msg.str());
-            case ConfigLex::LEX_SOLE_DOT_IDENT_SYM:
+            case lex::LEX_SOLE_DOT_IDENT_SYM:
                 msg << "'.' is not a valid identifier";
                 throw ConfigurationException(msg.str());
-            case ConfigLex::LEX_TWO_DOTS_IDENT_SYM:
+            case lex::LEX_TWO_DOTS_IDENT_SYM:
                 msg << "'..' appears in identified '" << m_token.spelling() << "'";
                 throw ConfigurationException(msg.str());
-            case ConfigLex::LEX_STRING_WITH_EOL_SYM:
+            case lex::LEX_STRING_WITH_EOL_SYM:
                 msg << "end-of-line not allowed in string '" << m_token.spelling() << "'";
                 throw ConfigurationException(msg.str());
-            case ConfigLex::LEX_BLOCK_STRING_WITH_EOF_SYM:
+            case lex::LEX_BLOCK_STRING_WITH_EOF_SYM:
                 msg << "end-of-file encountered in block string starting at "
                     << "line " << m_token.lineNum();
                 throw ConfigurationException(msg.str());
-            case ConfigLex::LEX_ILLEGAL_IDENT_SYM:
+            case lex::LEX_ILLEGAL_IDENT_SYM:
                 msg << "'" << m_token.spelling() << "' "
                     << "is not a legal identifier";
                 throw ConfigurationException(msg.str());
@@ -1612,12 +1612,12 @@ namespace danek
         // already been handled).
         //--------
 
-        if (printNear && m_token.type() == ConfigLex::LEX_STRING_SYM)
+        if (printNear && m_token.type() == lex::LEX_STRING_SYM)
         {
             msg << errMsg << " near \"" << m_token.spelling() << "\"";
             throw ConfigurationException(msg.str());
         }
-        else if (printNear && m_token.type() != ConfigLex::LEX_STRING_SYM)
+        else if (printNear && m_token.type() != lex::LEX_STRING_SYM)
         {
             msg << errMsg << " near '" << m_token.spelling() << "'";
             throw ConfigurationException(msg.str());

@@ -324,11 +324,11 @@ namespace danek
         {
             if (m_sourceType == Configuration::SourceType::String)
             {
-                token.reset(LEX_EOF_SYM, m_lineNum, "<end of string>");
+                token.reset(lex::LEX_EOF_SYM, m_lineNum, "<end of string>");
             }
             else
             {
-                token.reset(LEX_EOF_SYM, m_lineNum, "<end of file>");
+                token.reset(lex::LEX_EOF_SYM, m_lineNum, "<end of file>");
             }
             return;
         }
@@ -348,11 +348,11 @@ namespace danek
                 if (m_ch == '=')
                 {
                     nextChar();
-                    token.reset(LEX_QUESTION_EQUALS_SYM, lineNum, "?=");
+                    token.reset(lex::LEX_QUESTION_EQUALS_SYM, lineNum, "?=");
                 }
                 else
                 {
-                    token.reset(LEX_UNKNOWN_SYM, lineNum, spelling.str().c_str());
+                    token.reset(lex::LEX_UNKNOWN_SYM, lineNum, spelling.str().c_str());
                 }
                 return;
             case '!':
@@ -360,11 +360,11 @@ namespace danek
                 if (m_ch == '=')
                 {
                     nextChar();
-                    token.reset(LEX_NOT_EQUALS_SYM, lineNum, "!=");
+                    token.reset(lex::LEX_NOT_EQUALS_SYM, lineNum, "!=");
                 }
                 else
                 {
-                    token.reset(LEX_NOT_SYM, lineNum, "!");
+                    token.reset(lex::LEX_NOT_SYM, lineNum, "!");
                 }
                 return;
             case '@':
@@ -382,24 +382,24 @@ namespace danek
                 }
                 else
                 {
-                    token.reset(LEX_UNKNOWN_SYM, lineNum, spelling.str().c_str());
+                    token.reset(lex::LEX_UNKNOWN_SYM, lineNum, spelling.str().c_str());
                 }
                 return;
             case '+':
                 nextChar();
-                token.reset(LEX_PLUS_SYM, lineNum, "+");
+                token.reset(lex::LEX_PLUS_SYM, lineNum, "+");
                 return;
             case '&':
                 nextChar();
                 if (m_ch == '&')
                 {
                     nextChar();
-                    token.reset(LEX_AND_SYM, lineNum, "&&");
+                    token.reset(lex::LEX_AND_SYM, lineNum, "&&");
                 }
                 else
                 {
                     spelling << '&' << m_ch.c_str();
-                    token.reset(LEX_UNKNOWN_SYM, lineNum, spelling.str().c_str());
+                    token.reset(lex::LEX_UNKNOWN_SYM, lineNum, spelling.str().c_str());
                 }
                 return;
             case '|':
@@ -407,12 +407,12 @@ namespace danek
                 if (m_ch == '|')
                 {
                     nextChar();
-                    token.reset(LEX_OR_SYM, lineNum, "||");
+                    token.reset(lex::LEX_OR_SYM, lineNum, "||");
                 }
                 else
                 {
                     spelling << '|' << m_ch.c_str();
-                    token.reset(LEX_UNKNOWN_SYM, lineNum, spelling.str().c_str());
+                    token.reset(lex::LEX_UNKNOWN_SYM, lineNum, spelling.str().c_str());
                 }
                 return;
             case '=':
@@ -420,44 +420,44 @@ namespace danek
                 if (m_ch == '=')
                 {
                     nextChar();
-                    token.reset(LEX_EQUALS_EQUALS_SYM, lineNum, "==");
+                    token.reset(lex::LEX_EQUALS_EQUALS_SYM, lineNum, "==");
                 }
                 else
                 {
-                    token.reset(LEX_EQUALS_SYM, lineNum, "=");
+                    token.reset(lex::LEX_EQUALS_SYM, lineNum, "=");
                 }
                 return;
             case ';':
                 nextChar();
-                token.reset(LEX_SEMICOLON_SYM, lineNum, ";");
+                token.reset(lex::LEX_SEMICOLON_SYM, lineNum, ";");
                 return;
             case '[':
                 nextChar();
-                token.reset(LEX_OPEN_BRACKET_SYM, lineNum, "[");
+                token.reset(lex::LEX_OPEN_BRACKET_SYM, lineNum, "[");
                 return;
             case ']':
                 nextChar();
-                token.reset(LEX_CLOSE_BRACKET_SYM, lineNum, "]");
+                token.reset(lex::LEX_CLOSE_BRACKET_SYM, lineNum, "]");
                 return;
             case '{':
                 nextChar();
-                token.reset(LEX_OPEN_BRACE_SYM, lineNum, "{");
+                token.reset(lex::LEX_OPEN_BRACE_SYM, lineNum, "{");
                 return;
             case '}':
                 nextChar();
-                token.reset(LEX_CLOSE_BRACE_SYM, lineNum, "}");
+                token.reset(lex::LEX_CLOSE_BRACE_SYM, lineNum, "}");
                 return;
             case '(':
                 nextChar();
-                token.reset(LEX_OPEN_PAREN_SYM, lineNum, "(");
+                token.reset(lex::LEX_OPEN_PAREN_SYM, lineNum, "(");
                 return;
             case ')':
                 nextChar();
-                token.reset(LEX_CLOSE_PAREN_SYM, lineNum, ")");
+                token.reset(lex::LEX_CLOSE_PAREN_SYM, lineNum, ")");
                 return;
             case ',':
                 nextChar();
-                token.reset(LEX_COMMA_SYM, lineNum, ",");
+                token.reset(lex::LEX_COMMA_SYM, lineNum, ",");
                 return;
             case '"':
                 consumeString(token);
@@ -467,7 +467,7 @@ namespace danek
                 nextChar();
                 if (m_ch != '%')
                 {
-                    token.reset(LEX_UNKNOWN_SYM, lineNum, "<");
+                    token.reset(lex::LEX_UNKNOWN_SYM, lineNum, "<");
                     return;
                 }
                 nextChar(); // skip over '%'
@@ -544,7 +544,7 @@ namespace danek
                 }
                 else
                 {
-                    token.reset(LEX_UNKNOWN_FUNC_SYM, lineNum, spelling.str().c_str());
+                    token.reset(lex::LEX_UNKNOWN_FUNC_SYM, lineNum, spelling.str().c_str());
                 }
                 return;
             }
@@ -555,22 +555,22 @@ namespace danek
             //--------
             if (strcmp(spelling.str().c_str(), ".") == 0)
             {
-                token.reset(LEX_SOLE_DOT_IDENT_SYM, lineNum, spelling.str().c_str());
+                token.reset(lex::LEX_SOLE_DOT_IDENT_SYM, lineNum, spelling.str().c_str());
             }
             else if (strstr(spelling.str().c_str(), "..") != nullptr)
             {
-                token.reset(LEX_TWO_DOTS_IDENT_SYM, lineNum, spelling.str().c_str());
+                token.reset(lex::LEX_TWO_DOTS_IDENT_SYM, lineNum, spelling.str().c_str());
             }
             else
             {
                 try
                 {
                     m_uidIdentifierProcessor->expand(spelling);
-                    token.reset(LEX_IDENT_SYM, lineNum, spelling.str());
+                    token.reset(lex::LEX_IDENT_SYM, lineNum, spelling.str());
                 }
                 catch (const ConfigurationException&)
                 {
-                    token.reset(LEX_ILLEGAL_IDENT_SYM, lineNum, spelling.str());
+                    token.reset(lex::LEX_ILLEGAL_IDENT_SYM, lineNum, spelling.str());
                 }
             }
             return;
@@ -581,7 +581,7 @@ namespace danek
         //--------
         spelling << m_ch.c_str();
         nextChar();
-        token.reset(LEX_UNKNOWN_SYM, lineNum, spelling.str());
+        token.reset(lex::LEX_UNKNOWN_SYM, lineNum, spelling.str());
     }
 
     //----------------------------------------------------------------------
@@ -610,7 +610,7 @@ namespace danek
         {
             if (m_atEOF)
             {
-                token.reset(LEX_BLOCK_STRING_WITH_EOF_SYM, lineNum, spelling.str().c_str());
+                token.reset(lex::LEX_BLOCK_STRING_WITH_EOF_SYM, lineNum, spelling.str().c_str());
                 return;
             }
             spelling << m_ch.c_str();
@@ -628,7 +628,7 @@ namespace danek
         //--------
         // At the end of the string.
         //--------
-        token.reset(LEX_STRING_SYM, lineNum, spelling.str());
+        token.reset(lex::LEX_STRING_SYM, lineNum, spelling.str());
         return;
     }
 
@@ -659,7 +659,7 @@ namespace danek
         {
             if (m_atEOF || m_ch.c_str()[0] == '\n')
             {
-                token.reset(LEX_STRING_WITH_EOL_SYM, lineNum, spelling.str().c_str());
+                token.reset(lex::LEX_STRING_WITH_EOL_SYM, lineNum, spelling.str().c_str());
                 return;
             }
             switch (m_ch.c_str()[0])
@@ -671,7 +671,7 @@ namespace danek
                     nextChar();
                     if (m_atEOF || m_ch.c_str()[0] == '\n')
                     {
-                        token.reset(LEX_STRING_WITH_EOL_SYM, lineNum, spelling.str().c_str());
+                        token.reset(lex::LEX_STRING_WITH_EOL_SYM, lineNum, spelling.str().c_str());
                         return;
                     }
                     switch (m_ch.c_str()[0])
@@ -708,7 +708,7 @@ namespace danek
         //--------
         // At the end of the string.
         //--------
-        token.reset(LEX_STRING_SYM, lineNum, spelling.str());
+        token.reset(lex::LEX_STRING_SYM, lineNum, spelling.str());
         return;
     }
 

@@ -22,11 +22,11 @@
 // SOFTWARE.
 
 #include "danek/internal/LexToken.h"
-#include "danek/internal/LexBase.h"
+#include "danek/internal/LexBaseSymbols.h"
 
 namespace danek
 {
-    LexToken::LexToken() : LexToken(LexBase::LEX_UNKNOWN_SYM, -1, "")
+    LexToken::LexToken() : LexToken(lex::LEX_UNKNOWN_SYM, -1, "")
     {
     }
 

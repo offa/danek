@@ -35,10 +35,12 @@ add_library(danek-lexparser OBJECT SchemaLex.cpp
                         ConfigLex.cpp
                         )
 
-add_library(danek-config OBJECT ConfigurationImpl.cpp
-                        ConfigScope.cpp
-                        ConfigItem.cpp
-                        )
+add_library(danek-config-impl OBJECT ConfigurationImpl.cpp
+                                    )
+
+add_library(danek-config-types OBJECT ConfigScope.cpp
+                                    ConfigItem.cpp
+                                    )
 
 add_library(danek-security OBJECT DefaultSecurityConfiguration.cpp
                         )

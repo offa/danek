@@ -32,14 +32,7 @@ _add_test_suite(MiscTests ToStringTest.cpp
                         UtilTest.cpp
 
                         $<TARGET_OBJECTS:danek-misc>
-                        $<TARGET_OBJECTS:danek-config>
-
-                        # TODO: Dependency to these should be avoided (#61)
-                        $<TARGET_OBJECTS:danek-public>
-                        $<TARGET_OBJECTS:danek-schematypes>
-                        $<TARGET_OBJECTS:danek-security>
-                        $<TARGET_OBJECTS:danek-lexparser>
-                        $<TARGET_OBJECTS:DefaultSecurity>
+                        $<TARGET_OBJECTS:danek-config-types>
                         )
 
 _add_test_suite(ConfigTests ConfigItemTest.cpp
@@ -47,6 +40,13 @@ _add_test_suite(ConfigTests ConfigItemTest.cpp
                             )
 
 _add_test_suite(LexParserTests LexTokenTest.cpp
+
+                            $<TARGET_OBJECTS:danek-lexparser>
+                            $<TARGET_OBJECTS:danek-config-impl>
+                            $<TARGET_OBJECTS:danek-public>
+                            $<TARGET_OBJECTS:danek-schematypes>
+                            $<TARGET_OBJECTS:danek-security>
+                            $<TARGET_OBJECTS:DefaultSecurity>
                             )
 
 add_custom_target(unittest PublicMiscTests

@@ -94,7 +94,7 @@ namespace danek
             {
                 case SchemaLex::LEX_OPTIONAL_SYM:
                 case SchemaLex::LEX_REQUIRED_SYM:
-                case SchemaLex::LEX_IDENT_SYM:
+                case lex::LEX_IDENT_SYM:
                     m_sv->m_idRules[m_sv->m_idRulesCurrSize] = new SchemaIdRuleInfo();
                     m_sv->m_idRulesCurrSize++;
                     parseIdRule(schemaItem, m_sv->m_idRules[m_sv->m_idRulesCurrSize - 1]);
@@ -111,7 +111,7 @@ namespace danek
                     m_sv->sortTypes();
                     break;
                 default:
-                    accept(SchemaLex::LEX_IDENT_SYM, schemaItem, "expecting an identifier or keyword");
+                    accept(lex::LEX_IDENT_SYM, schemaItem, "expecting an identifier or keyword");
                     break;
             }
         }
@@ -177,7 +177,7 @@ namespace danek
 
         ruleInfo->m_isOptional = isOptional;
         ruleInfo->m_locallyScopedName = m_token.spelling();
-        accept(SchemaLex::LEX_IDENT_SYM, rule, "expecting an identifier");
+        accept(lex::LEX_IDENT_SYM, rule, "expecting an identifier");
 
         //--------
         // Complain if we have @required uid-<something>
@@ -202,10 +202,10 @@ namespace danek
             }
         }
 
-        accept(SchemaLex::LEX_EQUALS_SYM, rule, "expecting '='");
+        accept(lex::LEX_EQUALS_SYM, rule, "expecting '='");
 
         ruleInfo->m_typeName = m_token.spelling();
-        accept(SchemaLex::LEX_IDENT_SYM, rule, "expecting an identifier");
+        accept(lex::LEX_IDENT_SYM, rule, "expecting an identifier");
 
         typeDef = m_sv->findType(ruleInfo->m_typeName.str().c_str());
         if (typeDef == nullptr)
@@ -213,37 +213,37 @@ namespace danek
             msg << "Unknown type '" << ruleInfo->m_typeName << "' in rule '" << rule << "'";
 
         }
-        if (m_token.type() == SchemaLex::LEX_EOF_SYM)
+        if (m_token.type() == lex::LEX_EOF_SYM)
         {
             m_sv->callCheckRule(typeDef, m_cfg, ruleInfo->m_typeName.str().c_str(), ruleInfo->m_args, rule, 1);
             return;
         }
 
-        accept(SchemaLex::LEX_OPEN_BRACKET_SYM, rule, "expecting '['");
-        if (m_token.type() == SchemaLex::LEX_IDENT_SYM || m_token.type() == SchemaLex::LEX_STRING_SYM)
+        accept(lex::LEX_OPEN_BRACKET_SYM, rule, "expecting '['");
+        if (m_token.type() == lex::LEX_IDENT_SYM || m_token.type() == lex::LEX_STRING_SYM)
         {
             ruleInfo->m_args.push_back(m_token.spelling());
             m_lex->nextToken(m_token);
         }
-        else if (m_token.type() != SchemaLex::LEX_CLOSE_BRACKET_SYM)
+        else if (m_token.type() != lex::LEX_CLOSE_BRACKET_SYM)
         {
-            accept(SchemaLex::LEX_IDENT_SYM, rule, "expecting an identifier, string or ']'");
+            accept(lex::LEX_IDENT_SYM, rule, "expecting an identifier, string or ']'");
         }
-        while (m_token.type() != SchemaLex::LEX_CLOSE_BRACKET_SYM)
+        while (m_token.type() != lex::LEX_CLOSE_BRACKET_SYM)
         {
-            accept(SchemaLex::LEX_COMMA_SYM, rule, "expecting ','");
+            accept(lex::LEX_COMMA_SYM, rule, "expecting ','");
             ruleInfo->m_args.push_back(m_token.spelling());
-            if (m_token.type() == SchemaLex::LEX_IDENT_SYM || m_token.type() == SchemaLex::LEX_STRING_SYM)
+            if (m_token.type() == lex::LEX_IDENT_SYM || m_token.type() == lex::LEX_STRING_SYM)
             {
                 m_lex->nextToken(m_token);
             }
             else
             {
-                accept(SchemaLex::LEX_IDENT_SYM, rule, "expecting an identifier, string or ']'");
+                accept(lex::LEX_IDENT_SYM, rule, "expecting an identifier, string or ']'");
             }
         }
-        accept(SchemaLex::LEX_CLOSE_BRACKET_SYM, rule, "expecting ']'");
-        accept(SchemaLex::LEX_EOF_SYM, rule, "expecting <end of string>");
+        accept(lex::LEX_CLOSE_BRACKET_SYM, rule, "expecting ']'");
+        accept(lex::LEX_EOF_SYM, rule, "expecting <end of string>");
         m_sv->callCheckRule(typeDef, m_cfg, ruleInfo->m_typeName.str().c_str(), ruleInfo->m_args, rule, 1);
     }
 
@@ -260,8 +260,8 @@ namespace danek
         ruleInfo->m_symbol = m_token.type();
         m_lex->nextToken(m_token); // consume the "@ignore<something>" keyword
         ruleInfo->m_locallyScopedName = m_token.spelling();
-        accept(SchemaLex::LEX_IDENT_SYM, rule, "expecting an identifier");
-        accept(SchemaLex::LEX_EOF_SYM, rule, "expecting <end of string>");
+        accept(lex::LEX_IDENT_SYM, rule, "expecting an identifier");
+        accept(lex::LEX_EOF_SYM, rule, "expecting <end of string>");
     }
 
     //----------------------------------------------------------------------
@@ -286,10 +286,10 @@ namespace danek
 
         accept(SchemaLex::LEX_TYPEDEF_SYM, str, "expecting '@typedef'");
         typeName = m_token.spelling();
-        accept(SchemaLex::LEX_IDENT_SYM, str, "expecting an identifier");
-        accept(SchemaLex::LEX_EQUALS_SYM, str, "expecting '='");
+        accept(lex::LEX_IDENT_SYM, str, "expecting an identifier");
+        accept(lex::LEX_EQUALS_SYM, str, "expecting '='");
         baseTypeName = m_token.spelling();
-        accept(SchemaLex::LEX_IDENT_SYM, str, "expecting an identifier");
+        accept(lex::LEX_IDENT_SYM, str, "expecting an identifier");
 
         baseTypeDef = m_sv->findType(baseTypeName.str().c_str());
         if (baseTypeDef == nullptr)
@@ -298,7 +298,7 @@ namespace danek
 
         }
 
-        if (m_token.type() == SchemaLex::LEX_EOF_SYM)
+        if (m_token.type() == lex::LEX_EOF_SYM)
         {
             //--------
             // Finished. Ask the base type to check its (empty) arguments
@@ -310,31 +310,31 @@ namespace danek
             return;
         }
 
-        accept(SchemaLex::LEX_OPEN_BRACKET_SYM, str, "expecting '['");
-        if (m_token.type() == SchemaLex::LEX_IDENT_SYM || m_token.type() == SchemaLex::LEX_STRING_SYM)
+        accept(lex::LEX_OPEN_BRACKET_SYM, str, "expecting '['");
+        if (m_token.type() == lex::LEX_IDENT_SYM || m_token.type() == lex::LEX_STRING_SYM)
         {
             baseTypeArgs.push_back(m_token.spelling());
             m_lex->nextToken(m_token);
         }
-        else if (m_token.type() != SchemaLex::LEX_CLOSE_BRACKET_SYM)
+        else if (m_token.type() != lex::LEX_CLOSE_BRACKET_SYM)
         {
-            accept(SchemaLex::LEX_IDENT_SYM, str, "expecting an identifier, string or ']'");
+            accept(lex::LEX_IDENT_SYM, str, "expecting an identifier, string or ']'");
         }
-        while (m_token.type() != SchemaLex::LEX_CLOSE_BRACKET_SYM)
+        while (m_token.type() != lex::LEX_CLOSE_BRACKET_SYM)
         {
-            accept(SchemaLex::LEX_COMMA_SYM, str, "expecting ','");
+            accept(lex::LEX_COMMA_SYM, str, "expecting ','");
             baseTypeArgs.push_back(m_token.spelling());
-            if (m_token.type() == SchemaLex::LEX_IDENT_SYM || m_token.type() == SchemaLex::LEX_STRING_SYM)
+            if (m_token.type() == lex::LEX_IDENT_SYM || m_token.type() == lex::LEX_STRING_SYM)
             {
                 m_lex->nextToken(m_token);
             }
             else
             {
-                accept(SchemaLex::LEX_IDENT_SYM, str, "expecting an identifier, string or ']'");
+                accept(lex::LEX_IDENT_SYM, str, "expecting an identifier, string or ']'");
             }
         }
-        accept(SchemaLex::LEX_CLOSE_BRACKET_SYM, str, "expecting ']'");
-        accept(SchemaLex::LEX_EOF_SYM, str, "expecting <end of string>");
+        accept(lex::LEX_CLOSE_BRACKET_SYM, str, "expecting ']'");
+        accept(lex::LEX_EOF_SYM, str, "expecting <end of string>");
 
         //--------
         // Finished. Ask the base type to check its arguments
