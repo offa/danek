@@ -30,6 +30,7 @@
 #include "danek/internal/ConfigItem.h"
 #include "danek/internal/Common.h"
 #include "danek/internal/Compat.h"
+#include "danek/PatternMatch.h"
 #include <algorithm>
 #include <sstream>
 #include <stdlib.h>

@@ -82,6 +82,7 @@
 #include "danek/internal/platform.h"
 #include "danek/internal/ConfigItem.h"
 #include "danek/internal/Compat.h"
+#include "danek/PatternMatch.h"
 #include <stdlib.h>
 #include <ctype.h>
 #include <errno.h>
@@ -658,7 +659,7 @@ namespace danek
             case ConfigLex::LEX_MATCHES_SYM:
                 m_lex->nextToken(m_token);
                 parseStringExpr(str2);
-                result = Configuration::patternMatch(str1.str().c_str(), str2.str().c_str());
+                result = patternMatch(str1.str().c_str(), str2.str().c_str());
                 break;
             default:
                 error("expecting '(', or a string expression");

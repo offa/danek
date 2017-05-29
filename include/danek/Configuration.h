@@ -95,8 +95,6 @@ namespace danek
 
         virtual ConfType type(const char* scope, const char* localName) const = 0;
 
-        static bool patternMatch(const char* str, const char* pattern);
-
         virtual bool uidEquals(const char* s1, const char* s2) const = 0;
         virtual void expandUid(StringBuffer& spelling) = 0;
         virtual const char* unexpandUid(const char* spelling, StringBuffer& buf) const = 0;
@@ -251,8 +249,6 @@ namespace danek
         virtual ~Configuration();
 
     private:
-        static bool patternMatchInternal(const wchar_t* wStr, int wStrIndex, int wStrLen,
-            const wchar_t* wPattern, int wPatternIndex, int wPatternLen);
         //--------
         // Not implemented
         //--------

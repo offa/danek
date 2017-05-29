@@ -23,6 +23,7 @@
 
 #include "danek/Configuration.h"
 #include "danek/SchemaValidator.h"
+#include "danek/PatternMatch.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -137,7 +138,7 @@ int main(int argc, char** argv)
         }
         catch (const ConfigurationException& ex)
         {
-            if (Configuration::patternMatch(ex.c_str(), exPattern))
+            if (patternMatch(ex.c_str(), exPattern))
             {
                 passedCount++;
             }

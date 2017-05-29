@@ -30,6 +30,7 @@
 #include "Config2Cpp.h"
 #include "danek/Configuration.h"
 #include "danek/SchemaValidator.h"
+#include "danek/PatternMatch.h"
 
 using namespace danek;
 
@@ -43,7 +44,7 @@ void calculateRuleForName(const Configuration* cfg, const char* name, const char
         const char* keyword = wildcardedNamesAndTypes[i + 0].c_str(); // @optional or @required
         const char* wildcardedName = wildcardedNamesAndTypes[i + 1].c_str();
         const char* type = wildcardedNamesAndTypes[i + 2].c_str();
-        if (Configuration::patternMatch(uName, wildcardedName))
+        if (patternMatch(uName, wildcardedName))
         {
             rule << keyword << " " << uName << " = " << type;
             return;
@@ -175,7 +176,7 @@ bool doesPatternMatchAnyUnexpandedNameInList(
     for (int i = 0; i < len; i++)
     {
         const char* uName = cfg->unexpandUid(namesList[i].c_str(), buf);
-        if (Configuration::patternMatch(uName, pattern))
+        if (patternMatch(uName, pattern))
         {
             return true;
         }

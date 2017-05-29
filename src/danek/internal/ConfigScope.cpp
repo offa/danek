@@ -26,6 +26,7 @@
 #include "danek/internal/UidIdentifierProcessor.h"
 #include "danek/internal/ToString.h"
 #include "danek/Configuration.h"
+#include "danek/PatternMatch.h"
 #include <algorithm>
 #include <sstream>
 
@@ -230,7 +231,7 @@ namespace danek
         for (std::size_t i = 0; i < filterPatterns.size(); ++i)
         {
             const char* pattern = filterPatterns[i].c_str();
-            if (Configuration::patternMatch(unexpandedName, pattern))
+            if (patternMatch(unexpandedName, pattern))
             {
                 return true;
             }

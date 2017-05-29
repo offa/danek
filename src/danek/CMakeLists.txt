@@ -4,11 +4,12 @@ add_library(danek-public OBJECT SchemaValidator.cpp
                         Configuration.cpp
                         SchemaType.cpp
                         )
-add_library(danek-public-types OBJECT StringBuffer.cpp
+add_library(danek-public-misc OBJECT StringBuffer.cpp
+                                    PatternMatch.cpp
                                     )
 
 add_library(danek $<TARGET_OBJECTS:danek-public>
-                    $<TARGET_OBJECTS:danek-public-types>
+                    $<TARGET_OBJECTS:danek-public-misc>
                     $<TARGET_OBJECTS:danek-config>
                     $<TARGET_OBJECTS:danek-schematypes>
                     $<TARGET_OBJECTS:danek-lexparser>
