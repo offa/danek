@@ -69,9 +69,6 @@ namespace danek
         ConfigScope& operator=(const ConfigScope&) = delete;
 
 
-        std::vector<std::string> listLocalNames(ConfType typeMask) const;
-
-
     private:
 
         std::vector<std::string> listScopedNamesHelper(const std::string& prefix, ConfType typeMask, bool recursive, const std::vector<std::string>& filterPatterns) const;

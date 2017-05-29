@@ -185,11 +185,6 @@ namespace danek
         return listScopedNamesHelper("", typeMask, recursive, filterPatterns);
     }
 
-    std::vector<std::string> ConfigScope::listLocalNames(ConfType typeMask) const
-    {
-        return listScopedNamesHelper("", typeMask, false, {});
-    }
-
     std::vector<std::string> ConfigScope::listScopedNamesHelper(const std::string& prefix, ConfType typeMask, bool recursive, const std::vector<std::string>& filterPatterns) const
     {
         std::vector<std::string> vec;

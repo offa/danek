@@ -130,7 +130,7 @@ namespace danek
         std::stringstream ss;
 
         // First pass. Dump the variables
-        auto variables = scope.listLocalNames(ConfType::Variables);
+        auto variables = scope.listLocallyScopedNames(ConfType::Variables, false, { });
         std::sort(variables.begin(), variables.end());
 
         for (std::size_t i = 0; i < variables.size(); ++i)
@@ -140,7 +140,7 @@ namespace danek
         }
 
         // Second pass. Dump the nested scopes
-        auto scopes = scope.listLocalNames(ConfType::Scope);
+        auto scopes = scope.listLocallyScopedNames(ConfType::Scope, false, { });
         std::sort(scopes.begin(), scopes.end());
 
         for (std::size_t i = 0; i < scopes.size(); ++i)
