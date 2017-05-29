@@ -79,6 +79,18 @@ namespace danek
             return name;
         }
 
+        void appendConfType(std::stringstream& stream, const ConfigScope& scope, ConfType type, bool expandUid, std::size_t indentLevel)
+        {
+            auto names = scope.listLocallyScopedNames(type, false, { });
+            std::sort(names.begin(), names.end());
+
+            for( std::size_t i=0; i<names.size(); ++i )
+            {
+                const auto item = scope.findItem(names[i]);
+                stream << toString(*item, item->name(), expandUid, indentLevel);
+            }
+        }
+
     }
 
 
@@ -125,29 +137,12 @@ namespace danek
         return os.str();
     }
 
+
     std::string toString(const ConfigScope& scope, bool expandUidNames, std::size_t indentLevel)
     {
         std::stringstream ss;
-
-        // First pass. Dump the variables
-        auto variables = scope.listLocallyScopedNames(ConfType::Variables, false, { });
-        std::sort(variables.begin(), variables.end());
-
-        for (std::size_t i = 0; i < variables.size(); ++i)
-        {
-            const ConfigItem* item = scope.findItem(variables[i]);
-            ss << toString(*item, item->name(), expandUidNames, indentLevel);
-        }
-
-        // Second pass. Dump the nested scopes
-        auto scopes = scope.listLocallyScopedNames(ConfType::Scope, false, { });
-        std::sort(scopes.begin(), scopes.end());
-
-        for (std::size_t i = 0; i < scopes.size(); ++i)
-        {
-            const ConfigItem* item = scope.findItem(scopes[i].c_str());
-            ss << toString(*item, item->name(), expandUidNames, indentLevel);
-        }
+        appendConfType(ss, scope, ConfType::Variables, expandUidNames, indentLevel);
+        appendConfType(ss, scope, ConfType::Scope, expandUidNames, indentLevel);
 
         return ss.str();
     }
