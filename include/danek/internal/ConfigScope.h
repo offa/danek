@@ -68,14 +68,13 @@ namespace danek
 
         ConfigScope& operator=(const ConfigScope&) = delete;
 
-        //--------
-        // Debugging aids
-        //--------
-        void dump(StringBuffer& buf, bool wantExpandedUidNames, int indentLevel = 0) const;
+
+        // TODO: Used for toString() implementation only
+        std::vector<std::string> listLocalNames(ConfType typeMask) const;
+
 
     private:
 
-        std::vector<std::string> listLocalNames(ConfType typeMask) const;
         std::vector<std::string> listScopedNamesHelper(const std::string& prefix, ConfType typeMask, bool recursive, const std::vector<std::string>& filterPatterns) const;
         bool listFilter(const std::string& name, const std::vector<std::string>& filterPatterns) const;
 

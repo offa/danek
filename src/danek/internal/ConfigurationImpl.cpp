@@ -581,7 +581,7 @@ namespace danek
     void ConfigurationImpl::dump(StringBuffer& buf, bool wantExpandedUidNames) const
     {
         buf = "";
-        m_rootScope->dump(buf, wantExpandedUidNames);
+        buf << toString(*m_rootScope, wantExpandedUidNames);
     }
 
     //----------------------------------------------------------------------
@@ -599,7 +599,7 @@ namespace danek
         mergeNames(scope, localName, fullyScopedName);
         if (strcmp(fullyScopedName.str().c_str(), "") == 0)
         {
-            m_rootScope->dump(buf, wantExpandedUidNames);
+            buf << toString(*m_rootScope, wantExpandedUidNames);
         }
         else
         {

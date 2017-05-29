@@ -113,7 +113,8 @@ namespace danek
                 {
                     os << nameStr << " {\n";
                     StringBuffer buffer;
-                    item.scopeVal()->dump(buffer, expandUidNames, indentLevel + 1);
+                    os << toString(*(item.scopeVal()), expandUidNames, indentLevel + 1);
+                    //item.scopeVal()->dump(buffer, expandUidNames, indentLevel + 1);
                     os << indent(indentLevel) << buffer.str() << "}\n";
                 }
                 break;
@@ -122,6 +123,33 @@ namespace danek
         }
 
         return os.str();
+    }
+
+    std::string toString(const ConfigScope& scope, bool expandUidNames, std::size_t indentLevel)
+    {
+        std::stringstream ss;
+
+        // First pass. Dump the variables
+        auto variables = scope.listLocalNames(ConfType::Variables);
+        std::sort(variables.begin(), variables.end());
+
+        for (std::size_t i = 0; i < variables.size(); ++i)
+        {
+            const ConfigItem* item = scope.findItem(variables[i]);
+            ss << toString(*item, item->name(), expandUidNames, indentLevel);
+        }
+
+        // Second pass. Dump the nested scopes
+        auto scopes = scope.listLocalNames(ConfType::Scope);
+        std::sort(scopes.begin(), scopes.end());
+
+        for (std::size_t i = 0; i < scopes.size(); ++i)
+        {
+            const ConfigItem* item = scope.findItem(scopes[i].c_str());
+            ss << toString(*item, item->name(), expandUidNames, indentLevel);
+        }
+
+        return ss.str();
     }
 
 }

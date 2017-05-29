@@ -254,38 +254,4 @@ namespace danek
         return false;
     }
 
-    //----------------------------------------------------------------------
-    // Function:	dump()
-    //
-    // Description:	Dump the contents of the entire hash table to a file.
-    //
-    // Notes:	This is intended for debugging purposes.
-    //----------------------------------------------------------------------
-
-    void ConfigScope::dump(StringBuffer& buf, bool wantExpandedUidNames, int indentLevel) const
-    {
-        //--------
-        // First pass. Dump the variables
-        //--------
-        auto variables = listLocalNames(ConfType::Variables);
-        std::sort(variables.begin(), variables.end());
-
-        for (std::size_t i = 0; i < variables.size(); ++i)
-        {
-            const ConfigItem* item = findItem(variables[i]);
-            buf << toString(*item, item->name(), wantExpandedUidNames, indentLevel);
-        }
-
-        //--------
-        // Second pass. Dump the nested scopes
-        //--------
-        auto scopes = listLocalNames(ConfType::Scope);
-        std::sort(scopes.begin(), scopes.end());
-
-        for (std::size_t i = 0; i < scopes.size(); ++i)
-        {
-            const ConfigItem* item = findItem(scopes[i].c_str());
-            buf << toString(*item, item->name(), wantExpandedUidNames, indentLevel);
-        }
-    }
 }

@@ -88,3 +88,61 @@ TEST_F(ToStringTest, toStringScopeItem)
     EXPECT_THAT(str, StrEq("xyz {\n}\n"));
 }
 
+TEST_F(ToStringTest, dumpRoot)
+{
+    ConfigScope root{nullptr, "\0"};
+    StringBuffer buffer;
+    const auto str = toString(root, true);
+    EXPECT_THAT(str, StrEq(""));
+}
+
+TEST_F(ToStringTest, dumpStringNode)
+{
+    ConfigScope root{nullptr, "\0"};
+    ConfigScope node{&root, "abc"};
+    node.addOrReplaceString("x", "y");
+    node.addOrReplaceString("1", "2");
+
+    const auto str = toString(node, true);
+    EXPECT_THAT(str, StrEq("1 = \"2\";\nx = \"y\";\n"));
+}
+
+TEST_F(ToStringTest, dumpStringNodeWithIndention)
+{
+    ConfigScope root{nullptr, "\0"};
+    ConfigScope node{&root, "abc"};
+    node.addOrReplaceString("x", "y");
+    node.addOrReplaceString("1", "2");
+
+    const auto str = toString(node, true, 1);
+    EXPECT_THAT(str, StrEq("    1 = \"2\";\n    x = \"y\";\n"));
+}
+
+TEST_F(ToStringTest, dumpScopeNode)
+{
+    ConfigScope root{nullptr, "\0"};
+    ConfigScope scope{&root, "xy"};
+    ConfigScope* ptr = &scope;
+    root.ensureScopeExists("scope-name", ptr);
+
+    const auto str = toString(root, true);
+    EXPECT_THAT(str, StrEq("scope-name {\n}\n"));
+}
+
+TEST_F(ToStringTest, dumpMixedType)
+{
+    ConfigScope root{nullptr, "\0"};
+    ConfigScope scope0{&root, "s0"};
+    ConfigScope* ptr0 = &scope0;
+    ConfigScope scope1{ptr0, "s1"};
+    ConfigScope* ptr1 = &scope1;
+
+    root.ensureScopeExists("sn0", ptr0);
+    ptr0->addOrReplaceString("a", "b");
+    ptr0->ensureScopeExists("sn1", ptr1);
+    ptr1->addOrReplaceString("x", "y");
+
+    const auto str = toString(root, true);
+    EXPECT_THAT(str, StrEq("sn0 {\n    a = \"b\";\n    sn1 {\n            x = \"y\";\n}\n}\n"));
+}
+

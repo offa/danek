@@ -27,8 +27,9 @@
 namespace danek
 {
     class ConfigItem;
-
+    class ConfigScope;
 
     std::string toString(const ConfigItem& item, const std::string& name, bool expandUidNames, std::size_t indentLevel = 0);
+    std::string toString(const ConfigScope& scope, bool expandUidNames, std::size_t indentLevel = 0);
 
 }
