@@ -24,6 +24,7 @@
 #include "FooConfiguration.h"
 #include "danek/Configuration.h"
 #include "danek/SchemaValidator.h"
+#include "danek/PatternMatch.h"
 #include <string.h>
 #include <stdlib.h>
 
@@ -116,7 +117,7 @@ Logger::LogLevel FooConfiguration::getLogLevel(const char* opName) const
     {
         const char* pattern = m_logLevels[i + 0].c_str();
         const char* logLevelStr = m_logLevels[i + 1].c_str();
-        if (Configuration::patternMatch(opName, pattern))
+        if (danek::patternMatch(opName, pattern))
         {
             result = atoi(logLevelStr);
             if (result > (int) Logger::LogLevel::Debug)
