@@ -32,28 +32,28 @@ class ToStringTest : public testing::Test
 {
 };
 
-TEST_F(ToStringTest, toStringEscapesSpecialCharacters)
+TEST_F(ToStringTest, configItemEscapesSpecialCharacters)
 {
     const ConfigItem item{"name", "value\t_\n_%_\"_"};
     const auto str = toString(item, "xyz", false);
     EXPECT_THAT(str, StrEq("xyz = \"value%t_%n_%%_%\"_\";\n"));
 }
 
-TEST_F(ToStringTest, toStringWithIndention)
+TEST_F(ToStringTest, configItemWithIndention)
 {
     const ConfigItem item{"name", "value"};
     const auto str = toString(item, "xyz", false, 2);
     EXPECT_THAT(str, StrEq("        xyz = \"value\";\n"));
 }
 
-TEST_F(ToStringTest, toStringStringItem)
+TEST_F(ToStringTest, configItemStringItem)
 {
     const ConfigItem item{"name", "value"};
     const auto str = toString(item, "xyz", false);
     EXPECT_THAT(str, StrEq("xyz = \"value\";\n"));
 }
 
-TEST_F(ToStringTest, toStringListItem)
+TEST_F(ToStringTest, configItemListItem)
 {
     const std::vector<std::string> v{"a", "b\n"};
     const ConfigItem item{"name", v};
@@ -62,7 +62,7 @@ TEST_F(ToStringTest, toStringListItem)
     EXPECT_THAT(str, StrEq("xyz = [\"a\", \"b%n\"];\n"));
 }
 
-TEST_F(ToStringTest, toStringListItemSingleElement)
+TEST_F(ToStringTest, configItemListItemSingleElement)
 {
     const std::vector<std::string> v{};
     const ConfigItem item{"name", v};
@@ -71,7 +71,7 @@ TEST_F(ToStringTest, toStringListItemSingleElement)
     EXPECT_THAT(str, StrEq("xyz = [];\n"));
 }
 
-TEST_F(ToStringTest, toStringListItemIfEmpty)
+TEST_F(ToStringTest, configItemListItemIfEmpty)
 {
     const std::vector<std::string> v{};
     const ConfigItem item{"name", v};
@@ -80,7 +80,7 @@ TEST_F(ToStringTest, toStringListItemIfEmpty)
     EXPECT_THAT(str, StrEq("xyz = [];\n"));
 }
 
-TEST_F(ToStringTest, toStringScopeItem)
+TEST_F(ToStringTest, configItemScopeItem)
 {
     const char c = '\0';
     const ConfigItem item{"name", std::make_unique<ConfigScope>(nullptr, &c)};
@@ -88,7 +88,7 @@ TEST_F(ToStringTest, toStringScopeItem)
     EXPECT_THAT(str, StrEq("xyz {\n}\n"));
 }
 
-TEST_F(ToStringTest, dumpRoot)
+TEST_F(ToStringTest, configScopeRoot)
 {
     ConfigScope root{nullptr, "\0"};
     StringBuffer buffer;
@@ -96,7 +96,7 @@ TEST_F(ToStringTest, dumpRoot)
     EXPECT_THAT(str, StrEq(""));
 }
 
-TEST_F(ToStringTest, dumpStringNode)
+TEST_F(ToStringTest, configScopeStringNode)
 {
     ConfigScope root{nullptr, "\0"};
     ConfigScope node{&root, "abc"};
@@ -107,7 +107,7 @@ TEST_F(ToStringTest, dumpStringNode)
     EXPECT_THAT(str, StrEq("1 = \"2\";\nx = \"y\";\n"));
 }
 
-TEST_F(ToStringTest, dumpStringNodeWithIndention)
+TEST_F(ToStringTest, configScopeStringNodeWithIndention)
 {
     ConfigScope root{nullptr, "\0"};
     ConfigScope node{&root, "abc"};
@@ -118,7 +118,7 @@ TEST_F(ToStringTest, dumpStringNodeWithIndention)
     EXPECT_THAT(str, StrEq("    1 = \"2\";\n    x = \"y\";\n"));
 }
 
-TEST_F(ToStringTest, dumpScopeNode)
+TEST_F(ToStringTest, configScopeScopeNode)
 {
     ConfigScope root{nullptr, "\0"};
     ConfigScope scope{&root, "xy"};
@@ -129,7 +129,7 @@ TEST_F(ToStringTest, dumpScopeNode)
     EXPECT_THAT(str, StrEq("scope-name {\n}\n"));
 }
 
-TEST_F(ToStringTest, dumpMixedType)
+TEST_F(ToStringTest, configScopeMixedType)
 {
     ConfigScope root{nullptr, "\0"};
     ConfigScope scope0{&root, "s0"};
