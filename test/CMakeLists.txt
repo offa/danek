@@ -21,12 +21,12 @@ macro(_add_test_suite _name)
 endmacro()
 
 
-_add_test_suite(CommonTests ConfigurationExceptionTest.cpp
-                            StringVectorTest.cpp
-                            StringBufferTest.cpp
+_add_test_suite(PublicTypesTests ConfigurationExceptionTest.cpp
+                                StringVectorTest.cpp
+                                StringBufferTest.cpp
 
-                            $<TARGET_OBJECTS:danek-public-types>
-                            )
+                                $<TARGET_OBJECTS:danek-public-types>
+                                )
 
 _add_test_suite(MiscTests ToStringTest.cpp
                         UtilTest.cpp
@@ -49,7 +49,7 @@ _add_test_suite(ConfigTests ConfigItemTest.cpp
 _add_test_suite(LexParserTests LexTokenTest.cpp
                             )
 
-add_custom_target(unittest CommonTests
+add_custom_target(unittest PublicTypesTests
                         COMMAND MiscTests
                         COMMAND ConfigTests
                         COMMAND LexParserTests
