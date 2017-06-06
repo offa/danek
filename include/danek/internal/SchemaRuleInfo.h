@@ -25,15 +25,17 @@
 
 #include "danek/StringBuffer.h"
 #include "danek/StringVector.h"
+#include <vector>
+#include <string>
 
 namespace danek
 {
     class SchemaIdRuleInfo
     {
     public:
-        StringBuffer m_locallyScopedName;
-        StringBuffer m_typeName;
-        StringVector m_args;
+        std::string m_locallyScopedName;
+        std::string m_typeName;
+        std::vector<std::string> m_args;
         bool m_isOptional;
     };
 
@@ -41,6 +43,6 @@ namespace danek
     {
     public:
         short m_symbol;
-        StringBuffer m_locallyScopedName;
+        std::string m_locallyScopedName;
     };
 }

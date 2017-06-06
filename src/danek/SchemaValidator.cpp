@@ -63,7 +63,7 @@ namespace danek
 
         r1 = (SchemaIdRuleInfo**) p1;
         r2 = (SchemaIdRuleInfo**) p2;
-        result = strcmp((*r1)->m_locallyScopedName.str().c_str(), (*r2)->m_locallyScopedName.str().c_str());
+        result = strcmp((*r1)->m_locallyScopedName.c_str(), (*r2)->m_locallyScopedName.c_str());
         return result;
     }
 
@@ -404,12 +404,12 @@ namespace danek
             // There is an idRule for the entry. Look up the idRule's
             // type, and invoke its validate() operation.
             //--------
-            const char* typeName = idRule->m_typeName.str().c_str();
+            const char* typeName = idRule->m_typeName.c_str();
             SchemaType* typeDef = findType(typeName);
             compat::checkAssertion(typeDef != nullptr);
             try
             {
-                callValidate(typeDef, cfg, fullyScopedName.str().c_str(), iName, typeName, typeName, idRule->m_args, 1);
+                callValidate(typeDef, cfg, fullyScopedName.str().c_str(), iName, typeName, typeName, StringVector(idRule->m_args), 1);
             }
             catch (const ConfigurationException& ex)
             {
@@ -449,7 +449,7 @@ namespace danek
             {
                 continue;
             }
-            const char* nameInRule = idRule->m_locallyScopedName.str().c_str();
+            const char* nameInRule = idRule->m_locallyScopedName.c_str();
             if (strstr(nameInRule, "uid-") != nullptr)
             {
                 validateRequiredUidEntry(cfg, fullyScopedName.str().c_str(), idRule);
@@ -459,7 +459,7 @@ namespace danek
                 if (cfg->type(fullyScopedName.str().c_str(), nameInRule) == ConfType::NoValue)
                 {
                     cfg->mergeNames(fullyScopedName.str().c_str(), nameInRule, nameOfMissingEntry);
-                    const char* typeName = idRule->m_typeName.str().c_str();
+                    const char* typeName = idRule->m_typeName.c_str();
                     msg << cfg->fileName() << ": the " << typeName << " '" << nameOfMissingEntry
                         << "' does not exist";
                     throw ConfigurationException(msg.str());
@@ -480,7 +480,7 @@ namespace danek
         const char* typeName;
         const char* ptr;
 
-        nameInRule = idRule->m_locallyScopedName.str().c_str();
+        nameInRule = idRule->m_locallyScopedName.c_str();
         compat::checkAssertion(strstr(nameInRule, "uid-") != nullptr);
         lastDot = strrchr(nameInRule, '.');
         if (lastDot == nullptr || strstr(lastDot + 1, "uid-") != nullptr)
@@ -504,7 +504,7 @@ namespace danek
             if (cfg->type(parentScopes[i].c_str(), lastDot + 1) == ConfType::NoValue)
             {
                 cfg->mergeNames(parentScopes[i].c_str(), lastDot + 1, nameOfMissingEntry);
-                typeName = idRule->m_typeName.str().c_str();
+                typeName = idRule->m_typeName.c_str();
                 msg << cfg->fileName() << ": the " << typeName << " '" << nameOfMissingEntry
                     << "' does not exist";
                 throw ConfigurationException(msg.str());
@@ -523,7 +523,7 @@ namespace danek
             // Does unexpandedName start with rule.m_locallyScopedName
             // followed by "."?
             //--------
-            const char* name = m_ignoreRules[i]->m_locallyScopedName.str().c_str();
+            const char* name = m_ignoreRules[i]->m_locallyScopedName.c_str();
             int len = strlen(name);
             if (strncmp(unexpandedName, name, len) != 0)
             {

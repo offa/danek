@@ -129,8 +129,8 @@ namespace danek
         //--------
         for (int i = 0; i < m_sv->m_idRulesCurrSize - 1; i++)
         {
-            const char* s1 = m_sv->m_idRules[i]->m_locallyScopedName.str().c_str();
-            const char* s2 = m_sv->m_idRules[i + 1]->m_locallyScopedName.str().c_str();
+            const char* s1 = m_sv->m_idRules[i]->m_locallyScopedName.c_str();
+            const char* s2 = m_sv->m_idRules[i + 1]->m_locallyScopedName.c_str();
             if (strcmp(s1, s2) == 0)
             {
                 msg << "There are multiple rules for '" << s1 << "'";
@@ -184,7 +184,7 @@ namespace danek
         //--------
         if (!isOptional)
         {
-            const char* name = ruleInfo->m_locallyScopedName.str().c_str();
+            const char* name = ruleInfo->m_locallyScopedName.c_str();
             const char* ptr = strrchr(name, '.');
             if (ptr == nullptr)
             {
@@ -207,7 +207,7 @@ namespace danek
         ruleInfo->m_typeName = m_token.spelling();
         accept(lex::LEX_IDENT_SYM, rule, "expecting an identifier");
 
-        typeDef = m_sv->findType(ruleInfo->m_typeName.str().c_str());
+        typeDef = m_sv->findType(ruleInfo->m_typeName.c_str());
         if (typeDef == nullptr)
         {
             msg << "Unknown type '" << ruleInfo->m_typeName << "' in rule '" << rule << "'";
@@ -215,7 +215,7 @@ namespace danek
         }
         if (m_token.type() == lex::LEX_EOF_SYM)
         {
-            m_sv->callCheckRule(typeDef, m_cfg, ruleInfo->m_typeName.str().c_str(), ruleInfo->m_args, rule, 1);
+            m_sv->callCheckRule(typeDef, m_cfg, ruleInfo->m_typeName.c_str(), StringVector(ruleInfo->m_args), rule, 1);
             return;
         }
 
@@ -244,7 +244,7 @@ namespace danek
         }
         accept(lex::LEX_CLOSE_BRACKET_SYM, rule, "expecting ']'");
         accept(lex::LEX_EOF_SYM, rule, "expecting <end of string>");
-        m_sv->callCheckRule(typeDef, m_cfg, ruleInfo->m_typeName.str().c_str(), ruleInfo->m_args, rule, 1);
+        m_sv->callCheckRule(typeDef, m_cfg, ruleInfo->m_typeName.c_str(), StringVector(ruleInfo->m_args), rule, 1);
     }
 
     //----------------------------------------------------------------------
