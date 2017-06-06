@@ -23,9 +23,6 @@
 
 #pragma once
 
-//--------
-// #include's
-//--------
 #include "danek/StringBuffer.h"
 #include "danek/StringVector.h"
 
