@@ -77,14 +77,14 @@ namespace danek
 
 
     //----------------------------------------------------------------------
-    // Function:	patternMatch()
+    // Function:    patternMatch()
     //
-    // Description:	Returns true if the specified pattern matches the
-    //			specified string.
+    // Description: Returns true if the specified pattern matches the
+    //          specified string.
     //
-    // Note:	The only wildcard supported is "*". It acts like the
-    //			"*" wildcard in UNIX and DOS shells, that is, it
-    //			matches zero or more characters.
+    // Note:    The only wildcard supported is "*". It acts like the
+    //          "*" wildcard in UNIX and DOS shells, that is, it
+    //          matches zero or more characters.
     //----------------------------------------------------------------------
 
     bool patternMatch(const char* str, const char* pattern)
