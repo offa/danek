@@ -1,5 +1,4 @@
 // Copyright (c) 2017 offa
-// Copyright 2011 Ciaran McHale.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -23,6 +22,46 @@
 
 #pragma once
 
-#include "danek/internal/SchemaIdRuleInfo.h"
-#include "danek/internal/SchemaIgnoreRuleInfo.h"
+#include <string>
+
+namespace danek
+{
+
+
+    class SchemaIgnoreRuleInfo
+    {
+    public:
+
+        SchemaIgnoreRuleInfo() : m_symbol(0), m_locallyScopedName()
+        {
+        }
+
+
+        short symbol() const
+        {
+            return m_symbol;
+        }
+
+        void setSymbol(short s)
+        {
+            m_symbol = s;
+        }
+
+        void setLocallyScopedName(const std::string& name)
+        {
+            m_locallyScopedName = name;
+        }
+
+        std::string locallyScopedName() const
+        {
+            return m_locallyScopedName;
+        }
+
+
+    private:
+
+        short m_symbol;
+        std::string m_locallyScopedName;
+    };
+}
 
