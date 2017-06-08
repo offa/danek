@@ -26,6 +26,7 @@
 #include "danek/SchemaValidator.h"
 #include "danek/Configuration.h"
 #include "SchemaLex.h"
+#include <memory>
 
 namespace danek
 {
@@ -56,7 +57,7 @@ namespace danek
 
         void accept(short sym, const char* rule, const char* msg);
 
-        SchemaLex* m_lex;
+        std::unique_ptr<SchemaLex> m_lex;
         LexToken m_token;
         SchemaValidator* m_sv;
         Configuration* m_cfg;
