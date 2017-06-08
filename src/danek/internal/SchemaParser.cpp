@@ -45,9 +45,6 @@ namespace danek
 
     void SchemaParser::parse(const char** schema, int schemaSize)
     {
-        StringBuffer name;
-        StringBuffer msg;
-
         //--------
         // Allocate more than enough space for idRules and ignoreRules
         // in the schema validator.
@@ -55,7 +52,7 @@ namespace danek
         m_sv->m_idRulesMaxSize = schemaSize;
         m_sv->m_idRulesCurrSize = 0;
         m_sv->m_idRules = new SchemaIdRuleInfo*[schemaSize];
-        for (int i = 0; i < m_sv->m_idRulesMaxSize; i++)
+        for (int i = 0; i < m_sv->m_idRulesMaxSize; ++i)
         {
             m_sv->m_idRules[i] = nullptr;
         }
@@ -68,7 +65,7 @@ namespace danek
         }
 
         m_sv->sortTypes();
-        for (int i = 0; i < schemaSize; i++)
+        for (int i = 0; i < schemaSize; ++i
         {
             const char* schemaItem = schema[i];
             m_lex = std::make_unique<SchemaLex>(schemaItem);
@@ -110,14 +107,14 @@ namespace danek
         //--------
         // Check if multiple rules have the same name.
         //--------
-        for (int i = 0; i < m_sv->m_idRulesCurrSize - 1; i++)
+        for (int i = 0; i < m_sv->m_idRulesCurrSize - 1; ++i)
         {
             const char* s1 = m_sv->m_idRules[i]->locallyScopedName().c_str();
             const char* s2 = m_sv->m_idRules[i + 1]->locallyScopedName().c_str();
             if (strcmp(s1, s2) == 0)
             {
+                StringBuffer msg;
                 msg << "There are multiple rules for '" << s1 << "'";
-
             }
         }
     }
@@ -175,7 +172,7 @@ namespace danek
             }
             else
             {
-                ptr++; // skip over "."
+                ++ptr; // skip over "."
             }
             if (strncmp(ptr, "uid-", 4) == 0)
             {
