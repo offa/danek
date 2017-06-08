@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.2)
 
-project(danek VERSION 0.0.2)
+project(danek VERSION 0.0.3)
 message(STATUS "~~~ ${PROJECT_NAME} ${PROJECT_VERSION} ~~~")
 
 option(UNIT_TESTS "Build Unit Tests" ON)
