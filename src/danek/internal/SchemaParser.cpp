@@ -33,24 +33,10 @@ namespace danek
 {
     extern "C" int danek_compareSchemaIdRuleInfo_c(const void* p1, const void* p2);
 
-    //----------------------------------------------------------------------
-    // Function:	Constructor
-    //
-    // Description:
-    //----------------------------------------------------------------------
 
-    SchemaParser::SchemaParser(SchemaValidator* sv)
+    SchemaParser::SchemaParser(SchemaValidator* sv) : m_lex(nullptr), m_sv(sv), m_cfg(Configuration::create())
     {
-        m_sv = sv;
-        m_lex = nullptr;
-        m_cfg = Configuration::create();
     }
-
-    //----------------------------------------------------------------------
-    // Function:	Destructor
-    //
-    // Description:
-    //----------------------------------------------------------------------
 
     SchemaParser::~SchemaParser()
     {
