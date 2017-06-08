@@ -521,8 +521,8 @@ namespace danek
             // Does unexpandedName start with rule.m_locallyScopedName
             // followed by "."?
             //--------
-            const char* name = m_ignoreRules[i]->m_locallyScopedName.c_str();
-            int len = strlen(name);
+            const char* name = m_ignoreRules[i]->locallyScopedName().c_str();
+            const auto len = strlen(name);
             if (strncmp(unexpandedName, name, len) != 0)
             {
                 continue;
@@ -536,7 +536,7 @@ namespace danek
             // It does. Whether we ignore the item depends on the
             // "@ignore<something>" keyword used.
             //--------
-            short symbol = m_ignoreRules[i]->m_symbol;
+            const short symbol = m_ignoreRules[i]->symbol();
             switch (symbol)
             {
                 case SchemaLex::LEX_IGNORE_EVERYTHING_IN_SYM:

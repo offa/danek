@@ -97,10 +97,23 @@ namespace danek
             return m_symbol;
         }
 
+        void setSymbol(short s)
+        {
+            m_symbol = s;
+        }
+
+        void setLocallyScopedName(const std::string& name)
+        {
+            m_locallyScopedName = name;
+        }
+
         std::string locallyScopedName() const
         {
             return m_locallyScopedName;
         }
+
+
+    private:
 
         short m_symbol;
         std::string m_locallyScopedName;

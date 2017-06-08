@@ -257,9 +257,9 @@ namespace danek
 
     void SchemaParser::parseIgnoreRule(const char* rule, SchemaIgnoreRuleInfo* ruleInfo)
     {
-        ruleInfo->m_symbol = m_token.type();
+        ruleInfo->setSymbol(m_token.type());
         m_lex->nextToken(m_token); // consume the "@ignore<something>" keyword
-        ruleInfo->m_locallyScopedName = m_token.spelling();
+        ruleInfo->setLocallyScopedName(m_token.spelling());
         accept(lex::LEX_IDENT_SYM, rule, "expecting an identifier");
         accept(lex::LEX_EOF_SYM, rule, "expecting <end of string>");
     }

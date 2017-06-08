@@ -60,3 +60,14 @@ TEST(SchemaIdRuleInfoTest, ignoreRuleInfoGetter)
     EXPECT_THAT(info.symbol(), Eq(0));
     EXPECT_THAT(info.locallyScopedName(), StrEq(""));
 }
+
+TEST(SchemaIdRuleInfoTest, ignoreRuleInfoSetter)
+{
+    SchemaIgnoreRuleInfo info{};
+    info.setLocallyScopedName("abc");
+    info.setSymbol(9);
+
+    EXPECT_THAT(info.symbol(), Eq(9));
+    EXPECT_THAT(info.locallyScopedName(), StrEq("abc"));
+}
+
