@@ -20,7 +20,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "danek/internal/SchemaRuleInfo.h"
+#include "danek/internal/SchemaIdRuleInfo.h"
+#include "danek/internal/SchemaIgnoreRuleInfo.h"
 #include <gmock/gmock.h>
 
 using danek::SchemaIdRuleInfo;

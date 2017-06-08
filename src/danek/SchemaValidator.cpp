@@ -21,12 +21,9 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//--------
-// #include's
-//--------
 #include "danek/SchemaValidator.h"
 #include "danek/internal/SchemaParser.h"
-#include "danek/internal/SchemaRuleInfo.h"
+#include "danek/internal/SchemaIdRuleInfo.h"
 #include "danek/internal/SchemaTypeBoolean.h"
 #include "danek/internal/SchemaTypeDurationMicroseconds.h"
 #include "danek/internal/SchemaTypeDurationMilliseconds.h"

@@ -23,17 +23,15 @@
 
 #pragma once
 
-//--------
-// #include's
-//--------
 #include "danek/SchemaValidator.h"
 #include "danek/Configuration.h"
-#include "SchemaRuleInfo.h"
 #include "SchemaLex.h"
 
 namespace danek
 {
     class SchemaValidator;
+    class SchemaIdRuleInfo;
+    class SchemaIgnoreRuleInfo;
 
     class SchemaParser
     {

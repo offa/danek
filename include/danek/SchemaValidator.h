@@ -23,11 +23,11 @@
 
 #pragma once
 
-//--------
-// #include's
-//--------
 #include "danek/Configuration.h"
 #include "danek/SchemaType.h"
+#include "danek/internal/SchemaIdRuleInfo.h"
+#include "danek/internal/SchemaIgnoreRuleInfo.h"
+
 
 namespace danek
 {

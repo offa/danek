@@ -21,11 +21,10 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//--------
-// #include's
-//--------
 #include "danek/internal/SchemaParser.h"
 #include "danek/internal/ConfigItem.h"
+#include "danek/internal/SchemaIdRuleInfo.h"
+#include "danek/internal/SchemaIgnoreRuleInfo.h"
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
