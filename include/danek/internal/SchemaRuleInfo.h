@@ -87,9 +87,21 @@ namespace danek
 
     };
 
+
     class SchemaIgnoreRuleInfo
     {
     public:
+
+        short symbol() const
+        {
+            return m_symbol;
+        }
+
+        std::string locallyScopedName() const
+        {
+            return m_locallyScopedName;
+        }
+
         short m_symbol;
         std::string m_locallyScopedName;
     };

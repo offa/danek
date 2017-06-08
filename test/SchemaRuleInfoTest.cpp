@@ -24,6 +24,7 @@
 #include <gmock/gmock.h>
 
 using danek::SchemaIdRuleInfo;
+using danek::SchemaIgnoreRuleInfo;
 using namespace testing;
 
 class SchemaIdRuleInfoTest : public testing::Test
@@ -53,3 +54,9 @@ TEST(SchemaIdRuleInfoTest, idRuleInfoSetter)
     EXPECT_TRUE(info.isOptional());
 }
 
+TEST(SchemaIdRuleInfoTest, ignoreRuleInfoGetter)
+{
+    const SchemaIgnoreRuleInfo info{};
+    EXPECT_THAT(info.symbol(), Eq(0));
+    EXPECT_THAT(info.locallyScopedName(), StrEq(""));
+}
