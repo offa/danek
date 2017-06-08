@@ -25,6 +25,7 @@
 #include "danek/internal/ConfigItem.h"
 #include "danek/internal/SchemaIdRuleInfo.h"
 #include "danek/internal/SchemaIgnoreRuleInfo.h"
+#include "danek/ConfigurationException.h"
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
@@ -65,7 +66,7 @@ namespace danek
         }
 
         m_sv->sortTypes();
-        for (int i = 0; i < schemaSize; ++i
+        for (int i = 0; i < schemaSize; ++i)
         {
             const char* schemaItem = schema[i];
             m_lex = std::make_unique<SchemaLex>(schemaItem);
@@ -115,6 +116,7 @@ namespace danek
             {
                 StringBuffer msg;
                 msg << "There are multiple rules for '" << s1 << "'";
+                throw ConfigurationException{msg.str()};
             }
         }
     }
@@ -136,7 +138,6 @@ namespace danek
 
     void SchemaParser::parseIdRule(const char* rule, SchemaIdRuleInfo* ruleInfo)
     {
-        StringBuffer msg;
         SchemaType* typeDef;
         bool isOptional;
 
@@ -176,9 +177,10 @@ namespace danek
             }
             if (strncmp(ptr, "uid-", 4) == 0)
             {
+                StringBuffer msg;
                 msg << "Use of '@required' is incompatible with the uid- entry ('" << ptr << "') in rule '"
                     << rule << "'";
-
+                throw ConfigurationException{msg.str()};
             }
         }
 
@@ -190,8 +192,9 @@ namespace danek
         typeDef = m_sv->findType(ruleInfo->typeName().c_str());
         if (typeDef == nullptr)
         {
+            StringBuffer msg;
             msg << "Unknown type '" << ruleInfo->typeName() << "' in rule '" << rule << "'";
-
+            throw ConfigurationException{msg.str()};
         }
         if (m_token.type() == lex::LEX_EOF_SYM)
         {
@@ -258,7 +261,6 @@ namespace danek
 
     void SchemaParser::parseUserTypeDef(const char* str)
     {
-        StringBuffer msg;
         SchemaType* baseTypeDef;
         StringBuffer typeName;
         StringBuffer baseTypeName;
@@ -274,8 +276,9 @@ namespace danek
         baseTypeDef = m_sv->findType(baseTypeName.str().c_str());
         if (baseTypeDef == nullptr)
         {
+            StringBuffer msg;
             msg << "Unknown type '" << baseTypeName << "' in user-type definition '" << str << "'";
-
+            throw ConfigurationException{msg.str()};
         }
 
         if (m_token.type() == lex::LEX_EOF_SYM)
@@ -326,17 +329,16 @@ namespace danek
 
     void SchemaParser::accept(short sym, const char* rule, const char* msgPrefix)
     {
-        StringBuffer msg;
-
         if (m_token.type() == sym)
         {
             m_lex->nextToken(m_token);
         }
         else
         {
+            StringBuffer msg;
             msg << "error in validation rule '" << rule << "': " << msgPrefix << " near '"
                 << m_token.spelling() << "'";
-
+            throw ConfigurationException{msg.str()};
         }
     }
 }
