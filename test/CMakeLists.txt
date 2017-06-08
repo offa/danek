@@ -49,10 +49,14 @@ _add_test_suite(LexParserTests LexTokenTest.cpp
                             $<TARGET_OBJECTS:DefaultSecurity>
                             )
 
+_add_test_suite(SchemaTests SchemaRuleInfoTest.cpp
+                            )
+
 add_custom_target(unittest PublicMiscTests
                         COMMAND MiscTests
                         COMMAND ConfigTests
                         COMMAND LexParserTests
+                        COMMAND SchemaTests
 
                         COMMENT "Running unittests\n\n"
                         VERBATIM

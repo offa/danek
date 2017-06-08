@@ -1,5 +1,4 @@
 // Copyright (c) 2017 offa
-// Copyright 2011 Ciaran McHale.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -21,53 +20,21 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#pragma once
+#include "danek/internal/SchemaRuleInfo.h"
+#include <gmock/gmock.h>
 
-#include <vector>
-#include <string>
+using danek::SchemaIdRuleInfo;
+using namespace testing;
 
-namespace danek
+class SchemaIdRuleInfoTest : public testing::Test
 {
-    class SchemaIdRuleInfo
-    {
-    public:
+};
 
-        SchemaIdRuleInfo() : m_locallyScopedName(), m_typeName(), m_args(), m_isOptional(false)
-        {
-        }
-
-
-        std::string locallyScopedName() const
-        {
-            return m_locallyScopedName;
-        }
-
-        std::string typeName() const
-        {
-            return m_typeName;
-        }
-
-        std::vector<std::string> args() const
-        {
-            return m_args;
-        }
-
-        bool isOptional() const
-        {
-            return m_isOptional;
-        }
-
-        std::string m_locallyScopedName;
-        std::string m_typeName;
-        std::vector<std::string> m_args;
-        bool m_isOptional;
-
-    };
-
-    class SchemaIgnoreRuleInfo
-    {
-    public:
-        short m_symbol;
-        std::string m_locallyScopedName;
-    };
+TEST(SchemaIdRuleInfoTest, idRuleInfoValues)
+{
+    const SchemaIdRuleInfo info{};
+    EXPECT_THAT(info.locallyScopedName(), StrEq(""));
+    EXPECT_THAT(info.typeName(), StrEq(""));
+    EXPECT_THAT(info.args(), IsEmpty());
+    EXPECT_FALSE(info.isOptional());
 }
