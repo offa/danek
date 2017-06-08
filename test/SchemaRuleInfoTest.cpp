@@ -30,7 +30,7 @@ class SchemaIdRuleInfoTest : public testing::Test
 {
 };
 
-TEST(SchemaIdRuleInfoTest, idRuleInfoValues)
+TEST(SchemaIdRuleInfoTest, idRuleInfoGetter)
 {
     const SchemaIdRuleInfo info{};
     EXPECT_THAT(info.locallyScopedName(), StrEq(""));
@@ -38,3 +38,18 @@ TEST(SchemaIdRuleInfoTest, idRuleInfoValues)
     EXPECT_THAT(info.args(), IsEmpty());
     EXPECT_FALSE(info.isOptional());
 }
+
+TEST(SchemaIdRuleInfoTest, idRuleInfoSetter)
+{
+    SchemaIdRuleInfo info{};
+    info.setLocallyScopedName("abc");
+    info.setTypeName("123");
+    info.addArg("xyz");
+    info.setIsOptional(true);
+
+    EXPECT_THAT(info.locallyScopedName(), StrEq("abc"));
+    EXPECT_THAT(info.typeName(), StrEq("123"));
+    EXPECT_THAT(info.args(), ElementsAre("xyz"));
+    EXPECT_TRUE(info.isOptional());
+}
+

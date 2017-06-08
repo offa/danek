@@ -129,8 +129,8 @@ namespace danek
         //--------
         for (int i = 0; i < m_sv->m_idRulesCurrSize - 1; i++)
         {
-            const char* s1 = m_sv->m_idRules[i]->m_locallyScopedName.c_str();
-            const char* s2 = m_sv->m_idRules[i + 1]->m_locallyScopedName.c_str();
+            const char* s1 = m_sv->m_idRules[i]->locallyScopedName().c_str();
+            const char* s2 = m_sv->m_idRules[i + 1]->locallyScopedName().c_str();
             if (strcmp(s1, s2) == 0)
             {
                 msg << "There are multiple rules for '" << s1 << "'";
@@ -175,8 +175,8 @@ namespace danek
                 break;
         }
 
-        ruleInfo->m_isOptional = isOptional;
-        ruleInfo->m_locallyScopedName = m_token.spelling();
+        ruleInfo->setIsOptional(isOptional);
+        ruleInfo->setLocallyScopedName(m_token.spelling());
         accept(lex::LEX_IDENT_SYM, rule, "expecting an identifier");
 
         //--------
@@ -184,7 +184,7 @@ namespace danek
         //--------
         if (!isOptional)
         {
-            const char* name = ruleInfo->m_locallyScopedName.c_str();
+            const char* name = ruleInfo->locallyScopedName().c_str();
             const char* ptr = strrchr(name, '.');
             if (ptr == nullptr)
             {
@@ -204,25 +204,25 @@ namespace danek
 
         accept(lex::LEX_EQUALS_SYM, rule, "expecting '='");
 
-        ruleInfo->m_typeName = m_token.spelling();
+        ruleInfo->setTypeName(m_token.spelling());
         accept(lex::LEX_IDENT_SYM, rule, "expecting an identifier");
 
-        typeDef = m_sv->findType(ruleInfo->m_typeName.c_str());
+        typeDef = m_sv->findType(ruleInfo->typeName().c_str());
         if (typeDef == nullptr)
         {
-            msg << "Unknown type '" << ruleInfo->m_typeName << "' in rule '" << rule << "'";
+            msg << "Unknown type '" << ruleInfo->typeName() << "' in rule '" << rule << "'";
 
         }
         if (m_token.type() == lex::LEX_EOF_SYM)
         {
-            m_sv->callCheckRule(typeDef, m_cfg, ruleInfo->m_typeName.c_str(), StringVector(ruleInfo->m_args), rule, 1);
+            m_sv->callCheckRule(typeDef, m_cfg, ruleInfo->typeName().c_str(), StringVector(ruleInfo->args()), rule, 1);
             return;
         }
 
         accept(lex::LEX_OPEN_BRACKET_SYM, rule, "expecting '['");
         if (m_token.type() == lex::LEX_IDENT_SYM || m_token.type() == lex::LEX_STRING_SYM)
         {
-            ruleInfo->m_args.push_back(m_token.spelling());
+            ruleInfo->addArg(m_token.spelling());
             m_lex->nextToken(m_token);
         }
         else if (m_token.type() != lex::LEX_CLOSE_BRACKET_SYM)
@@ -232,7 +232,7 @@ namespace danek
         while (m_token.type() != lex::LEX_CLOSE_BRACKET_SYM)
         {
             accept(lex::LEX_COMMA_SYM, rule, "expecting ','");
-            ruleInfo->m_args.push_back(m_token.spelling());
+            ruleInfo->addArg(m_token.spelling());
             if (m_token.type() == lex::LEX_IDENT_SYM || m_token.type() == lex::LEX_STRING_SYM)
             {
                 m_lex->nextToken(m_token);
@@ -244,7 +244,7 @@ namespace danek
         }
         accept(lex::LEX_CLOSE_BRACKET_SYM, rule, "expecting ']'");
         accept(lex::LEX_EOF_SYM, rule, "expecting <end of string>");
-        m_sv->callCheckRule(typeDef, m_cfg, ruleInfo->m_typeName.c_str(), StringVector(ruleInfo->m_args), rule, 1);
+        m_sv->callCheckRule(typeDef, m_cfg, ruleInfo->typeName().c_str(), StringVector(ruleInfo->args()), rule, 1);
     }
 
     //----------------------------------------------------------------------

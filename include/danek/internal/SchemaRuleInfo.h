@@ -42,9 +42,24 @@ namespace danek
             return m_locallyScopedName;
         }
 
+        void setLocallyScopedName(const std::string& name)
+        {
+            m_locallyScopedName = name;
+        }
+
         std::string typeName() const
         {
             return m_typeName;
+        }
+
+        void setTypeName(const std::string& name)
+        {
+            m_typeName = name;
+        }
+
+        void addArg(const std::string& arg)
+        {
+            m_args.push_back(arg);
         }
 
         std::vector<std::string> args() const
@@ -52,10 +67,18 @@ namespace danek
             return m_args;
         }
 
+        void setIsOptional(bool opt)
+        {
+            m_isOptional = opt;
+        }
+
         bool isOptional() const
         {
             return m_isOptional;
         }
+
+
+    private:
 
         std::string m_locallyScopedName;
         std::string m_typeName;

@@ -63,7 +63,7 @@ namespace danek
 
         r1 = (SchemaIdRuleInfo**) p1;
         r2 = (SchemaIdRuleInfo**) p2;
-        result = strcmp((*r1)->m_locallyScopedName.c_str(), (*r2)->m_locallyScopedName.c_str());
+        result = strcmp((*r1)->locallyScopedName().c_str(), (*r2)->locallyScopedName().c_str());
         return result;
     }
 
@@ -95,7 +95,7 @@ namespace danek
         SchemaIdRuleInfo* searchPtr;
         SchemaIdRuleInfo** result;
 
-        search.m_locallyScopedName = name;
+        search.setLocallyScopedName(name);
         searchPtr = &search;
         result = (SchemaIdRuleInfo**) bsearch(&searchPtr,
             m_idRules,
@@ -404,12 +404,12 @@ namespace danek
             // There is an idRule for the entry. Look up the idRule's
             // type, and invoke its validate() operation.
             //--------
-            const char* typeName = idRule->m_typeName.c_str();
+            const char* typeName = idRule->typeName().c_str();
             SchemaType* typeDef = findType(typeName);
             compat::checkAssertion(typeDef != nullptr);
             try
             {
-                callValidate(typeDef, cfg, fullyScopedName.str().c_str(), iName, typeName, typeName, StringVector(idRule->m_args), 1);
+                callValidate(typeDef, cfg, fullyScopedName.str().c_str(), iName, typeName, typeName, StringVector(idRule->args()), 1);
             }
             catch (const ConfigurationException& ex)
             {
@@ -444,12 +444,12 @@ namespace danek
         for (int i = 0; i < m_idRulesCurrSize; i++)
         {
             SchemaIdRuleInfo* idRule = m_idRules[i];
-            bool isOptional = idRule->m_isOptional;
+            bool isOptional = idRule->isOptional();
             if (forceMode == ForceMode::None && isOptional)
             {
                 continue;
             }
-            const char* nameInRule = idRule->m_locallyScopedName.c_str();
+            const char* nameInRule = idRule->locallyScopedName().c_str();
             if (strstr(nameInRule, "uid-") != nullptr)
             {
                 validateRequiredUidEntry(cfg, fullyScopedName.str().c_str(), idRule);
@@ -459,7 +459,7 @@ namespace danek
                 if (cfg->type(fullyScopedName.str().c_str(), nameInRule) == ConfType::NoValue)
                 {
                     cfg->mergeNames(fullyScopedName.str().c_str(), nameInRule, nameOfMissingEntry);
-                    const char* typeName = idRule->m_typeName.c_str();
+                    const auto typeName = idRule->typeName();
                     msg << cfg->fileName() << ": the " << typeName << " '" << nameOfMissingEntry
                         << "' does not exist";
                     throw ConfigurationException(msg.str());
@@ -471,16 +471,14 @@ namespace danek
     void SchemaValidator::validateRequiredUidEntry(const Configuration* cfg, const char* fullScope,
         SchemaIdRuleInfo* idRule) const
     {
-        const char* nameInRule;
         const char* lastDot;
         StringBuffer parentScopePattern;
         StringBuffer nameOfMissingEntry;
         StringBuffer msg;
         StringVector parentScopes;
-        const char* typeName;
         const char* ptr;
 
-        nameInRule = idRule->m_locallyScopedName.c_str();
+        const char* nameInRule = idRule->locallyScopedName().c_str();
         compat::checkAssertion(strstr(nameInRule, "uid-") != nullptr);
         lastDot = strrchr(nameInRule, '.');
         if (lastDot == nullptr || strstr(lastDot + 1, "uid-") != nullptr)
@@ -504,7 +502,7 @@ namespace danek
             if (cfg->type(parentScopes[i].c_str(), lastDot + 1) == ConfType::NoValue)
             {
                 cfg->mergeNames(parentScopes[i].c_str(), lastDot + 1, nameOfMissingEntry);
-                typeName = idRule->m_typeName.c_str();
+                const auto typeName = idRule->typeName();
                 msg << cfg->fileName() << ": the " << typeName << " '" << nameOfMissingEntry
                     << "' does not exist";
                 throw ConfigurationException(msg.str());
