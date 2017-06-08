@@ -36,21 +36,19 @@ namespace danek
     class SchemaParser
     {
     public:
-        //--------
-        // Constructors and destructor
-        //--------
+
         explicit SchemaParser(SchemaValidator* sv);
+        SchemaParser(const SchemaParser&) = delete;
         ~SchemaParser();
 
-        //--------
-        // Public API
-        //--------
         void parse(const char** schema, int schemaSize);
 
+
+        SchemaParser& operator=(const SchemaParser&) = delete;
+
+
     private:
-        //--------
-        // Helper operations.
-        //--------
+
         void parseIdRule(const char* rule, SchemaIdRuleInfo* SchemaIdRuleInfo);
         void parseIgnoreRule(const char* rule, SchemaIgnoreRuleInfo* SchemaIgnoreRuleInfo);
 
@@ -58,18 +56,9 @@ namespace danek
 
         void accept(short sym, const char* rule, const char* msg);
 
-        //--------
-        // Instance variables
-        //--------
         SchemaLex* m_lex;
         LexToken m_token;
         SchemaValidator* m_sv;
         Configuration* m_cfg;
-
-        //--------
-        // Not implemented.
-        //--------
-        SchemaParser(const SchemaParser&);
-        SchemaParser& operator=(const SchemaParser&);
     };
 }
