@@ -126,7 +126,6 @@ namespace danek
                     os << nameStr << " {\n";
                     StringBuffer buffer;
                     os << toString(*(item.scopeVal()), expandUidNames, indentLevel + 1);
-                    //item.scopeVal()->dump(buffer, expandUidNames, indentLevel + 1);
                     os << indent(indentLevel) << buffer.str() << "}\n";
                 }
                 break;
