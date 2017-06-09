@@ -22,41 +22,39 @@
 // SOFTWARE.
 
 #include "Logger.h"
-#include <stdio.h>
+#include <iostream>
 
-//--------
-// Singleton object
-//--------
 Logger log;
 
-void Logger::error(LogLevel logLevel, const char* msg)
+
+void Logger::error(LogLevel logLevel, const std::string& msg)
 {
     if (logLevel >= LogLevel::Error)
     {
-        printf("%s\n", msg);
+        std::cout << msg << "\n";
     }
 }
 
-void Logger::warn(LogLevel logLevel, const char* msg)
+void Logger::warn(LogLevel logLevel, const std::string& msg)
 {
     if (logLevel >= LogLevel::Warn)
     {
-        printf("%s\n", msg);
+        std::cout << msg << "\n";
     }
 }
 
-void Logger::info(LogLevel logLevel, const char* msg)
+void Logger::info(LogLevel logLevel, const std::string& msg)
 {
     if (logLevel >= LogLevel::Info)
     {
-        printf("%s\n", msg);
+        std::cout << msg << "\n";
     }
 }
 
-void Logger::debug(LogLevel logLevel, const char* msg)
+void Logger::debug(LogLevel logLevel, const std::string& msg)
 {
     if (logLevel >= LogLevel::Debug)
     {
-        printf("%s\n", msg);
+        std::cout << msg << "\n";
     }
 }

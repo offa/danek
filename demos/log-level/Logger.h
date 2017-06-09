@@ -23,6 +23,8 @@
 
 #pragma once
 
+#include <string>
+
 class Logger
 {
 public:
@@ -35,13 +37,10 @@ public:
         Debug
     };
 
-    static void error(LogLevel logLevel, const char* msg);
-    static void warn(LogLevel logLevel, const char* msg);
-    static void info(LogLevel logLevel, const char* msg);
-    static void debug(LogLevel logLevel, const char* msg);
+    static void error(LogLevel logLevel, const std::string& msg);
+    static void warn(LogLevel logLevel, const std::string& msg);
+    static void info(LogLevel logLevel, const std::string& msg);
+    static void debug(LogLevel logLevel, const std::string& msg);
 };
 
-//--------
-// Singleton object
-//--------
 extern Logger log;
