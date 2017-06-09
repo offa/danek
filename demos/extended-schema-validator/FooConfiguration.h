@@ -23,28 +23,6 @@
 
 #pragma once
 
-class FooConfigurationException
-{
-public:
-    //--------
-    // Constructors and destructor
-    //--------
-    explicit FooConfigurationException(const char* str);
-    FooConfigurationException(const FooConfigurationException& other);
-    ~FooConfigurationException();
-
-    const char* c_str() const; // Accessor
-
-private:
-    char* m_str;
-
-    //--------
-    // The following are unimplemented
-    //--------
-    FooConfigurationException();
-    FooConfigurationException operator=(const FooConfigurationException&);
-};
-
 class FooConfiguration
 {
 public:

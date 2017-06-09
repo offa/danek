@@ -27,48 +27,23 @@
 #include <vector>
 #include <string>
 
-class FooConfigurationException
-{
-public:
-    //--------
-    // Constructors and destructor
-    //--------
-    explicit FooConfigurationException(const char* str);
-    FooConfigurationException(const FooConfigurationException& other);
-    ~FooConfigurationException();
-
-    const char* c_str() const; // Accessor
-
-private:
-    char* m_str;
-
-    //--------
-    // Not implemented
-    //--------
-    FooConfigurationException();
-    FooConfigurationException operator=(const FooConfigurationException&);
-};
-
 class FooConfiguration
 {
 public:
     FooConfiguration();
+    FooConfiguration(const FooConfiguration&) = delete;
     ~FooConfiguration();
 
     void parse(const char* cfgInput, const char* cfgScope = "", const char* secInput = "",
         const char* secScope = "");
-    //--------
-    // Public operations
-    //--------
+
     Logger::LogLevel getLogLevel(const char* opName) const;
 
+    FooConfiguration& operator=(const FooConfiguration&) = delete;
+
+
 private:
+
     void* m_cfg; // opaque pointer to Config4Cpp config object
     std::vector<std::string> m_logLevels;
-
-    //--------
-    // The following are not implemented
-    //--------
-    FooConfiguration& operator=(const FooConfiguration&);
-    FooConfiguration(const FooConfiguration&);
 };

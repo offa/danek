@@ -21,20 +21,16 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//--------
-// #include's
-//--------
 #include "FooConfiguration.h"
+#include "FooConfigurationException.h"
 #include "A.h"
 #include "B.h"
+#include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <locale.h>
 
-//--------
-// Forward declarations
-//--------
 static void parseCmdLineArgs(int argc, char** argv, const char*& cfgInput, const char*& cfgScope,
     const char*& secInput, const char*& secScope);
 static void usage();
@@ -61,7 +57,7 @@ int main(int argc, char** argv)
     }
     catch (const FooConfigurationException& ex)
     {
-        fprintf(stderr, "%s\n", ex.c_str());
+        std::cerr << ex.what() << "\n";
         delete cfg;
         exit(1);
     }

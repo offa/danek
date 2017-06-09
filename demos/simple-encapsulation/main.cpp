@@ -22,6 +22,8 @@
 // SOFTWARE.
 
 #include "FooConfiguration.h"
+#include "FooConfigurationException.h"
+#include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -38,7 +40,6 @@ int main(int argc, char** argv)
     const char* cfgScope;
     const char* secInput;
     const char* secScope;
-    int exitStatus = 0;
     bool wantDiagnostics;
 
     setlocale(LC_ALL, "");
@@ -65,12 +66,12 @@ int main(int argc, char** argv)
     }
     catch (const FooConfigurationException& ex)
     {
-        fprintf(stderr, "%s\n", ex.c_str());
-        exitStatus = 1;
+        std::cerr << ex.what() << "\n";
+        return 1;
     }
 
     delete cfg;
-    return exitStatus;
+    return 0;
 }
 
 static void parseCmdLineArgs(int argc, char** argv, const char*& cfgInput, const char*& cfgScope,
