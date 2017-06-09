@@ -24,31 +24,33 @@
 #include "RecipeFileParser.h"
 #include <memory>
 #include <iostream>
+#include <tuple>
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
 
-static void parseCmdLineArgs(int argc, char** argv, const char*& recipeFilename, const char*& scope);
+static std::tuple<std::string, std::string> parseCmdLineArgs(int argc, char** argv);
 static void usage();
 
 int main(int argc, char** argv)
 {
     auto parser = std::make_unique<RecipeFileParser>();
-    const char* recipeFilename;
-    const char* scope;
     StringVector recipeScopes;
     StringVector steps;
     StringVector ingredients;
 
     setlocale(LC_ALL, "");
-    parseCmdLineArgs(argc, argv, recipeFilename, scope);
+    std::string recipeFilename;
+    std::string scope;
+    std::tie(recipeFilename, scope) = parseCmdLineArgs(argc, argv);
 
     //--------
     // Parse and error-check a file containing recipes.
     //--------
     try
     {
-        parser->parse(recipeFilename, scope);
+        parser->parse(recipeFilename.c_str(), scope.c_str());
     }
     catch (const RecipeFileParserException& ex)
     {
@@ -89,12 +91,12 @@ int main(int argc, char** argv)
     return 0;
 }
 
-static void parseCmdLineArgs(int argc, char** argv, const char*& recipeFilename, const char*& scope)
+static std::tuple<std::string, std::string> parseCmdLineArgs(int argc, char** argv)
 {
     int i;
 
-    recipeFilename = "";
-    scope = "";
+    std::string recipeFilename = "";
+    std::string scope = "";
 
     for (i = 1; i < argc; i++)
     {
@@ -126,10 +128,13 @@ static void parseCmdLineArgs(int argc, char** argv, const char*& recipeFilename,
             usage();
         }
     }
-    if (strcmp(recipeFilename, "") == 0)
+
+    if (recipeFilename.empty() == true )
     {
         usage();
     }
+
+    return std::make_tuple(recipeFilename, scope);
 }
 
 static void usage()
