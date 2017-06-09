@@ -23,9 +23,10 @@
 
 #pragma once
 
+#include <exception>
 #include <string.h>
 
-class RecipeFileParserException
+class RecipeFileParserException : public std::exception
 {
 public:
     //--------

@@ -21,23 +21,19 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//--------
-// #include's
-//--------
 #include "RecipeFileParser.h"
+#include <memory>
+#include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
 
-//--------
-// Forward declarations
-//--------
 static void parseCmdLineArgs(int argc, char** argv, const char*& recipeFilename, const char*& scope);
 static void usage();
 
 int main(int argc, char** argv)
 {
-    RecipeFileParser* parser = nullptr;
+    auto parser = std::make_unique<RecipeFileParser>();
     const char* recipeFilename;
     const char* scope;
     StringVector recipeScopes;
@@ -55,13 +51,11 @@ int main(int argc, char** argv)
     //--------
     try
     {
-        parser = new RecipeFileParser();
         parser->parse(recipeFilename, scope);
     }
     catch (const RecipeFileParserException& ex)
     {
-        fprintf(stderr, "%s\n", ex.c_str());
-        delete parser;
+        std::cerr << ex.what() << std::endl;
         return 1;
     }
 
@@ -91,7 +85,6 @@ int main(int argc, char** argv)
         }
     }
 
-    delete parser;
     return 0;
 }
 
