@@ -39,9 +39,6 @@ int main(int argc, char** argv)
     StringVector recipeScopes;
     StringVector steps;
     StringVector ingredients;
-    int i;
-    int len;
-    int i2;
 
     setlocale(LC_ALL, "");
     parseCmdLineArgs(argc, argv, recipeFilename, scope);
@@ -63,25 +60,29 @@ int main(int argc, char** argv)
     // Print information about the recipes.
     //--------
     parser->listRecipeScopes(recipeScopes);
-    len = recipeScopes.size();
-    printf("There are %d recipes\n", len);
-    for (i = 0; i < len; i++)
+    const std::size_t len = recipeScopes.size();
+    std::cout << "There are " << len << " recipes\n";
+
+    for ( std::size_t i = 0; i < len; ++i )
     {
         const char* name = parser->getRecipeName(recipeScopes[i].c_str());
         parser->getRecipeIngredients(recipeScopes[i].c_str(), ingredients);
         parser->getRecipeSteps(recipeScopes[i].c_str(), steps);
-        printf("\nRecipe \"%s\":\n", name);
-        int len2 = ingredients.size();
-        printf("\tThis recipe has %d ingredients:\n", len2);
-        for (i2 = 0; i2 < len2; i2++)
+        std::cout << "\nRecipe \"" << name << "\":\n";
+        const std::size_t ingredientsLen = ingredients.size();
+        std::cout << "\tThis recipe has " << ingredientsLen << " ingredients:\n";
+
+        for (std::size_t i2 = 0; i2 < ingredientsLen; ++i2)
         {
-            printf("\t\t\"%s\"\n", ingredients[i2].c_str());
+            std::cout << "\t\t\"" << ingredients[i2].c_str() << "\"\n";
         }
-        len2 = steps.size();
-        printf("\tThis recipe has %d steps:\n", len2);
-        for (i2 = 0; i2 < len2; i2++)
+
+        const std::size_t stepsLen = steps.size();
+        std::cout << "\tThis recipe has " << stepsLen << " steps:\n";
+
+        for (std::size_t i2 = 0; i2 < stepsLen; ++i2)
         {
-            printf("\t\t\"%s\"\n", steps[i2].c_str());
+            std::cout << "\t\t\"" << steps[i2].c_str() << "%s\"\n";
         }
     }
 
@@ -133,16 +134,15 @@ static void parseCmdLineArgs(int argc, char** argv, const char*& recipeFilename,
 
 static void usage()
 {
-    fprintf(stderr,
-        "\n"
-        "usage: demo <options> -recipes <source>\n"
-        "\n"
-        "The <options> can be:\n"
-        "  -h                Print this usage statement\n"
-        "  -scope            scope within recipes file\n"
-        "A <source> can be one of the following:\n"
-        "  file.cfg          A file\n"
-        "  file#file.cfg     A file\n"
-        "  exec#<command>    Output from executing the specified command\n\n");
+    std::cerr << "\n"
+        << "usage: demo <options> -recipes <source>\n"
+        << "\n"
+        << "The <options> can be:\n"
+        << "  -h                Print this usage statement\n"
+        << "  -scope            scope within recipes file\n"
+        << "A <source> can be one of the following:\n"
+        << "  file.cfg          A file\n"
+        << "  file#file.cfg     A file\n"
+        << "  exec#<command>    Output from executing the specified command\n\n";
     exit(1);
 }
