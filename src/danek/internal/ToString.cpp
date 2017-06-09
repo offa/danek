@@ -84,11 +84,11 @@ namespace danek
             auto names = scope.listLocallyScopedNames(type, false, { });
             std::sort(names.begin(), names.end());
 
-            for( std::size_t i=0; i<names.size(); ++i )
+            std::for_each(names.cbegin(), names.cend(), [&stream, &scope, expandUid, indentLevel](const auto s)
             {
-                const auto item = scope.findItem(names[i]);
+                const auto item = scope.findItem(s);
                 stream << toString(*item, item->name(), expandUid, indentLevel);
-            }
+            });
         }
 
     }
