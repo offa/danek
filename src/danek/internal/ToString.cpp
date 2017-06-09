@@ -123,9 +123,9 @@ namespace danek
                 break;
             case ConfType::Scope:
                 {
-                    os << nameStr << " {\n";
-                    os << toString(*(item.scopeVal()), expandUidNames, indentLevel + 1);
-                    os << indent(indentLevel) << "}\n";
+                    os << nameStr << " {\n"
+                        << toString(*(item.scopeVal()), expandUidNames, indentLevel + 1)
+                        << indent(indentLevel) << "}\n";
                 }
                 break;
             default:
