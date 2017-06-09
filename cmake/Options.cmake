@@ -1,4 +1,11 @@
 
+if( CMAKE_BUILD_TYPE )
+    message(STATUS "Build Type : ${CMAKE_BUILD_TYPE}")
+else()
+    message(STATUS "Build Type : None")
+endif()
+
+
 macro(_print_option _option _name)
     message(STATUS "${_name} : ${${_option}}")
 endmacro()
