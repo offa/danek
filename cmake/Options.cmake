@@ -6,16 +6,27 @@ else()
 endif()
 
 
-macro(_add_option _option _name _value _docstring)
-    option(${_option} "${_docstring}" ${${_value}})
+macro(_print_option _option _name)
     message(STATUS "${_name} : ${${_option}}")
 endmacro()
 
 
-_add_option(UNIT_TESTS "Unit Tests" ON "Build Unit Tests")
-_add_option(COVERAGE "Coverage" OFF "Enable Coverage")
-_add_option(BUILD_TOOLS "Build Tools" ON "Build the tools")
-_add_option(BUILD_SCHEMA_TESTS "Build Schema Tests" OFF "Build the Schema Tests")
-_add_option(BUILD_DEMOS "Build Demos" OFF "Build the Demos")
-_add_option(BUILD_SHARED_LIBS "Build shared library" OFF "Build Shared Library")
+
+option(UNIT_TESTS "Build Unit Tests" ON)
+_print_option(UNIT_TESTS "Unit Tests")
+
+option(COVERAGE "Enable Coverage" OFF)
+_print_option(COVERAGE "Coverage")
+
+option(BUILD_TOOLS "Build the tools" ON)
+_print_option(BUILD_TOOLS "Build Tools")
+
+option(BUILD_SCHEMA_TESTS "Build the Schema Tests" OFF)
+_print_option(BUILD_SCHEMA_TESTS "Build Schema Tests")
+
+option(BUILD_DEMOS "Build the Demos" OFF)
+_print_option(BUILD_DEMOS "Build Demos")
+
+option(BUILD_SHARED_LIBS "Build Shared Library" OFF)
+_print_option(BUILD_SHARED_LIBS "Build shared library")
 
