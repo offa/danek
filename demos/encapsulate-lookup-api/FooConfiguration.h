@@ -25,36 +25,33 @@
 
 #include <string>
 #include <vector>
+#include <exception>
 
-class FooConfigurationException
+class FooConfigurationException : public std::exception
 {
 public:
-    //--------
-    // Constructors and destructor
-    //--------
-    explicit FooConfigurationException(const char* str);
-    FooConfigurationException(const FooConfigurationException& other);
-    ~FooConfigurationException();
 
-    const char* c_str() const; // Accessor
+    explicit FooConfigurationException(const char* str) : m_str(str)
+    {
+    }
+
+    const char* what() const noexcept override
+    {
+        return m_str.c_str();
+    }
+
 
 private:
-    char* m_str;
 
-    //--------
-    // Not implemented
-    //--------
-    FooConfigurationException();
-    FooConfigurationException operator=(const FooConfigurationException&);
+    std::string m_str;
 };
+
 
 class FooConfiguration
 {
 public:
-    //--------
-    // Constructor and destructor
-    //--------
     FooConfiguration();
+    FooConfiguration(const FooConfiguration&) = delete;
     virtual ~FooConfiguration();
 
     void parse(const char* cfgSource, const char* scope = "");
@@ -71,16 +68,12 @@ public:
     virtual int lookupDurationMilliseconds(const char* name) const;
     virtual int lookupDurationSeconds(const char* name) const;
 
+
+    FooConfiguration& operator=(const FooConfiguration&) = delete;
+
 private:
-    //--------
-    // Instance variables
-    //--------
+
     char* m_scope;
     void* m_cfg;
 
-    //--------
-    // The following are not implemented
-    //--------
-    FooConfiguration(const FooConfiguration&);
-    FooConfiguration& operator=(const FooConfiguration&);
 };

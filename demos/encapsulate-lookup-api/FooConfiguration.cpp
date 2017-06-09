@@ -26,38 +26,10 @@
 #include "FallbackConfiguration.h"
 #include <stdio.h>
 #include <stdlib.h>
+
 using danek::Configuration;
 using danek::ConfigurationException;
 
-//----------------------------------------------------------------------
-// class FooConfigurationException
-//----------------------------------------------------------------------
-
-FooConfigurationException::FooConfigurationException(const char* str)
-{
-    m_str = new char[strlen(str) + 1];
-    strcpy(m_str, str);
-}
-
-FooConfigurationException::FooConfigurationException(const FooConfigurationException& other)
-{
-    m_str = new char[strlen(other.m_str) + 1];
-    strcpy(m_str, other.m_str);
-}
-
-FooConfigurationException::~FooConfigurationException()
-{
-    delete[] m_str;
-}
-
-const char* FooConfigurationException::c_str() const
-{
-    return m_str;
-}
-
-//----------------------------------------------------------------------
-// class FooConfiguration
-//----------------------------------------------------------------------
 
 FooConfiguration::FooConfiguration()
 {

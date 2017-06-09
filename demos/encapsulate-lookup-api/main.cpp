@@ -23,6 +23,7 @@
 
 #include "FooConfiguration.h"
 #include <memory>
+#include <iostream>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -37,7 +38,6 @@ int main(int argc, char** argv)
     auto cfg = std::make_unique<FooConfiguration>();
     const char* cfgSource;
     const char* scope;
-    int exitStatus = 0;
 
     setlocale(LC_ALL, "");
     parseCmdLineArgs(argc, argv, cfgSource, scope);
@@ -52,19 +52,18 @@ int main(int argc, char** argv)
         //--------
         // Query the configuration object.
         //--------
-        printf("host = \"%s\"\n", cfg->lookupString("host"));
-        printf("port = %d\n", cfg->lookupInt("port"));
-        printf("timeout = %d (\"%s\")\n",
-            cfg->lookupDurationMilliseconds("timeout"),
-            cfg->lookupString("timeout"));
+        std::cout << "host = \"" << cfg->lookupString("host") << "\"\n"
+                    << "port = " << cfg->lookupInt("port") << "\n"
+                    << "timeout = " << cfg->lookupDurationMilliseconds("timeout")
+                    << " (\"" << cfg->lookupString("timeout") << "\")\n";
     }
     catch (const FooConfigurationException& ex)
     {
-        fprintf(stderr, "%s\n", ex.c_str());
-        exitStatus = 1;
+        std::cerr << ex.what() << "\n";
+        return 1;
     }
 
-    return exitStatus;
+    return 0;
 }
 
 static void parseCmdLineArgs(int argc, char** argv, const char*& cfgSource, const char*& scope)
