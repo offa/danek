@@ -20,6 +20,8 @@ add_executable(demo-encapsulate-lookup-api main.cpp
                                         ${CMAKE_CURRENT_BINARY_DIR}/FallbackConfiguration.cpp
                                         )
 target_link_libraries(demo-encapsulate-lookup-api danek)
-target_include_directories(demo-encapsulate-lookup-api PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
+target_include_directories(demo-encapsulate-lookup-api
+                                PRIVATE ${CMAKE_CURRENT_BINARY_DIR}
+                                PRIVATE ${DEMO_COMMON_SRC_DIR})
 add_dependencies(demo-encapsulate-lookup-api demo-encapsulate-lookup-api-fallback)
 

@@ -1,5 +1,4 @@
 // Copyright (c) 2017 offa
-// Copyright 2011 Ciaran McHale.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -24,36 +23,24 @@
 #pragma once
 
 #include <string>
-#include <vector>
 #include <exception>
 
-class FooConfiguration
+class FooConfigurationException : public std::exception
 {
 public:
-    FooConfiguration();
-    FooConfiguration(const FooConfiguration&) = delete;
-    virtual ~FooConfiguration();
 
-    void parse(const char* cfgSource, const char* scope = "");
+    explicit FooConfigurationException(const char* str) : m_str(str)
+    {
+    }
 
-    //--------
-    // Lookup-style functions.
-    //--------
-    const char* lookupString(const char* name) const;
-    void lookupList(const char* name, std::vector<std::string>& data) const;
+    const char* what() const noexcept override
+    {
+        return m_str.c_str();
+    }
 
-    virtual int lookupInt(const char* name) const;
-    virtual float lookupFloat(const char* name) const;
-    virtual bool lookupBoolean(const char* name) const;
-    virtual int lookupDurationMilliseconds(const char* name) const;
-    virtual int lookupDurationSeconds(const char* name) const;
-
-
-    FooConfiguration& operator=(const FooConfiguration&) = delete;
 
 private:
 
-    char* m_scope;
-    void* m_cfg;
-
+    const std::string m_str;
 };
+

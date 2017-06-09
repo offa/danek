@@ -22,6 +22,7 @@
 // SOFTWARE.
 
 #include "FooConfiguration.h"
+#include "FooConfigurationException.h"
 #include "danek/Configuration.h"
 #include "FallbackConfiguration.h"
 #include <stdio.h>
