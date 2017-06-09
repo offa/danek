@@ -35,7 +35,6 @@ static void usage();
 
 int main(int argc, char** argv)
 {
-    auto cfg = std::make_unique<FooConfiguration>();
     const char* cfgSource;
     const char* scope;
 
@@ -47,6 +46,7 @@ int main(int argc, char** argv)
         //--------
         // Parse the configuration file.
         //--------
+        auto cfg = std::make_unique<FooConfiguration>();
         cfg->parse(cfgSource, scope);
 
         //--------
@@ -68,12 +68,10 @@ int main(int argc, char** argv)
 
 static void parseCmdLineArgs(int argc, char** argv, const char*& cfgSource, const char*& scope)
 {
-    int i;
-
     cfgSource = "";
     scope = "";
 
-    for (i = 1; i < argc; i++)
+    for (int i = 1; i < argc; ++i)
     {
         if (strcmp(argv[i], "-h") == 0)
         {
@@ -86,7 +84,7 @@ static void parseCmdLineArgs(int argc, char** argv, const char*& cfgSource, cons
                 usage();
             }
             cfgSource = argv[i + 1];
-            i++;
+            ++i;
         }
         else if (strcmp(argv[i], "-scope") == 0)
         {
@@ -95,11 +93,11 @@ static void parseCmdLineArgs(int argc, char** argv, const char*& cfgSource, cons
                 usage();
             }
             scope = argv[i + 1];
-            i++;
+            ++i;
         }
         else
         {
-            fprintf(stderr, "Unrecognised option '%s'\n\n", argv[i]);
+            std::cerr << "Unrecognised option '" << argv[i] << "'\n\n";
             usage();
         }
     }
@@ -107,18 +105,17 @@ static void parseCmdLineArgs(int argc, char** argv, const char*& cfgSource, cons
 
 static void usage()
 {
-    fprintf(stderr,
-        "\n"
-        "usage: demo <options>\n"
-        "\n"
-        "The <options> can be:\n"
-        "  -h             Print this usage statement\n"
-        "  -cfg <source>  Parse the specified configuration file\n"
-        "  -scope <name>  Application scope in the configuration source\n"
-        "\n"
-        "A configuration <source> can be one of the following:\n"
-        "  file.cfg       A configuration file\n"
-        "  file#file.cfg  A configuration file\n"
-        "  exec#<command> Output from executing the specified command\n\n");
+    std::cerr << "\n"
+            << "usage: demo <options>\n"
+            << "\n"
+            << "The <options> can be:\n"
+            << "  -h             Print this usage statement\n"
+            << "  -cfg <source>  Parse the specified configuration file\n"
+            << "  -scope <name>  Application scope in the configuration source\n"
+            << "\n"
+            << "A configuration <source> can be one of the following:\n"
+            << "  file.cfg       A configuration file\n"
+            << "  file#file.cfg  A configuration file\n"
+            << "  exec#<command> Output from executing the specified command\n\n";
     exit(1);
 }
