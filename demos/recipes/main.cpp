@@ -25,9 +25,6 @@
 #include <memory>
 #include <iostream>
 #include <tuple>
-
-#include <stdio.h>
-#include <stdlib.h>
 #include <locale.h>
 
 static std::tuple<std::string, std::string> parseCmdLineArgs(int argc, char** argv);

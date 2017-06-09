@@ -21,18 +21,12 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//--------
-// #include's
-//--------
 #include "FooConfiguration.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <locale.h>
 
-//--------
-// Forward declarations
-//--------
 static void parseCmdLineArgs(int argc, char** argv, const char*& cfgInput, const char*& cfgScope,
     const char*& secInput, const char*& secScope, bool& wantDiagnostics);
 static void usage();
