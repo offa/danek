@@ -26,6 +26,7 @@
 #include "danek/internal/SchemaIdRuleInfo.h"
 #include "danek/internal/SchemaIgnoreRuleInfo.h"
 #include "danek/ConfigurationException.h"
+#include <sstream>
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
@@ -114,7 +115,7 @@ namespace danek
             const char* s2 = m_sv->m_idRules[i + 1]->locallyScopedName().c_str();
             if (strcmp(s1, s2) == 0)
             {
-                StringBuffer msg;
+                std::stringstream msg;
                 msg << "There are multiple rules for '" << s1 << "'";
                 throw ConfigurationException{msg.str()};
             }
@@ -177,7 +178,7 @@ namespace danek
             }
             if (strncmp(ptr, "uid-", 4) == 0)
             {
-                StringBuffer msg;
+                std::stringstream msg;
                 msg << "Use of '@required' is incompatible with the uid- entry ('" << ptr << "') in rule '"
                     << rule << "'";
                 throw ConfigurationException{msg.str()};
@@ -192,7 +193,7 @@ namespace danek
         typeDef = m_sv->findType(ruleInfo->typeName().c_str());
         if (typeDef == nullptr)
         {
-            StringBuffer msg;
+            std::stringstream msg;
             msg << "Unknown type '" << ruleInfo->typeName() << "' in rule '" << rule << "'";
             throw ConfigurationException{msg.str()};
         }
@@ -262,21 +263,19 @@ namespace danek
     void SchemaParser::parseUserTypeDef(const char* str)
     {
         SchemaType* baseTypeDef;
-        StringBuffer typeName;
-        StringBuffer baseTypeName;
         StringVector baseTypeArgs;
 
         accept(SchemaLex::LEX_TYPEDEF_SYM, str, "expecting '@typedef'");
-        typeName = m_token.spelling();
+        const auto typeName = m_token.spelling();
         accept(lex::LEX_IDENT_SYM, str, "expecting an identifier");
         accept(lex::LEX_EQUALS_SYM, str, "expecting '='");
-        baseTypeName = m_token.spelling();
+        const auto baseTypeName = m_token.spelling();
         accept(lex::LEX_IDENT_SYM, str, "expecting an identifier");
 
-        baseTypeDef = m_sv->findType(baseTypeName.str().c_str());
+        baseTypeDef = m_sv->findType(baseTypeName.c_str());
         if (baseTypeDef == nullptr)
         {
-            StringBuffer msg;
+            std::stringstream msg;
             msg << "Unknown type '" << baseTypeName << "' in user-type definition '" << str << "'";
             throw ConfigurationException{msg.str()};
         }
@@ -287,9 +286,9 @@ namespace danek
             // Finished. Ask the base type to check its (empty) arguments
             // and then register the new command.
             //--------
-            m_sv->callCheckRule(baseTypeDef, m_cfg, baseTypeName.str().c_str(), baseTypeArgs, str, 1);
+            m_sv->callCheckRule(baseTypeDef, m_cfg, baseTypeName.c_str(), baseTypeArgs, str, 1);
             m_sv->registerTypedef(
-                typeName.str().c_str(), baseTypeDef->cfgType(), baseTypeName.str().c_str(), baseTypeArgs);
+                typeName.c_str(), baseTypeDef->cfgType(), baseTypeName.c_str(), baseTypeArgs);
             return;
         }
 
@@ -323,8 +322,8 @@ namespace danek
         // Finished. Ask the base type to check its arguments
         // and then register the new command.
         //--------
-        m_sv->callCheckRule(baseTypeDef, m_cfg, baseTypeName.str().c_str(), baseTypeArgs, str, 1);
-        m_sv->registerTypedef(typeName.str().c_str(), baseTypeDef->cfgType(), baseTypeName.str().c_str(), baseTypeArgs);
+        m_sv->callCheckRule(baseTypeDef, m_cfg, baseTypeName.c_str(), baseTypeArgs, str, 1);
+        m_sv->registerTypedef(typeName.c_str(), baseTypeDef->cfgType(), baseTypeName.c_str(), baseTypeArgs);
     }
 
     void SchemaParser::accept(short sym, const char* rule, const char* msgPrefix)
@@ -335,7 +334,7 @@ namespace danek
         }
         else
         {
-            StringBuffer msg;
+            std::stringstream msg;
             msg << "error in validation rule '" << rule << "': " << msgPrefix << " near '"
                 << m_token.spelling() << "'";
             throw ConfigurationException{msg.str()};
