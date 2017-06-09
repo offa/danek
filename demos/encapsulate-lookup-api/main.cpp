@@ -22,6 +22,8 @@
 // SOFTWARE.
 
 #include "FooConfiguration.h"
+#include <memory>
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -32,7 +34,7 @@ static void usage();
 
 int main(int argc, char** argv)
 {
-    FooConfiguration* cfg = new FooConfiguration();
+    auto cfg = std::make_unique<FooConfiguration>();
     const char* cfgSource;
     const char* scope;
     int exitStatus = 0;
@@ -62,7 +64,6 @@ int main(int argc, char** argv)
         exitStatus = 1;
     }
 
-    delete cfg;
     return exitStatus;
 }
 
