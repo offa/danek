@@ -28,26 +28,20 @@
 class A
 {
 public:
-    //--------
-    // Constructors and destructor
-    //--------
+
     explicit A(const FooConfiguration* cfg);
+    A(const A&) = delete;
 
     void op1();
     void op2();
     void op3();
 
+    A operator=(const A&) = delete;
+
+
 private:
-    //--------
-    // Instance variables
-    //--------
+
     Logger::LogLevel m_logLevelOp1;
     Logger::LogLevel m_logLevelOp2;
     Logger::LogLevel m_logLevelOp3;
-
-    //--------
-    // Not implemented
-    //--------
-    A(const A&);
-    A operator=(const A&);
 };

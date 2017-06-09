@@ -24,11 +24,10 @@
 #include "A.h"
 #include "Logger.h"
 
-A::A(const FooConfiguration* cfg)
+A::A(const FooConfiguration* cfg) : m_logLevelOp1(cfg->getLogLevel("A::op1")),
+                                m_logLevelOp2(cfg->getLogLevel("A::op2")),
+                                m_logLevelOp3(cfg->getLogLevel("A::op3"))
 {
-    m_logLevelOp1 = cfg->getLogLevel("A::op1");
-    m_logLevelOp2 = cfg->getLogLevel("A::op2");
-    m_logLevelOp3 = cfg->getLogLevel("A::op3");
 }
 
 void A::op1()
