@@ -23,10 +23,6 @@
 
 #pragma once
 
-//--------
-// #include's
-//--------
-
 #include "danek/StringBuffer.h"
 #include "danek/ConfigurationException.h"
 
@@ -35,9 +31,7 @@ namespace danek
     class UidIdentifierProcessor
     {
     public:
-        //--------
-        // Constructor and destructor
-        //--------
+
         UidIdentifierProcessor();
         virtual ~UidIdentifierProcessor();
 
@@ -55,15 +49,9 @@ namespace danek
         //--------
         long m_count;
 
-        //--------
-        // Helper functions
-        //--------
         void expandOne(StringBuffer& spelling);
         const char* unexpandOne(const char* spelling, StringBuffer& buf) const;
 
-        //--------
-        // The following are not implemented
-        //--------
         UidIdentifierProcessor(const UidIdentifierProcessor&);
         UidIdentifierProcessor& operator=(const UidIdentifierProcessor&);
     };
