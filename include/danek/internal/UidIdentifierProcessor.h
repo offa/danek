@@ -37,17 +37,12 @@ namespace danek
 
         virtual void expand(StringBuffer& spelling);
 
-        virtual const char* unexpand(const char* spelling, StringBuffer& buf) const
-           ;
+        virtual const char* unexpand(const char* spelling, StringBuffer& buf) const;
+
 
     private:
-        //--------
-        // Instance variables
-        //
-        // An assert() statement in the constructor checks that
-        // the type of "m_count" is at least 32 bits wide.
-        //--------
-        long m_count;
+
+        std::size_t m_count;
 
         void expandOne(StringBuffer& spelling);
         const char* unexpandOne(const char* spelling, StringBuffer& buf) const;
