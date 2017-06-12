@@ -36,10 +36,6 @@ namespace danek
     {
     }
 
-    UidIdentifierProcessor::~UidIdentifierProcessor()
-    {
-    }
-
     //----------------------------------------------------------------------
     // Spelling must be in one of the following forms:
     //      - "foo"                 -->  "foo"
