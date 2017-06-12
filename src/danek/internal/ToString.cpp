@@ -27,6 +27,7 @@
 #include <algorithm>
 #include <iterator>
 #include <sstream>
+#include <array>
 
 namespace danek
 {
