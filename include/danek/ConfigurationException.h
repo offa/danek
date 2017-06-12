@@ -46,11 +46,6 @@ namespace danek
             return m_msg;
         }
 
-        const char* c_str() const noexcept
-        {
-            return what();
-        }
-
 
     private:
 

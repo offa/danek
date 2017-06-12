@@ -195,7 +195,7 @@ namespace danek
             }
             else
             {
-                msg << m_fileName << ", line " << m_token.lineNum() << ": " << ex.c_str();
+                msg << m_fileName << ", line " << m_token.lineNum() << ": " << ex.what();
                 throw ConfigurationException(msg.str());
             }
         }
@@ -417,7 +417,7 @@ namespace danek
         catch (const ConfigurationException& ex)
         {
             m_errorInIncludedFile = true;
-            msg << ex.c_str() << "\n(included from " << m_fileName << ", line " << includeLineNum << ")";
+            msg << ex.what() << "\n(included from " << m_fileName << ", line " << includeLineNum << ")";
             throw ConfigurationException(msg.str());
         }
 

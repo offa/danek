@@ -29,7 +29,7 @@ class FooConfigurationException : public std::exception
 {
 public:
 
-    explicit FooConfigurationException(const char* str) : m_str(str)
+    explicit FooConfigurationException(const std::string& str) : m_str(str)
     {
     }
 

@@ -60,7 +60,7 @@ void FooConfiguration::parse(const char* cfgSource, const char* scope)
     }
     catch (const ConfigurationException& ex)
     {
-        throw FooConfigurationException(ex.c_str());
+        throw FooConfigurationException(ex.message());
     }
 }
 
@@ -73,7 +73,7 @@ const char* FooConfiguration::lookupString(const char* name) const
     }
     catch (const ConfigurationException& ex)
     {
-        throw FooConfigurationException(ex.c_str());
+        throw FooConfigurationException(ex.message());
     }
 }
 
@@ -87,7 +87,7 @@ void FooConfiguration::lookupList(const char* name, std::vector<std::string>& da
     }
     catch (const ConfigurationException& ex)
     {
-        throw FooConfigurationException(ex.c_str());
+        throw FooConfigurationException(ex.message());
     }
 }
 
@@ -100,7 +100,7 @@ int FooConfiguration::lookupInt(const char* name) const
     }
     catch (const ConfigurationException& ex)
     {
-        throw FooConfigurationException(ex.c_str());
+        throw FooConfigurationException(ex.message());
     }
 }
 
@@ -113,7 +113,7 @@ float FooConfiguration::lookupFloat(const char* name) const
     }
     catch (const ConfigurationException& ex)
     {
-        throw FooConfigurationException(ex.c_str());
+        throw FooConfigurationException(ex.message());
     }
 }
 
@@ -126,7 +126,7 @@ bool FooConfiguration::lookupBoolean(const char* name) const
     }
     catch (const ConfigurationException& ex)
     {
-        throw FooConfigurationException(ex.c_str());
+        throw FooConfigurationException(ex.message());
     }
 }
 
@@ -139,7 +139,7 @@ int FooConfiguration::lookupDurationMilliseconds(const char* name) const
     }
     catch (const ConfigurationException& ex)
     {
-        throw FooConfigurationException(ex.c_str());
+        throw FooConfigurationException(ex.message());
     }
 }
 
@@ -152,6 +152,6 @@ int FooConfiguration::lookupDurationSeconds(const char* name) const
     }
     catch (const ConfigurationException& ex)
     {
-        throw FooConfigurationException(ex.c_str());
+        throw FooConfigurationException(ex.message());
     }
 }

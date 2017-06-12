@@ -309,7 +309,7 @@ namespace danek
         {
             if (m_wantDiagnostics)
             {
-                printf("\n%s: error: %s\n\n", prefix, ex.c_str());
+                printf("\n%s: error: %s\n\n", prefix, ex.what());
             }
             throw;
         }
@@ -680,7 +680,7 @@ namespace danek
             {
                 printf("\n");
                 indent(indentLevel);
-                printf("exception thrown from %s::checkRule(): %s\n", target->className(), ex.c_str());
+                printf("exception thrown from %s::checkRule(): %s\n", target->className(), ex.what());
             }
             throw;
         }
@@ -716,7 +716,7 @@ namespace danek
             {
                 printf("\n");
                 indent(indentLevel);
-                printf("exception thrown from %s::validate(): %s\n", target->className(), ex.c_str());
+                printf("exception thrown from %s::validate(): %s\n", target->className(), ex.what());
             }
             throw;
         }
@@ -753,7 +753,7 @@ namespace danek
             {
                 printf("\n");
                 indent(indentLevel);
-                printf("exception thrown from %s::isA(): %s\n", target->className(), ex.c_str());
+                printf("exception thrown from %s::isA(): %s\n", target->className(), ex.what());
             }
             throw;
         }

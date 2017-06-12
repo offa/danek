@@ -33,7 +33,6 @@ class ConfigurationExceptionTest : public testing::Test
 TEST_F(ConfigurationExceptionTest, message)
 {
     const ConfigurationException ex("abc");
-    EXPECT_THAT(ex.c_str(), StrEq("abc"));
     EXPECT_THAT(ex.what(), StrEq("abc"));
     EXPECT_THAT(ex.message(), StrEq("abc"));
 }

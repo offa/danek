@@ -76,7 +76,7 @@ void FooConfiguration::parse(const char* cfgInput, const char* cfgScope, const c
     }
     catch (const ConfigurationException& ex)
     {
-        throw FooConfigurationException(ex.c_str());
+        throw FooConfigurationException(ex.message());
     }
 }
 

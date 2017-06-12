@@ -116,7 +116,7 @@ int main(int argc, char** argv)
     }
     catch (const ConfigurationException& ex)
     {
-        printf("%s\n", ex.c_str());
+        printf("%s\n", ex.what());
         exit(1);
     }
     cfg->mergeNames(scope, name, fullyScopedName);
@@ -149,7 +149,7 @@ int main(int argc, char** argv)
         }
         catch (ConfigurationException& ex)
         {
-            fprintf(stderr, "%s\n", ex.c_str());
+            fprintf(stderr, "%s\n", ex.what());
         }
     }
     else if (strcmp(cmd, "slist") == 0)
@@ -165,7 +165,7 @@ int main(int argc, char** argv)
         }
         catch (ConfigurationException& ex)
         {
-            fprintf(stderr, "%s\n", ex.c_str());
+            fprintf(stderr, "%s\n", ex.what());
         }
     }
     else if (strcmp(cmd, "llist") == 0)
@@ -181,7 +181,7 @@ int main(int argc, char** argv)
         }
         catch (ConfigurationException& ex)
         {
-            fprintf(stderr, "%s\n", ex.c_str());
+            fprintf(stderr, "%s\n", ex.what());
         }
     }
     else if (strcmp(cmd, "type") == 0)
@@ -238,7 +238,7 @@ int main(int argc, char** argv)
         }
         catch (const ConfigurationException& ex)
         {
-            fprintf(stderr, "%s\n", ex.c_str());
+            fprintf(stderr, "%s\n", ex.what());
         }
     }
     else if (strcmp(cmd, "dumpSec") == 0)
@@ -255,7 +255,7 @@ int main(int argc, char** argv)
         }
         catch (const ConfigurationException& ex)
         {
-            fprintf(stderr, "%s\n", ex.c_str());
+            fprintf(stderr, "%s\n", ex.what());
         }
     }
     else if (strcmp(cmd, "dump") == 0)
@@ -267,7 +267,7 @@ int main(int argc, char** argv)
         }
         catch (const ConfigurationException& ex)
         {
-            fprintf(stderr, "%s\n", ex.c_str());
+            fprintf(stderr, "%s\n", ex.what());
         }
     }
     else

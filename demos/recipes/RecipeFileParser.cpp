@@ -69,7 +69,7 @@ void RecipeFileParser::parse(const char* recipeFilename, const char* scope)
     }
     catch (const ConfigurationException& ex)
     {
-        throw RecipeFileParserException(ex.c_str());
+        throw RecipeFileParserException(ex.message());
     }
     m_parseCalled = true;
 }
@@ -90,7 +90,7 @@ const char* RecipeFileParser::getRecipeName(const char* recipeScope)
     }
     catch (const ConfigurationException& ex)
     {
-        throw RecipeFileParserException(ex.c_str());
+        throw RecipeFileParserException(ex.message());
     }
 }
 
@@ -104,7 +104,7 @@ void RecipeFileParser::getRecipeIngredients(const char* recipeScope, StringVecto
     }
     catch (const ConfigurationException& ex)
     {
-        throw RecipeFileParserException(ex.c_str());
+        throw RecipeFileParserException(ex.message());
     }
 }
 
@@ -122,7 +122,7 @@ void RecipeFileParser::getRecipeSteps(const char* recipeScope, StringVector& res
     }
     catch (const ConfigurationException& ex)
     {
-        throw RecipeFileParserException(ex.c_str());
+        throw RecipeFileParserException(ex.message());
     }
     result.clear();
     len = namesVec.size();

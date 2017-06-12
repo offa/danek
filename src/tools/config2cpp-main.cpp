@@ -255,7 +255,7 @@ int main(int argc, char** argv)
         }
         catch (const ConfigurationException& ex)
         {
-            fprintf(stderr, "%s\n", ex.c_str());
+            fprintf(stderr, "%s\n", ex.what());
             ok = false;
         }
         int len = unmatchedPatterns.size();
