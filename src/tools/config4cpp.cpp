@@ -21,12 +21,10 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//--------
-// #include's
-//--------
 #include "danek/Configuration.h"
 #include "danek/StringBuffer.h"
 #include "danek/SchemaValidator.h"
+#include <iostream>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -39,9 +37,6 @@ using danek::StringBuffer;
 using danek::StringVector;
 using danek::ConfType;
 
-//--------
-// Forward declarations
-//--------
 static void usage(const char* optMsg);
 
 static void parseCmdLineArgs(int argc, char** argv, const char*& cmd, bool& isRecursive,
@@ -67,9 +62,6 @@ int main(int argc, char** argv)
     const char* schemaName;
     bool wantDiagnostics;
     const char* str;
-    Configuration* cfg;
-    Configuration* secCfg;
-    Configuration* schemaCfg;
     const Configuration* secDumpCfg;
     const char* secDumpScope;
     std::size_t len;
@@ -83,9 +75,9 @@ int main(int argc, char** argv)
 
     setlocale(LC_ALL, "");
 
-    cfg = Configuration::create();
-    secCfg = Configuration::create();
-    schemaCfg = Configuration::create();
+    Configuration* cfg = Configuration::create();
+    Configuration* secCfg = Configuration::create();
+    Configuration* schemaCfg = Configuration::create();
 
     parseCmdLineArgs(argc,
         argv,
@@ -116,8 +108,8 @@ int main(int argc, char** argv)
     }
     catch (const ConfigurationException& ex)
     {
-        printf("%s\n", ex.what());
-        exit(1);
+        std::cerr << ex.what() << "\n";
+        throw;
     }
     cfg->mergeNames(scope, name, fullyScopedName);
 
@@ -149,7 +141,7 @@ int main(int argc, char** argv)
         }
         catch (const ConfigurationException& ex)
         {
-            fprintf(stderr, "%s\n", ex.what());
+            std::cerr << ex.what() << "\n";
         }
     }
     else if (strcmp(cmd, "slist") == 0)
@@ -165,7 +157,7 @@ int main(int argc, char** argv)
         }
         catch (const ConfigurationException& ex)
         {
-            fprintf(stderr, "%s\n", ex.what());
+            std::cerr << ex.what() << "\n";
         }
     }
     else if (strcmp(cmd, "llist") == 0)
@@ -181,7 +173,7 @@ int main(int argc, char** argv)
         }
         catch (const ConfigurationException& ex)
         {
-            fprintf(stderr, "%s\n", ex.what());
+            std::cerr << ex.what() << "\n";
         }
     }
     else if (strcmp(cmd, "type") == 0)
@@ -238,7 +230,7 @@ int main(int argc, char** argv)
         }
         catch (const ConfigurationException& ex)
         {
-            fprintf(stderr, "%s\n", ex.what());
+            std::cerr << ex.what() << "\n";
         }
     }
     else if (strcmp(cmd, "dumpSec") == 0)
@@ -255,7 +247,7 @@ int main(int argc, char** argv)
         }
         catch (const ConfigurationException& ex)
         {
-            fprintf(stderr, "%s\n", ex.what());
+            std::cerr << ex.what() << "\n";
         }
     }
     else if (strcmp(cmd, "dump") == 0)
@@ -267,7 +259,7 @@ int main(int argc, char** argv)
         }
         catch (const ConfigurationException& ex)
         {
-            fprintf(stderr, "%s\n", ex.what());
+            std::cerr << ex.what() << "\n";
         }
     }
     else

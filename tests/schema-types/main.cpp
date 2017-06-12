@@ -87,7 +87,7 @@ int main(int argc, char** argv)
     }
     catch (const ConfigurationException& ex)
     {
-        printf("%s\n", ex.c_str());
+        printf("%s\n", ex.message().c_str());
         return 1;
     }
 
@@ -112,7 +112,7 @@ int main(int argc, char** argv)
                 throw; // Bug!
             }
             printf("\n\n--------\n");
-            printf("%s\n\n%s--------\n\n", ex.c_str(), buf.str().c_str());
+            printf("%s\n\n%s--------\n\n", ex.message().c_str(), buf.str().c_str());
         }
     }
 
@@ -138,9 +138,9 @@ int main(int argc, char** argv)
         }
         catch (const ConfigurationException& ex)
         {
-            if (patternMatch(ex.c_str(), exPattern))
+            if (patternMatch(ex.message().c_str(), exPattern))
             {
-                passedCount++;
+                ++passedCount;
             }
             else
             {
@@ -150,7 +150,7 @@ int main(int argc, char** argv)
                        "exception\n\"%s\"\n--------\n\n",
                     badScopes[i].c_str(),
                     exPattern,
-                    ex.c_str());
+                    ex.message().c_str());
             }
         }
     }
