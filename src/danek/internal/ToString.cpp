@@ -33,6 +33,13 @@ namespace danek
 
     namespace
     {
+        const std::array<std::pair<std::string, std::string>, 4> escapeSequences{{
+            {"%", "%%"},
+            {"\t", "%t"},
+            {"\n", "%n"},
+            {"\"", "%\""}
+        }};
+
         std::string indent(std::size_t level)
         {
             constexpr std::size_t indentCount = 4;
@@ -59,10 +66,10 @@ namespace danek
         {
             auto output = str;
 
-            replaceInplace(output, "%", "%%");
-            replaceInplace(output, "\t", "%t");
-            replaceInplace(output, "\n", "%n");
-            replaceInplace(output, "\"", "%\"");
+            std::for_each(escapeSequences.cbegin(), escapeSequences.cend(), [&output](const auto& v)
+            {
+                replaceInplace(output, v.first, v.second);
+            });
 
             return "\"" + output + "\"";
         }
