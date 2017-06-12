@@ -24,7 +24,6 @@
 #pragma once
 
 #include "danek/StringBuffer.h"
-#include "danek/ConfigurationException.h"
 
 namespace danek
 {
