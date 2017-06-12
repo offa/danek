@@ -41,9 +41,9 @@ namespace danek
 
     //----------------------------------------------------------------------
     // Spelling must be in one of the following forms:
-    //		- "foo"                 -->  "foo"
-    //		- "uid-<foo>"           -->  "uid-<digits>-<foo>"
-    //		- "uid-<digits>-<foo>"  -->  "uid-<new-digits>-<foo>"
+    //      - "foo"                 -->  "foo"
+    //      - "uid-<foo>"           -->  "uid-<digits>-<foo>"
+    //      - "uid-<digits>-<foo>"  -->  "uid-<new-digits>-<foo>"
     // where "<foo>" does NOT start with a digit or "-"
     //----------------------------------------------------------------------
 

@@ -23,10 +23,7 @@
 
 #pragma once
 
-//--------
-// #include's
-//--------
-#include "UidIdentifierProcessor.h"
+#include "danek/internal/UidIdentifierProcessor.h"
 
 namespace danek
 {
@@ -43,12 +40,13 @@ namespace danek
         {
         }
 
-        virtual void expand(StringBuffer& spelling)
+        void expand(StringBuffer& spelling) override
         {
             StringBuffer dummy = spelling;
             UidIdentifierProcessor::expand(dummy);
         }
-        virtual const char* unexpand(const char* spelling, StringBuffer&) const
+
+        const char* unexpand(const char* spelling, StringBuffer&) const override
         {
             StringBuffer dummyBuf{spelling};
             (void) UidIdentifierProcessor::unexpand(spelling, dummyBuf);
