@@ -25,7 +25,6 @@
 #include "danek/StringBuffer.h"
 #include "danek/SchemaValidator.h"
 #include <iostream>
-#include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <locale.h>
@@ -152,7 +151,7 @@ int main(int argc, char** argv)
             len = names.size();
             for (i = 0; i < len; i++)
             {
-                printf("%s\n", names[i].c_str());
+                std::cout << names[i].c_str() << "\n";
             }
         }
         catch (const ConfigurationException& ex)
@@ -168,7 +167,7 @@ int main(int argc, char** argv)
             len = names.size();
             for (i = 0; i < len; i++)
             {
-                printf("%s\n", names[i].c_str());
+                std::cout << names[i].c_str() << "\n";
             }
         }
         catch (const ConfigurationException& ex)
@@ -181,16 +180,16 @@ int main(int argc, char** argv)
         switch (cfg->type(scope, name))
         {
             case ConfType::String:
-                printf("string\n");
+                std::cout << "string\n";
                 break;
             case ConfType::List:
-                printf("list\n");
+                std::cout << "list\n";
                 break;
             case ConfType::Scope:
-                printf("scope\n");
+                std::cout << "scope\n";
                 break;
             case ConfType::NoValue:
-                printf("no_value\n");
+                std::cout << "no_value\n";
                 break;
             default:
                 throw std::exception{}; // Bug!
@@ -205,7 +204,7 @@ int main(int argc, char** argv)
             {
                 case ConfType::String:
                     str = cfg->lookupString(scope, name);
-                    printf("%s\n", str);
+                    std::cout << str << "\n";
                     break;
                 case ConfType::List:
                     {
@@ -213,15 +212,15 @@ int main(int argc, char** argv)
                         cfg->lookupList(scope, name, vec);
                         for (i = 0; i < vec.size(); i++)
                         {
-                            printf("%s\n", vec[i].c_str());
+                            std::cout << vec[i] << "\n";
                         }
                     }
                     break;
                 case ConfType::Scope:
-                    fprintf(stderr, "'%s' is a scope\n", fullyScopedName.str().c_str());
+                    std::cerr << "'" << fullyScopedName.str() << "' is a scope\n";
                     break;
                 case ConfType::NoValue:
-                    fprintf(stderr, "'%s' does not exist\n", fullyScopedName.str().c_str());
+                    std::cerr << "'" << fullyScopedName.str() << "' does not exist\n";
                     break;
                 default:
                     throw std::exception{}; // Bug!
@@ -239,11 +238,11 @@ int main(int argc, char** argv)
         {
             cfg->getSecurityConfiguration(secDumpCfg, secDumpScope);
             secDumpCfg->dump(buf, wantExpandedUidNames, secDumpScope, "allow_patterns");
-            printf("%s", buf.str().c_str());
+            std::cout << buf.str();
             secDumpCfg->dump(buf, wantExpandedUidNames, secDumpScope, "deny_patterns");
-            printf("%s", buf.str().c_str());
+            std::cout << buf.str();
             secDumpCfg->dump(buf, wantExpandedUidNames, secDumpScope, "trusted_directories");
-            printf("%s", buf.str().c_str());
+            std::cout << buf.str();
         }
         catch (const ConfigurationException& ex)
         {
@@ -255,7 +254,7 @@ int main(int argc, char** argv)
         try
         {
             cfg->dump(buf, wantExpandedUidNames, scope, name);
-            printf("%s", buf.str().c_str());
+            std::cout << buf.str();
         }
         catch (const ConfigurationException& ex)
         {
@@ -473,28 +472,24 @@ static void parseCmdLineArgs(int argc, char** argv, const char*& cmd, bool& isRe
     }
     if (cfgSource == nullptr)
     {
-        fprintf(stderr, "\nYou must specify -cfg <source>\n\n");
+        std::cerr << "\nYou must specify -cfg <source>\n\n";
         usage("");
     }
     if (cmd == nullptr)
     {
-        fprintf(stderr, "\nYou must specify a command\n\n");
+        std::cerr << "\nYou must specify a command\n\n";
         usage("");
     }
     if (strcmp(cmd, "validate") == 0)
     {
         if (schemaSource == nullptr)
         {
-            fprintf(stderr,
-                "\nThe validate command requires "
-                "-schemaCfg <source>\n\n");
+            std::cerr << "\nThe validate command requires -schemaCfg <source>\n\n";
             usage("");
         }
         if (schemaName == nullptr)
         {
-            fprintf(stderr,
-                "\nThe validate command requires "
-                "-schema <full.name>\n\n");
+            std::cerr << "\nThe validate command requires -schema <full.name>\n\n";
             usage("");
         }
     }
@@ -583,6 +578,6 @@ static void usage(const char* optMsg)
         << "  file.cfg       A configuration file\n"
         << "  file#file.cfg  A configuration file\n"
         << "  exec#<command> Output from executing the specified command\n";
-    fprintf(stderr, "%s", msg.str().c_str());
+    std::cerr << msg.str();
     exit(1);
 }
