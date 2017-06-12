@@ -1109,7 +1109,6 @@ namespace danek
                         return;
                     default:
                         throw std::exception{}; // Bug
-                        return;
                 }
                 m_lex->nextToken(m_token);
                 break;
