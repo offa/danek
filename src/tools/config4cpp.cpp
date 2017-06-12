@@ -147,7 +147,7 @@ int main(int argc, char** argv)
             sv.parseSchema(schemaVec.data(), schemaVec.size());
             sv.validate(cfg, scope, name, isRecursive, types, forceMode);
         }
-        catch (ConfigurationException& ex)
+        catch (const ConfigurationException& ex)
         {
             fprintf(stderr, "%s\n", ex.what());
         }
@@ -163,7 +163,7 @@ int main(int argc, char** argv)
                 printf("%s\n", names[i].c_str());
             }
         }
-        catch (ConfigurationException& ex)
+        catch (const ConfigurationException& ex)
         {
             fprintf(stderr, "%s\n", ex.what());
         }
@@ -179,7 +179,7 @@ int main(int argc, char** argv)
                 printf("%s\n", names[i].c_str());
             }
         }
-        catch (ConfigurationException& ex)
+        catch (const ConfigurationException& ex)
         {
             fprintf(stderr, "%s\n", ex.what());
         }
