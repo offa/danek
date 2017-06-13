@@ -42,9 +42,7 @@ namespace danek
         }
         catch (const ConfigurationException& ex)
         {
-            fprintf(stderr, "%s\n", ex.what());
-            fflush(stderr);
-            abort();
+            throw ex;
         }
     }
 
