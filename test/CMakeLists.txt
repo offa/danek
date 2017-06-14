@@ -30,6 +30,7 @@ _add_test_suite(PublicMiscTests ConfigurationExceptionTest.cpp
 
 _add_test_suite(MiscTests ToStringTest.cpp
                         UtilTest.cpp
+                        UidIdentifierProcessorTest.cpp
 
                         $<TARGET_OBJECTS:danek-misc>
                         $<TARGET_OBJECTS:danek-config-types>
