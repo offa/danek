@@ -110,10 +110,16 @@ TEST(UidIdentifierProcessorTest, expandWithWithouthUidSuffixThrows)
     StringBuffer str2{"uid--"};
     StringBuffer str3{"uid--abc"};
     StringBuffer str4{"uid-9abc"};
+    StringBuffer str5{"uid-123-"};
+    StringBuffer str6{"uid-123--a"};
+    StringBuffer str7{"uid-123-456a"};
 
     EXPECT_THROW(p.expand(str), ConfigurationException);
     EXPECT_THROW(p.expand(str2), ConfigurationException);
     EXPECT_THROW(p.expand(str3), ConfigurationException);
     EXPECT_THROW(p.expand(str4), ConfigurationException);
+    EXPECT_THROW(p.expand(str5), ConfigurationException);
+    EXPECT_THROW(p.expand(str6), ConfigurationException);
+    EXPECT_THROW(p.expand(str7), ConfigurationException);
 }
 
