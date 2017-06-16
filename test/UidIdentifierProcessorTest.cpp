@@ -22,10 +22,12 @@
 
 #include <gmock/gmock.h>
 #include "danek/internal/UidIdentifierProcessor.h"
+#include "danek/ConfigurationException.h"
 #include "danek/StringBuffer.h"
 
 using danek::UidIdentifierProcessor;
 using danek::StringBuffer;
+using danek::ConfigurationException;
 using namespace testing;
 
 class UidIdentifierProcessorTest : public testing::Test
@@ -40,3 +42,23 @@ TEST(UidIdentifierProcessorTest, expandSimpleString)
     p.expand(str);
     EXPECT_THAT(str.str(), StrEq("abc"));
 }
+
+TEST(UidIdentifierProcessorTest, expandWithUid)
+{
+    UidIdentifierProcessor p;
+    StringBuffer str{"uid-xyz"};
+
+    p.expand(str);
+    EXPECT_THAT(str.str(), StrEq("uid-000000000-xyz"));
+}
+
+TEST(UidIdentifierProcessorTest, expandWithWithouthUidSuffixThrows)
+{
+    UidIdentifierProcessor p;
+    StringBuffer str{"uid-"};
+    StringBuffer str2{"uid--"};
+
+    EXPECT_THROW(p.expand(str), ConfigurationException);
+    EXPECT_THROW(p.expand(str2), ConfigurationException);
+}
+
