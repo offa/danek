@@ -34,13 +34,31 @@ class UidIdentifierProcessorTest : public testing::Test
 {
 };
 
-TEST(UidIdentifierProcessorTest, expandSimpleString)
+TEST(UidIdentifierProcessorTest, expandString)
 {
     UidIdentifierProcessor p;
     StringBuffer str{"abc"};
 
     p.expand(str);
     EXPECT_THAT(str.str(), StrEq("abc"));
+}
+
+TEST(UidIdentifierProcessorTest, expandWithScope)
+{
+    UidIdentifierProcessor p;
+    StringBuffer str{"a.b.c"};
+
+    p.expand(str);
+    EXPECT_THAT(str.str(), StrEq("a.b.c"));
+}
+
+TEST(UidIdentifierProcessorTest, expandWithScopeAndUid)
+{
+    UidIdentifierProcessor p;
+    StringBuffer str{"a.uid-b.uid-0013-c"};
+
+    p.expand(str);
+    EXPECT_THAT(str.str(), StrEq("a.uid-000000000-b.uid-000000001-c"));
 }
 
 TEST(UidIdentifierProcessorTest, expandWithUid)
@@ -52,13 +70,48 @@ TEST(UidIdentifierProcessorTest, expandWithUid)
     EXPECT_THAT(str.str(), StrEq("uid-000000000-xyz"));
 }
 
+TEST(UidIdentifierProcessorTest, expandWithUidIncreasesUid)
+{
+    UidIdentifierProcessor p;
+    StringBuffer str{"uid-x.uid-y.uid-z"};
+
+    p.expand(str);
+    EXPECT_THAT(str.str(), StrEq("uid-000000000-x.uid-000000001-y.uid-000000002-z"));
+}
+
+TEST(UidIdentifierProcessorTest, expandMaintaintsUidState)
+{
+    UidIdentifierProcessor p;
+    StringBuffer str{"uid-x"};
+    StringBuffer str2{"uid-y"};
+    StringBuffer str3{"uid-z"};
+
+    p.expand(str);
+    p.expand(str2);
+    p.expand(str3);
+    EXPECT_THAT(str.str(), StrEq("uid-000000000-x"));
+    EXPECT_THAT(str2.str(), StrEq("uid-000000001-y"));
+    EXPECT_THAT(str3.str(), StrEq("uid-000000002-z"));
+}
+
+TEST(UidIdentifierProcessorTest, expandWithUidAndNumber)
+{
+    UidIdentifierProcessor p;
+    StringBuffer str{"uid-01234-xyz"};
+
+    p.expand(str);
+    EXPECT_THAT(str.str(), StrEq("uid-000000000-xyz"));
+}
+
 TEST(UidIdentifierProcessorTest, expandWithWithouthUidSuffixThrows)
 {
     UidIdentifierProcessor p;
     StringBuffer str{"uid-"};
     StringBuffer str2{"uid--"};
+    StringBuffer str3{"uid--abc"};
 
     EXPECT_THROW(p.expand(str), ConfigurationException);
     EXPECT_THROW(p.expand(str2), ConfigurationException);
+    EXPECT_THROW(p.expand(str3), ConfigurationException);
 }
 
