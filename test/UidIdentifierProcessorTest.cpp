@@ -20,10 +20,10 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <gmock/gmock.h>
 #include "danek/internal/UidIdentifierProcessor.h"
 #include "danek/ConfigurationException.h"
 #include "danek/StringBuffer.h"
+#include <gmock/gmock.h>
 
 using danek::UidIdentifierProcessor;
 using danek::StringBuffer;

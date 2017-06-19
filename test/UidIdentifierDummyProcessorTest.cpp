@@ -20,8 +20,9 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <gmock/gmock.h>
 #include "danek/internal/UidIdentifierDummyProcessor.h"
+#include <memory>
+#include <gmock/gmock.h>
 
 using danek::UidIdentifierDummyProcessor;
 using danek::StringBuffer;
@@ -29,21 +30,27 @@ using namespace testing;
 
 class UidIdentifierDummyProcessorTest : public testing::Test
 {
+public:
+
+    void SetUp() override
+    {
+        processor = std::make_unique<UidIdentifierDummyProcessor>();
+    }
+
+    std::unique_ptr<UidIdentifierDummyProcessor> processor;
 };
 
-TEST(UidIdentifierDummyProcessorTest, expandExpandsNothing)
+TEST_F(UidIdentifierDummyProcessorTest, expandExpandsNothing)
 {
-    UidIdentifierDummyProcessor p;
     StringBuffer str{"uid-a.b.uid-123-c"};
-    p.expand(str);
+    processor->expand(str);
     EXPECT_THAT(str.str(), StrEq("uid-a.b.uid-123-c"));
 }
 
-TEST(UidIdentifierDummyProcessorTest, unexpandExpandsNothing)
+TEST_F(UidIdentifierDummyProcessorTest, unexpandExpandsNothing)
 {
-    UidIdentifierDummyProcessor p;
     StringBuffer str;
-    const auto result = p.unexpand("uid-a.b.uid-123-c", str);
+    const auto result = processor->unexpand("uid-a.b.uid-123-c", str);
     EXPECT_THAT(result, StrEq("uid-a.b.uid-123-c"));
 }
 
