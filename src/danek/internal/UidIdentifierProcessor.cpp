@@ -66,12 +66,10 @@ namespace danek
         StringBuffer buf;
         StringBuffer msg;
         StringBuffer result;
-        int i;
-        int len;
 
         StringVector vec{util::splitScopes(spelling.str())};
-        len = vec.size();
-        for (i = 0; i < len; i++)
+        const int len = vec.size();
+        for (int i = 0; i < len; ++i)
         {
             buf = vec[i];
             try
@@ -132,7 +130,7 @@ namespace danek
             //--------
             compat::checkAssertion(m_count < 1000 * 1000 * 1000);
             sprintf(digits, "%09ld", m_count);
-            m_count++;
+            ++m_count;
             suffix = &(spelling.str().c_str()[4]); // deep copy
             spelling.clear();
             spelling << "uid-" << digits << "-" << suffix;
@@ -152,7 +150,7 @@ namespace danek
             // illegal: "uid-<digits>" or "uid-<digits>foo"
             throw ConfigurationException(msg.str());
         }
-        ptr++; // point to just after "uid-<digits>-"
+        ++ptr; // point to just after "uid-<digits>-"
         if (*ptr == '\0')
         {
             // illegal: "uid-<digits>-"
@@ -170,7 +168,7 @@ namespace danek
         }
         compat::checkAssertion(m_count < 1000 * 1000 * 1000);
         sprintf(digits, "%09ld", m_count);
-        m_count++;
+        ++m_count;
         suffix = ptr; // deep copy just after "uid-<digits>-"
         spelling.clear();
         spelling << "uid-" << digits << "-" << suffix;
@@ -198,12 +196,10 @@ namespace danek
         StringBuffer result;
         StringBuffer msg;
         const char* str;
-        int i;
-        int len;
 
         StringVector vec{util::splitScopes(spelling)};
-        len = vec.size();
-        for (i = 0; i < len; i++)
+        const int len = vec.size();
+        for (int i = 0; i < len; ++i)
         {
             try
             {
@@ -242,8 +238,8 @@ namespace danek
         count = 0;
         while (isdigit(*ptr))
         {
-            ptr++;
-            count++;
+            ++ptr;
+            ++count;
         }
         if (count == 0 || *ptr != '-')
         {
