@@ -42,7 +42,7 @@ namespace danek
         }
         catch (const ConfigurationException& ex)
         {
-            throw ex;
+            throw;
         }
     }
 
