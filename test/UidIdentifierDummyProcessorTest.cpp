@@ -1,5 +1,4 @@
 // Copyright (c) 2017 offa
-// Copyright 2011 Ciaran McHale.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -21,34 +20,30 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#pragma once
+#include <gmock/gmock.h>
+#include "danek/internal/UidIdentifierDummyProcessor.h"
 
-#include "danek/internal/UidIdentifierProcessor.h"
+using danek::UidIdentifierDummyProcessor;
+using danek::StringBuffer;
+using namespace testing;
 
-namespace danek
+class UidIdentifierDummyProcessorTest : public testing::Test
 {
-    class UidIdentifierDummyProcessor : public UidIdentifierProcessor
-    {
-    public:
+};
 
-        UidIdentifierDummyProcessor() = default;
-        UidIdentifierDummyProcessor(const UidIdentifierDummyProcessor&) = delete;
-
-        void expand(StringBuffer& spelling) override
-        {
-            StringBuffer dummy = spelling;
-            UidIdentifierProcessor::expand(dummy);
-        }
-
-        const char* unexpand(const char* spelling, StringBuffer&) const override
-        {
-            StringBuffer dummyBuf{spelling};
-            (void) UidIdentifierProcessor::unexpand(spelling, dummyBuf);
-            return spelling;
-        }
-
-
-        UidIdentifierDummyProcessor& operator=(const UidIdentifierDummyProcessor&) = delete;
-
-    };
+TEST(UidIdentifierDummyProcessorTest, expandExpandsNothing)
+{
+    UidIdentifierDummyProcessor p;
+    StringBuffer str{"uid-a.b.uid-123-c"};
+    p.expand(str);
+    EXPECT_THAT(str.str(), StrEq("uid-a.b.uid-123-c"));
 }
+
+TEST(UidIdentifierDummyProcessorTest, unexpandExpandsNothing)
+{
+    UidIdentifierDummyProcessor p;
+    StringBuffer str;
+    const auto result = p.unexpand("uid-a.b.uid-123-c", str);
+    EXPECT_THAT(result, StrEq("uid-a.b.uid-123-c"));
+}
+
