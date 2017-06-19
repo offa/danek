@@ -30,15 +30,8 @@ namespace danek
     class UidIdentifierDummyProcessor : public UidIdentifierProcessor
     {
     public:
-        //--------
-        // Constructor and destructor
-        //--------
-        UidIdentifierDummyProcessor()
-        {
-        }
-        virtual ~UidIdentifierDummyProcessor()
-        {
-        }
+        UidIdentifierDummyProcessor() = default;
+        UidIdentifierDummyProcessor(const UidIdentifierDummyProcessor&) = delete;
 
         void expand(StringBuffer& spelling) override
         {
@@ -53,11 +46,9 @@ namespace danek
             return spelling;
         }
 
+
+        UidIdentifierDummyProcessor& operator=(const UidIdentifierDummyProcessor&) = delete;
+
     private:
-        //--------
-        // The following are not implemented
-        //--------
-        UidIdentifierDummyProcessor(const UidIdentifierDummyProcessor&);
-        UidIdentifierDummyProcessor& operator=(const UidIdentifierDummyProcessor&);
     };
 }
