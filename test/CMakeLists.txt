@@ -36,10 +36,15 @@ _add_test_suite(MiscTests ToStringTest.cpp
 
                         $<TARGET_OBJECTS:danek-misc>
                         $<TARGET_OBJECTS:danek-config-types>
+                        $<TARGET_OBJECTS:danek-public-misc>
                         )
 
 _add_test_suite(ConfigTests ConfigItemTest.cpp
                             ConfigScopeTest.cpp
+
+                            $<TARGET_OBJECTS:danek-config-types>
+                            $<TARGET_OBJECTS:danek-public-misc>
+                            $<TARGET_OBJECTS:danek-misc>
                             )
 
 _add_test_suite(LexParserTests LexTokenTest.cpp
@@ -50,6 +55,9 @@ _add_test_suite(LexParserTests LexTokenTest.cpp
                             $<TARGET_OBJECTS:danek-schematypes>
                             $<TARGET_OBJECTS:danek-security>
                             $<TARGET_OBJECTS:DefaultSecurity>
+                            $<TARGET_OBJECTS:danek-public-misc>
+                            $<TARGET_OBJECTS:danek-config-types>
+                            $<TARGET_OBJECTS:danek-misc>
                             )
 
 _add_test_suite(SchemaTests SchemaRuleInfoTest.cpp
