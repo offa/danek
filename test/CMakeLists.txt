@@ -4,6 +4,8 @@ find_package(GTest REQUIRED)
 
 
 macro(_add_test_suite _name)
+    set(source_list)
+
     foreach( arg ${ARGN} )
         list(APPEND source_list ${arg})
     endforeach()
