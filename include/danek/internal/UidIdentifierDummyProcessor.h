@@ -32,7 +32,6 @@ namespace danek
     public:
 
         UidIdentifierDummyProcessor() = default;
-        UidIdentifierDummyProcessor(const UidIdentifierDummyProcessor&) = delete;
 
         void expand(StringBuffer& spelling) override
         {
@@ -46,9 +45,6 @@ namespace danek
             (void) UidIdentifierProcessor::unexpand(spelling, dummyBuf);
             return spelling;
         }
-
-
-        UidIdentifierDummyProcessor& operator=(const UidIdentifierDummyProcessor&) = delete;
 
     };
 }
