@@ -159,3 +159,36 @@ TEST(UidIdentifierProcessorTest, unexpandWithUid)
     EXPECT_THAT(result, StrEq("uid-xyz"));
 }
 
+TEST(UidIdentifierProcessorTest, unexpandWithUidIncreasesUid)
+{
+    UidIdentifierProcessor p;
+    StringBuffer str;
+
+    const auto result = p.unexpand("uid-000000000-x.uid-000000001-y.uid-000000002-z", str);
+    EXPECT_THAT(result, StrEq("uid-x.uid-y.uid-z"));
+}
+
+TEST(UidIdentifierProcessorTest, unexpandWithDifferentUid)
+{
+    UidIdentifierProcessor p;
+    StringBuffer str;
+    StringBuffer str2;
+    StringBuffer str3;
+
+    const auto result1 =  p.unexpand("uid-000000000-x", str);
+    const auto result2 = p.unexpand("uid-000000001-y", str2);
+    const auto result3 = p.unexpand("uid-000000002-z", str3);
+    EXPECT_THAT(result1, StrEq("uid-x"));
+    EXPECT_THAT(result2, StrEq("uid-y"));
+    EXPECT_THAT(result3, StrEq("uid-z"));
+}
+
+TEST(UidIdentifierProcessorTest, unexpandWithUidAndNumber)
+{
+    UidIdentifierProcessor p;
+    StringBuffer str;
+
+    const auto result = p.unexpand("uid-01234-xyz", str);
+    EXPECT_THAT(result, StrEq("uid-xyz"));
+}
+
