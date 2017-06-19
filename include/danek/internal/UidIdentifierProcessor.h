@@ -32,15 +32,10 @@ namespace danek
     public:
 
         UidIdentifierProcessor();
-        UidIdentifierProcessor(const UidIdentifierProcessor&) = delete;
         virtual ~UidIdentifierProcessor() = default;
 
         virtual void expand(StringBuffer& spelling);
-
         virtual const char* unexpand(const char* spelling, StringBuffer& buf) const;
-
-
-        UidIdentifierProcessor& operator=(const UidIdentifierProcessor&) = delete;
 
 
     private:
