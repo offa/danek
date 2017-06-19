@@ -123,3 +123,39 @@ TEST(UidIdentifierProcessorTest, expandWithWithouthUidSuffixThrows)
     EXPECT_THROW(p.expand(str7), ConfigurationException);
 }
 
+TEST(UidIdentifierProcessorTest, unexpandString)
+{
+    UidIdentifierProcessor p;
+    StringBuffer str;
+
+    const auto result = p.unexpand("abc", str);
+    EXPECT_THAT(result, StrEq("abc"));
+}
+
+TEST(UidIdentifierProcessorTest, unexpandWithScope)
+{
+    UidIdentifierProcessor p;
+    StringBuffer str;
+
+    const auto result = p.unexpand("a.b.c", str);
+    EXPECT_THAT(result, StrEq("a.b.c"));
+}
+
+TEST(UidIdentifierProcessorTest, unexpandWithScopeAndUid)
+{
+    UidIdentifierProcessor p;
+    StringBuffer str;
+
+    const auto result = p.unexpand("a.uid-000000000-b.uid-000000001-c", str);
+    EXPECT_THAT(result, StrEq("a.uid-b.uid-c"));
+}
+
+TEST(UidIdentifierProcessorTest, unexpandWithUid)
+{
+    UidIdentifierProcessor p;
+    StringBuffer str;
+
+    const auto result = p.unexpand("uid-000000003-xyz", str);
+    EXPECT_THAT(result, StrEq("uid-xyz"));
+}
+
