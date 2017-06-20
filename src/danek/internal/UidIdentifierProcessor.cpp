@@ -93,16 +93,10 @@ namespace danek
 
     std::string UidIdentifierProcessor::expandOne(const std::string& spelling)
     {
-        int count;
-        const char* ptr;
-        StringBuffer msg;
-
-        msg << "'" << spelling << "' is not a legal identifier";
-
         //--------
         // If spelling does not start with "uid-" then do nothing.
         //--------
-        ptr = spelling.c_str();
+        const char* ptr = spelling.c_str();
         if (strncmp(ptr, "uid-", 4) != 0)
         {
             return spelling;
@@ -110,6 +104,8 @@ namespace danek
 
         StringBuffer suffix;
         char digits[10]; // big enough for 9 digits
+        StringBuffer msg;
+        msg << "'" << spelling << "' is not a legal identifier";
 
         //--------
         // Check for "uid-" (with no suffix), because that is illegal
@@ -140,7 +136,7 @@ namespace danek
         }
 
         ptr += 4; // skip over "uid-"
-        count = 0;
+        int count = 0;
         while (isdigit(*ptr))
         {
             ptr++;
