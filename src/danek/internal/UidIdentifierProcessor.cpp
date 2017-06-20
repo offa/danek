@@ -27,12 +27,27 @@
 #include "danek/ConfigurationException.h"
 #include "danek/StringVector.h"
 #include <sstream>
+#include <iomanip>
 #include <string.h>
 #include <ctype.h>
 #include <stdio.h>
 
 namespace danek
 {
+    namespace
+    {
+        std::string formatCount(std::size_t count)
+        {
+            constexpr std::size_t numDigits = 9;
+            std::ostringstream ss;
+            ss << std::setw(numDigits) << std::setfill('0') << count;
+            return ss.str();
+        }
+    }
+
+
+
+
     UidIdentifierProcessor::UidIdentifierProcessor() : m_count(0)
     {
     }
@@ -103,7 +118,6 @@ namespace danek
             return spelling;
         }
 
-        char digits[10]; // big enough for 9 digits
         StringBuffer msg;
         msg << "'" << spelling << "' is not a legal identifier";
 
@@ -126,12 +140,11 @@ namespace danek
             // "uid-foo"  --> "uid-<digits>-foo"
             //--------
             compat::checkAssertion(m_count < 1000 * 1000 * 1000);
-            sprintf(digits, "%09ld", m_count);
-            ++m_count;
             const std::string suffix = &(spelling.c_str()[4]); // deep copy
 
             std::stringstream ss;
-            ss << "uid-" << digits << "-" << suffix;
+            ss << "uid-" << formatCount(m_count) << "-" << suffix;
+            ++m_count;
             return ss.str();
         }
 
@@ -165,12 +178,11 @@ namespace danek
             throw ConfigurationException(msg.str());
         }
         compat::checkAssertion(m_count < 1000 * 1000 * 1000);
-        sprintf(digits, "%09ld", m_count);
-        ++m_count;
         const std::string suffix = ptr; // deep copy just after "uid-<digits>-"
 
         std::stringstream ss;
-        ss << "uid-" << digits << "-" << suffix;
+        ss << "uid-" << formatCount(m_count) << "-" << suffix;
+        ++m_count;
         return ss.str();
     }
 
