@@ -149,7 +149,7 @@ namespace danek
         }
 
         ptr += 4; // skip over "uid-"
-        int count = 0;
+        std::size_t count = 0;
         while (isdigit(*ptr))
         {
             ++ptr;
@@ -187,7 +187,6 @@ namespace danek
     }
 
     const char* UidIdentifierProcessor::unexpand(const char* spelling, StringBuffer& buf) const
-
     {
         //--------
         // Common case optimizations
