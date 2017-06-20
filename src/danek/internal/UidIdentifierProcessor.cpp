@@ -103,7 +103,6 @@ namespace danek
             return spelling;
         }
 
-        StringBuffer suffix;
         char digits[10]; // big enough for 9 digits
         StringBuffer msg;
         msg << "'" << spelling << "' is not a legal identifier";
@@ -129,10 +128,10 @@ namespace danek
             compat::checkAssertion(m_count < 1000 * 1000 * 1000);
             sprintf(digits, "%09ld", m_count);
             ++m_count;
-            suffix = &(spelling.c_str()[4]); // deep copy
+            const std::string suffix = &(spelling.c_str()[4]); // deep copy
 
             std::stringstream ss;
-            ss << "uid-" << digits << "-" << suffix.str();
+            ss << "uid-" << digits << "-" << suffix;
             return ss.str();
         }
 
@@ -168,10 +167,10 @@ namespace danek
         compat::checkAssertion(m_count < 1000 * 1000 * 1000);
         sprintf(digits, "%09ld", m_count);
         ++m_count;
-        suffix = ptr; // deep copy just after "uid-<digits>-"
+        const std::string suffix = ptr; // deep copy just after "uid-<digits>-"
 
         std::stringstream ss;
-        ss << "uid-" << digits << "-" << suffix.str();
+        ss << "uid-" << digits << "-" << suffix;
         return ss.str();
     }
 
