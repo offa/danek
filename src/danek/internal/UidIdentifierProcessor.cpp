@@ -97,6 +97,7 @@ namespace danek
         // If spelling does not start with "uid-" then do nothing.
         //--------
         const char* ptr = spelling.c_str();
+
         if (strncmp(ptr, "uid-", 4) != 0)
         {
             return spelling;
@@ -139,8 +140,8 @@ namespace danek
         int count = 0;
         while (isdigit(*ptr))
         {
-            ptr++;
-            count++;
+            ++ptr;
+            ++count;
         }
         compat::checkAssertion(count > 0);
         if (*ptr == '\0' || *ptr != '-')
