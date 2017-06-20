@@ -26,6 +26,7 @@
 #include "danek/internal/Compat.h"
 #include "danek/ConfigurationException.h"
 #include "danek/StringVector.h"
+#include <sstream>
 #include <string.h>
 #include <ctype.h>
 #include <stdio.h>
@@ -51,7 +52,7 @@ namespace danek
         //--------
         if (strchr(spelling.str().c_str(), '.') == nullptr)
         {
-            expandOne(spelling);
+            spelling = expandOne(spelling.str());
             return;
         }
         if (strstr(spelling.str().c_str(), "uid-") == nullptr)
@@ -74,7 +75,7 @@ namespace danek
             buf = vec[i];
             try
             {
-                expandOne(buf);
+                buf = expandOne(buf.str());
             }
             catch (const ConfigurationException&)
             {
@@ -90,7 +91,7 @@ namespace danek
         spelling = result;
     }
 
-    void UidIdentifierProcessor::expandOne(StringBuffer& spelling)
+    std::string UidIdentifierProcessor::expandOne(const std::string& spelling)
     {
         int count;
         const char* ptr;
@@ -101,10 +102,10 @@ namespace danek
         //--------
         // If spelling does not start with "uid-" then do nothing.
         //--------
-        ptr = spelling.str().c_str();
+        ptr = spelling.c_str();
         if (strncmp(ptr, "uid-", 4) != 0)
         {
-            return;
+            return spelling;
         }
 
         StringBuffer suffix;
@@ -131,10 +132,11 @@ namespace danek
             compat::checkAssertion(m_count < 1000 * 1000 * 1000);
             sprintf(digits, "%09ld", m_count);
             ++m_count;
-            suffix = &(spelling.str().c_str()[4]); // deep copy
-            spelling.clear();
-            spelling << "uid-" << digits << "-" << suffix;
-            return;
+            suffix = &(spelling.c_str()[4]); // deep copy
+
+            std::stringstream ss;
+            ss << "uid-" << digits << "-" << suffix.str();
+            return ss.str();
         }
 
         ptr += 4; // skip over "uid-"
@@ -170,8 +172,10 @@ namespace danek
         sprintf(digits, "%09ld", m_count);
         ++m_count;
         suffix = ptr; // deep copy just after "uid-<digits>-"
-        spelling.clear();
-        spelling << "uid-" << digits << "-" << suffix;
+
+        std::stringstream ss;
+        ss << "uid-" << digits << "-" << suffix.str();
+        return ss.str();
     }
 
     const char* UidIdentifierProcessor::unexpand(const char* spelling, StringBuffer& buf) const

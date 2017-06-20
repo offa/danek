@@ -24,6 +24,7 @@
 #pragma once
 
 #include "danek/StringBuffer.h"
+#include <string>
 
 namespace danek
 {
@@ -40,7 +41,7 @@ namespace danek
 
     private:
 
-        void expandOne(StringBuffer& spelling);
+        std::string expandOne(const std::string& spelling);
         const char* unexpandOne(const char* spelling, StringBuffer& buf) const;
 
         std::size_t m_count;
