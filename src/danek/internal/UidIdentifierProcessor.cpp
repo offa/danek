@@ -148,8 +148,9 @@ namespace danek
             return ss.str();
         }
 
-        ptr += 4; // skip over "uid-"
+        ptr = std::next(ptr, 4); // skip over "uid-"
         std::size_t count = 0;
+
         while (isdigit(*ptr))
         {
             ++ptr;
@@ -177,13 +178,12 @@ namespace danek
             // illegal: "uid-<digits>-<digits>foo"
             throw ConfigurationException(msg.str());
         }
+
         compat::checkAssertion(m_count < 1000 * 1000 * 1000);
         const std::string suffix = ptr; // deep copy just after "uid-<digits>-"
-
-        std::stringstream ss;
-        ss << "uid-" << formatCount(m_count) << "-" << suffix;
+        const std::string result(m_uidToken + formatCount(m_count) + "-" + suffix);
         ++m_count;
-        return ss.str();
+        return result;
     }
 
     const char* UidIdentifierProcessor::unexpand(const char* spelling, StringBuffer& buf) const
