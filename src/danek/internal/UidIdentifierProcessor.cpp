@@ -118,23 +118,21 @@ namespace danek
 
         StringBuffer msg;
         msg << "'" << spelling << "' is not a legal identifier";
-        const char* ptr = spelling.c_str();
-
 
         //--------
         // Check for "uid-" (with no suffix), because that is illegal
         //--------
-        if (ptr[4] == '\0')
+        if (spelling[4] == '\0')
         {
             throw ConfigurationException(msg.str());
         }
-        if (ptr[4] == '-')
+        if (spelling[4] == '-')
         {
             // illegal: "uid--foo"
             throw ConfigurationException(msg.str());
         }
 
-        if (!isdigit(ptr[4]))
+        if (!isdigit(spelling[4]))
         {
             //--------
             // "uid-foo"  --> "uid-<digits>-foo"
@@ -148,39 +146,39 @@ namespace danek
             return ss.str();
         }
 
-        ptr = std::next(ptr, 4); // skip over "uid-"
+        auto itr = std::next(spelling.cbegin(), 4); // skip over "uid-"
         std::size_t count = 0;
 
-        while (isdigit(*ptr))
+        while (isdigit(*itr))
         {
-            ++ptr;
+            ++itr;
             ++count;
         }
         compat::checkAssertion(count > 0);
-        if (*ptr == '\0' || *ptr != '-')
+        if (*itr == '\0' || *itr != '-')
         {
             // illegal: "uid-<digits>" or "uid-<digits>foo"
             throw ConfigurationException(msg.str());
         }
-        ++ptr; // point to just after "uid-<digits>-"
-        if (*ptr == '\0')
+        ++itr; // point to just after "uid-<digits>-"
+        if (*itr == '\0')
         {
             // illegal: "uid-<digits>-"
             throw ConfigurationException(msg.str());
         }
-        if (*ptr == '-')
+        if (*itr == '-')
         {
             // illegal: "uid-<digits>--"
             throw ConfigurationException(msg.str());
         }
-        if (isdigit(*(ptr)))
+        if (isdigit(*(itr)))
         {
             // illegal: "uid-<digits>-<digits>foo"
             throw ConfigurationException(msg.str());
         }
 
         compat::checkAssertion(m_count < 1000 * 1000 * 1000);
-        const std::string suffix = ptr; // deep copy just after "uid-<digits>-"
+        const std::string suffix(itr, spelling.cend()); // deep copy just after "uid-<digits>-"
         const std::string result(m_uidToken + formatCount(m_count) + "-" + suffix);
         ++m_count;
         return result;
