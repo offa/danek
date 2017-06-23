@@ -17,7 +17,7 @@ if [[ "${CXX}" = clang* ]] ; then
 fi
 
 cmake ..
-make -j4
+make -j 4
 sudo make install
 cd ${OLD_DIR}
 
