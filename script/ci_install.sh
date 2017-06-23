@@ -12,11 +12,11 @@ cd ${GTEST}
 mkdir build && cd build
 
 if [[ "${CXX}" = clang* ]] ; then
-    cmake -DCMAKE_CXX_FLAGS="-stdlib=libc++" ..
-else
-    cmake ..
+    export CXXFLAGS="-stdlib=libc++"
 fi
 
-make -j4 && sudo make install && cd ../..
-
+cmake ..
+make -j4
+sudo make install
+cd ../..
 
