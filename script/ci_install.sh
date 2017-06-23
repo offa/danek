@@ -3,8 +3,8 @@
 set -ex
 
 ## Install GTest
-export GTEST_VERSION=master
-export GTEST=googletest-${GTEST_VERSION}
+GTEST_VERSION=master
+GTEST=googletest-${GTEST_VERSION}
 
 wget https://github.com/google/googletest/archive/${GTEST_VERSION}.tar.gz
 tar -xzf *.tar.gz
