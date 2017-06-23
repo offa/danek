@@ -151,7 +151,7 @@ namespace danek
 
         while (isdigit(*itr))
         {
-            ++itr;
+            std::advance(itr, 1);
             ++count;
         }
         compat::checkAssertion(count > 0);
@@ -160,7 +160,7 @@ namespace danek
             // illegal: "uid-<digits>" or "uid-<digits>foo"
             throw ConfigurationException(msg.str());
         }
-        ++itr; // point to just after "uid-<digits>-"
+        std::advance(itr, 1); // point to just after "uid-<digits>-"
         if (*itr == '\0')
         {
             // illegal: "uid-<digits>-"
