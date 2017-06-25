@@ -108,9 +108,7 @@ namespace danek
 
     std::string UidIdentifierProcessor::expandOne(const std::string& spelling)
     {
-        //--------
         // If spelling does not start with "uid-" then do nothing.
-        //--------
         if( std::equal(m_uidToken.cbegin(), m_uidToken.cend(), spelling.cbegin()) == false )
         {
             return spelling;
@@ -119,16 +117,9 @@ namespace danek
         StringBuffer msg;
         msg << "'" << spelling << "' is not a legal identifier";
 
-        //--------
-        // Check for "uid-" (with no suffix), because that is illegal
-        //--------
-        if( spelling == m_uidToken )
+        // Check for "uid-" (with no suffix) and "uid--foo", because that is illegal
+        if( spelling == m_uidToken || spelling.at(m_uidToken.size()) == '-' )
         {
-            throw ConfigurationException(msg.str());
-        }
-        if( spelling.at(m_uidToken.size()) == '-' )
-        {
-            // illegal: "uid--foo"
             throw ConfigurationException(msg.str());
         }
 
