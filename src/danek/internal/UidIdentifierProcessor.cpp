@@ -114,13 +114,12 @@ namespace danek
             return spelling;
         }
 
-        StringBuffer msg;
-        msg << "'" << spelling << "' is not a legal identifier";
+        const std::string errorMessage = "'" + spelling + "' is not a legal identifier";
 
         // Check for "uid-" (with no suffix) and "uid--foo", because that is illegal
         if( spelling == m_uidToken || spelling.at(m_uidToken.size()) == '-' )
         {
-            throw ConfigurationException(msg.str());
+            throw ConfigurationException(errorMessage);
         }
 
         if (!isdigit(spelling[4]))
@@ -149,23 +148,23 @@ namespace danek
         if (*itr == '\0' || *itr != '-')
         {
             // illegal: "uid-<digits>" or "uid-<digits>foo"
-            throw ConfigurationException(msg.str());
+            throw ConfigurationException(errorMessage);
         }
         std::advance(itr, 1); // point to just after "uid-<digits>-"
         if (*itr == '\0')
         {
             // illegal: "uid-<digits>-"
-            throw ConfigurationException(msg.str());
+            throw ConfigurationException(errorMessage);
         }
         if (*itr == '-')
         {
             // illegal: "uid-<digits>--"
-            throw ConfigurationException(msg.str());
+            throw ConfigurationException(errorMessage);
         }
         if (isdigit(*(itr)))
         {
             // illegal: "uid-<digits>-<digits>foo"
-            throw ConfigurationException(msg.str());
+            throw ConfigurationException(errorMessage);
         }
 
         compat::checkAssertion(m_count < 1000 * 1000 * 1000);
