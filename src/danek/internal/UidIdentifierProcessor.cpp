@@ -34,19 +34,6 @@
 
 namespace danek
 {
-    namespace
-    {
-        std::string formatCount(std::size_t count)
-        {
-            constexpr std::size_t numDigits = 9;
-            std::ostringstream ss;
-            ss << std::setw(numDigits) << std::setfill('0') << count;
-            return ss.str();
-        }
-    }
-
-
-
 
     UidIdentifierProcessor::UidIdentifierProcessor() : m_count(0), m_uidToken("uid-")
     {
@@ -127,11 +114,7 @@ namespace danek
         if (!isdigit(*itr))
         {
             // "uid-foo"  --> "uid-<digits>-foo"
-            compat::checkAssertion(m_count < 1000 * 1000 * 1000);
-            const std::string suffix(itr, spelling.cend()); // deep copy just after "uid-<digits>-"
-            const std::string result = m_uidToken + formatCount(m_count) + "-" + suffix;
-            ++m_count;
-            return result;
+            return formatExpanded(std::string(itr, spelling.cend()));
         }
 
         std::size_t count = 0;
@@ -164,11 +147,7 @@ namespace danek
             throw ConfigurationException(errorMessage);
         }
 
-        compat::checkAssertion(m_count < 1000 * 1000 * 1000);
-        const std::string suffix(itr, spelling.cend()); // deep copy just after "uid-<digits>-"
-        const std::string result = m_uidToken + formatCount(m_count) + "-" + suffix;
-        ++m_count;
-        return result;
+        return formatExpanded(std::string(itr, spelling.cend()));
     }
 
     const char* UidIdentifierProcessor::unexpand(const char* spelling, StringBuffer& buf) const
@@ -252,4 +231,16 @@ namespace danek
         buf << "uid-" << suffix;
         return buf.str().c_str();
     }
+
+    std::string UidIdentifierProcessor::formatExpanded(const std::string& suffix)
+    {
+        compat::checkAssertion(m_count < 1000 * 1000 * 1000);
+        constexpr std::size_t numDigits = 9;
+
+        std::ostringstream ss;
+        ss << m_uidToken << std::setw(numDigits) << std::setfill('0') << (m_count++) << "-" << suffix;
+
+        return ss.str();
+    }
+
 }
