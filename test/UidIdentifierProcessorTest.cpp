@@ -84,23 +84,23 @@ TEST(UidIdentifierProcessorTest, expandMaintaintsUidState)
     UidIdentifierProcessor p;
     StringBuffer str{"uid-x"};
     StringBuffer str2{"uid-y"};
-    StringBuffer str3{"uid-z"};
+    StringBuffer str3{"uid-z33"};
 
     p.expand(str);
     p.expand(str2);
     p.expand(str3);
     EXPECT_THAT(str.str(), StrEq("uid-000000000-x"));
     EXPECT_THAT(str2.str(), StrEq("uid-000000001-y"));
-    EXPECT_THAT(str3.str(), StrEq("uid-000000002-z"));
+    EXPECT_THAT(str3.str(), StrEq("uid-000000002-z33"));
 }
 
 TEST(UidIdentifierProcessorTest, expandWithUidAndNumber)
 {
     UidIdentifierProcessor p;
-    StringBuffer str{"uid-01234-xyz"};
+    StringBuffer str{"uid-01234-xyz12"};
 
     p.expand(str);
-    EXPECT_THAT(str.str(), StrEq("uid-000000000-xyz"));
+    EXPECT_THAT(str.str(), StrEq("uid-000000000-xyz12"));
 }
 
 TEST(UidIdentifierProcessorTest, expandWithWithouthUidSuffixThrows)
