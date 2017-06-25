@@ -122,11 +122,11 @@ namespace danek
         //--------
         // Check for "uid-" (with no suffix), because that is illegal
         //--------
-        if (spelling[4] == '\0')
+        if( spelling == m_uidToken )
         {
             throw ConfigurationException(msg.str());
         }
-        if (spelling[4] == '-')
+        if( spelling.at(m_uidToken.size()) == '-' )
         {
             // illegal: "uid--foo"
             throw ConfigurationException(msg.str());
