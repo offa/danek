@@ -136,7 +136,7 @@ namespace danek
             return ss.str();
         }
 
-        auto itr = std::next(spelling.cbegin(), 4); // skip over "uid-"
+        auto itr = std::next(spelling.cbegin(), m_uidToken.size()); // skip over "uid-"
         std::size_t count = 0;
 
         while (isdigit(*itr))
