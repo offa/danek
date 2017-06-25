@@ -46,6 +46,7 @@ namespace danek
 
         std::string formatExpanded(const std::string& suffix);
 
+
         std::size_t m_count;
         const std::string m_uidToken;
     };

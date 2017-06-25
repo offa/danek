@@ -124,7 +124,7 @@ namespace danek
             std::advance(itr, 1);
             ++count;
         }
-        compat::checkAssertion(count > 0);
+
         if (*itr == '\0' || *itr != '-')
         {
             // illegal: "uid-<digits>" or "uid-<digits>foo"
