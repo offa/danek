@@ -131,11 +131,9 @@ namespace danek
             //--------
             compat::checkAssertion(m_count < 1000 * 1000 * 1000);
             const std::string suffix = &(spelling.c_str()[4]); // deep copy
-
-            std::stringstream ss;
-            ss << "uid-" << formatCount(m_count) << "-" << suffix;
+            const std::string result = m_uidToken + formatCount(m_count) + "-" + suffix;
             ++m_count;
-            return ss.str();
+            return result;
         }
 
         std::size_t count = 0;
@@ -170,7 +168,7 @@ namespace danek
 
         compat::checkAssertion(m_count < 1000 * 1000 * 1000);
         const std::string suffix(itr, spelling.cend()); // deep copy just after "uid-<digits>-"
-        const std::string result(m_uidToken + formatCount(m_count) + "-" + suffix);
+        const std::string result = m_uidToken + formatCount(m_count) + "-" + suffix;
         ++m_count;
         return result;
     }
