@@ -122,7 +122,9 @@ namespace danek
             throw ConfigurationException(errorMessage);
         }
 
-        if (!isdigit(spelling[4]))
+        auto itr = std::next(spelling.cbegin(), m_uidToken.size()); // skip over "uid-"
+
+        if (!isdigit(*itr))
         {
             //--------
             // "uid-foo"  --> "uid-<digits>-foo"
@@ -136,7 +138,6 @@ namespace danek
             return ss.str();
         }
 
-        auto itr = std::next(spelling.cbegin(), m_uidToken.size()); // skip over "uid-"
         std::size_t count = 0;
 
         while (isdigit(*itr))
