@@ -126,11 +126,9 @@ namespace danek
 
         if (!isdigit(*itr))
         {
-            //--------
             // "uid-foo"  --> "uid-<digits>-foo"
-            //--------
             compat::checkAssertion(m_count < 1000 * 1000 * 1000);
-            const std::string suffix = &(spelling.c_str()[4]); // deep copy
+            const std::string suffix(itr, spelling.cend()); // deep copy just after "uid-<digits>-"
             const std::string result = m_uidToken + formatCount(m_count) + "-" + suffix;
             ++m_count;
             return result;
