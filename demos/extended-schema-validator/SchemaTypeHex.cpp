@@ -146,7 +146,7 @@ int SchemaTypeHex::stringToHex(const Configuration* cfg, const char* scope, cons
             << fullyScopedName;
         throw ConfigurationException(msg.str());
     }
-    return (int) value;
+    return static_cast<int>(value);
 }
 
 bool SchemaTypeHex::isHex(const char* str)

@@ -39,14 +39,14 @@ FooConfiguration::FooConfiguration() : m_cfg(Configuration::create()), m_logLeve
 
 FooConfiguration::~FooConfiguration()
 {
-    ((Configuration*) m_cfg)->destroy();
+    static_cast<Configuration*>(m_cfg)->destroy();
 }
 
 void FooConfiguration::parse(const char* cfgInput, const char* cfgScope, const char* secInput,
     const char* secScope)
 {
     SchemaValidator sv;
-    Configuration* cfg = (Configuration*) m_cfg;
+    Configuration* cfg = static_cast<Configuration*>(m_cfg);
 
     try
     {
@@ -91,15 +91,15 @@ Logger::LogLevel FooConfiguration::getLogLevel(const char* opName) const
         if (danek::patternMatch(opName, pattern))
         {
             result = atoi(logLevelStr);
-            if (result > (int) Logger::LogLevel::Debug)
+            if (result > static_cast<int>(Logger::LogLevel::Debug))
             {
-                result = (int) Logger::LogLevel::Debug;
+                result = static_cast<int>(Logger::LogLevel::Debug);
             }
             else if (result < 0)
             {
                 result = 0;
             }
-            return (Logger::LogLevel) result;
+            return static_cast<Logger::LogLevel>(result);
         }
     }
     return Logger::LogLevel::Error; // default log level

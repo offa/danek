@@ -41,12 +41,12 @@ FooConfiguration::FooConfiguration()
 FooConfiguration::~FooConfiguration()
 {
     delete[] m_scope;
-    ((Configuration*) m_cfg)->destroy();
+    static_cast<Configuration*>(m_cfg)->destroy();
 }
 
 void FooConfiguration::parse(const char* cfgSource, const char* scope)
 {
-    Configuration* cfg = (Configuration*) m_cfg;
+    Configuration* cfg = static_cast<Configuration*>(m_cfg);
 
     m_scope = new char[strlen(scope) + 1];
     strcpy(m_scope, scope);
@@ -66,7 +66,7 @@ void FooConfiguration::parse(const char* cfgSource, const char* scope)
 
 const char* FooConfiguration::lookupString(const char* name) const
 {
-    Configuration* cfg = (Configuration*) m_cfg;
+    Configuration* cfg = static_cast<Configuration*>(m_cfg);
     try
     {
         return cfg->lookupString(m_scope, name);
@@ -78,9 +78,8 @@ const char* FooConfiguration::lookupString(const char* name) const
 }
 
 void FooConfiguration::lookupList(const char* name, std::vector<std::string>& data) const
-
 {
-    Configuration* cfg = (Configuration*) m_cfg;
+    Configuration* cfg = static_cast<Configuration*>(m_cfg);
     try
     {
         cfg->lookupList(m_scope, name, data);
@@ -93,7 +92,7 @@ void FooConfiguration::lookupList(const char* name, std::vector<std::string>& da
 
 int FooConfiguration::lookupInt(const char* name) const
 {
-    Configuration* cfg = (Configuration*) m_cfg;
+    Configuration* cfg = static_cast<Configuration*>(m_cfg);
     try
     {
         return cfg->lookupInt(m_scope, name);
@@ -106,7 +105,7 @@ int FooConfiguration::lookupInt(const char* name) const
 
 float FooConfiguration::lookupFloat(const char* name) const
 {
-    Configuration* cfg = (Configuration*) m_cfg;
+    Configuration* cfg = static_cast<Configuration*>(m_cfg);
     try
     {
         return cfg->lookupFloat(m_scope, name);
@@ -119,7 +118,7 @@ float FooConfiguration::lookupFloat(const char* name) const
 
 bool FooConfiguration::lookupBoolean(const char* name) const
 {
-    Configuration* cfg = (Configuration*) m_cfg;
+    Configuration* cfg = static_cast<Configuration*>(m_cfg);
     try
     {
         return cfg->lookupBoolean(m_scope, name);
@@ -132,7 +131,7 @@ bool FooConfiguration::lookupBoolean(const char* name) const
 
 int FooConfiguration::lookupDurationMilliseconds(const char* name) const
 {
-    Configuration* cfg = (Configuration*) m_cfg;
+    Configuration* cfg = static_cast<Configuration*>(m_cfg);
     try
     {
         return cfg->lookupDurationMilliseconds(m_scope, name);
@@ -145,7 +144,7 @@ int FooConfiguration::lookupDurationMilliseconds(const char* name) const
 
 int FooConfiguration::lookupDurationSeconds(const char* name) const
 {
-    Configuration* cfg = (Configuration*) m_cfg;
+    Configuration* cfg = static_cast<Configuration*>(m_cfg);
     try
     {
         return cfg->lookupDurationSeconds(m_scope, name);

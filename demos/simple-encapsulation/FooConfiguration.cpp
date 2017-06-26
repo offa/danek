@@ -47,13 +47,13 @@ FooConfiguration::FooConfiguration(bool wantDiagnostics)
 
 FooConfiguration::~FooConfiguration()
 {
-    ((Configuration*) m_cfg)->destroy();
+    static_cast<Configuration*>(m_cfg)->destroy();
 }
 
 void FooConfiguration::parse(const char* cfgInput, const char* cfgScope, const char* secInput,
     const char* secScope)
 {
-    Configuration* cfg = (Configuration*) m_cfg;
+    Configuration* cfg = static_cast<Configuration*>(m_cfg);
     SchemaValidator sv;
 
     try

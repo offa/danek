@@ -46,7 +46,7 @@ FooConfiguration::FooConfiguration(bool wantDiagnostics)
 
 FooConfiguration::~FooConfiguration()
 {
-    ((Configuration*) m_cfg)->destroy();
+    static_cast<Configuration*>(m_cfg)->destroy();
     delete[] m_hexList;
 }
 
@@ -55,7 +55,7 @@ void FooConfiguration::parse(const char* cfgInput, const char* scope, const char
 {
     StringBuffer localName;
     StringVector strList;
-    Configuration* cfg = (Configuration*) m_cfg;
+    Configuration* cfg = static_cast<Configuration*>(m_cfg);
     ExtendedSchemaValidator sv;
 
     try

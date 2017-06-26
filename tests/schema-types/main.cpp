@@ -159,7 +159,7 @@ int main(int argc, char** argv)
     printf("\n%d tests out of %d passed\n\n", static_cast<int>(passedCount), static_cast<int>(totalCount));
 
     cfg->destroy();
-    return (int) (passedCount != totalCount);
+    return static_cast<int>(passedCount != totalCount);
 }
 
 static void parseCmdLineArgs(int argc, char** argv, const char*& cfgFile, bool& wantDiagnostics)
