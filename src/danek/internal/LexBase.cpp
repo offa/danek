@@ -38,11 +38,8 @@ namespace danek
 {
     extern "C" int danek_keywordInfoCmp(const void* ptr1, const void* ptr2)
     {
-        const LexBase::KeywordInfo* sas1;
-        const LexBase::KeywordInfo* sas2;
-
-        sas1 = (const LexBase::KeywordInfo*) ptr1;
-        sas2 = (const LexBase::KeywordInfo*) ptr2;
+        const auto sas1 = static_cast<const LexBase::KeywordInfo*>(ptr1);
+        const auto sas2 = static_cast<const LexBase::KeywordInfo*>(ptr2);
         return strcmp(sas1->m_spelling, sas2->m_spelling);
     }
 
@@ -75,11 +72,8 @@ namespace danek
 
     extern "C" int danek_funcInfoCmp_c(const void* ptr1, const void* ptr2)
     {
-        const LexBase::FuncInfo* sas1;
-        const LexBase::FuncInfo* sas2;
-
-        sas1 = (const LexBase::FuncInfo*) ptr1;
-        sas2 = (const LexBase::FuncInfo*) ptr2;
+        const auto sas1 = static_cast<const LexBase::FuncInfo*>(ptr1);
+        const auto sas2 = static_cast<const LexBase::FuncInfo*>(ptr2);
         return strcmp(sas1->m_spelling, sas2->m_spelling);
     }
 
