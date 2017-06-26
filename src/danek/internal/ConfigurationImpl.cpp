@@ -1937,7 +1937,7 @@ namespace danek
             if (strcmp(durationMicrosecondsUnitsInfo[i].spelling, units) == 0)
             {
                 unitsVal = durationMicrosecondsUnitsInfo[i].val;
-                result = (int) (floatVal * unitsVal);
+                result = static_cast<int>(floatVal * unitsVal);
                 break;
             }
         }
@@ -1989,7 +1989,7 @@ namespace danek
             if (strcmp(durationMillisecondsUnitsInfo[i].spelling, units) == 0)
             {
                 unitsVal = durationMillisecondsUnitsInfo[i].val;
-                result = (int) (floatVal * unitsVal);
+                result = static_cast<int>(floatVal * unitsVal);
                 break;
             }
         }
@@ -2041,7 +2041,7 @@ namespace danek
             if (strcmp(durationSecondsUnitsInfo[i].spelling, units) == 0)
             {
                 unitsVal = durationSecondsUnitsInfo[i].val;
-                result = (int) (floatVal * unitsVal);
+                result = static_cast<int>(floatVal * unitsVal);
                 break;
             }
         }
@@ -2159,7 +2159,7 @@ namespace danek
             if (strcmp(unitsInfo[i].spelling, units) == 0)
             {
                 unitsVal = unitsInfo[i].val;
-                result = (int) (floatVal * unitsVal);
+                result = static_cast<int>(floatVal * unitsVal);
                 break;
             }
         }

@@ -15,7 +15,7 @@ if( COVERAGE )
     include(Coverage)
 endif()
 
-add_definitions(-Wall -Wextra -pedantic -Werror -Wshadow)
+add_definitions(-Wall -Wextra -pedantic -Werror -Wshadow -Wold-style-cast)
 
 include_directories("include")
 

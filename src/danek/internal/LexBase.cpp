@@ -57,11 +57,11 @@ namespace danek
             found = false;
             return;
         }
-        result = (LexBase::KeywordInfo*) bsearch(&searchItem,
+        result = static_cast<LexBase::KeywordInfo*>(bsearch(&searchItem,
             m_keywordInfoArray,
             m_keywordInfoArraySize,
             sizeof(searchItem),
-            danek_keywordInfoCmp);
+            danek_keywordInfoCmp));
         if (result == nullptr)
         {
             found = false;
@@ -244,7 +244,7 @@ namespace danek
         {
             ch = 0;
         }
-        return (char) ch;
+        return static_cast<char>(ch);
     }
 
     //----------------------------------------------------------------------

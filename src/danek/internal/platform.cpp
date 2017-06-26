@@ -75,7 +75,7 @@ namespace danek
         {
             if (ch != '\r')
             {
-                output.append((char) ch);
+                output.append(static_cast<char>(ch));
             }
         }
         len = output.size();

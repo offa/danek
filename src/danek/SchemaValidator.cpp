@@ -54,14 +54,9 @@ namespace danek
 {
     int compareSchemaIdRuleInfo(const void* p1, const void* p2)
     {
-        SchemaIdRuleInfo** r1;
-        SchemaIdRuleInfo** r2;
-        int result;
-
-        r1 = (SchemaIdRuleInfo**) p1;
-        r2 = (SchemaIdRuleInfo**) p2;
-        result = strcmp((*r1)->locallyScopedName().c_str(), (*r2)->locallyScopedName().c_str());
-        return result;
+        const auto r1 = static_cast<const SchemaIdRuleInfo* const*>(p1);
+        const auto r2 = static_cast<const SchemaIdRuleInfo* const*>(p2);
+        return strcmp((*r1)->locallyScopedName().c_str(), (*r2)->locallyScopedName().c_str());
     }
 
     extern "C" int danek_compareSchemaIdRuleInfo_c(const void* p1, const void* p2)
@@ -71,14 +66,9 @@ namespace danek
 
     int compareSchemaType(const void* p1, const void* p2)
     {
-        SchemaType** r1;
-        SchemaType** r2;
-        int result;
-
-        r1 = (SchemaType**) p1;
-        r2 = (SchemaType**) p2;
-        result = strcmp((*r1)->typeName(), (*r2)->typeName());
-        return result;
+        const auto r1 = static_cast<const SchemaType* const*>(p1);
+        const auto r2 = static_cast<const SchemaType* const*>(p2);
+        return strcmp((*r1)->typeName(), (*r2)->typeName());
     }
 
     extern "C" int danek_compareSchemaType_c(const void* p1, const void* p2)
@@ -90,15 +80,14 @@ namespace danek
     {
         SchemaIdRuleInfo search;
         SchemaIdRuleInfo* searchPtr;
-        SchemaIdRuleInfo** result;
 
         search.setLocallyScopedName(name);
         searchPtr = &search;
-        result = (SchemaIdRuleInfo**) bsearch(&searchPtr,
-            m_idRules,
-            m_idRulesCurrSize,
-            sizeof(SchemaIdRuleInfo*),
-            danek_compareSchemaIdRuleInfo_c);
+        SchemaIdRuleInfo** result = static_cast<SchemaIdRuleInfo**>(bsearch(&searchPtr,
+                                                                            m_idRules,
+                                                                            m_idRulesCurrSize,
+                                                                            sizeof(SchemaIdRuleInfo*),
+                                                                            danek_compareSchemaIdRuleInfo_c));
         if (result == nullptr)
         {
             return nullptr;
@@ -119,8 +108,8 @@ namespace danek
         if (m_areTypesSorted)
         {
             SchemaType* searchPtr = &search;
-            SchemaType** result = (SchemaType**) bsearch(
-                &searchPtr, m_types, m_typesCurrSize, sizeof(SchemaType*), danek_compareSchemaType_c);
+            SchemaType** result = static_cast<SchemaType**>(bsearch(
+                &searchPtr, m_types, m_typesCurrSize, sizeof(SchemaType*), danek_compareSchemaType_c));
             if (result == nullptr)
             {
                 return nullptr;

@@ -1207,7 +1207,7 @@ namespace danek
         {
             if (ch != '\r')
             {
-                str.append((char) ch);
+                str.append(static_cast<char>(ch));
             }
         }
     }
