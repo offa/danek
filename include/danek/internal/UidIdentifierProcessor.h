@@ -44,6 +44,7 @@ namespace danek
         std::string expandOne(const std::string& spelling);
         const char* unexpandOne(const char* spelling, StringBuffer& buf) const;
 
+        bool startsWithUidToken(const std::string& str) const;
         std::string formatExpanded(const std::string& suffix);
 
 

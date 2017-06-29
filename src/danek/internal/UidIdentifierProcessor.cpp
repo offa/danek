@@ -95,8 +95,7 @@ namespace danek
 
     std::string UidIdentifierProcessor::expandOne(const std::string& spelling)
     {
-        // If spelling does not start with "uid-" then do nothing.
-        if( std::equal(m_uidToken.cbegin(), m_uidToken.cend(), spelling.cbegin()) == false )
+        if( startsWithUidToken(spelling) == false )
         {
             return spelling;
         }
@@ -230,6 +229,11 @@ namespace danek
         buf.clear();
         buf << "uid-" << suffix;
         return buf.str().c_str();
+    }
+
+    bool UidIdentifierProcessor::startsWithUidToken(const std::string& str) const
+    {
+        return std::equal(m_uidToken.cbegin(), m_uidToken.cend(), str.cbegin());
     }
 
     std::string UidIdentifierProcessor::formatExpanded(const std::string& suffix)
