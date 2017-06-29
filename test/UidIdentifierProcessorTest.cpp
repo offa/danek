@@ -113,6 +113,7 @@ TEST_F(UidIdentifierProcessorTest, expandWithWithouthUidSuffixThrows)
     StringBuffer str5{"uid-123-"};
     StringBuffer str6{"uid-123--a"};
     StringBuffer str7{"uid-123-456a"};
+    StringBuffer str8{"uid-9"};
 
     EXPECT_THROW(processor->expand(str), ConfigurationException);
     EXPECT_THROW(processor->expand(str2), ConfigurationException);
@@ -121,6 +122,7 @@ TEST_F(UidIdentifierProcessorTest, expandWithWithouthUidSuffixThrows)
     EXPECT_THROW(processor->expand(str5), ConfigurationException);
     EXPECT_THROW(processor->expand(str6), ConfigurationException);
     EXPECT_THROW(processor->expand(str7), ConfigurationException);
+    EXPECT_THROW(processor->expand(str8), ConfigurationException);
 }
 
 TEST_F(UidIdentifierProcessorTest, unexpandString)

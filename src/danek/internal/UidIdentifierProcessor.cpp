@@ -124,13 +124,13 @@ namespace danek
             ++count;
         }
 
-        if (*itr == '\0' || *itr != '-')
+        if (itr == spelling.cend() || *itr != '-')
         {
             // illegal: "uid-<digits>" or "uid-<digits>foo"
             throw ConfigurationException(errorMessage);
         }
         std::advance(itr, 1); // point to just after "uid-<digits>-"
-        if (*itr == '\0')
+        if (itr == spelling.cend())
         {
             // illegal: "uid-<digits>-"
             throw ConfigurationException(errorMessage);
