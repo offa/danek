@@ -109,10 +109,10 @@ namespace danek
             throw ConfigurationException(errorMessage);
         }
 
-        const auto tokenSkipped = std::next(spelling.cbegin(), m_uidToken.size());
-        auto itr = std::find_if_not(tokenSkipped, spelling.cend(), [](auto v) { return std::isdigit(v); });
+        const auto startPayload = std::next(spelling.cbegin(), m_uidToken.size());
+        auto itr = std::find_if_not(startPayload, spelling.cend(), [](auto v) { return std::isdigit(v); });
 
-        if( itr == tokenSkipped )
+        if( itr == startPayload )
         {
             // "uid-foo"  --> "uid-<digits>-foo"
             return formatExpanded(std::string(itr, spelling.cend()));
