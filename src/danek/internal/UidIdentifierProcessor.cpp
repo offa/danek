@@ -102,35 +102,19 @@ namespace danek
             return spelling;
         }
 
-        const std::string errorMessage = "'" + spelling + "' is not a legal identifier";
-
-        if( hasValidPrefix(spelling) == false )
-        {
-            throw ConfigurationException(errorMessage);
-        }
+        checkCondition(hasValidPrefix(spelling), spelling);
 
         const auto startPayload = std::next(spelling.cbegin(), m_uidToken.size());
-        auto itr = std::find_if_not(startPayload, spelling.cend(), [](auto v) { return std::isdigit(v); });
+        auto digitsEnd = std::find_if_not(startPayload, spelling.cend(), [](auto v) { return std::isdigit(v); });
 
-        if( itr == startPayload )
+        if( digitsEnd == startPayload )
         {
-            // "uid-foo"  --> "uid-<digits>-foo"
-            return formatExpanded(std::string(itr, spelling.cend()));
+            return formatExpanded(std::string(digitsEnd, spelling.cend()));
         }
 
-        if (itr == spelling.cend() || *itr != '-')
-        {
-            // illegal: "uid-<digits>" or "uid-<digits>foo"
-            throw ConfigurationException(errorMessage);
-        }
-        std::advance(itr, 1); // point to just after "uid-<digits>-"
+        checkCondition(hasValidPayload(digitsEnd, spelling.cend()), spelling);
 
-        if( hasValidPayload(itr, spelling.cend()) == false )
-        {
-            throw ConfigurationException{errorMessage};
-        }
-
-        return formatExpanded(std::string(itr, spelling.cend()));
+        return formatExpanded(std::string(std::next(digitsEnd), spelling.cend()));
     }
 
     const char* UidIdentifierProcessor::unexpand(const char* spelling, StringBuffer& buf) const
@@ -234,6 +218,14 @@ namespace danek
         ss << m_uidToken << std::setw(numDigits) << std::setfill('0') << (m_count++) << "-" << suffix;
 
         return ss.str();
+    }
+
+    void UidIdentifierProcessor::checkCondition(bool result, const std::string& input) const
+    {
+        if( result == false )
+        {
+            throw ConfigurationException{"'" + input + "' is not a legal identifier"};
+        }
     }
 
 }

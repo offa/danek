@@ -50,10 +50,16 @@ namespace danek
         template<class Itr>
         bool hasValidPayload(Itr begin, Itr end) const
         {
-            return ( std::distance(begin, end) > 0 ) && ( *begin != '-' ) && ( std::isdigit(*begin) == false );
+            if( (begin == end) || (*begin != '-') )
+            {
+                return false;
+            }
+            const auto itr = std::next(begin);
+            return ( std::distance(itr, end) > 0 ) && ( *itr != '-' ) && ( std::isdigit(*itr) == false );
         }
 
         std::string formatExpanded(const std::string& suffix);
+        void checkCondition(bool result, const std::string& input) const;
 
 
         std::size_t m_count;
