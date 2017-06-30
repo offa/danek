@@ -109,15 +109,14 @@ namespace danek
             throw ConfigurationException(errorMessage);
         }
 
-        auto itr = std::next(spelling.cbegin(), m_uidToken.size()); // skip over "uid-"
+        const auto tokenSkipped = std::next(spelling.cbegin(), m_uidToken.size());
+        auto itr = std::find_if_not(tokenSkipped, spelling.cend(), [](auto v) { return std::isdigit(v); });
 
-        if( std::isdigit(*itr) == false )
+        if( itr == tokenSkipped )
         {
             // "uid-foo"  --> "uid-<digits>-foo"
             return formatExpanded(std::string(itr, spelling.cend()));
         }
-
-        itr = std::find_if_not(itr, spelling.cend(), [](auto v) { return std::isdigit(v); });
 
         if (itr == spelling.cend() || *itr != '-')
         {
