@@ -26,6 +26,7 @@
 #include "danek/internal/Compat.h"
 #include "danek/ConfigurationException.h"
 #include "danek/StringVector.h"
+#include <algorithm>
 #include <sstream>
 #include <iomanip>
 #include <cctype>
@@ -103,8 +104,7 @@ namespace danek
 
         const std::string errorMessage = "'" + spelling + "' is not a legal identifier";
 
-        // Check for "uid-" (with no suffix) and "uid--foo", because that is illegal
-        if( spelling == m_uidToken || spelling.at(m_uidToken.size()) == '-' )
+        if( hasValidPrefix(spelling) == false )
         {
             throw ConfigurationException(errorMessage);
         }
@@ -117,13 +117,7 @@ namespace danek
             return formatExpanded(std::string(itr, spelling.cend()));
         }
 
-        std::size_t count = 0;
-
-        while( std::isdigit(*itr) == true )
-        {
-            std::advance(itr, 1);
-            ++count;
-        }
+        itr = std::find_if_not(itr, spelling.cend(), [](auto v) { return std::isdigit(v); });
 
         if (itr == spelling.cend() || *itr != '-')
         {
@@ -235,6 +229,11 @@ namespace danek
     bool UidIdentifierProcessor::startsWithUidToken(const std::string& str) const
     {
         return std::equal(m_uidToken.cbegin(), m_uidToken.cend(), str.cbegin());
+    }
+
+    bool UidIdentifierProcessor::hasValidPrefix(const std::string& str) const
+    {
+        return ( str != m_uidToken ) && ( str.at(m_uidToken.size()) != '-' );
     }
 
     std::string UidIdentifierProcessor::formatExpanded(const std::string& suffix)
