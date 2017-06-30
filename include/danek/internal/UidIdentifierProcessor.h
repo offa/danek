@@ -46,6 +46,13 @@ namespace danek
 
         bool startsWithUidToken(const std::string& str) const;
         bool hasValidPrefix(const std::string& str) const;
+
+        template<class Itr>
+        bool hasValidPayload(Itr begin, Itr end) const
+        {
+            return ( std::distance(begin, end) > 0 ) && ( *begin != '-' ) && ( std::isdigit(*begin) == false );
+        }
+
         std::string formatExpanded(const std::string& suffix);
 
 

@@ -124,20 +124,10 @@ namespace danek
             throw ConfigurationException(errorMessage);
         }
         std::advance(itr, 1); // point to just after "uid-<digits>-"
-        if (itr == spelling.cend())
+
+        if( hasValidPayload(itr, spelling.cend()) == false )
         {
-            // illegal: "uid-<digits>-"
-            throw ConfigurationException(errorMessage);
-        }
-        if (*itr == '-')
-        {
-            // illegal: "uid-<digits>--"
-            throw ConfigurationException(errorMessage);
-        }
-        if( std::isdigit(*(itr)) == true )
-        {
-            // illegal: "uid-<digits>-<digits>foo"
-            throw ConfigurationException(errorMessage);
+            throw ConfigurationException{errorMessage};
         }
 
         return formatExpanded(std::string(itr, spelling.cend()));
