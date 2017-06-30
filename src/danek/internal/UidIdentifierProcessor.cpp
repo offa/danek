@@ -28,6 +28,7 @@
 #include "danek/StringVector.h"
 #include <sstream>
 #include <iomanip>
+#include <cctype>
 #include <string.h>
 #include <ctype.h>
 #include <stdio.h>
@@ -110,7 +111,7 @@ namespace danek
 
         auto itr = std::next(spelling.cbegin(), m_uidToken.size()); // skip over "uid-"
 
-        if (!isdigit(*itr))
+        if( std::isdigit(*itr) == false )
         {
             // "uid-foo"  --> "uid-<digits>-foo"
             return formatExpanded(std::string(itr, spelling.cend()));
@@ -118,7 +119,7 @@ namespace danek
 
         std::size_t count = 0;
 
-        while (isdigit(*itr))
+        while( std::isdigit(*itr) == true )
         {
             std::advance(itr, 1);
             ++count;
@@ -140,7 +141,7 @@ namespace danek
             // illegal: "uid-<digits>--"
             throw ConfigurationException(errorMessage);
         }
-        if (isdigit(*(itr)))
+        if( std::isdigit(*(itr)) == true )
         {
             // illegal: "uid-<digits>-<digits>foo"
             throw ConfigurationException(errorMessage);
