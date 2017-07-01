@@ -66,7 +66,7 @@ namespace danek
         using OItr = std::ostream_iterator<std::string>;
 
         const auto scopes = util::splitScopes(spelling);
-        const auto f = [this](auto s) { return expandOne(s); };
+        const auto f = [this](auto s) { return this->expandOne(s); };
         std::ostringstream result;
 
         std::transform(scopes.cbegin(), std::prev(scopes.cend()), OItr{result, "."}, f);
