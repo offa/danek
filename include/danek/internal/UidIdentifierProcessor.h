@@ -59,6 +59,7 @@ namespace danek
         }
 
         std::string formatExpanded(const std::string& suffix);
+        std::string formatUnexpanded(const std::string& suffix) const;
         void checkCondition(bool result, const std::string& input) const;
 
 

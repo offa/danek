@@ -177,10 +177,8 @@ namespace danek
             return spelling;
         }
 
-        std::string suffix(std::next(digitsEnd), spelling.cend()); // deep copy from just after "uid-<digits>-"
-        buf.clear();
-        buf << "uid-" << suffix;
-        return buf.str().c_str();
+        buf = formatUnexpanded(std::string(std::next(digitsEnd), spelling.cend()));
+        return formatUnexpanded(std::string(std::next(digitsEnd), spelling.cend()));
     }
 
     bool UidIdentifierProcessor::startsWithUidToken(const std::string& str) const
@@ -202,6 +200,11 @@ namespace danek
         ss << m_uidToken << std::setw(numDigits) << std::setfill('0') << (m_count++) << "-" << suffix;
 
         return ss.str();
+    }
+
+    std::string UidIdentifierProcessor::formatUnexpanded(const std::string& suffix) const
+    {
+        return m_uidToken + suffix;
     }
 
     void UidIdentifierProcessor::checkCondition(bool result, const std::string& input) const
