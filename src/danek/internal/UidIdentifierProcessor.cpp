@@ -62,29 +62,27 @@ namespace danek
             return spelling;
         }
 
-        //--------
         // Let's break apart the scoped name, expand each local part
         // and then recombine the parts into an expanded scoped name.
-        //--------
-        StringBuffer buf;
         StringBuffer msg;
         std::ostringstream result;
 
-        StringVector vec{util::splitScopes(spelling)};
+        const auto vec{util::splitScopes(spelling)};
         const int len = vec.size();
+
         for (int i = 0; i < len; ++i)
         {
-            buf = vec[i];
             try
             {
-                buf = expandOne(buf.str());
+                const auto buf = expandOne(vec[i]);
+                result << buf;
+
             }
             catch (const ConfigurationException&)
             {
-                msg << "'" << spelling << "' is not a legal identifier";
-                throw ConfigurationException(msg.str());
+                checkCondition(false, spelling);
             }
-            result << buf.str();
+
             if (i < len - 1)
             {
                 result << '.';
