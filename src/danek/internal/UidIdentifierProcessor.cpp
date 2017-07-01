@@ -169,25 +169,15 @@ namespace danek
             return spelling;
         }
 
-        const char* ptr = spelling.c_str();
-        ptr += 4; // skip over "uid-"
-        std::size_t count = 0;
+        const auto startPayload = std::next(spelling.cbegin(), m_uidToken.size());
+        auto digitsEnd = std::find_if_not(startPayload, spelling.cend(), [](auto v) { return std::isdigit(v); });
 
-        while (isdigit(*ptr))
-        {
-            ++ptr;
-            ++count;
-        }
-
-        if (count == 0 || *ptr != '-')
+        if( digitsEnd == startPayload )
         {
             return spelling;
         }
 
-        //--------
-        // Okay, let's returned a modified spelling.
-        //--------
-        std::string suffix = (ptr + 1); // deep copy from just after "uid-<digits>-"
+        std::string suffix(std::next(digitsEnd), spelling.cend()); // deep copy from just after "uid-<digits>-"
         buf.clear();
         buf << "uid-" << suffix;
         return buf.str().c_str();
