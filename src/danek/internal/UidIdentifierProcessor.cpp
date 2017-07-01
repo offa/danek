@@ -137,12 +137,12 @@ namespace danek
         //--------
         StringBuffer result;
         StringBuffer msg;
-        const char* str;
 
         StringVector vec{util::splitScopes(spelling)};
         const int len = vec.size();
         for (int i = 0; i < len; ++i)
         {
+            std::string str;
             try
             {
                 str = unexpandOne(vec[i].c_str(), buf);
@@ -162,7 +162,7 @@ namespace danek
         return buf.str().c_str();
     }
 
-    const char* UidIdentifierProcessor::unexpandOne(const char* spelling, StringBuffer& buf) const
+    std::string UidIdentifierProcessor::unexpandOne(const char* spelling, StringBuffer& buf) const
     {
         //--------
         // If spelling does not start with "uid-<digits>-" then do nothing.
