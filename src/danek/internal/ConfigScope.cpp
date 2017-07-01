@@ -226,12 +226,12 @@ namespace danek
 
         StringBuffer buf;
         UidIdentifierProcessor uidProc;
-        const char* unexpandedName = uidProc.unexpand(name.c_str(), buf);
+        const auto unexpandedName = uidProc.unexpand(name.c_str(), buf);
 
         for (std::size_t i = 0; i < filterPatterns.size(); ++i)
         {
             const char* pattern = filterPatterns[i].c_str();
-            if (patternMatch(unexpandedName, pattern))
+            if (patternMatch(unexpandedName.c_str(), pattern))
             {
                 return true;
             }

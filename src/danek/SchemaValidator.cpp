@@ -349,8 +349,8 @@ namespace danek
         for (int i = 0; i < len; i++)
         {
             const char* iName = itemNames[i].data();
-            const char* unexpandedName = cfg->unexpandUid(iName, buf);
-            if (shouldIgnore(cfg, scope, iName, unexpandedName))
+            const std::string unexpandedName = cfg->unexpandUid(iName, buf);
+            if (shouldIgnore(cfg, scope, iName, unexpandedName.c_str()))
             {
                 if (m_wantDiagnostics)
                 {
@@ -358,7 +358,7 @@ namespace danek
                 }
                 continue;
             }
-            SchemaIdRuleInfo* idRule = findIdRule(unexpandedName);
+            SchemaIdRuleInfo* idRule = findIdRule(unexpandedName.c_str());
             if (idRule == nullptr)
             {
                 //--------

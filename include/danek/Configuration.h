@@ -97,7 +97,7 @@ namespace danek
 
         virtual bool uidEquals(const char* s1, const char* s2) const = 0;
         virtual void expandUid(StringBuffer& spelling) = 0;
-        virtual const char* unexpandUid(const char* spelling, StringBuffer& buf) const = 0;
+        virtual std::string unexpandUid(const char* spelling, StringBuffer& buf) const = 0;
 
         //--------
         // Dump part or all of the configuration

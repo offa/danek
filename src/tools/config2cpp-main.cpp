@@ -156,11 +156,11 @@ void calculateSchema(const Configuration* cfg, const StringVector& namesList,
         }
         else
         {
-            const char* uName = cfg->unexpandUid(name, buf);
-            if (!doesVectorcontainString(uidNames, uName))
+            const auto uName = cfg->unexpandUid(name, buf);
+            if (!doesVectorcontainString(uidNames, uName.c_str()))
             {
                 uidNames.push_back(uName);
-                calculateRuleForName(cfg, name, uName, wildcardedNamesAndTypes, rule);
+                calculateRuleForName(cfg, name, uName.c_str(), wildcardedNamesAndTypes, rule);
                 schema.push_back(rule.str());
             }
         }
@@ -175,8 +175,8 @@ bool doesPatternMatchAnyUnexpandedNameInList(
     int len = namesList.size();
     for (int i = 0; i < len; i++)
     {
-        const char* uName = cfg->unexpandUid(namesList[i].c_str(), buf);
-        if (patternMatch(uName, pattern))
+        const auto uName = cfg->unexpandUid(namesList[i].c_str(), buf);
+        if (patternMatch(uName.c_str(), pattern))
         {
             return true;
         }

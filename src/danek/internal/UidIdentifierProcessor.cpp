@@ -117,7 +117,7 @@ namespace danek
         return formatExpanded(std::string(std::next(digitsEnd), spelling.cend()));
     }
 
-    const char* UidIdentifierProcessor::unexpand(const char* spelling, StringBuffer& buf) const
+    std::string UidIdentifierProcessor::unexpand(const char* spelling, StringBuffer& buf) const
     {
         //--------
         // Common case optimizations
