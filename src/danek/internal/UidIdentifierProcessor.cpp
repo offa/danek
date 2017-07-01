@@ -28,6 +28,7 @@
 #include "danek/StringVector.h"
 #include <algorithm>
 #include <sstream>
+#include <iterator>
 #include <iomanip>
 #include <cctype>
 #include <string.h>
@@ -51,7 +52,6 @@ namespace danek
 
     std::string UidIdentifierProcessor::expand(const std::string& spelling)
     {
-        // Common case optimizations
         if( spelling.find('.') == std::string::npos )
         {
             return expandOne(spelling);
@@ -62,20 +62,14 @@ namespace danek
             return spelling;
         }
 
-        // Let's break apart the scoped name, expand each local part
-        // and then recombine the parts into an expanded scoped name.
-        std::ostringstream result;
+        using OItr = std::ostream_iterator<std::string>;
+
         const auto scopes = util::splitScopes(spelling);
+        const auto f = [this](auto s) { return expandOne(s); };
+        std::ostringstream result;
 
-        for( std::size_t i=0; i<scopes.size(); ++i )
-        {
-            result << expandOne(scopes[i]);
-
-            if( i < scopes.size() - 1 )
-            {
-                result << '.';
-            }
-        }
+        std::transform(scopes.cbegin(), std::prev(scopes.cend()), OItr{result, "."}, f);
+        std::transform(std::prev(scopes.cend()), scopes.cend(), OItr{result}, f);
 
         return result.str();
     }
