@@ -65,13 +65,13 @@ namespace danek
         // Let's break apart the scoped name, expand each local part
         // and then recombine the parts into an expanded scoped name.
         std::ostringstream result;
-        const auto vec = util::splitScopes(spelling);
+        const auto scopes = util::splitScopes(spelling);
 
-        for( std::size_t i=0; i<vec.size(); ++i )
+        for( std::size_t i=0; i<scopes.size(); ++i )
         {
-            result << expandOne(vec[i]);
+            result << expandOne(scopes[i]);
 
-            if (i < vec.size() - 1)
+            if( i < scopes.size() - 1 )
             {
                 result << '.';
             }
