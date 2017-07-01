@@ -51,14 +51,13 @@ namespace danek
 
     std::string UidIdentifierProcessor::expand(const std::string& spelling)
     {
-        //--------
         // Common case optimizations
-        //--------
-        if (strchr(spelling.c_str(), '.') == nullptr)
+        if( spelling.find('.') == std::string::npos )
         {
             return expandOne(spelling);
         }
-        if (strstr(spelling.c_str(), "uid-") == nullptr)
+
+        if( spelling.find(m_uidToken) == std::string::npos )
         {
             return spelling;
         }
