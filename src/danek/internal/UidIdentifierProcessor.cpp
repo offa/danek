@@ -35,20 +35,21 @@
 #include <ctype.h>
 #include <stdio.h>
 
+//----------------------------------------------------------------------
+// Spelling must be in one of the following forms:
+//      - "foo"                 -->  "foo"
+//      - "uid-<foo>"           -->  "uid-<digits>-<foo>"
+//      - "uid-<digits>-<foo>"  -->  "uid-<new-digits>-<foo>"
+// where "<foo>" does NOT start with a digit or "-"
+//----------------------------------------------------------------------
+
+
 namespace danek
 {
 
     UidIdentifierProcessor::UidIdentifierProcessor() : m_count(0), m_uidToken("uid-")
     {
     }
-
-    //----------------------------------------------------------------------
-    // Spelling must be in one of the following forms:
-    //      - "foo"                 -->  "foo"
-    //      - "uid-<foo>"           -->  "uid-<digits>-<foo>"
-    //      - "uid-<digits>-<foo>"  -->  "uid-<new-digits>-<foo>"
-    // where "<foo>" does NOT start with a digit or "-"
-    //----------------------------------------------------------------------
 
     std::string UidIdentifierProcessor::expand(const std::string& spelling)
     {
