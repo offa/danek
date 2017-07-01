@@ -163,26 +163,26 @@ namespace danek
     }
 
     const char* UidIdentifierProcessor::unexpandOne(const char* spelling, StringBuffer& buf) const
-
     {
-        int count;
-        const char* ptr;
-
         //--------
         // If spelling does not start with "uid-<digits>-" then do nothing.
         //--------
-        ptr = spelling;
+        const char* ptr = spelling;
+
         if (strncmp(ptr, "uid-", 4) != 0)
         {
             return spelling;
         }
+
         ptr += 4; // skip over "uid-"
-        count = 0;
+        std::size_t count = 0;
+
         while (isdigit(*ptr))
         {
             ++ptr;
             ++count;
         }
+
         if (count == 0 || *ptr != '-')
         {
             return spelling;
@@ -191,9 +191,7 @@ namespace danek
         //--------
         // Okay, let's returned a modified spelling.
         //--------
-        StringBuffer suffix;
-
-        suffix = (ptr + 1); // deep copy from just after "uid-<digits>-"
+        std::string suffix = (ptr + 1); // deep copy from just after "uid-<digits>-"
         buf.clear();
         buf << "uid-" << suffix;
         return buf.str().c_str();
