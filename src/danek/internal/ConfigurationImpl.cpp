@@ -2355,7 +2355,7 @@ namespace danek
 
     void ConfigurationImpl::expandUid(StringBuffer& spelling)
     {
-        m_uidIdentifierProcessor.expand(spelling);
+        spelling = m_uidIdentifierProcessor.expand(spelling.str());
     }
 
     std::string ConfigurationImpl::unexpandUid(const char* spelling, StringBuffer& buf) const

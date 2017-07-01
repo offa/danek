@@ -559,7 +559,7 @@ namespace danek
             {
                 try
                 {
-                    m_uidIdentifierProcessor->expand(spelling);
+                    spelling = m_uidIdentifierProcessor->expand(spelling.str());
                     token.reset(lex::LEX_IDENT_SYM, lineNum, spelling.str());
                 }
                 catch (const ConfigurationException&)

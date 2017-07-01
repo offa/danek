@@ -33,10 +33,9 @@ namespace danek
 
         UidIdentifierDummyProcessor() = default;
 
-        void expand(StringBuffer& spelling) override
+        std::string expand(const std::string& spelling) override
         {
-            StringBuffer dummy = spelling;
-            UidIdentifierProcessor::expand(dummy);
+            return spelling;
         }
 
         std::string unexpand(const char* spelling, StringBuffer&) const override

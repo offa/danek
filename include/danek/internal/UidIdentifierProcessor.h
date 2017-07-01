@@ -35,7 +35,7 @@ namespace danek
         UidIdentifierProcessor();
         virtual ~UidIdentifierProcessor() = default;
 
-        virtual void expand(StringBuffer& spelling);
+        virtual std::string expand(const std::string& spelling);
         virtual std::string unexpand(const char* spelling, StringBuffer& buf) const;
 
 

@@ -49,19 +49,18 @@ namespace danek
     // where "<foo>" does NOT start with a digit or "-"
     //----------------------------------------------------------------------
 
-    void UidIdentifierProcessor::expand(StringBuffer& spelling)
+    std::string UidIdentifierProcessor::expand(const std::string& spelling)
     {
         //--------
         // Common case optimizations
         //--------
-        if (strchr(spelling.str().c_str(), '.') == nullptr)
+        if (strchr(spelling.c_str(), '.') == nullptr)
         {
-            spelling = expandOne(spelling.str());
-            return;
+            return expandOne(spelling);
         }
-        if (strstr(spelling.str().c_str(), "uid-") == nullptr)
+        if (strstr(spelling.c_str(), "uid-") == nullptr)
         {
-            return;
+            return spelling;
         }
 
         //--------
@@ -70,9 +69,9 @@ namespace danek
         //--------
         StringBuffer buf;
         StringBuffer msg;
-        StringBuffer result;
+        std::ostringstream result;
 
-        StringVector vec{util::splitScopes(spelling.str())};
+        StringVector vec{util::splitScopes(spelling)};
         const int len = vec.size();
         for (int i = 0; i < len; ++i)
         {
@@ -86,13 +85,13 @@ namespace danek
                 msg << "'" << spelling << "' is not a legal identifier";
                 throw ConfigurationException(msg.str());
             }
-            result.append(buf);
+            result << buf.str();
             if (i < len - 1)
             {
-                result.append(".");
+                result << '.';
             }
         }
-        spelling = result;
+        return result.str();
     }
 
     std::string UidIdentifierProcessor::expandOne(const std::string& spelling)

@@ -44,85 +44,60 @@ public:
 
 TEST_F(UidIdentifierProcessorTest, expandString)
 {
-    StringBuffer str{"abc"};
-
-    processor->expand(str);
-    EXPECT_THAT(str.str(), StrEq("abc"));
+    const auto s = processor->expand("abc");
+    EXPECT_THAT(s, StrEq("abc"));
 }
 
 TEST_F(UidIdentifierProcessorTest, expandWithScope)
 {
-    StringBuffer str{"a.b.c"};
-
-    processor->expand(str);
-    EXPECT_THAT(str.str(), StrEq("a.b.c"));
+    const auto s = processor->expand("a.b.c");
+    EXPECT_THAT(s, StrEq("a.b.c"));
 }
 
 TEST_F(UidIdentifierProcessorTest, expandWithScopeAndUid)
 {
-    StringBuffer str{"a.uid-b.uid-0013-c"};
-
-    processor->expand(str);
-    EXPECT_THAT(str.str(), StrEq("a.uid-000000000-b.uid-000000001-c"));
+    const auto s = processor->expand("a.uid-b.uid-0013-c");
+    EXPECT_THAT(s, StrEq("a.uid-000000000-b.uid-000000001-c"));
 }
 
 TEST_F(UidIdentifierProcessorTest, expandWithUid)
 {
-    StringBuffer str{"uid-xyz"};
-
-    processor->expand(str);
-    EXPECT_THAT(str.str(), StrEq("uid-000000000-xyz"));
+    const auto s = processor->expand("uid-xyz");
+    EXPECT_THAT(s, StrEq("uid-000000000-xyz"));
 }
 
 TEST_F(UidIdentifierProcessorTest, expandWithUidIncreasesUid)
 {
-    StringBuffer str{"uid-x.uid-y.uid-z"};
-
-    processor->expand(str);
-    EXPECT_THAT(str.str(), StrEq("uid-000000000-x.uid-000000001-y.uid-000000002-z"));
+    const auto s = processor->expand("uid-x.uid-y.uid-z");
+    EXPECT_THAT(s, StrEq("uid-000000000-x.uid-000000001-y.uid-000000002-z"));
 }
 
 TEST_F(UidIdentifierProcessorTest, expandMaintaintsUidState)
 {
-    StringBuffer str{"uid-x"};
-    StringBuffer str2{"uid-y"};
-    StringBuffer str3{"uid-z33"};
-
-    processor->expand(str);
-    processor->expand(str2);
-    processor->expand(str3);
-    EXPECT_THAT(str.str(), StrEq("uid-000000000-x"));
-    EXPECT_THAT(str2.str(), StrEq("uid-000000001-y"));
-    EXPECT_THAT(str3.str(), StrEq("uid-000000002-z33"));
+    const auto s = processor->expand("uid-x");
+    const auto s1 = processor->expand("uid-y");
+    const auto s2 = processor->expand("uid-z33");
+    EXPECT_THAT(s , StrEq("uid-000000000-x"));
+    EXPECT_THAT(s1, StrEq("uid-000000001-y"));
+    EXPECT_THAT(s2, StrEq("uid-000000002-z33"));
 }
 
 TEST_F(UidIdentifierProcessorTest, expandWithUidAndNumber)
 {
-    StringBuffer str{"uid-01234-xyz12"};
-
-    processor->expand(str);
-    EXPECT_THAT(str.str(), StrEq("uid-000000000-xyz12"));
+    const auto s = processor->expand("uid-01234-xyz12");
+    EXPECT_THAT(s, StrEq("uid-000000000-xyz12"));
 }
 
 TEST_F(UidIdentifierProcessorTest, expandWithWithouthUidSuffixThrows)
 {
-    StringBuffer str{"uid-"};
-    StringBuffer str2{"uid--"};
-    StringBuffer str3{"uid--abc"};
-    StringBuffer str4{"uid-9abc"};
-    StringBuffer str5{"uid-123-"};
-    StringBuffer str6{"uid-123--a"};
-    StringBuffer str7{"uid-123-456a"};
-    StringBuffer str8{"uid-9"};
-
-    EXPECT_THROW(processor->expand(str), ConfigurationException);
-    EXPECT_THROW(processor->expand(str2), ConfigurationException);
-    EXPECT_THROW(processor->expand(str3), ConfigurationException);
-    EXPECT_THROW(processor->expand(str4), ConfigurationException);
-    EXPECT_THROW(processor->expand(str5), ConfigurationException);
-    EXPECT_THROW(processor->expand(str6), ConfigurationException);
-    EXPECT_THROW(processor->expand(str7), ConfigurationException);
-    EXPECT_THROW(processor->expand(str8), ConfigurationException);
+    EXPECT_THROW(processor->expand("uid-"), ConfigurationException);
+    EXPECT_THROW(processor->expand("uid--"), ConfigurationException);
+    EXPECT_THROW(processor->expand("uid--abc"), ConfigurationException);
+    EXPECT_THROW(processor->expand("uid-9abc"), ConfigurationException);
+    EXPECT_THROW(processor->expand("uid-123-"), ConfigurationException);
+    EXPECT_THROW(processor->expand("uid-123--a"), ConfigurationException);
+    EXPECT_THROW(processor->expand("uid-123-456a"), ConfigurationException);
+    EXPECT_THROW(processor->expand("uid-9"), ConfigurationException);
 }
 
 TEST_F(UidIdentifierProcessorTest, unexpandString)
