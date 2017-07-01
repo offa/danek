@@ -164,16 +164,12 @@ namespace danek
 
     std::string UidIdentifierProcessor::unexpandOne(const std::string& spelling, StringBuffer& buf) const
     {
-        //--------
-        // If spelling does not start with "uid-<digits>-" then do nothing.
-        //--------
-        const char* ptr = spelling.c_str();
-
         if( startsWithUidToken(spelling) == false )
         {
             return spelling;
         }
 
+        const char* ptr = spelling.c_str();
         ptr += 4; // skip over "uid-"
         std::size_t count = 0;
 
