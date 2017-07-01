@@ -124,7 +124,9 @@ namespace danek
         //--------
         if (strchr(spelling, '.') == nullptr)
         {
-            return unexpandOne(spelling, buf);
+            const auto result = unexpandOne(spelling);
+            buf = result;
+            return result;
         }
         if (strstr(spelling, "uid-") == nullptr)
         {
@@ -145,7 +147,8 @@ namespace danek
             std::string str;
             try
             {
-                str = unexpandOne(vec[i].c_str(), buf);
+                str = unexpandOne(vec[i]);
+                buf = str;
             }
             catch (const ConfigurationException&)
             {
@@ -162,7 +165,7 @@ namespace danek
         return buf.str().c_str();
     }
 
-    std::string UidIdentifierProcessor::unexpandOne(const std::string& spelling, StringBuffer& buf) const
+    std::string UidIdentifierProcessor::unexpandOne(const std::string& spelling) const
     {
         if( startsWithUidToken(spelling) == false )
         {
@@ -177,7 +180,6 @@ namespace danek
             return spelling;
         }
 
-        buf = formatUnexpanded(std::string(std::next(digitsEnd), spelling.cend()));
         return formatUnexpanded(std::string(std::next(digitsEnd), spelling.cend()));
     }
 
