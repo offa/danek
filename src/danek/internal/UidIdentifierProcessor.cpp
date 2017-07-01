@@ -66,11 +66,9 @@ namespace danek
         // and then recombine the parts into an expanded scoped name.
         StringBuffer msg;
         std::ostringstream result;
+        const auto vec = util::splitScopes(spelling);
 
-        const auto vec{util::splitScopes(spelling)};
-        const int len = vec.size();
-
-        for (int i = 0; i < len; ++i)
+        for( std::size_t i=0; i<vec.size(); ++i )
         {
             try
             {
@@ -83,7 +81,7 @@ namespace danek
                 checkCondition(false, spelling);
             }
 
-            if (i < len - 1)
+            if (i < vec.size() - 1)
             {
                 result << '.';
             }
