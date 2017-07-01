@@ -162,14 +162,14 @@ namespace danek
         return buf.str().c_str();
     }
 
-    std::string UidIdentifierProcessor::unexpandOne(const char* spelling, StringBuffer& buf) const
+    std::string UidIdentifierProcessor::unexpandOne(const std::string& spelling, StringBuffer& buf) const
     {
         //--------
         // If spelling does not start with "uid-<digits>-" then do nothing.
         //--------
-        const char* ptr = spelling;
+        const char* ptr = spelling.c_str();
 
-        if (strncmp(ptr, "uid-", 4) != 0)
+        if( startsWithUidToken(spelling) == false )
         {
             return spelling;
         }

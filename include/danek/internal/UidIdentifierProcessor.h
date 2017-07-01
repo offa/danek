@@ -42,7 +42,7 @@ namespace danek
     private:
 
         std::string expandOne(const std::string& spelling);
-        std::string unexpandOne(const char* spelling, StringBuffer& buf) const;
+        std::string unexpandOne(const std::string& spelling, StringBuffer& buf) const;
 
         bool startsWithUidToken(const std::string& str) const;
         bool hasValidPrefix(const std::string& str) const;
