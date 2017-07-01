@@ -64,28 +64,19 @@ namespace danek
 
         // Let's break apart the scoped name, expand each local part
         // and then recombine the parts into an expanded scoped name.
-        StringBuffer msg;
         std::ostringstream result;
         const auto vec = util::splitScopes(spelling);
 
         for( std::size_t i=0; i<vec.size(); ++i )
         {
-            try
-            {
-                const auto buf = expandOne(vec[i]);
-                result << buf;
-
-            }
-            catch (const ConfigurationException&)
-            {
-                checkCondition(false, spelling);
-            }
+            result << expandOne(vec[i]);
 
             if (i < vec.size() - 1)
             {
                 result << '.';
             }
         }
+
         return result.str();
     }
 
