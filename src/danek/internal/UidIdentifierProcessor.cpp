@@ -111,13 +111,10 @@ namespace danek
             return spelling;
         }
 
-        // Let's break apart the scoped name, unexpand each local part
-        // and then recombine the parts into an unexpanded scoped name.
         std::ostringstream result;
-        StringBuffer msg;
-
         StringVector vec{util::splitScopes(spelling)};
         const int len = vec.size();
+
         for (int i = 0; i < len; ++i)
         {
             const std::string str = unexpandOne(vec[i]);
