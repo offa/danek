@@ -31,8 +31,6 @@ namespace danek
     {
     public:
 
-        UidIdentifierDummyProcessor() = default;
-
         std::string expand(const std::string& spelling) override
         {
             return spelling;
@@ -40,8 +38,6 @@ namespace danek
 
         std::string unexpand(const std::string& spelling, StringBuffer&) const override
         {
-            StringBuffer dummyBuf{spelling};
-            (void) UidIdentifierProcessor::unexpand(spelling, dummyBuf);
             return spelling;
         }
 
