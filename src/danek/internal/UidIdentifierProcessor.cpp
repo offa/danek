@@ -111,10 +111,8 @@ namespace danek
             return spelling;
         }
 
-        //--------
         // Let's break apart the scoped name, unexpand each local part
         // and then recombine the parts into an unexpanded scoped name.
-        //--------
         StringBuffer result;
         StringBuffer msg;
 
@@ -140,7 +138,7 @@ namespace danek
             }
         }
         buf = result.str();
-        return buf.str().c_str();
+        return buf.str();
     }
 
     std::string UidIdentifierProcessor::unexpandOne(const std::string& spelling) const
