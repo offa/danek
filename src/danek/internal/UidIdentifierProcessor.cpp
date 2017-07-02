@@ -120,18 +120,10 @@ namespace danek
         const int len = vec.size();
         for (int i = 0; i < len; ++i)
         {
-            std::string str;
-            try
-            {
-                str = unexpandOne(vec[i]);
-                buf = str;
-            }
-            catch (const ConfigurationException&)
-            {
-                msg << "'" << spelling << "' is not a legal identifier";
-                throw ConfigurationException(msg.str());
-            }
+            const std::string str = unexpandOne(vec[i]);
+            buf = str;
             result.append(str);
+
             if (i < len - 1)
             {
                 result.append(".");
