@@ -97,18 +97,18 @@ namespace danek
         return formatExpanded(std::string(std::next(digitsEnd), spelling.cend()));
     }
 
-    std::string UidIdentifierProcessor::unexpand(const char* spelling, StringBuffer& buf) const
+    std::string UidIdentifierProcessor::unexpand(const std::string& spelling, StringBuffer& buf) const
     {
         //--------
         // Common case optimizations
         //--------
-        if (strchr(spelling, '.') == nullptr)
+        if (strchr(spelling.c_str(), '.') == nullptr)
         {
             const auto result = unexpandOne(spelling);
             buf = result;
             return result;
         }
-        if (strstr(spelling, "uid-") == nullptr)
+        if (strstr(spelling.c_str(), "uid-") == nullptr)
         {
             return spelling;
         }
