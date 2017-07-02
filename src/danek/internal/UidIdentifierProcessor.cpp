@@ -99,16 +99,14 @@ namespace danek
 
     std::string UidIdentifierProcessor::unexpand(const std::string& spelling, StringBuffer& buf) const
     {
-        //--------
-        // Common case optimizations
-        //--------
-        if (strchr(spelling.c_str(), '.') == nullptr)
+        if( spelling.find('.') == std::string::npos )
         {
             const auto result = unexpandOne(spelling);
             buf = result;
             return result;
         }
-        if (strstr(spelling.c_str(), "uid-") == nullptr)
+
+        if( spelling.find(m_uidToken) == std::string::npos )
         {
             return spelling;
         }
