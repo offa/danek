@@ -30,9 +30,6 @@
 #include <iterator>
 #include <iomanip>
 #include <cctype>
-#include <string.h>
-#include <ctype.h>
-#include <stdio.h>
 
 //----------------------------------------------------------------------
 // Spelling must be in one of the following forms:
