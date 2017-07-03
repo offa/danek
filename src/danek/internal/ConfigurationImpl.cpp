@@ -1452,38 +1452,29 @@ namespace danek
     bool ConfigurationImpl::isIntWithUnits(
         const char* str, const char** allowedUnits, int allowedUnitsSize) const
     {
-        char* unitSpelling;
-        int i;
-        int intVal;
-
-        //--------
         // See if it is in the form "<int> <units>"
-        //--------
-        unitSpelling = new char[strlen(str) + 1]; // big enough
-        i = sscanf(str, "%d %s", &intVal, unitSpelling);
-        if (i != 2)
+        std::stringstream ss{str};
+        int intVal;
+        std::string unitSpelling;
+
+        ss >> intVal >> unitSpelling;
+
+        if ( ss.fail() == true )
         {
-            delete[] unitSpelling;
             return false;
         }
 
-        //--------
         // The entry appears to be in the correct format. Find out
         // what the specified units are.
-        //--------
-        for (i = 0; i < allowedUnitsSize; i++)
+        for (int i = 0; i < allowedUnitsSize; i++)
         {
-            if (strcmp(unitSpelling, allowedUnits[i]) == 0)
+            if (strcmp(unitSpelling.c_str(), allowedUnits[i]) == 0)
             {
-                delete[] unitSpelling;
                 return true;
             }
         }
 
-        //--------
         // An unknown unit was specified.
-        //--------
-        delete[] unitSpelling;
         return false;
     }
 
