@@ -25,7 +25,6 @@
 #include "danek/internal/Util.h"
 #include "danek/internal/Compat.h"
 #include "danek/ConfigurationException.h"
-#include "danek/StringVector.h"
 #include <algorithm>
 #include <sstream>
 #include <iterator>
