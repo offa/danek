@@ -109,19 +109,15 @@ namespace danek
             return spelling;
         }
 
+        using OItr = std::ostream_iterator<std::string>;
+
+        const auto scopes =  util::splitScopes(spelling);
+        const auto f = [this](auto s) { return this->unexpandOne(s); };
         std::ostringstream result;
-        StringVector vec{util::splitScopes(spelling)};
-        const int len = vec.size();
 
-        for (int i = 0; i < len; ++i)
-        {
-            result << unexpandOne(vec[i]);
+        std::transform(scopes.cbegin(), std::prev(scopes.cend()), OItr{result, "."}, f);
+        std::transform(std::prev(scopes.cend()), scopes.cend(), OItr{result}, f);
 
-            if (i < len - 1)
-            {
-                result << '.';
-            }
-        }
         return result.str();
     }
 
