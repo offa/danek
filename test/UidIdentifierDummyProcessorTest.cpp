@@ -25,7 +25,6 @@
 #include <gmock/gmock.h>
 
 using danek::UidIdentifierDummyProcessor;
-using danek::StringBuffer;
 using namespace testing;
 
 class UidIdentifierDummyProcessorTest : public testing::Test

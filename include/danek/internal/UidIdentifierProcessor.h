@@ -23,7 +23,6 @@
 
 #pragma once
 
-#include "danek/StringBuffer.h"
 #include <string>
 
 namespace danek
