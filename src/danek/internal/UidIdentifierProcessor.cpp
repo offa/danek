@@ -23,7 +23,6 @@
 
 #include "danek/internal/UidIdentifierProcessor.h"
 #include "danek/internal/Util.h"
-#include "danek/internal/Compat.h"
 #include "danek/ConfigurationException.h"
 #include <algorithm>
 #include <sstream>
@@ -38,7 +37,6 @@
 //      - "uid-<digits>-<foo>"  -->  "uid-<new-digits>-<foo>"
 // where "<foo>" does NOT start with a digit or "-"
 //----------------------------------------------------------------------
-
 
 namespace danek
 {
@@ -147,7 +145,9 @@ namespace danek
 
     std::string UidIdentifierProcessor::formatExpanded(const std::string& suffix)
     {
-        compat::checkAssertion(m_count < 1000 * 1000 * 1000);
+        if( m_count >= 1000 * 1000 * 1000 ) {
+            throw std::domain_error{"Count has exceeded 9 digits"};
+        }
         constexpr std::size_t numDigits = 9;
 
         std::ostringstream ss;
