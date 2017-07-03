@@ -47,11 +47,6 @@ namespace danek
 
     std::string UidIdentifierProcessor::expand(const std::string& spelling)
     {
-        if( spelling.find('.') == std::string::npos )
-        {
-            return expandOne(spelling);
-        }
-
         if( spelling.find(m_uidToken) == std::string::npos )
         {
             return spelling;
@@ -93,11 +88,6 @@ namespace danek
 
     std::string UidIdentifierProcessor::unexpand(const std::string& spelling) const
     {
-        if( spelling.find('.') == std::string::npos )
-        {
-            return unexpandOne(spelling);
-        }
-
         if( spelling.find(m_uidToken) == std::string::npos )
         {
             return spelling;

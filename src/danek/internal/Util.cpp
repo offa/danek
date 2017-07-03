@@ -30,12 +30,13 @@ namespace util
 
     std::vector<std::string> splitScopes(const std::string& input)
     {
-        if( input.empty() )
+        constexpr auto delim = '.';
+
+        if( input.empty() == true || input.find(delim) == false )
         {
-            return { "" };
+            return { input };
         }
 
-        constexpr auto delim = '.';
         std::vector<std::string> tokens;
         std::stringstream ss{input};
         std::string token;
