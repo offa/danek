@@ -1359,25 +1359,23 @@ namespace danek
         const char* typeName, const char* str, const char** allowedUnits, int allowedUnitsSize,
         int& intResult, const char*& unitsResult) const
     {
-        char* unitSpelling;
-        int i;
-        int intVal;
         StringBuffer fullyScopedName;
         std::stringstream msg;
 
-        //--------
         // See if the string is in the form "<int> <units>"
-        //--------
-        unitSpelling = new char[strlen(str) + 1]; // big enough
-        i = sscanf(str, "%d %s", &intVal, unitSpelling);
-        if (i != 2)
+        std::stringstream ss{str};
+        int intVal;
+        std::string unitSpelling;
+
+        ss >> intVal >> unitSpelling;
+
+        if ( ss.fail() == true )
         {
-            delete[] unitSpelling;
             mergeNames(scope, localName, fullyScopedName);
             msg << fileName() << ": invalid " << typeName << " ('" << str << "') specified for '"
                 << fullyScopedName.str() << "': should be"
                 << " '<int> <units>' where <units> are";
-            for (i = 0; i < allowedUnitsSize; i++)
+            for (int i = 0; i < allowedUnitsSize; ++i)
             {
                 msg << " '" << allowedUnits[i] << "'";
                 if (i < allowedUnitsSize - 1)
@@ -1388,33 +1386,25 @@ namespace danek
             throw ConfigurationException(msg.str());
         }
 
-        //--------
         // The entry appears to be in the correct format. Find out
         // what the specified units are.
-        //--------
-        for (i = 0; i < allowedUnitsSize; i++)
+        for (int i = 0; i < allowedUnitsSize; ++i)
         {
-            if (strcmp(unitSpelling, allowedUnits[i]) == 0)
+            if (strcmp(unitSpelling.c_str(), allowedUnits[i]) == 0)
             {
-                //--------
                 // Success!
-                //--------
-                delete[] unitSpelling;
                 intResult = intVal;
                 unitsResult = allowedUnits[i];
                 return;
             }
         }
 
-        //--------
         // Error: an unknown unit was specified.
-        //--------
-        delete[] unitSpelling;
         mergeNames(scope, localName, fullyScopedName);
         msg << fileName() << ": invalid " << typeName << " ('" << str << "') specified for '"
             << fullyScopedName.str() << "': should be"
             << " '<int> <units>' where <units> are";
-        for (i = 0; i < allowedUnitsSize; i++)
+        for (int i = 0; i < allowedUnitsSize; ++i)
         {
             msg << " '" << allowedUnits[i] << "'";
             if (i < allowedUnitsSize - 1)
