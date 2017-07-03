@@ -22,11 +22,9 @@
 
 #include "danek/internal/UidIdentifierProcessor.h"
 #include "danek/ConfigurationException.h"
-#include "danek/StringBuffer.h"
 #include <gmock/gmock.h>
 
 using danek::UidIdentifierProcessor;
-using danek::StringBuffer;
 using danek::ConfigurationException;
 using namespace testing;
 
@@ -44,48 +42,48 @@ public:
 
 TEST_F(UidIdentifierProcessorTest, expandString)
 {
-    const auto s = processor->expand("abc");
-    EXPECT_THAT(s, StrEq("abc"));
+    const auto result = processor->expand("abc");
+    EXPECT_THAT(result, StrEq("abc"));
 }
 
 TEST_F(UidIdentifierProcessorTest, expandWithScope)
 {
-    const auto s = processor->expand("a.b.c");
-    EXPECT_THAT(s, StrEq("a.b.c"));
+    const auto result = processor->expand("a.b.c");
+    EXPECT_THAT(result, StrEq("a.b.c"));
 }
 
 TEST_F(UidIdentifierProcessorTest, expandWithScopeAndUid)
 {
-    const auto s = processor->expand("a.uid-b.uid-0013-c");
-    EXPECT_THAT(s, StrEq("a.uid-000000000-b.uid-000000001-c"));
+    const auto result = processor->expand("a.uid-b.uid-0013-c");
+    EXPECT_THAT(result, StrEq("a.uid-000000000-b.uid-000000001-c"));
 }
 
 TEST_F(UidIdentifierProcessorTest, expandWithUid)
 {
-    const auto s = processor->expand("uid-xyz");
-    EXPECT_THAT(s, StrEq("uid-000000000-xyz"));
+    const auto result = processor->expand("uid-xyz");
+    EXPECT_THAT(result, StrEq("uid-000000000-xyz"));
 }
 
 TEST_F(UidIdentifierProcessorTest, expandWithUidIncreasesUid)
 {
-    const auto s = processor->expand("uid-x.uid-y.uid-z");
-    EXPECT_THAT(s, StrEq("uid-000000000-x.uid-000000001-y.uid-000000002-z"));
+    const auto result = processor->expand("uid-x.uid-y.uid-z");
+    EXPECT_THAT(result, StrEq("uid-000000000-x.uid-000000001-y.uid-000000002-z"));
 }
 
 TEST_F(UidIdentifierProcessorTest, expandMaintaintsUidState)
 {
-    const auto s = processor->expand("uid-x");
-    const auto s1 = processor->expand("uid-y");
-    const auto s2 = processor->expand("uid-z33");
-    EXPECT_THAT(s , StrEq("uid-000000000-x"));
-    EXPECT_THAT(s1, StrEq("uid-000000001-y"));
-    EXPECT_THAT(s2, StrEq("uid-000000002-z33"));
+    const auto result = processor->expand("uid-x");
+    const auto result1 = processor->expand("uid-y");
+    const auto result2 = processor->expand("uid-z33");
+    EXPECT_THAT(result , StrEq("uid-000000000-x"));
+    EXPECT_THAT(result1, StrEq("uid-000000001-y"));
+    EXPECT_THAT(result2, StrEq("uid-000000002-z33"));
 }
 
 TEST_F(UidIdentifierProcessorTest, expandWithUidAndNumber)
 {
-    const auto s = processor->expand("uid-01234-xyz12");
-    EXPECT_THAT(s, StrEq("uid-000000000-xyz12"));
+    const auto result = processor->expand("uid-01234-xyz12");
+    EXPECT_THAT(result, StrEq("uid-000000000-xyz12"));
 }
 
 TEST_F(UidIdentifierProcessorTest, expandWithWithouthUidSuffixThrows)
@@ -102,61 +100,45 @@ TEST_F(UidIdentifierProcessorTest, expandWithWithouthUidSuffixThrows)
 
 TEST_F(UidIdentifierProcessorTest, unexpandString)
 {
-    StringBuffer str;
-
-    const auto result = processor->unexpand("abc", str);
+    const auto result = processor->unexpand("abc");
     EXPECT_THAT(result, StrEq("abc"));
 }
 
 TEST_F(UidIdentifierProcessorTest, unexpandWithScope)
 {
-    StringBuffer str;
-
-    const auto result = processor->unexpand("a.b.c", str);
+    const auto result = processor->unexpand("a.b.c");
     EXPECT_THAT(result, StrEq("a.b.c"));
 }
 
 TEST_F(UidIdentifierProcessorTest, unexpandWithScopeAndUid)
 {
-    StringBuffer str;
-
-    const auto result = processor->unexpand("a.uid-000000000-b.uid-000000001-c", str);
+    const auto result = processor->unexpand("a.uid-000000000-b.uid-000000001-c");
     EXPECT_THAT(result, StrEq("a.uid-b.uid-c"));
 }
 
 TEST_F(UidIdentifierProcessorTest, unexpandWithUid)
 {
-    StringBuffer str;
-
-    const auto result = processor->unexpand("uid-xyz", str);
+    const auto result = processor->unexpand("uid-xyz");
     EXPECT_THAT(result, StrEq("uid-xyz"));
 }
 
 TEST_F(UidIdentifierProcessorTest, unexpandWithUidAndNumber)
 {
-    StringBuffer str;
-
-    const auto result = processor->unexpand("uid-000000003-xyz", str);
+    const auto result = processor->unexpand("uid-000000003-xyz");
     EXPECT_THAT(result, StrEq("uid-xyz"));
 }
 
 TEST_F(UidIdentifierProcessorTest, unexpandWithUidAndUidWithNumbers)
 {
-    StringBuffer str;
-
-    const auto result = processor->unexpand("uid-000000000-x.uid-y.uid-000000002-z", str);
+    const auto result = processor->unexpand("uid-000000000-x.uid-y.uid-000000002-z");
     EXPECT_THAT(result, StrEq("uid-x.uid-y.uid-z"));
 }
 
 TEST_F(UidIdentifierProcessorTest, unexpandWithDifferentUid)
 {
-    StringBuffer str;
-    StringBuffer str2;
-    StringBuffer str3;
-
-    const auto result1 =  processor->unexpand("uid-000000000-x", str);
-    const auto result2 = processor->unexpand("uid-000000001-y", str2);
-    const auto result3 = processor->unexpand("uid-000000002-z", str3);
+    const auto result1 =  processor->unexpand("uid-000000000-x");
+    const auto result2 = processor->unexpand("uid-000000001-y");
+    const auto result3 = processor->unexpand("uid-000000002-z");
     EXPECT_THAT(result1, StrEq("uid-x"));
     EXPECT_THAT(result2, StrEq("uid-y"));
     EXPECT_THAT(result3, StrEq("uid-z"));

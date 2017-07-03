@@ -42,14 +42,13 @@ public:
 
 TEST_F(UidIdentifierDummyProcessorTest, expandExpandsNothing)
 {
-    const auto s = processor->expand("uid-a.b.uid-123-c");
-    EXPECT_THAT(s, StrEq("uid-a.b.uid-123-c"));
+    const auto result = processor->expand("uid-a.b.uid-123-c");
+    EXPECT_THAT(result, StrEq("uid-a.b.uid-123-c"));
 }
 
 TEST_F(UidIdentifierDummyProcessorTest, unexpandExpandsNothing)
 {
-    StringBuffer str;
-    const auto result = processor->unexpand("uid-a.b.uid-123-c", str);
+    const auto result = processor->unexpand("uid-a.b.uid-123-c");
     EXPECT_THAT(result, StrEq("uid-a.b.uid-123-c"));
 }
 

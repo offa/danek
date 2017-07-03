@@ -224,9 +224,8 @@ namespace danek
             return true;
         }
 
-        StringBuffer buf;
         UidIdentifierProcessor uidProc;
-        const auto unexpandedName = uidProc.unexpand(name.c_str(), buf);
+        const auto unexpandedName = uidProc.unexpand(name.c_str());
 
         for (std::size_t i = 0; i < filterPatterns.size(); ++i)
         {

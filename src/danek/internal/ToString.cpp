@@ -81,8 +81,7 @@ namespace danek
             if( expand == false )
             {
                 UidIdentifierProcessor uidIdProc;
-                StringBuffer nameBuf;
-                return uidIdProc.unexpand(name.c_str(), nameBuf);
+                return uidIdProc.unexpand(name);
             }
             return name;
         }

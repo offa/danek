@@ -2345,11 +2345,8 @@ namespace danek
 
     bool ConfigurationImpl::uidEquals(const char* s1, const char* s2) const
     {
-        StringBuffer buf1;
-        StringBuffer buf2;
-
-        const auto us1 = m_uidIdentifierProcessor.unexpand(s1, buf1);
-        const auto us2 = m_uidIdentifierProcessor.unexpand(s2, buf2);
+        const auto us1 = m_uidIdentifierProcessor.unexpand(s1);
+        const auto us2 = m_uidIdentifierProcessor.unexpand(s2);
         return strcmp(us1.c_str(), us2.c_str()) == 0;
     }
 
@@ -2360,7 +2357,8 @@ namespace danek
 
     std::string ConfigurationImpl::unexpandUid(const char* spelling, StringBuffer& buf) const
     {
-        return m_uidIdentifierProcessor.unexpand(spelling, buf);
+        unused(buf);
+        return m_uidIdentifierProcessor.unexpand(spelling);
     }
 
     void ConfigurationImpl::ensureScopeExists(const char* name, ConfigScope*& scope)
