@@ -86,7 +86,7 @@ namespace danek
         return formatExpanded(std::string(std::next(digitsEnd), spelling.cend()));
     }
 
-    std::string UidIdentifierProcessor::unexpand(const std::string& spelling) const
+    std::string UidIdentifierProcessor::unexpand(const std::string& spelling)
     {
         if( spelling.find(m_uidToken) == std::string::npos )
         {
