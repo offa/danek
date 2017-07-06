@@ -29,11 +29,10 @@ namespace danek
 {
     class SchemaValidator;
 
-    SchemaType::SchemaType(const char* typeName, const char* className, ConfType cfgType)
+    SchemaType::SchemaType(const char* typeName, const char* className, ConfType cfgType) : m_typeName(typeName),
+                                                                                        m_className(className),
+                                                                                        m_cfgType(cfgType)
     {
-        m_typeName = typeName;
-        m_className = className;
-        m_cfgType = cfgType;
     }
 
     SchemaType::~SchemaType()
