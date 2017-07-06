@@ -10,7 +10,6 @@ if( CPPCHECK )
     add_custom_command(TARGET cppcheck POST_BUILD
                         COMMAND ${CPPCHECK} --error-exitcode=1
                                             --enable=all
-                                            --check-library
                                             --project=${CMAKE_BINARY_DIR}/compile_commands.json
                                             --report-progress
                                             --suppress='*:*test/*'
