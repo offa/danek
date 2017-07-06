@@ -30,12 +30,11 @@ namespace danek
     class SchemaTypeTypedef : public SchemaType
     {
     public:
-        SchemaTypeTypedef(const char* name, ConfType cfgType, const char* baseTypeName,
-            const StringVector& baseTypeArgs)
-            : SchemaType(name, "danek::SchemaTypeTypedef", cfgType)
+        SchemaTypeTypedef(const char* name, ConfType cfgType, const char* baseTypeName, const StringVector& baseTypeArgs)
+                                : SchemaType(name, "danek::SchemaTypeTypedef", cfgType),
+                                m_baseTypeName(baseTypeName),
+                                m_baseTypeArgs(baseTypeArgs)
         {
-            m_baseTypeName = baseTypeName;
-            m_baseTypeArgs = baseTypeArgs;
         }
         virtual ~SchemaTypeTypedef()
         {
