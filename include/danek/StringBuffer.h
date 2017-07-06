@@ -49,7 +49,7 @@ namespace danek
         StringBuffer& append(int value);
         StringBuffer& append(float value);
         StringBuffer& append(const std::string& str);
-        StringBuffer& append(StringBuffer other);
+        StringBuffer& append(const StringBuffer& other);
 
 
         StringBuffer& operator<<(const StringBuffer& other);

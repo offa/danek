@@ -90,7 +90,7 @@ namespace danek
         return *this;
     }
 
-    StringBuffer& StringBuffer::append(StringBuffer other)
+    StringBuffer& StringBuffer::append(const StringBuffer& other)
     {
         m_string += other.str();
         return *this;
