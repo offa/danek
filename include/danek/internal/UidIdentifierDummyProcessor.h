@@ -36,7 +36,7 @@ namespace danek
             return spelling;
         }
 
-        std::string unexpand(const std::string& spelling) const override
+        std::string unexpand(const std::string& spelling) override
         {
             return spelling;
         }
