@@ -39,12 +39,6 @@
 
 namespace danek
 {
-    //----------------------------------------------------------------------
-    // Function:	Constructor
-    //
-    // Description:
-    //----------------------------------------------------------------------
-
     ConfigurationImpl::ConfigurationImpl() : m_securityCfg(&DefaultSecurityConfiguration::singleton),
                                              m_fileName("<no file>"),
                                              m_rootScope(new ConfigScope{nullptr, ""}),
@@ -54,12 +48,6 @@ namespace danek
                                              m_amOwnerOfFallbackCfg(false)
     {
     }
-
-    //----------------------------------------------------------------------
-    // Function:	Destructor
-    //
-    // Description:
-    //----------------------------------------------------------------------
 
     ConfigurationImpl::~ConfigurationImpl()
     {
