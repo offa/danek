@@ -28,6 +28,18 @@ using danek::UidIdentifierProcessor;
 using danek::ConfigurationException;
 using namespace testing;
 
+namespace
+{
+    struct UidIdentifierProcessorMock : public UidIdentifierProcessor
+    {
+        void advanceCount(std::size_t n)
+        {
+            nextCount(n);
+        }
+    };
+}
+
+
 class UidIdentifierProcessorTest : public testing::Test
 {
 public:
@@ -96,6 +108,13 @@ TEST_F(UidIdentifierProcessorTest, expandWithWithouthUidSuffixThrows)
     EXPECT_THROW(processor->expand("uid-123--a"), ConfigurationException);
     EXPECT_THROW(processor->expand("uid-123-456a"), ConfigurationException);
     EXPECT_THROW(processor->expand("uid-9"), ConfigurationException);
+}
+
+TEST_F(UidIdentifierProcessorTest, expandThrowsIfNineDigitsAreExceeded)
+{
+    UidIdentifierProcessorMock mock;
+    mock.advanceCount(1'000'000'000);
+    EXPECT_THROW(mock.expand("uid-00000-abc"), std::domain_error);
 }
 
 TEST_F(UidIdentifierProcessorTest, unexpandString)

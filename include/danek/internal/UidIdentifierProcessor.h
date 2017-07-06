@@ -38,6 +38,11 @@ namespace danek
         virtual std::string unexpand(const std::string& spelling) const;
 
 
+    protected:
+
+        std::size_t nextCount(std::size_t current);
+
+
     private:
 
         std::string expandOne(const std::string& spelling);

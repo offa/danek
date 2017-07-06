@@ -123,6 +123,17 @@ namespace danek
         return formatUnexpanded(std::string(std::next(digitsEnd), spelling.cend()));
     }
 
+    std::size_t UidIdentifierProcessor::nextCount(std::size_t current)
+    {
+        if( m_count >= 1'000'000'000 )
+        {
+            throw std::domain_error{"Count has exceeded 9 digits"};
+        }
+        m_count = current + 1;
+
+        return current;
+    }
+
     bool UidIdentifierProcessor::startsWithUidToken(const std::string& str) const
     {
         return std::equal(m_uidToken.cbegin(), m_uidToken.cend(), str.cbegin());
@@ -135,14 +146,10 @@ namespace danek
 
     std::string UidIdentifierProcessor::formatExpanded(const std::string& suffix)
     {
-        if( m_count >= 1'000'000'000 )
-        {
-            throw std::domain_error{"Count has exceeded 9 digits"};
-        }
         constexpr std::size_t numDigits = 9;
 
         std::ostringstream ss;
-        ss << m_uidToken << std::setw(numDigits) << std::setfill('0') << (m_count++) << "-" << suffix;
+        ss << m_uidToken << std::setw(numDigits) << std::setfill('0') << nextCount(m_count) << "-" << suffix;
 
         return ss.str();
     }
