@@ -45,15 +45,14 @@ namespace danek
     // Description:
     //----------------------------------------------------------------------
 
-    ConfigurationImpl::ConfigurationImpl()
+    ConfigurationImpl::ConfigurationImpl() : m_securityCfg(&DefaultSecurityConfiguration::singleton),
+                                             m_fileName("<no file>"),
+                                             m_rootScope(new ConfigScope{nullptr, ""}),
+                                             m_currScope(m_rootScope),
+                                             m_fallbackCfg(nullptr),
+                                             m_amOwnerOfSecurityCfg(false),
+                                             m_amOwnerOfFallbackCfg(false)
     {
-        m_fileName = "<no file>";
-        m_rootScope = new ConfigScope(nullptr, "");
-        m_currScope = m_rootScope;
-        m_fallbackCfg = nullptr;
-        m_amOwnerOfFallbackCfg = false;
-        m_amOwnerOfSecurityCfg = false;
-        m_securityCfg = &DefaultSecurityConfiguration::singleton;
     }
 
     //----------------------------------------------------------------------
