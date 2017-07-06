@@ -135,7 +135,7 @@ namespace danek
 
     std::string UidIdentifierProcessor::formatExpanded(const std::string& suffix)
     {
-        if( m_count >= 1000 * 1000 * 1000 )
+        if( m_count >= 1'000'000'000 )
         {
             throw std::domain_error{"Count has exceeded 9 digits"};
         }
