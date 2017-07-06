@@ -14,6 +14,8 @@ if( CPPCHECK )
                                             --report-progress
                                             --suppress='*:*test/*'
                                             --suppress=missingInclude
+                                            --suppress=unmatchedSuppression
+                                            --suppressions-list=${CMAKE_MODULE_PATH}/CppCheck.suppressions
                                             "${PROJECT_SOURCE_DIR}/src"
                                             "${PROJECT_SOURCE_DIR}/include"
                         COMMENT "Running CppCheck ..."
