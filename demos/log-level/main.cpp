@@ -42,8 +42,6 @@ int main(int argc, char** argv)
     const char* cfgScope;
     const char* secInput;
     const char* secScope;
-    A* aObj;
-    B* bObj;
 
     setlocale(LC_ALL, "");
     parseCmdLineArgs(argc, argv, cfgInput, cfgScope, secInput, secScope);
@@ -66,8 +64,8 @@ int main(int argc, char** argv)
     // Create some application objects, and set their log levels
     // via configuration.
     //--------
-    aObj = new A(cfg);
-    bObj = new B(cfg);
+    A* aObj = new A(cfg);
+    B* bObj = new B(cfg);
 
     //--------
     // Invoke operations. Diagnostics will be written to standard output.
@@ -89,17 +87,15 @@ int main(int argc, char** argv)
     return 0;
 }
 
-static void parseCmdLineArgs(int argc, char** argv, const char*& cfgInput, const char*& cfgScope,
-    const char*& secInput, const char*& secScope)
+static void parseCmdLineArgs(int argc, char** argv, const char*& cfgInput, const char*& cfgScope, const char*& secInput, const char*& secScope)
 {
-    int i;
 
     cfgInput = "";
     cfgScope = "";
     secInput = "";
     secScope = "";
 
-    for (i = 1; i < argc; i++)
+    for (int i = 1; i < argc; ++i)
     {
         if (strcmp(argv[i], "-h") == 0)
         {
@@ -112,7 +108,7 @@ static void parseCmdLineArgs(int argc, char** argv, const char*& cfgInput, const
                 usage();
             }
             cfgInput = argv[i + 1];
-            i++;
+            ++i;
         }
         else if (strcmp(argv[i], "-scope") == 0)
         {
@@ -121,7 +117,7 @@ static void parseCmdLineArgs(int argc, char** argv, const char*& cfgInput, const
                 usage();
             }
             cfgScope = argv[i + 1];
-            i++;
+            ++i;
         }
         else if (strcmp(argv[i], "-sec") == 0)
         {
@@ -130,7 +126,7 @@ static void parseCmdLineArgs(int argc, char** argv, const char*& cfgInput, const
                 usage();
             }
             secInput = argv[i + 1];
-            i++;
+            ++i;
         }
         else if (strcmp(argv[i], "-secScope") == 0)
         {
@@ -139,7 +135,7 @@ static void parseCmdLineArgs(int argc, char** argv, const char*& cfgInput, const
                 usage();
             }
             secScope = argv[i + 1];
-            i++;
+            ++i;
         }
         else
         {

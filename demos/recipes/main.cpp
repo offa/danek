@@ -90,12 +90,10 @@ int main(int argc, char** argv)
 
 static std::tuple<std::string, std::string> parseCmdLineArgs(int argc, char** argv)
 {
-    int i;
-
     std::string recipeFilename = "";
     std::string scope = "";
 
-    for (i = 1; i < argc; i++)
+    for (int i = 1; i < argc; ++i)
     {
         if (strcmp(argv[i], "-h") == 0)
         {
@@ -108,7 +106,7 @@ static std::tuple<std::string, std::string> parseCmdLineArgs(int argc, char** ar
                 usage();
             }
             recipeFilename = argv[i + 1];
-            i++;
+            ++i;
         }
         else if (strcmp(argv[i], "-scope") == 0)
         {
@@ -117,7 +115,7 @@ static std::tuple<std::string, std::string> parseCmdLineArgs(int argc, char** ar
                 usage();
             }
             scope = argv[i + 1];
-            i++;
+            ++i;
         }
         else
         {

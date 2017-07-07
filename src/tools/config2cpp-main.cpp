@@ -111,11 +111,8 @@ void calculateRuleForName(const Configuration* cfg, const char* name, const char
 
 bool doesVectorcontainString(const StringVector& vec, const char* str)
 {
-    int i;
-    int len;
-
-    len = vec.size();
-    for (i = 0; i < len; i++)
+    int len = vec.size();
+    for (int i = 0; i < len; ++i)
     {
         if (strcmp(vec[i].c_str(), str) == 0)
         {
@@ -146,7 +143,7 @@ void calculateSchema(const Configuration* cfg, const StringVector& namesList,
     }
 
     int len = namesList.size();
-    for (int i = 0; i < len; i++)
+    for (int i = 0; i < len; ++i)
     {
         const char* name = namesList[i].c_str();
         if (strstr(name, "uid-") == nullptr)
@@ -173,7 +170,7 @@ bool doesPatternMatchAnyUnexpandedNameInList(
     StringBuffer buf;
 
     int len = namesList.size();
-    for (int i = 0; i < len; i++)
+    for (int i = 0; i < len; ++i)
     {
         const auto uName = cfg->unexpandUid(namesList[i].c_str(), buf);
         if (patternMatch(uName.c_str(), pattern))
@@ -287,12 +284,6 @@ int main(int argc, char** argv)
     }
 
     cfg->destroy();
-    if (ok)
-    {
-        return 0;
-    }
-    else
-    {
-        return 1;
-    }
+
+    return ( ok ? 0 : 1 );
 }
