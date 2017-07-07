@@ -99,7 +99,7 @@ int main(int argc, char** argv)
         try
         {
             testSv.validate(cfg, goodScopes[i].c_str(), "");
-            passedCount++;
+            ++passedCount;
         }
         catch (const ConfigurationException& ex)
         {
@@ -164,7 +164,7 @@ int main(int argc, char** argv)
 
 static void parseCmdLineArgs(int argc, char** argv, const char*& cfgFile, bool& wantDiagnostics)
 {
-    cfgFile = 0;
+    cfgFile = nullptr;
     wantDiagnostics = false;
 
     for (int i = 1; i < argc; ++i)
