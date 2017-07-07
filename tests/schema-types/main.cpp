@@ -94,7 +94,7 @@ int main(int argc, char** argv)
     //--------
     // Schema validation should succeed for every sub-scope withinin "good".
     //--------
-    for ( std::size_t i = 0; i < goodScopes.size(); i++)
+    for ( std::size_t i = 0; i < goodScopes.size(); ++i)
     {
         try
         {
@@ -119,7 +119,7 @@ int main(int argc, char** argv)
     //--------
     // Schema validation should fail for every sub-scope within "bad".
     //--------
-    for ( std::size_t i = 0; i < badScopes.size(); i++)
+    for ( std::size_t i = 0; i < badScopes.size(); ++i)
     {
         try
         {
@@ -164,12 +164,10 @@ int main(int argc, char** argv)
 
 static void parseCmdLineArgs(int argc, char** argv, const char*& cfgFile, bool& wantDiagnostics)
 {
-    int i;
-
     cfgFile = 0;
     wantDiagnostics = false;
 
-    for (i = 1; i < argc; i++)
+    for (int i = 1; i < argc; ++i)
     {
         if (strcmp(argv[i], "-h") == 0)
         {
@@ -190,7 +188,7 @@ static void parseCmdLineArgs(int argc, char** argv, const char*& cfgFile, bool& 
                 usage();
             }
             cfgFile = argv[i + 1];
-            i++;
+            ++i;
         }
         else
         {
