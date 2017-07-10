@@ -55,6 +55,8 @@
 #include "danek/StringBuffer.h"
 #include <stdio.h>
 
+#include <fstream>
+
 namespace danek
 {
     extern bool execCmd(const char* cmd, StringBuffer& output);
@@ -78,33 +80,13 @@ namespace danek
     class BufferedFileReader
     {
     public:
-        //--------
-        // Constructors and destructor
-        //--------
-        BufferedFileReader();
-        ~BufferedFileReader();
 
         bool open(const char* fileName);
         int getChar(); // returns EOF on end-of-file
         bool close();
 
     private:
-//--------
-// Instance variables
-//--------
-#ifdef P_STDIO_HAS_LIMITED_FDS
-#define BUFFERED_FILE_READER_BUF_SIZE 8192
-        int m_fd;
-        char m_buf[BUFFERED_FILE_READER_BUF_SIZE];
-        int m_bufIndex;
-        int m_bufLen;
-#else
-        FILE* m_file;
-#endif
-        //--------
-        // The following are not implemented
-        //--------
-        BufferedFileReader(const BufferedFileReader&);
-        BufferedFileReader& operator=(const BufferedFileReader&);
+
+        std::ifstream m_file;
     };
 }

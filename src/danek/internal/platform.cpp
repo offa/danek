@@ -137,99 +137,26 @@ namespace danek
     }
 #endif
 
-#ifdef P_STDIO_HAS_LIMITED_FDS
-
-    BufferedFileReader::BufferedFileReader() : m_fd(-1), m_buf(nullptr), m_bufIndex(0), m_bufLen(0)
-    {
-    }
-
-    BufferedFileReader::~BufferedFileReader()
-    {
-        if (m_fd != -1)
-        {
-            close();
-        }
-    }
-
     bool BufferedFileReader::open(const char* fileName)
     {
-        compat::checkAssertion(m_fd == -1);
-        m_fd = ::open(fileName, O_RDONLY);
-        m_bufIndex = 0;
-        m_bufLen = 0;
-        return (m_fd != -1);
+        m_file.open(fileName);
+        return m_file.is_open();
     }
 
     bool BufferedFileReader::close()
     {
-        int result;
-
-        compat::checkAssertion(m_fd != -1);
-        result = ::close(m_fd);
-        if (result != -1)
-        {
-            m_fd = -1;
-        }
-        return (result != -1);
+        m_file.close();
+        return true;
     }
 
     int BufferedFileReader::getChar()
     {
-        int result;
-
-        compat::checkAssertion(m_fd != -1);
-        if (m_bufIndex == m_bufLen)
+        if( m_file.eof() )
         {
-            int size = ::read(m_fd, m_buf, BUFFERED_FILE_READER_BUF_SIZE);
-            m_bufIndex = 0;
-            m_bufLen = size;
-            if (size <= 0)
-            {
-                m_bufLen = 0;
-                return EOF;
-            }
+            return EOF;
         }
-        compat::checkAssertion(m_bufIndex < m_bufLen);
-        result = m_buf[m_bufIndex];
-        m_bufIndex++;
-        return result;
+
+        return m_file.get();
     }
 
-#else
-
-    BufferedFileReader::BufferedFileReader()
-    {
-        m_file = nullptr;
-    }
-
-    BufferedFileReader::~BufferedFileReader()
-    {
-        if (m_file != nullptr)
-        {
-            fclose(m_file);
-        }
-    }
-
-    bool BufferedFileReader::open(const char* fileName)
-    {
-        compat::checkAssertion(m_file == nullptr);
-        m_file = fopen(fileName, "r");
-        return (m_file != nullptr);
-    }
-
-    bool BufferedFileReader::close()
-    {
-        int status;
-
-        status = fclose(m_file);
-        return (status != -1);
-    }
-
-    int BufferedFileReader::getChar()
-    {
-        compat::checkAssertion(m_file != nullptr);
-        return fgetc(m_file);
-    }
-
-#endif
 }
