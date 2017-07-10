@@ -36,9 +36,7 @@ public:
 
     void parse(const char* cfgSource, const char* scope = "");
 
-    //--------
     // Lookup-style functions.
-    //--------
     const char* lookupString(const char* name) const;
     void lookupList(const char* name, std::vector<std::string>& data) const;
 
@@ -53,7 +51,7 @@ public:
 
 private:
 
-    char* m_scope;
+    std::string m_scope;
     void* m_cfg;
 
 };

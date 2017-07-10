@@ -35,21 +35,18 @@ using danek::ConfigurationException;
 FooConfiguration::FooConfiguration()
 {
     m_cfg = Configuration::create();
-    m_scope = 0;
 }
 
 FooConfiguration::~FooConfiguration()
 {
-    delete[] m_scope;
     static_cast<Configuration*>(m_cfg)->destroy();
 }
 
 void FooConfiguration::parse(const char* cfgSource, const char* scope)
 {
     Configuration* cfg = static_cast<Configuration*>(m_cfg);
+    m_scope = scope;
 
-    m_scope = new char[strlen(scope) + 1];
-    strcpy(m_scope, scope);
     try
     {
         if (cfgSource != 0 && strcmp(cfgSource, "") != 0)
@@ -69,7 +66,7 @@ const char* FooConfiguration::lookupString(const char* name) const
     Configuration* cfg = static_cast<Configuration*>(m_cfg);
     try
     {
-        return cfg->lookupString(m_scope, name);
+        return cfg->lookupString(m_scope.c_str(), name);
     }
     catch (const ConfigurationException& ex)
     {
@@ -82,7 +79,7 @@ void FooConfiguration::lookupList(const char* name, std::vector<std::string>& da
     Configuration* cfg = static_cast<Configuration*>(m_cfg);
     try
     {
-        cfg->lookupList(m_scope, name, data);
+        cfg->lookupList(m_scope.c_str(), name, data);
     }
     catch (const ConfigurationException& ex)
     {
@@ -95,7 +92,7 @@ int FooConfiguration::lookupInt(const char* name) const
     Configuration* cfg = static_cast<Configuration*>(m_cfg);
     try
     {
-        return cfg->lookupInt(m_scope, name);
+        return cfg->lookupInt(m_scope.c_str(), name);
     }
     catch (const ConfigurationException& ex)
     {
@@ -108,7 +105,7 @@ float FooConfiguration::lookupFloat(const char* name) const
     Configuration* cfg = static_cast<Configuration*>(m_cfg);
     try
     {
-        return cfg->lookupFloat(m_scope, name);
+        return cfg->lookupFloat(m_scope.c_str(), name);
     }
     catch (const ConfigurationException& ex)
     {
@@ -121,7 +118,7 @@ bool FooConfiguration::lookupBoolean(const char* name) const
     Configuration* cfg = static_cast<Configuration*>(m_cfg);
     try
     {
-        return cfg->lookupBoolean(m_scope, name);
+        return cfg->lookupBoolean(m_scope.c_str(), name);
     }
     catch (const ConfigurationException& ex)
     {
@@ -134,7 +131,7 @@ int FooConfiguration::lookupDurationMilliseconds(const char* name) const
     Configuration* cfg = static_cast<Configuration*>(m_cfg);
     try
     {
-        return cfg->lookupDurationMilliseconds(m_scope, name);
+        return cfg->lookupDurationMilliseconds(m_scope.c_str(), name);
     }
     catch (const ConfigurationException& ex)
     {
@@ -147,7 +144,7 @@ int FooConfiguration::lookupDurationSeconds(const char* name) const
     Configuration* cfg = static_cast<Configuration*>(m_cfg);
     try
     {
-        return cfg->lookupDurationSeconds(m_scope, name);
+        return cfg->lookupDurationSeconds(m_scope.c_str(), name);
     }
     catch (const ConfigurationException& ex)
     {
