@@ -24,6 +24,7 @@
 #include "FooConfiguration.h"
 #include "FooConfigurationException.h"
 #include <iostream>
+#include <memory>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -35,7 +36,6 @@ static void usage();
 
 int main(int argc, char** argv)
 {
-    FooConfiguration* cfg = 0;
     const char* cfgInput;
     const char* cfgScope;
     const char* secInput;
@@ -47,15 +47,11 @@ int main(int argc, char** argv)
 
     try
     {
-        //--------
         // Initialize the configuration object.
-        //--------
-        cfg = new FooConfiguration(wantDiagnostics);
+        auto cfg = std::make_unique<FooConfiguration>(wantDiagnostics);
         cfg->parse(cfgInput, cfgScope, secInput, secScope);
 
-        //--------
         // Query the configuration object.
-        //--------
         printf("connection_timeout = %d\n", cfg->getConnectionTimeout());
         printf("rpc_timeout = %d\n", cfg->getRpcTimeout());
         printf("idle_timeout = %d\n", cfg->getIdleTimeout());
@@ -70,22 +66,19 @@ int main(int argc, char** argv)
         return 1;
     }
 
-    delete cfg;
     return 0;
 }
 
 static void parseCmdLineArgs(int argc, char** argv, const char*& cfgInput, const char*& cfgScope,
     const char*& secInput, const char*& secScope, bool& wantDiagnostics)
 {
-    int i;
-
     cfgInput = "";
     cfgScope = "";
     secInput = "";
     secScope = "";
     wantDiagnostics = false;
 
-    for (i = 1; i < argc; i++)
+    for (int i = 1; i < argc; i++)
     {
         if (strcmp(argv[i], "-h") == 0)
         {
@@ -106,7 +99,7 @@ static void parseCmdLineArgs(int argc, char** argv, const char*& cfgInput, const
                 usage();
             }
             cfgInput = argv[i + 1];
-            i++;
+            ++i;
         }
         else if (strcmp(argv[i], "-scope") == 0)
         {
@@ -115,7 +108,7 @@ static void parseCmdLineArgs(int argc, char** argv, const char*& cfgInput, const
                 usage();
             }
             cfgScope = argv[i + 1];
-            i++;
+            ++i;
         }
         else if (strcmp(argv[i], "-sec") == 0)
         {
@@ -124,7 +117,7 @@ static void parseCmdLineArgs(int argc, char** argv, const char*& cfgInput, const
                 usage();
             }
             secInput = argv[i + 1];
-            i++;
+            ++i;
         }
         else if (strcmp(argv[i], "-secScope") == 0)
         {
@@ -133,7 +126,7 @@ static void parseCmdLineArgs(int argc, char** argv, const char*& cfgInput, const
                 usage();
             }
             secScope = argv[i + 1];
-            i++;
+            ++i;
         }
         else
         {
