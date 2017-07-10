@@ -62,31 +62,4 @@ namespace danek
     extern bool execCmd(const char* cmd, StringBuffer& output);
     extern bool isCmdInDir(const char* cmd, const char* dir);
 
-    //----------------------------------------------------------------------
-    // Some operating systems, such as Solaris
-    // (see http://developers.sun.com/solaris/articles/stdio_256.html),
-    // have an implementation of <stdio.h> in which fopen() fails if
-    // the file descriptor used is > 255. This suggests that config4Cpp
-    // should use open() instead of fopen(). However, fopen() is part of
-    // the standard C library and is guaranteed to be available everywhere,
-    // but open() is UNIX-specific and may not be available on some
-    // (non-UNIX) systems. The workaround is to define a class that provides
-    // an abstraction layer around either fopen() or open(). The
-    // functionality of this class is driven by the needs of the Lex class,
-    // which needs only to open a file for reading and then read it one
-    // byte at a time.
-    //----------------------------------------------------------------------
-
-    class [[deprecated("Use std::ifstream instead")]] BufferedFileReader
-    {
-    public:
-
-        bool open(const char* fileName);
-        int getChar(); // returns EOF on end-of-file
-        bool close();
-
-    private:
-
-        std::ifstream m_file;
-    };
 }

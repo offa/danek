@@ -137,26 +137,4 @@ namespace danek
     }
 #endif
 
-    bool BufferedFileReader::open(const char* fileName)
-    {
-        m_file.open(fileName);
-        return m_file.is_open();
-    }
-
-    bool BufferedFileReader::close()
-    {
-        m_file.close();
-        return true;
-    }
-
-    int BufferedFileReader::getChar()
-    {
-        if( m_file.eof() )
-        {
-            return EOF;
-        }
-
-        return m_file.get();
-    }
-
 }
