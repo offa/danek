@@ -81,7 +81,7 @@ int main(int argc, char** argv)
 
         for (std::size_t i2 = 0; i2 < stepsLen; ++i2)
         {
-            std::cout << "\t\t\"" << steps[i2].c_str() << "%s\"\n";
+            std::cout << "\t\t\"" << steps[i2].c_str() << "\"\n";
         }
     }
 
