@@ -25,6 +25,7 @@
 #include "FooConfigurationException.h"
 #include "A.h"
 #include "B.h"
+#include <memory>
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
@@ -37,7 +38,7 @@ static void usage();
 
 int main(int argc, char** argv)
 {
-    FooConfiguration* cfg = new FooConfiguration();
+    auto cfg = std::make_unique<FooConfiguration>();
     const char* cfgInput;
     const char* cfgScope;
     const char* secInput;
@@ -46,9 +47,7 @@ int main(int argc, char** argv)
     setlocale(LC_ALL, "");
     parseCmdLineArgs(argc, argv, cfgInput, cfgScope, secInput, secScope);
 
-    //--------
     // Parse the configuration file.
-    //--------
     try
     {
         cfg->parse(cfgInput, cfgScope, secInput, secScope);
@@ -56,20 +55,15 @@ int main(int argc, char** argv)
     catch (const FooConfigurationException& ex)
     {
         std::cerr << ex.what() << "\n";
-        delete cfg;
-        exit(1);
+        return 1;
     }
 
-    //--------
     // Create some application objects, and set their log levels
     // via configuration.
-    //--------
-    A* aObj = new A(cfg);
-    B* bObj = new B(cfg);
+    auto aObj = std::make_unique<A>(cfg.get());
+    auto bObj = std::make_unique<B>(cfg.get());
 
-    //--------
     // Invoke operations. Diagnostics will be written to standard output.
-    //--------
     aObj->op1();
     aObj->op2();
     aObj->op3();
@@ -78,12 +72,6 @@ int main(int argc, char** argv)
     bObj->op2();
     bObj->op3();
 
-    //--------
-    // Terminate gracefully.
-    //--------
-    delete aObj;
-    delete bObj;
-    delete cfg;
     return 0;
 }
 
