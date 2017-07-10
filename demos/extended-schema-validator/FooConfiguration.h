@@ -23,6 +23,8 @@
 
 #pragma once
 
+#include <vector>
+
 class FooConfiguration
 {
 public:
@@ -56,7 +58,7 @@ public:
 
     void getHexList(const int*& array, int& arraySize)
     {
-        array = m_hexList;
+        array = m_hexList.data();
         arraySize = m_hexListSize;
     }
 
@@ -73,7 +75,7 @@ private:
     const char* m_host;
     int m_hexByte;
     int m_hexWord;
-    int* m_hexList;
+    std::vector<int> m_hexList;
     int m_hexListSize;
 
 };

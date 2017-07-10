@@ -39,7 +39,6 @@ FooConfiguration::FooConfiguration(bool wantDiagnostics)
                                   m_host(""),
                                   m_hexByte(0x00),
                                   m_hexWord(0x00),
-                                  m_hexList(0),
                                   m_hexListSize(0)
 {
 }
@@ -47,7 +46,6 @@ FooConfiguration::FooConfiguration(bool wantDiagnostics)
 FooConfiguration::~FooConfiguration()
 {
     static_cast<Configuration*>(m_cfg)->destroy();
-    delete[] m_hexList;
 }
 
 void FooConfiguration::parse(const char* cfgInput, const char* scope, const char* secInput,
@@ -95,7 +93,8 @@ void FooConfiguration::parse(const char* cfgInput, const char* scope, const char
         m_hexWord = SchemaTypeHex::lookupHex(cfg, scope, "hex_word");
         cfg->lookupList(scope, "hex_list", strList);
         m_hexListSize = strList.size();
-        m_hexList = new int[m_hexListSize];
+        m_hexList.reserve(m_hexListSize);
+
         for (int i = 0; i < m_hexListSize; i++)
         {
             localName.clear();
