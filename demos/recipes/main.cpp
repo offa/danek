@@ -119,7 +119,7 @@ static std::tuple<std::string, std::string> parseCmdLineArgs(int argc, char** ar
         }
         else
         {
-            fprintf(stderr, "Unrecognised option '%s'\n\n", argv[i]);
+            std::cerr << "Unrecognised option '" << argv[i] << "'\n\n";
             usage();
         }
     }
