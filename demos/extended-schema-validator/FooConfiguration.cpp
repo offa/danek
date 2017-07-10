@@ -33,14 +33,14 @@ using danek::Configuration;
 using danek::ConfigurationException;
 
 FooConfiguration::FooConfiguration(bool wantDiagnostics)
-    : m_cfg(Configuration::create()),
-      m_wantDiagnostics(wantDiagnostics),
-      m_timeout(0),
-      m_host(""),
-      m_hexByte(0x00),
-      m_hexWord(0x00),
-      m_hexList(0),
-      m_hexListSize(0)
+                                : m_cfg(Configuration::create()),
+                                  m_wantDiagnostics(wantDiagnostics),
+                                  m_timeout(0),
+                                  m_host(""),
+                                  m_hexByte(0x00),
+                                  m_hexWord(0x00),
+                                  m_hexList(0),
+                                  m_hexListSize(0)
 {
 }
 
@@ -69,10 +69,8 @@ void FooConfiguration::parse(const char* cfgInput, const char* scope, const char
             0 // null-terminated array of strings
         };
 
-        //--------
         // Set non-default security, if supplied.
         // Parse config input, if supplied.
-        //--------
         if (strcmp(secInput, "") != 0)
         {
             cfg->setSecurityConfiguration(secInput, secScope);
@@ -82,19 +80,15 @@ void FooConfiguration::parse(const char* cfgInput, const char* scope, const char
             cfg->parse(cfgInput);
         }
 
-        //--------
         // Perform schema validation.
-        //--------
         sv.wantDiagnostics(m_wantDiagnostics);
         sv.parseSchema(schema);
         sv.validate(cfg, scope, "");
 
-        //--------
         // Cache configuration variables in instance variables for
         // faster access. We use static utility operations on the
         // SchemaTypeHex class to perform lookupHex() and convert
         // list[hex] to int[].
-        //--------
         m_host = cfg->lookupString(scope, "host");
         m_timeout = cfg->lookupDurationMilliseconds(scope, "timeout");
         m_hexByte = SchemaTypeHex::lookupHex(cfg, scope, "hex_byte");

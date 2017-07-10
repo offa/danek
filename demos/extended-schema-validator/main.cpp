@@ -23,6 +23,7 @@
 
 #include "FooConfiguration.h"
 #include "FooConfigurationException.h"
+#include <memory>
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
@@ -35,7 +36,6 @@ static void usage();
 
 int main(int argc, char** argv)
 {
-    FooConfiguration* cfg;
     const char* cfgInput;
     const char* cfgScope;
     const char* secInput;
@@ -45,19 +45,15 @@ int main(int argc, char** argv)
     setlocale(LC_ALL, "");
     parseCmdLineArgs(argc, argv, cfgInput, cfgScope, secInput, secScope, wantDiagnostics);
 
-    cfg = new FooConfiguration(wantDiagnostics);
+    auto cfg = std::make_unique<FooConfiguration>(wantDiagnostics);
     try
     {
         const int* hexList = nullptr;
         int hexListSize = 0;
-        //--------
         // Parse the configuration file.
-        //--------
         cfg->parse(cfgInput, cfgScope, secInput, secScope);
 
-        //--------
         // Query the configuration object.
-        //--------
         printf("host = %s\n", cfg->getHost());
         printf("timeout = %d\n", cfg->getTimeout());
         printf("hex_byte = %d\n", cfg->getHexByte());
@@ -78,7 +74,6 @@ int main(int argc, char** argv)
         return 1;
     }
 
-    delete cfg;
     return 0;
 }
 

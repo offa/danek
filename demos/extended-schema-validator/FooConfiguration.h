@@ -28,45 +28,47 @@ class FooConfiguration
 public:
     explicit FooConfiguration(bool wantDiagnostics = false);
     ~FooConfiguration();
+    FooConfiguration(const FooConfiguration&) = delete;
 
     void parse(const char* cfgInput, const char* cfgScope = "", const char* secInput = "",
         const char* secScope = "");
 
-    //--------
     // Acccessors for configuration variables.
-    //--------
     int getTimeout() const
     {
         return m_timeout;
     }
+
     const char* getHost() const
     {
         return m_host;
     }
+
     int getHexByte() const
     {
         return m_hexByte;
     }
+
     int getHexWord() const
     {
         return m_hexWord;
     }
+
     void getHexList(const int*& array, int& arraySize)
     {
         array = m_hexList;
         arraySize = m_hexListSize;
     }
 
+    FooConfiguration& operator=(const FooConfiguration&) = delete;
+
+
 private:
-    //--------
-    // Instance variables
-    //--------
+
     void* m_cfg; // opaque pointer to Config4Cpp config object
     bool m_wantDiagnostics;
 
-    //--------
     // Instance variables to cache configuration variables.
-    //--------
     int m_timeout;
     const char* m_host;
     int m_hexByte;
@@ -74,9 +76,4 @@ private:
     int* m_hexList;
     int m_hexListSize;
 
-    //--------
-    // The following are not implemented
-    //--------
-    FooConfiguration& operator=(const FooConfiguration&);
-    FooConfiguration(const FooConfiguration&);
 };
