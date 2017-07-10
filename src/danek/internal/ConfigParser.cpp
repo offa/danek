@@ -75,14 +75,12 @@
 //			| StringExpr '@matches' StringExpr
 //----------------------------------------------------------------------
 
-//--------
-// #include's
-//--------
 #include "danek/internal/ConfigParser.h"
 #include "danek/internal/platform.h"
 #include "danek/internal/ConfigItem.h"
 #include "danek/internal/Compat.h"
 #include "danek/PatternMatch.h"
+#include <fstream>
 #include <stdlib.h>
 #include <ctype.h>
 #include <errno.h>
@@ -1192,18 +1190,20 @@ namespace danek
         StringBuffer msg;
         StringBuffer fileName;
         int ch;
-        BufferedFileReader file;
+        std::ifstream file;
 
         accept(ConfigLex::LEX_FUNC_READ_FILE_SYM, "expecting 'read.file('");
         parseStringExpr(fileName);
         accept(lex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
         str.clear();
-        if (!file.open(fileName.str().c_str()))
+        file.open(fileName.str());
+
+        if( file.good() == false )
         {
             msg << "error reading " << fileName << ": " << strerror(errno);
             throw ConfigurationException(msg.str());
         }
-        while ((ch = file.getChar()) != EOF)
+        while ((ch = file.get()) != EOF)
         {
             if (ch != '\r')
             {

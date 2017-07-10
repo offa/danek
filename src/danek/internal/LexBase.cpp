@@ -21,12 +21,10 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//--------
-// #include's
-//--------
 #include "danek/internal/LexBase.h"
 #include "danek/internal/UidIdentifierDummyProcessor.h"
 #include "danek/internal/Compat.h"
+#include "danek/internal/platform.h"
 #include <stdlib.h>
 #include <errno.h>
 #include <string.h>
@@ -132,10 +130,13 @@ namespace danek
         switch (sourceType)
         {
             case Configuration::SourceType::File:
-                if (!m_file.open(source))
                 {
-                    msg << "cannot open " << source << ": " << strerror(errno);
-                    throw ConfigurationException(msg.str());
+                    m_file.open(source);
+                    if( m_file.good() == false )
+                    {
+                        msg << "cannot open " << source << ": " << strerror(errno);
+                        throw ConfigurationException(msg.str());
+                    }
                 }
                 break;
             case Configuration::SourceType::String:
@@ -215,7 +216,7 @@ namespace danek
         {
             do
             {
-                ch = m_file.getChar();
+                ch = m_file.get();
             } while (ch == '\r');
         }
         else

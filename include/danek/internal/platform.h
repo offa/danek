@@ -77,7 +77,7 @@ namespace danek
     // byte at a time.
     //----------------------------------------------------------------------
 
-    class BufferedFileReader
+    class [[deprecated("Use std::ifstream instead")]] BufferedFileReader
     {
     public:
 

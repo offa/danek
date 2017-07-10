@@ -29,8 +29,8 @@
 #include "LexToken.h"
 #include "MBChar.h"
 #include "UidIdentifierProcessor.h"
-#include "platform.h"
 #include "LexBaseSymbols.h"
+#include <fstream>
 
 namespace danek
 {
@@ -105,7 +105,7 @@ namespace danek
         // CFG_INPUT_STRING uses m_ptr and m_source
         // CFG_INPUT_EXEC   uses m_ptr and m_execOutput
         //--------
-        BufferedFileReader m_file;
+        std::ifstream m_file;
         const char* m_ptr;
         StringBuffer m_execOutput;
 
