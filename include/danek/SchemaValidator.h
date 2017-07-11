@@ -96,8 +96,7 @@ namespace danek
             const StringVector& baseTypeArgs);
 
         SchemaIdRuleInfo* findIdRule(const char* name) const;
-        bool shouldIgnore(const Configuration* cfg, const char* scope, const char* expandedName,
-            const char* unexpandedName) const;
+        bool shouldIgnore(const Configuration* cfg, const char* scope, const char* expandedName, const char* unexpandedName) const;
 
         // Instance variables are NOT visible to subclasses.
         SchemaIdRuleInfo** m_idRules;

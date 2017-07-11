@@ -132,12 +132,6 @@ namespace danek
         return nullptr;
     }
 
-    //----------------------------------------------------------------------
-    // Function:	Constructor
-    //
-    // Description:
-    //----------------------------------------------------------------------
-
     SchemaValidator::SchemaValidator()
     {
         try
@@ -160,12 +154,6 @@ namespace danek
             throw std::exception{}; // Bug!
         }
     }
-
-    //----------------------------------------------------------------------
-    // Function:	Destructor
-    //
-    // Description:
-    //----------------------------------------------------------------------
 
     SchemaValidator::~SchemaValidator()
     {
@@ -195,16 +183,12 @@ namespace danek
     {
         registerType(new SchemaTypeScope());
 
-        //--------
         // List-based types
-        //--------
         registerType(new SchemaTypeList());
         registerType(new SchemaTypeTable());
         registerType(new SchemaTypeTuple());
 
-        //--------
         // String-based types
-        //--------
         registerType(new SchemaTypeString());
         registerType(new SchemaTypeBoolean());
         registerType(new SchemaTypeDurationMicroseconds());
@@ -231,8 +215,7 @@ namespace danek
         m_areTypesSorted = false;
     }
 
-    void SchemaValidator::registerTypedef(const char* typeName, ConfType cfgType,
-        const char* baseTypeName, const StringVector& baseTypeArgs)
+    void SchemaValidator::registerTypedef(const char* typeName, ConfType cfgType, const char* baseTypeName, const StringVector& baseTypeArgs)
     {
         checkTypeDoesNotExist(typeName);
         ensureSpaceInTypesArray();
@@ -310,20 +293,15 @@ namespace danek
 
     void SchemaValidator::validate(const Configuration* cfg, const char* scope, const char* localName,
         bool recurseIntoSubscopes, ConfType typeMask, ForceMode forceMode) const
-
     {
         StringBuffer fullyScopedName;
         StringVector itemNames;
 
-        //--------
         // Get a list of the entries in the scope.
-        //--------
         cfg->mergeNames(scope, localName, fullyScopedName);
         cfg->listLocallyScopedNames(scope, localName, typeMask, recurseIntoSubscopes, itemNames);
 
-        //--------
         // Now validte those names
-        //--------
         validate(cfg, scope, localName, itemNames, forceMode);
     }
 
@@ -342,9 +320,8 @@ namespace danek
         {
             printf("\n%s: start\n", prefix);
         }
-        //--------
+
         // Compare every name in itemNames with m_ignoreRules and m_idRules.
-        //--------
         int len = itemNames.size();
         for (int i = 0; i < len; i++)
         {
@@ -361,9 +338,7 @@ namespace danek
             SchemaIdRuleInfo* idRule = findIdRule(unexpandedName.c_str());
             if (idRule == nullptr)
             {
-                //--------
                 // Can't find an idRule for the entry
-                //--------
                 cfg->mergeNames(fullyScopedName.str().c_str(), iName, unlistedName);
                 switch (cfg->type(unlistedName.str().c_str(), ""))
                 {
@@ -386,10 +361,8 @@ namespace danek
                 throw ConfigurationException(msg.str());
             }
 
-            //--------
             // There is an idRule for the entry. Look up the idRule's
             // type, and invoke its validate() operation.
-            //--------
             const char* typeName = idRule->typeName().c_str();
             SchemaType* typeDef = findType(typeName);
             compat::checkAssertion(typeDef != nullptr);
@@ -480,8 +453,7 @@ namespace danek
         {
             parentScopePattern.append(*ptr);
         }
-        cfg->listFullyScopedNames(
-            fullScope, "", ConfType::Scope, true, parentScopePattern.str().c_str(), parentScopes);
+        cfg->listFullyScopedNames(fullScope, "", ConfType::Scope, true, parentScopePattern.str().c_str(), parentScopes);
         int len = parentScopes.size();
         for (int i = 0; i < len; i++)
         {
@@ -503,10 +475,8 @@ namespace danek
 
         for (int i = 0; i < m_ignoreRulesCurrSize; i++)
         {
-            //--------
             // Does unexpandedName start with rule.m_locallyScopedName
             // followed by "."?
-            //--------
             const char* name = m_ignoreRules[i]->locallyScopedName().c_str();
             const auto len = strlen(name);
             if (strncmp(unexpandedName, name, len) != 0)
@@ -518,10 +488,8 @@ namespace danek
                 continue;
             }
 
-            //--------
             // It does. Whether we ignore the item depends on the
             // "@ignore<something>" keyword used.
-            //--------
             const short symbol = m_ignoreRules[i]->symbol();
             switch (symbol)
             {
@@ -548,17 +516,13 @@ namespace danek
             {
                 if (hasDotAfterPrefix)
                 {
-                    //--------
                     // The item is a variable in a nested scope so
                     // the "@ignoreVariablesIn" rule does not apply.
-                    //--------
                     continue;
                 }
-                //--------
                 // The item is directly in the scope, so the
                 // "@ignoreVariablesIn" rule applies if the item
                 // is a variable.
-                //--------
                 if ((static_cast<int>(cfgType) & static_cast<int>(ConfType::Variables)) != 0)
                 {
                     return true;
@@ -577,10 +541,8 @@ namespace danek
                 //--------
                 return true;
             }
-            //--------
             // The item is directly in the ignore-able scope,
             // so we ignore it only if the item is a scope.
-            //--------
             if (cfgType == ConfType::Scope)
             {
                 return true;
