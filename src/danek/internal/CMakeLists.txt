@@ -20,12 +20,12 @@ add_library(danek-schematypes OBJECT SchemaTypeBoolean.cpp
                             SchemaTypeTypedef.cpp
                             )
 
-add_library(danek-misc OBJECT platform.cpp
-                        UidIdentifierProcessor.cpp
+add_library(danek-misc OBJECT UidIdentifierProcessor.cpp
                         Util.cpp
                         ToString.cpp
                         MBChar.cpp
                         )
+add_library(danek-platform OBJECT platform.cpp)
 
 add_library(danek-lexparser OBJECT SchemaLex.cpp
                         SchemaParser.cpp
