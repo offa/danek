@@ -270,7 +270,7 @@ namespace danek
         Configuration* m_securityCfg;
         StringBuffer m_securityCfgScope;
         StringBuffer m_fileName;
-        ConfigScope* m_rootScope;
+        std::unique_ptr<ConfigScope> m_rootScope;
         ConfigScope* m_currScope;
         StringVector m_fileNameStack;
         ConfigurationImpl* m_fallbackCfg;
@@ -296,7 +296,7 @@ namespace danek
 
     inline ConfigScope* ConfigurationImpl::rootScope()
     {
-        return m_rootScope;
+        return m_rootScope.get();
     }
 
     inline ConfigScope* ConfigurationImpl::getCurrScope()

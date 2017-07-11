@@ -41,8 +41,8 @@ namespace danek
 {
     ConfigurationImpl::ConfigurationImpl() : m_securityCfg(&DefaultSecurityConfiguration::singleton),
                                              m_fileName("<no file>"),
-                                             m_rootScope(new ConfigScope{nullptr, ""}),
-                                             m_currScope(m_rootScope),
+                                             m_rootScope(std::make_unique<ConfigScope>(nullptr, "")),
+                                             m_currScope(m_rootScope.get()),
                                              m_fallbackCfg(nullptr),
                                              m_amOwnerOfSecurityCfg(false),
                                              m_amOwnerOfFallbackCfg(false)
@@ -51,7 +51,6 @@ namespace danek
 
     ConfigurationImpl::~ConfigurationImpl()
     {
-        delete m_rootScope;
         if (m_amOwnerOfSecurityCfg)
         {
             m_securityCfg->destroy();
@@ -477,10 +476,9 @@ namespace danek
 
     void ConfigurationImpl::empty()
     {
-        delete m_rootScope;
         m_fileName = "<no file>";
-        m_rootScope = new ConfigScope(nullptr, "");
-        m_currScope = m_rootScope;
+        m_rootScope = std::make_unique<ConfigScope>(nullptr, "");
+        m_currScope = m_rootScope.get();
     }
 
     //----------------------------------------------------------------------
@@ -504,7 +502,7 @@ namespace danek
             // Search only in the root scope and skip over '.'
             //--------
             vec = StringVector{util::splitScopes(&fullyScopedName[1])};
-            scope = m_rootScope;
+            scope = m_rootScope.get();
         }
         else if (startInRoot)
         {
@@ -512,7 +510,7 @@ namespace danek
             // Search only in the root scope
             //--------
             vec = StringVector{util::splitScopes(fullyScopedName)};
-            scope = m_rootScope;
+            scope = m_rootScope.get();
         }
         else
         {
@@ -637,7 +635,7 @@ namespace danek
         mergeNames(scope, localName, fullyScopedName);
         if (strcmp(fullyScopedName.str().c_str(), "") == 0)
         {
-            scopeObj = m_rootScope;
+            scopeObj = m_rootScope.get();
         }
         else
         {
@@ -689,7 +687,7 @@ namespace danek
         mergeNames(scope, localName, fullyScopedName);
         if (strcmp(fullyScopedName.str().c_str(), "") == 0)
         {
-            scopeObj = m_rootScope;
+            scopeObj = m_rootScope.get();
         }
         else
         {
