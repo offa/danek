@@ -37,9 +37,7 @@ namespace danek
     class LexBase
     {
     public:
-        //--------
-        // Public operations
-        //--------
+
         void nextToken(LexToken& token);
 
 
@@ -56,29 +54,22 @@ namespace danek
         };
 
     protected:
-        //--------
         // Constructors and destructor
-        //--------
         LexBase(Configuration::SourceType sourceType, const char* source,
             UidIdentifierProcessor* uidIdentifierProcessor);
         explicit LexBase(const char* str);
         virtual ~LexBase();
 
-        //--------
         // The constructors of a subclass should initialize the
         // following variables.
-        //--------
         KeywordInfo* m_keywordInfoArray;
         int m_keywordInfoArraySize;
         FuncInfo* m_funcInfoArray;
         int m_funcInfoArraySize;
 
     private:
-        //--------
-        // Implementation-specific operations
-        //--------
-        void searchForKeyword(const char* spelling, bool& found, short& symbol);
 
+        void searchForKeyword(const char* spelling, bool& found, short& symbol);
         void searchForFunction(const char* spelling, bool& found, FunctionType& funcType, short& symbol);
 
         void nextChar();
@@ -88,9 +79,6 @@ namespace danek
         bool isKeywordChar(const MBChar& ch);
         bool isIdentifierChar(const MBChar& ch);
 
-        //--------
-        // Instance variables
-        //--------
         UidIdentifierProcessor* m_uidIdentifierProcessor;
         bool m_amOwnerOfUidIdentifierProcessor;
         int m_lineNum; // Used for error reporting
@@ -109,9 +97,7 @@ namespace danek
         const char* m_ptr;
         StringBuffer m_execOutput;
 
-        //--------
         // Unsupported constructors and assignment operators
-        //--------
         LexBase();
         LexBase(const LexBase&);
         LexBase& operator=(const LexBase&);
