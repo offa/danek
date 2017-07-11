@@ -46,59 +46,40 @@ namespace danek
             Required
         };
 
-        //--------
-        // Constructors and destructor
-        //--------
         SchemaValidator();
         virtual ~SchemaValidator();
 
-        //--------
-        // Public API
-        //--------
         inline void wantDiagnostics(bool value);
         inline bool wantDiagnostics();
         void parseSchema(const char** schema, int schemaSize);
         void parseSchema(const char** nullTerminatedSchema);
-        inline void validate(const Configuration* cfg, const char* scope, const char* localName,
-            ForceMode forceMode = ForceMode::None) const;
-        void validate(const Configuration* cfg, const char* scope, const char* localName,
-            bool recurseIntoSubscopes, ConfType typeMask, ForceMode forceMode = ForceMode::None) const
-           ;
+        inline void validate(const Configuration* cfg, const char* scope, const char* localName, ForceMode forceMode = ForceMode::None) const;
+        void validate(const Configuration* cfg, const char* scope, const char* localName, bool recurseIntoSubscopes, ConfType typeMask, ForceMode forceMode = ForceMode::None) const;
 
     protected:
-        //--------
+
         // Operations that can be called by a subclass.
-        //--------
         void registerType(SchemaType* type);
 
     private:
+
         friend int compareSchemaIdRuleInfo(const void*, const void*);
         friend int compareSchemaType(const void*, const void*);
         friend class SchemaParser;
         friend class SchemaType;
 
-        //--------
         // Helper operations.
-        //--------
         SchemaType* findType(const char* name) const;
 
-        void validate(const Configuration* cfg, const char* scope, const char* localName,
-            const StringVector& itemNames, ForceMode forceMode) const;
-        void validateForceMode(const Configuration* cfg, const char* scope, const char* localName,
-            ForceMode forceMode) const;
-        void validateRequiredUidEntry(const Configuration* cfg, const char* fullScope,
-            SchemaIdRuleInfo* idRule) const;
+        void validate(const Configuration* cfg, const char* scope, const char* localName, const StringVector& itemNames, ForceMode forceMode) const;
+        void validateForceMode(const Configuration* cfg, const char* scope, const char* localName, ForceMode forceMode) const;
+        void validateRequiredUidEntry(const Configuration* cfg, const char* fullScope, SchemaIdRuleInfo* idRule) const;
 
-        void callCheckRule(const SchemaType* target, const Configuration* cfg, const char* typeName,
-            const StringVector& typeArgs, const char* rule, int indentLevel) const;
+        void callCheckRule(const SchemaType* target, const Configuration* cfg, const char* typeName, const StringVector& typeArgs, const char* rule, int indentLevel) const;
 
-        void callValidate(const SchemaType* target, const Configuration* cfg, const char* scope,
-            const char* localName, const char* typeName, const char* origTypeName,
-            const StringVector& typeArgs, int indentLevel) const;
+        void callValidate(const SchemaType* target, const Configuration* cfg, const char* scope, const char* localName, const char* typeName, const char* origTypeName, const StringVector& typeArgs, int indentLevel) const;
 
-        bool callIsA(const SchemaType* target, const Configuration* cfg, const char* value,
-            const char* typeName, const StringVector& typeArgs, int indentLevel,
-            StringBuffer& errSuffix) const;
+        bool callIsA(const SchemaType* target, const Configuration* cfg, const char* value, const char* typeName, const StringVector& typeArgs, int indentLevel, StringBuffer& errSuffix) const;
 
         void printTypeArgs(const StringVector& typeArgs, int indentLevel) const;
         void printTypeNameAndArgs(const char* typeName, const StringVector& typeArgs, int indentLevel) const;
@@ -118,9 +99,7 @@ namespace danek
         bool shouldIgnore(const Configuration* cfg, const char* scope, const char* expandedName,
             const char* unexpandedName) const;
 
-        //--------
         // Instance variables are NOT visible to subclasses.
-        //--------
         SchemaIdRuleInfo** m_idRules;
         int m_idRulesCurrSize;
         int m_idRulesMaxSize;
@@ -135,19 +114,13 @@ namespace danek
         bool m_areTypesSorted;
         bool m_wantDiagnostics;
 
-        //--------
         // The following are unimplemented
-        //--------
         SchemaValidator(const SchemaValidator&);
         SchemaValidator& operator=(const SchemaValidator&);
     };
 
-    //--------
-    // Inline implementation of operations
-    //--------
 
-    inline void SchemaValidator::validate(const Configuration* cfg, const char* scope, const char* localName,
-        ForceMode forceMode) const
+    inline void SchemaValidator::validate(const Configuration* cfg, const char* scope, const char* localName, ForceMode forceMode) const
     {
         validate(cfg, scope, localName, true, ConfType::ScopesAndVars, forceMode);
     }
