@@ -99,20 +99,12 @@ namespace danek
         }
     }
 
-    //----------------------------------------------------------------------
-    // Function:	Constructor
-    //
-    // Description:
-    //----------------------------------------------------------------------
-
     LexBase::LexBase(Configuration::SourceType sourceType, const char* source,
         UidIdentifierProcessor* uidIdentifierProcessor)
     {
         StringBuffer msg;
 
-        //--------
         // Initialize state for the multi-byte functions in the C library.
-        //--------
         memset(&m_mbtowcState, 0, sizeof(mbstate_t));
 
         m_keywordInfoArray = nullptr;
@@ -158,19 +150,11 @@ namespace danek
         nextChar(); // initialize m_ch
     }
 
-    //----------------------------------------------------------------------
-    // Function:	Constructor
-    //
-    // Description:
-    //----------------------------------------------------------------------
-
     LexBase::LexBase(const char* str)
     {
         StringBuffer msg;
 
-        //--------
         // Initialize state for the multi-byte functions in the C library.
-        //--------
         memset(&m_mbtowcState, 0, sizeof(mbstate_t));
 
         m_keywordInfoArray = nullptr;
@@ -187,12 +171,6 @@ namespace danek
         m_atEOF = false;
         nextChar(); // initialize m_ch
     }
-
-    //----------------------------------------------------------------------
-    // Function:	Destructor
-    //
-    // Description:
-    //----------------------------------------------------------------------
 
     LexBase::~LexBase()
     {
