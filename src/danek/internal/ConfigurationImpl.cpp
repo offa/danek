@@ -127,10 +127,9 @@ namespace danek
 
     void ConfigurationImpl::setSecurityConfiguration(const char* cfgInput, const char* scope)
     {
-        Configuration* cfg;
         StringVector dummyList;
 
-        cfg = Configuration::create();
+        Configuration* cfg = Configuration::create();
         try
         {
             cfg->parse(cfgInput);
@@ -161,14 +160,7 @@ namespace danek
         scope = m_securityCfgScope.str().c_str();
     }
 
-    //----------------------------------------------------------------------
-    // Function:	parse()
-    //
-    // Description:
-    //----------------------------------------------------------------------
-
-    void ConfigurationImpl::parse(Configuration::SourceType sourceType, const char* source,
-        const char* sourceDescription)
+    void ConfigurationImpl::parse(Configuration::SourceType sourceType, const char* source, const char* sourceDescription)
     {
         StringBuffer trustedCmdLine;
 
@@ -211,12 +203,6 @@ namespace danek
         }
         ConfigParser parser(sourceType, source, trustedCmdLine.str().c_str(), m_fileName.str().c_str(), this);
     }
-
-    //----------------------------------------------------------------------
-    // Function:	type()
-    //
-    // Description:	Return the type of the named entry.
-    //----------------------------------------------------------------------
 
     ConfType ConfigurationImpl::type(const char* scope, const char* localName) const
     {
@@ -343,17 +329,10 @@ namespace danek
         if (!scopeObj->addOrReplaceString(vec[len - 1].c_str(), str))
         {
             std::stringstream msg;
-            msg << fileName() << ": "
-                << "variable '" << fullyScopedName.str() << "' was previously used as a scope";
+            msg << fileName() << ": " << "variable '" << fullyScopedName.str() << "' was previously used as a scope";
             throw ConfigurationException(msg.str());
         }
     }
-
-    //----------------------------------------------------------------------
-    // Function:	ensureScopeExists()
-    //
-    // Description:
-    //----------------------------------------------------------------------
 
     void ConfigurationImpl::ensureScopeExists(const char* scope, const char* localName)
     {
@@ -385,8 +364,7 @@ namespace danek
         if (!scopeObj->addOrReplaceList(vec[len - 1].c_str(), data))
         {
             std::stringstream msg;
-            msg << fileName() << ": "
-                << "variable '" << fullyScopedName.str() << "' was previously used as a scope";
+            msg << fileName() << ": " << "variable '" << fullyScopedName.str() << "' was previously used as a scope";
             throw ConfigurationException(msg.str());
         }
     }
@@ -423,8 +401,7 @@ namespace danek
         if (!scope->addOrReplaceList(vec[len - 1].c_str(), list.get()))
         {
             std::stringstream msg;
-            msg << fileName() << ": "
-                << "variable '" << name << "' was previously used as a scope";
+            msg << fileName() << ": " << "variable '" << name << "' was previously used as a scope";
             throw ConfigurationException(msg.str());
         }
     }
@@ -438,14 +415,12 @@ namespace danek
     void ConfigurationImpl::remove(const char* scope, const char* localName)
     {
         StringBuffer fullyScopedName;
-        ConfigScope* scopeObj;
-        int i;
-        int len;
+        std::size_t i;
 
-        scopeObj = m_currScope;
+        ConfigScope* scopeObj = m_currScope;
         mergeNames(scope, localName, fullyScopedName);
         StringVector vec{util::splitScopes(fullyScopedName.str())};
-        len = vec.size();
+        const std::size_t len = vec.size();
         for (i = 0; i < len - 1; i++)
         {
             const ConfigItem* item = scopeObj->findItem(vec[i].c_str());
@@ -480,12 +455,6 @@ namespace danek
         m_rootScope = std::make_unique<ConfigScope>(nullptr, "");
         m_currScope = m_rootScope.get();
     }
-
-    //----------------------------------------------------------------------
-    // Function:	lookup()
-    //
-    // Description:
-    //----------------------------------------------------------------------
 
     const ConfigItem* ConfigurationImpl::lookup(const char* fullyScopedName, const char* localName, bool startInRoot) const
     {
@@ -539,11 +508,10 @@ namespace danek
 
     const ConfigItem* ConfigurationImpl::lookupHelper(const ConfigScope* scope, const StringVector& vec) const
     {
-        int len;
-        int i;
+        std::size_t i;
+        const std::size_t len = vec.size();
 
-        len = vec.size();
-        for (i = 0; i < len - 1; i++)
+        for (i = 0; i < len - 1; ++i)
         {
             const ConfigItem* item = scope->findItem(vec[i].c_str());
             if (item == nullptr || item->type() != ConfType::Scope)
@@ -576,8 +544,7 @@ namespace danek
     // Description:	Generate a "printout" of the specified entry.
     //----------------------------------------------------------------------
 
-    void ConfigurationImpl::dump(StringBuffer& buf, bool wantExpandedUidNames, const char* scope,
-        const char* localName) const
+    void ConfigurationImpl::dump(StringBuffer& buf, bool wantExpandedUidNames, const char* scope, const char* localName) const
     {
         StringBuffer fullyScopedName;
 
@@ -601,12 +568,6 @@ namespace danek
             buf << toString(*item, fullyScopedName.str(), wantExpandedUidNames);
         }
     }
-
-    //----------------------------------------------------------------------
-    // Function:	listFullyScopedNames()
-    //
-    // Description:
-    //----------------------------------------------------------------------
 
     void ConfigurationImpl::listFullyScopedNames(const char* scope, const char* localName, ConfType typeMask,
         bool recursive, StringVector& names) const
@@ -654,12 +615,6 @@ namespace danek
         names = StringVector{v};
     }
 
-    //----------------------------------------------------------------------
-    // Function:	listLocallyScopedNames()
-    //
-    // Description:
-    //----------------------------------------------------------------------
-
     void ConfigurationImpl::listLocallyScopedNames(const char* scope, const char* localName, ConfType typeMask,
         bool recursive, const char* filterPattern, StringVector& names) const
     {
@@ -706,8 +661,7 @@ namespace danek
         names = StringVector{v};
     }
 
-    const char* ConfigurationImpl::lookupString(
-        const char* scope, const char* localName, const char* defaultVal) const
+    const char* ConfigurationImpl::lookupString(const char* scope, const char* localName, const char* defaultVal) const
     {
         ConfType type;
         std::stringstream msg;
@@ -736,7 +690,6 @@ namespace danek
     }
 
     const char* ConfigurationImpl::lookupString(const char* scope, const char* localName) const
-
     {
         ConfType type;
         std::stringstream msg;
@@ -766,7 +719,6 @@ namespace danek
     }
 
     void ConfigurationImpl::lookupList(const char* scope, const char* localName, std::vector<std::string>& data, const char** defaultArray, int defaultArraySize) const
-
     {
         ConfType type;
         std::stringstream msg;
@@ -825,8 +777,7 @@ namespace danek
         }
     }
 
-    void ConfigurationImpl::lookupList(const char* scope, const char* localName, StringVector& list,
-        const StringVector& defaultList) const
+    void ConfigurationImpl::lookupList(const char* scope, const char* localName, StringVector& list, const StringVector& defaultList) const
     {
         ConfType type;
         std::stringstream msg;
@@ -855,7 +806,6 @@ namespace danek
     }
 
     void ConfigurationImpl::lookupList(const char* scope, const char* localName, StringVector& list) const
-
     {
         ConfType type;
         std::stringstream msg;
@@ -887,7 +837,6 @@ namespace danek
 
     int ConfigurationImpl::lookupEnum(const char* scope, const char* localName, const char* typeName,
         const EnumNameAndValue* enumInfo, int numEnums, const char* defaultVal) const
-
     {
         int result;
         StringBuffer fullyScopedName;
@@ -1002,23 +951,17 @@ namespace danek
     bool ConfigurationImpl::enumVal(
         const char* name, const EnumNameAndValue* enumInfo, int numEnums, int& val) const
     {
-        int i;
-
-        for (i = 0; i < numEnums; i++)
+        for (int i = 0; i < numEnums; i++)
         {
             if (!strcmp(name, enumInfo[i].name))
             {
-                //--------
                 // Found it.
-                //--------
                 val = enumInfo[i].value;
                 return true;
             }
         }
 
-        //--------
         // Failure.
-        //--------
         return false;
     }
 
@@ -1027,9 +970,7 @@ namespace danek
     int countBoolInfo = sizeof(boolInfo) / sizeof(boolInfo[0]);
 
     bool ConfigurationImpl::lookupBoolean(const char* scope, const char* localName, bool defaultVal) const
-
     {
-        int intVal;
         const char* defaultStrVal;
 
         if (defaultVal)
@@ -1040,50 +981,41 @@ namespace danek
         {
             defaultStrVal = "false";
         }
-        intVal = lookupEnum(scope, localName, "boolean", boolInfo, countBoolInfo, defaultStrVal);
+        int intVal = lookupEnum(scope, localName, "boolean", boolInfo, countBoolInfo, defaultStrVal);
         return intVal != 0;
     }
 
     bool ConfigurationImpl::lookupBoolean(const char* scope, const char* localName) const
-
     {
-        int intVal;
-
-        intVal = lookupEnum(scope, localName, "boolean", boolInfo, countBoolInfo);
+        int intVal = lookupEnum(scope, localName, "boolean", boolInfo, countBoolInfo);
         return intVal != 0;
     }
 
     int ConfigurationImpl::lookupInt(const char* scope, const char* localName, int defaultVal) const
-
     {
         const char* strValue;
-        int result;
         char defaultStrVal[64]; // Big enough
 
         sprintf(defaultStrVal, "%d", defaultVal);
         strValue = lookupString(scope, localName, defaultStrVal);
-        result = stringToInt(scope, localName, strValue);
+        const int result = stringToInt(scope, localName, strValue);
         return result;
     }
 
     int ConfigurationImpl::lookupInt(const char* scope, const char* localName) const
-
     {
         const char* strValue;
-        int result;
-
         strValue = lookupString(scope, localName);
-        result = stringToInt(scope, localName, strValue);
+        const int result = stringToInt(scope, localName, strValue);
         return result;
     }
 
     bool ConfigurationImpl::isInt(const char* str) const
     {
-        int i;
         int intValue;
         char dummy;
 
-        i = sscanf(str, "%d%c", &intValue, &dummy);
+        const int i = sscanf(str, "%d%c", &intValue, &dummy);
         return i == 1;
     }
 
