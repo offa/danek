@@ -21,9 +21,6 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//--------
-// #include's
-//--------
 #include "danek/Configuration.h"
 #include "danek/internal/ConfigurationImpl.h"
 #include "danek/internal/MBChar.h"
@@ -69,16 +66,14 @@ namespace danek
 
     int Configuration::mbstrlen(const char* str)
     {
-        int count;
         char byte;
-        const char* ptr;
         wchar_t wChar;
         MBChar ch;
         mbstate_t mbtowcState;
 
         memset(&mbtowcState, 0, sizeof(mbtowcState));
-        count = 0;
-        ptr = str;
+        int count = 0;
+        const char* ptr = str;
         while (*ptr != '\0')
         {
             int status = -1;
@@ -106,7 +101,7 @@ namespace danek
             }
             if (byte != '\0')
             {
-                count++;
+                ++count;
             }
             ch.reset();
         }
