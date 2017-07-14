@@ -1869,12 +1869,9 @@ namespace danek
         return result;
     }
 
-    int ConfigurationImpl::lookupDurationMicroseconds(
-        const char* scope, const char* localName, int defaultVal) const
+    int ConfigurationImpl::lookupDurationMicroseconds(const char* scope, const char* localName, int defaultVal) const
     {
         char defaultStrValue[128]; // big enough
-        const char* strValue;
-        int result;
 
         if (defaultVal == -1)
         {
@@ -1884,28 +1881,21 @@ namespace danek
         {
             sprintf(defaultStrValue, "%d microseconds", defaultVal);
         }
-        strValue = lookupString(scope, localName, defaultStrValue);
-        result = stringToDurationMicroseconds(scope, localName, strValue);
+        const char* strValue = lookupString(scope, localName, defaultStrValue);
+        const int result = stringToDurationMicroseconds(scope, localName, strValue);
         return result;
     }
 
     int ConfigurationImpl::lookupDurationMicroseconds(const char* scope, const char* localName) const
-
     {
-        const char* strValue;
-        int result;
-
-        strValue = lookupString(scope, localName);
-        result = stringToDurationMicroseconds(scope, localName, strValue);
+        const char* strValue = lookupString(scope, localName);
+        const int result = stringToDurationMicroseconds(scope, localName, strValue);
         return result;
     }
 
-    int ConfigurationImpl::lookupDurationMilliseconds(
-        const char* scope, const char* localName, int defaultVal) const
+    int ConfigurationImpl::lookupDurationMilliseconds(const char* scope, const char* localName, int defaultVal) const
     {
         char defaultStrValue[128]; // big enough
-        const char* strValue;
-        int result;
 
         if (defaultVal == -1)
         {
@@ -1915,28 +1905,21 @@ namespace danek
         {
             sprintf(defaultStrValue, "%d milliseconds", defaultVal);
         }
-        strValue = lookupString(scope, localName, defaultStrValue);
-        result = stringToDurationMilliseconds(scope, localName, strValue);
+        const char* strValue = lookupString(scope, localName, defaultStrValue);
+        const int result = stringToDurationMilliseconds(scope, localName, strValue);
         return result;
     }
 
     int ConfigurationImpl::lookupDurationMilliseconds(const char* scope, const char* localName) const
-
     {
-        const char* strValue;
-        int result;
-
-        strValue = lookupString(scope, localName);
-        result = stringToDurationMilliseconds(scope, localName, strValue);
+        const char* strValue = lookupString(scope, localName);
+        const int result = stringToDurationMilliseconds(scope, localName, strValue);
         return result;
     }
 
-    int ConfigurationImpl::lookupDurationSeconds(
-        const char* scope, const char* localName, int defaultVal) const
+    int ConfigurationImpl::lookupDurationSeconds(const char* scope, const char* localName, int defaultVal) const
     {
         char defaultStrValue[128]; // big enough
-        const char* strValue;
-        int result;
 
         if (defaultVal == -1)
         {
@@ -1946,19 +1929,15 @@ namespace danek
         {
             sprintf(defaultStrValue, "%d seconds", defaultVal);
         }
-        strValue = lookupString(scope, localName, defaultStrValue);
-        result = stringToDurationSeconds(scope, localName, strValue);
+        const char* strValue = lookupString(scope, localName, defaultStrValue);
+        const int result = stringToDurationSeconds(scope, localName, strValue);
         return result;
     }
 
     int ConfigurationImpl::lookupDurationSeconds(const char* scope, const char* localName) const
-
     {
-        const char* strValue;
-        int result;
-
-        strValue = lookupString(scope, localName);
-        result = stringToDurationSeconds(scope, localName, strValue);
+        const char* strValue = lookupString(scope, localName);
+        const int result = stringToDurationSeconds(scope, localName, strValue);
         return result;
     }
 
@@ -1968,13 +1947,13 @@ namespace danek
     {
         float floatVal;
         const char* units;
-        int i;
         int result;
         int unitsVal;
 
         stringToFloatWithUnits(scope, localName, typeName, str, allowedUnits, unitsInfoSize, floatVal, units);
         result = -1; // avoid compiler warning about an unitialized variable
-        for (i = 0; i < unitsInfoSize; i++)
+        int i = 0;
+        for (i = 0; i < unitsInfoSize; ++i)
         {
             if (strcmp(unitsInfo[i].spelling, units) == 0)
             {
@@ -2011,104 +1990,75 @@ namespace danek
             "memorySizeMB", MemorySizeMBUnitsInfo, 4, allowedUnits, scope, localName, str);
     }
 
-    int ConfigurationImpl::lookupMemorySizeBytes(
-        const char* scope, const char* localName, int defaultVal) const
+    int ConfigurationImpl::lookupMemorySizeBytes(const char* scope, const char* localName, int defaultVal) const
     {
         char defaultStrValue[64]; // big enough
-        const char* strValue;
-        int result;
 
         sprintf(defaultStrValue, "%d milliseconds", defaultVal);
-        strValue = lookupString(scope, localName, defaultStrValue);
-        result = stringToMemorySizeBytes(scope, localName, strValue);
+        const char* strValue = lookupString(scope, localName, defaultStrValue);
+        const int result = stringToMemorySizeBytes(scope, localName, strValue);
         return result;
     }
 
     int ConfigurationImpl::lookupMemorySizeBytes(const char* scope, const char* localName) const
-
     {
-        const char* strValue;
-        int result;
-
-        strValue = lookupString(scope, localName);
-        result = stringToMemorySizeBytes(scope, localName, strValue);
+        const char* strValue = lookupString(scope, localName);
+        const int result = stringToMemorySizeBytes(scope, localName, strValue);
         return result;
     }
 
     int ConfigurationImpl::lookupMemorySizeKB(const char* scope, const char* localName, int defaultVal) const
-
     {
         char defaultStrValue[64]; // big enough
-        const char* strValue;
-        int result;
 
         sprintf(defaultStrValue, "%d KB", defaultVal);
-        strValue = lookupString(scope, localName, defaultStrValue);
-        result = stringToMemorySizeKB(scope, localName, strValue);
+        const char* strValue = lookupString(scope, localName, defaultStrValue);
+        const int result = stringToMemorySizeKB(scope, localName, strValue);
         return result;
     }
 
     int ConfigurationImpl::lookupMemorySizeKB(const char* scope, const char* localName) const
-
     {
-        const char* strValue;
-        int result;
-
-        strValue = lookupString(scope, localName);
-        result = stringToMemorySizeKB(scope, localName, strValue);
+        const char* strValue = lookupString(scope, localName);
+        const int result = stringToMemorySizeKB(scope, localName, strValue);
         return result;
     }
 
     int ConfigurationImpl::lookupMemorySizeMB(const char* scope, const char* localName, int defaultVal) const
-
     {
         char defaultStrValue[64]; // big enough
-        const char* strValue;
-        int result;
 
         sprintf(defaultStrValue, "%d MB", defaultVal);
-        strValue = lookupString(scope, localName, defaultStrValue);
-        result = stringToMemorySizeMB(scope, localName, strValue);
+        const char* strValue = lookupString(scope, localName, defaultStrValue);
+        const int result = stringToMemorySizeMB(scope, localName, strValue);
         return result;
     }
 
     int ConfigurationImpl::lookupMemorySizeMB(const char* scope, const char* localName) const
-
     {
-        const char* strValue;
-        int result;
-
-        strValue = lookupString(scope, localName);
-        result = stringToMemorySizeMB(scope, localName, strValue);
+        const char* strValue = lookupString(scope, localName);
+        const int result = stringToMemorySizeMB(scope, localName, strValue);
         return result;
     }
 
     float ConfigurationImpl::lookupFloat(const char* scope, const char* localName, float defaultVal) const
-
     {
-        const char* strValue;
-        float result;
         char defaultStrVal[64]; // Big enough
 
         sprintf(defaultStrVal, "%f", defaultVal);
-        strValue = lookupString(scope, localName, defaultStrVal);
-        result = stringToFloat(scope, localName, strValue);
+        const char* strValue = lookupString(scope, localName, defaultStrVal);
+        const float result = stringToFloat(scope, localName, strValue);
         return result;
     }
 
     float ConfigurationImpl::lookupFloat(const char* scope, const char* localName) const
-
     {
-        const char* strValue;
-        float result;
-
-        strValue = lookupString(scope, localName);
-        result = stringToFloat(scope, localName, strValue);
+        const char* strValue = lookupString(scope, localName);
+        const float result = stringToFloat(scope, localName, strValue);
         return result;
     }
 
     void ConfigurationImpl::lookupScope(const char* scope, const char* localName) const
-
     {
         std::stringstream msg;
         StringBuffer fullyScopedName;
@@ -2142,7 +2092,7 @@ namespace danek
     {
         unused(fileName);
 
-        int size = m_fileNameStack.size();
+        const int size = m_fileNameStack.size();
         unused(size); // Prevent build failure in release builds
         compat::checkAssertion(size > 0);
         compat::checkAssertion(strcmp(m_fileNameStack[size - 1].c_str(), fileName) == 0);
@@ -2152,7 +2102,7 @@ namespace danek
     void ConfigurationImpl::checkForCircularIncludes(const char* file, int includeLineNum)
     {
         const auto size = m_fileNameStack.size();
-        for (std::size_t i = 0; i < size; i++)
+        for (std::size_t i = 0; i < size; ++i)
         {
             if (strcmp(m_fileNameStack[i].c_str(), file) == 0)
             {
@@ -2187,21 +2137,18 @@ namespace danek
         ensureScopeExists(vec, 0, vec.size() - 1, scope);
     }
 
-    void ConfigurationImpl::ensureScopeExists(const StringVector& vec, int firstIndex, int lastIndex,
-        ConfigScope*& scope)
+    void ConfigurationImpl::ensureScopeExists(const StringVector& vec, int firstIndex, int lastIndex, ConfigScope*& scope)
     {
-        int i;
-        int j;
         std::stringstream msg;
 
         scope = m_currScope;
-        for (i = firstIndex; i <= lastIndex; i++)
+        for (int i = firstIndex; i <= lastIndex; ++i)
         {
             if (!scope->ensureScopeExists(vec[i].c_str(), scope))
             {
                 msg << fileName() << ": "
                     << "scope '";
-                for (j = firstIndex; j <= i; j++)
+                for (int j = firstIndex; j <= i; ++j)
                 {
                     msg << vec[j].c_str();
                     if (j < i)
@@ -2222,26 +2169,20 @@ namespace danek
         StringVector trustedDirs;
         StringBuffer cmd;
         const char* ptr;
-        const char* scope;
-        std::size_t i;
-        std::size_t j;
-        std::size_t len;
 
         if (this == &DefaultSecurityConfiguration::singleton || m_securityCfg == nullptr)
         {
             return false;
         }
-        scope = m_securityCfgScope.str().c_str();
+        const char* scope = m_securityCfgScope.str().c_str();
 
         m_securityCfg->lookupList(scope, "allow_patterns", allowPatterns);
         m_securityCfg->lookupList(scope, "deny_patterns", denyPatterns);
         m_securityCfg->lookupList(scope, "trusted_directories", trustedDirs);
 
-        //--------
         // Check if there is any rule to deny execution.
-        //--------
-        len = denyPatterns.size();
-        for (i = 0; i < len; i++)
+        const int len = denyPatterns.size();
+        for (int i = 0; i < len; ++i)
         {
             if (patternMatch(cmdLine, denyPatterns[i].c_str()))
             {
@@ -2249,34 +2190,28 @@ namespace danek
             }
         }
 
-        //--------
         // Check if there is any rule to allow execution *and* the
         // command can be found in trusted_directories.
-        //--------
-        len = allowPatterns.size();
-        for (i = 0; i < len; i++)
+        const int len2 = allowPatterns.size();
+        for (int i = 0; i < len2; ++i)
         {
             if (!patternMatch(cmdLine, allowPatterns[i].c_str()))
             {
                 continue;
             }
-            //--------
             // Found cmdLine in allow_patterns. Now extract the
             // first word from cmdLine to get the actual command.
-            //--------
             cmd = "";
             ptr = cmdLine;
             while (*ptr != '\0' && !isspace(*ptr))
             {
                 cmd.append(*ptr);
-                ptr++;
+                ++ptr;
             }
 
-            //--------
             // Check if cmd resides in a directory in
             // trusted_directories.
-            //--------
-            for (j = 0; j < trustedDirs.size(); j++)
+            for (std::size_t j = 0; j < trustedDirs.size(); ++j)
             {
                 if (isCmdInDir(cmd.str().c_str(), trustedDirs[j].c_str()))
                 {
