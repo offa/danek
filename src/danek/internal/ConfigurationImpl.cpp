@@ -1020,17 +1020,14 @@ namespace danek
     }
 
     int ConfigurationImpl::stringToInt(const char* scope, const char* localName, const char* str) const
-
     {
         int result;
         char dummy;
-        int i;
         StringBuffer fullyScopedName;
 
-        //--------
         // Convert the string value into an int value.
-        //--------
-        i = sscanf(str, "%d%c", &result, &dummy);
+        const int i = sscanf(str, "%d%c", &result, &dummy);
+
         if (i != 1)
         {
             //--------
@@ -1046,31 +1043,24 @@ namespace danek
 
     bool ConfigurationImpl::isFloat(const char* str) const
     {
-        int i;
         float floatValue;
         char dummy;
 
-        i = sscanf(str, "%f%c", &floatValue, &dummy);
+        const int i = sscanf(str, "%f%c", &floatValue, &dummy);
         return i == 1;
     }
 
     float ConfigurationImpl::stringToFloat(const char* scope, const char* localName, const char* str) const
-
     {
         float result;
         char dummy;
-        int i;
         StringBuffer fullyScopedName;
 
-        //--------
         // Convert the string value into a float value.
-        //--------
-        i = sscanf(str, "%f%c", &result, &dummy);
+        const int i = sscanf(str, "%f%c", &result, &dummy);
         if (i != 1)
         {
-            //--------
             // The number is badly formatted. Report an error.
-            //--------
             mergeNames(scope, localName, fullyScopedName);
             std::stringstream msg;
             msg << fileName() << ": non-numeric value for '" << fullyScopedName.str() << "'";
@@ -1082,18 +1072,16 @@ namespace danek
     bool ConfigurationImpl::isEnum(const char* str, const EnumNameAndValue* enumInfo, int numEnums) const
     {
         int dummyValue;
-        bool result;
 
-        result = enumVal(str, enumInfo, numEnums, dummyValue);
+        const bool result = enumVal(str, enumInfo, numEnums, dummyValue);
         return result;
     }
 
     bool ConfigurationImpl::isBoolean(const char* str) const
     {
         int dummyValue;
-        bool result;
 
-        result = enumVal(str, boolInfo, countBoolInfo, dummyValue);
+        const bool result = enumVal(str, boolInfo, countBoolInfo, dummyValue);
         return result;
     }
 
@@ -1103,16 +1091,14 @@ namespace danek
         StringBuffer fullyScopedName;
         int result;
 
-        //--------
         // Check if the value matches anything in the enumInfo list.
-        //--------
         if (!enumVal(str, enumInfo, numEnums, result))
         {
             mergeNames(scope, localName, fullyScopedName);
             std::stringstream msg;
             msg << fileName() << ": bad " << typeName << " value specified for '" << fullyScopedName.str()
                 << "'; should be one of:";
-            for (int i = 0; i < numEnums; i++)
+            for (int i = 0; i < numEnums; ++i)
             {
                 if (i < numEnums - 1)
                 {
@@ -1129,11 +1115,8 @@ namespace danek
     }
 
     bool ConfigurationImpl::stringToBoolean(const char* scope, const char* localName, const char* str) const
-
     {
-        int result;
-
-        result = stringToEnum(scope, localName, "boolean", str, boolInfo, countBoolInfo);
+        const int result = stringToEnum(scope, localName, "boolean", str, boolInfo, countBoolInfo);
         return result != 0;
     }
 
@@ -1141,9 +1124,7 @@ namespace danek
         const char* typeName, const char** allowedUnits, int allowedUnitsSize, float& floatResult,
         const char*& unitsResult) const
     {
-        const char* str;
-
-        str = lookupString(scope, localName);
+        const char* str = lookupString(scope, localName);
         stringToFloatWithUnits(
             scope, localName, typeName, str, allowedUnits, allowedUnitsSize, floatResult, unitsResult);
     }
@@ -1151,7 +1132,6 @@ namespace danek
     void ConfigurationImpl::lookupFloatWithUnits(const char* scope, const char* localName,
         const char* typeName, const char** allowedUnits, int allowedUnitsSize, float& floatResult,
         const char*& unitsResult, float defaultFloat, const char* defaultUnits) const
-
     {
         if (type(scope, localName) == ConfType::NoValue)
         {
@@ -1204,9 +1184,7 @@ namespace danek
         const char* typeName, const char** allowedUnits, int allowedUnitsSize, float& floatResult,
         const char*& unitsResult) const
     {
-        const char* str;
-
-        str = lookupString(scope, localName);
+        const char* str = lookupString(scope, localName);
         stringToUnitsWithFloat(
             scope, localName, typeName, str, allowedUnits, allowedUnitsSize, floatResult, unitsResult);
     }
@@ -1214,7 +1192,6 @@ namespace danek
     void ConfigurationImpl::lookupUnitsWithFloat(const char* scope, const char* localName,
         const char* typeName, const char** allowedUnits, int allowedUnitsSize, float& floatResult,
         const char*& unitsResult, float defaultFloat, const char* defaultUnits) const
-
     {
         if (type(scope, localName) == ConfType::NoValue)
         {
@@ -1239,9 +1216,9 @@ namespace danek
         const char* str, const char** allowedUnits, int allowedUnitsSize) const
     {
         int maxUnitsLen = 0;
-        for (int index = 0; index < allowedUnitsSize; index++)
+        for (int index = 0; index < allowedUnitsSize; ++index)
         {
-            int len = strlen(allowedUnits[index]);
+            const int len = strlen(allowedUnits[index]);
             if (len > maxUnitsLen)
             {
                 maxUnitsLen = len;
@@ -1250,15 +1227,13 @@ namespace danek
         char* formatStr = new char[maxUnitsLen + 7]; // big enough
         char* unitSpelling = new char[strlen(str) + 1]; // big enough
 
-        //--------
         // See if the string is in the form "allowedUnits[index] <float>"
-        //--------
-        for (int index = 0; index < allowedUnitsSize; index++)
+        for (int index = 0; index < allowedUnitsSize; ++index)
         {
             sprintf(formatStr, "%s %%f%%c", allowedUnits[index]);
             float fVal;
             char dummyCh;
-            int i = sscanf(str, formatStr, &fVal, &dummyCh);
+            const int i = sscanf(str, formatStr, &fVal, &dummyCh);
             if (i == 1)
             {
                 delete[] formatStr;
@@ -1334,11 +1309,8 @@ namespace danek
 
     void ConfigurationImpl::lookupIntWithUnits(const char* scope, const char* localName, const char* typeName,
         const char** allowedUnits, int allowedUnitsSize, int& intResult, const char*& unitsResult) const
-
     {
-        const char* str;
-
-        str = lookupString(scope, localName);
+        const char* str = lookupString(scope, localName);
         stringToIntWithUnits(
             scope, localName, typeName, str, allowedUnits, allowedUnitsSize, intResult, unitsResult);
     }
@@ -1383,7 +1355,7 @@ namespace danek
 
         // The entry appears to be in the correct format. Find out
         // what the specified units are.
-        for (int i = 0; i < allowedUnitsSize; i++)
+        for (int i = 0; i < allowedUnitsSize; ++i)
         {
             if (strcmp(unitSpelling.c_str(), allowedUnits[i]) == 0)
             {
@@ -1403,9 +1375,9 @@ namespace danek
         int maxUnitsLen = 0;
         std::stringstream msg;
 
-        for (int index = 0; index < allowedUnitsSize; index++)
+        for (int index = 0; index < allowedUnitsSize; ++index)
         {
-            int len = strlen(allowedUnits[index]);
+            const int len = strlen(allowedUnits[index]);
             if (len > maxUnitsLen)
             {
                 maxUnitsLen = len;
@@ -1414,15 +1386,13 @@ namespace danek
         char* formatStr = new char[maxUnitsLen + 7]; // big enough
         char* unitSpelling = new char[strlen(str) + 1]; // big enough
 
-        //--------
         // See if the string is in the form "allowedUnits[index] <int>"
-        //--------
-        for (int index = 0; index < allowedUnitsSize; index++)
+        for (int index = 0; index < allowedUnitsSize; ++index)
         {
             sprintf(formatStr, "%s %%d%%c", allowedUnits[index]);
             int intVal;
             char dummyCh;
-            int i = sscanf(str, formatStr, &intVal, &dummyCh);
+            const int i = sscanf(str, formatStr, &intVal, &dummyCh);
             if (i == 1)
             {
                 unitsResult = allowedUnits[index];
@@ -1433,16 +1403,14 @@ namespace danek
             }
         }
 
-        //--------
         // Incorrect format. Report an error.
-        //--------
         delete[] unitSpelling;
         delete[] formatStr;
         mergeNames(scope, localName, fullyScopedName);
         msg << fileName() << ": invalid " << typeName << " ('" << str << "') specified for '"
             << fullyScopedName.str() << "': should be"
             << " '<units> <int>' where <units> are";
-        for (int i = 0; i < allowedUnitsSize; i++)
+        for (int i = 0; i < allowedUnitsSize; ++i)
         {
             msg << " '" << allowedUnits[i] << "'";
             if (i < allowedUnitsSize - 1)
@@ -1455,11 +1423,8 @@ namespace danek
 
     void ConfigurationImpl::lookupUnitsWithInt(const char* scope, const char* localName, const char* typeName,
         const char** allowedUnits, int allowedUnitsSize, int& intResult, const char*& unitsResult) const
-
     {
-        const char* str;
-
-        str = lookupString(scope, localName);
+        const char* str = lookupString(scope, localName);
         stringToUnitsWithInt(
             scope, localName, typeName, str, allowedUnits, allowedUnitsSize, intResult, unitsResult);
     }
@@ -1487,14 +1452,13 @@ namespace danek
         }
     }
 
-    bool ConfigurationImpl::isUnitsWithInt(
-        const char* str, const char** allowedUnits, int allowedUnitsSize) const
+    bool ConfigurationImpl::isUnitsWithInt(const char* str, const char** allowedUnits, int allowedUnitsSize) const
     {
         int maxUnitsLen = 0;
 
-        for (int index = 0; index < allowedUnitsSize; index++)
+        for (int index = 0; index < allowedUnitsSize; ++index)
         {
-            int len = strlen(allowedUnits[index]);
+            const int len = strlen(allowedUnits[index]);
             if (len > maxUnitsLen)
             {
                 maxUnitsLen = len;
@@ -1503,15 +1467,13 @@ namespace danek
         char* formatStr = new char[maxUnitsLen + 7]; // big enough
         char* unitSpelling = new char[strlen(str) + 1]; // big enough
 
-        //--------
         // See if the string is in the form "allowedUnits[index] <int>"
-        //--------
         for (int index = 0; index < allowedUnitsSize; index++)
         {
             sprintf(formatStr, "%s %%d%%c", allowedUnits[index]);
             int intVal;
             char dummyCh;
-            int i = sscanf(str, formatStr, &intVal, &dummyCh);
+            const int i = sscanf(str, formatStr, &intVal, &dummyCh);
             if (i == 1)
             {
                 delete[] formatStr;
@@ -1661,9 +1623,9 @@ namespace danek
         StringBuffer fullyScopedName;
 
         int maxUnitsLen = 0;
-        for (int index = 0; index < allowedUnitsSize; index++)
+        for (int index = 0; index < allowedUnitsSize; ++index)
         {
-            int len = strlen(allowedUnits[index]);
+            const int len = strlen(allowedUnits[index]);
             if (len > maxUnitsLen)
             {
                 maxUnitsLen = len;
@@ -1672,15 +1634,13 @@ namespace danek
         char* formatStr = new char[maxUnitsLen + 7]; // big enough
         char* unitSpelling = new char[strlen(str) + 1]; // big enough
 
-        //--------
         // See if the string is in the form "allowedUnits[index] <float>"
-        //--------
-        for (int index = 0; index < allowedUnitsSize; index++)
+        for (int index = 0; index < allowedUnitsSize; ++index)
         {
             sprintf(formatStr, "%s %%f%%c", allowedUnits[index]);
             char dummyCh;
             float fVal;
-            int i = sscanf(str, formatStr, &fVal, &dummyCh);
+            const int i = sscanf(str, formatStr, &fVal, &dummyCh);
             if (i == 1)
             {
                 unitsResult = allowedUnits[index];
@@ -1691,16 +1651,14 @@ namespace danek
             }
         }
 
-        //--------
         // Incorrect format. Report an error.
-        //--------
         delete[] unitSpelling;
         delete[] formatStr;
         mergeNames(scope, localName, fullyScopedName);
         msg << fileName() << ": invalid " << typeName << " ('" << str << "') specified for '"
             << fullyScopedName.str() << "': should be"
             << " '<units> <float>' where <units> are";
-        for (int i = 0; i < allowedUnitsSize; i++)
+        for (int i = 0; i < allowedUnitsSize; ++i)
         {
             msg << " '" << allowedUnits[i] << "'";
             if (i < allowedUnitsSize - 1)
@@ -1759,7 +1717,7 @@ namespace danek
         msg << fileName() << ": invalid " << typeName << " ('" << str << "') specified for '"
             << fullyScopedName.str() << "': should be"
             << " '<float> <units>' where <units> are";
-        for ( int i = 0; i < allowedUnitsSize; ++i)
+        for( int i = 0; i < allowedUnitsSize; ++i )
         {
             msg << " '" << allowedUnits[i] << "'";
             if (i < allowedUnitsSize - 1)
@@ -1776,20 +1734,15 @@ namespace danek
         float floatVal;
         const char* units;
         int i;
-        int result;
         int unitsVal;
 
-        //--------
         // Is the duration "infinite"?
-        //--------
         if (!strcmp(str, "infinite"))
         {
             return -1;
         }
 
-        //--------
         // Use stringToFloatWithUnits()
-        //--------
         try
         {
             stringToFloatWithUnits(scope,
@@ -1808,8 +1761,8 @@ namespace danek
             throw ConfigurationException(msg.str());
         }
         compat::checkAssertion(countDurationMicrosecondsInfo == countAllowedDurationMicrosecondsUnits);
-        result = -1; // avoid compiler warning about an unitialized variable
-        for (i = 0; i < countDurationMicrosecondsInfo; i++)
+        int result = -1; // avoid compiler warning about an unitialized variable
+        for (i = 0; i < countDurationMicrosecondsInfo; ++i)
         {
             if (strcmp(durationMicrosecondsUnitsInfo[i].spelling, units) == 0)
             {
@@ -1828,20 +1781,15 @@ namespace danek
         float floatVal;
         const char* units;
         int i;
-        int result;
         int unitsVal;
 
-        //--------
         // Is the duration "infinite"?
-        //--------
         if (!strcmp(str, "infinite"))
         {
             return -1;
         }
 
-        //--------
         // Use stringToFloatWithUnits()
-        //--------
         try
         {
             stringToFloatWithUnits(scope,
@@ -1860,7 +1808,7 @@ namespace danek
             throw ConfigurationException(msg.str());
         }
         compat::checkAssertion(countDurationMillisecondsInfo == countAllowedDurationMillisecondsUnits);
-        result = -1; // avoid compiler warning about an unitialized variable
+        int result = -1; // avoid compiler warning about an unitialized variable
         for (i = 0; i < countDurationMillisecondsInfo; i++)
         {
             if (strcmp(durationMillisecondsUnitsInfo[i].spelling, units) == 0)
@@ -1880,20 +1828,15 @@ namespace danek
         float floatVal;
         const char* units;
         int i;
-        int result;
         int unitsVal;
 
-        //--------
         // Is the duration "infinite"?
-        //--------
         if (!strcmp(str, "infinite"))
         {
             return -1;
         }
 
-        //--------
         // Use stringToFloatWithUnits()
-        //--------
         try
         {
             stringToFloatWithUnits(scope,
@@ -1912,8 +1855,8 @@ namespace danek
             throw ConfigurationException(msg.str());
         }
         compat::checkAssertion(countDurationSecondsInfo == countAllowedDurationSecondsUnits);
-        result = -1; // avoid compiler warning about an unitialized variable
-        for (i = 0; i < countDurationSecondsInfo; i++)
+        int result = -1; // avoid compiler warning about an unitialized variable
+        for (i = 0; i < countDurationSecondsInfo; ++i)
         {
             if (strcmp(durationSecondsUnitsInfo[i].spelling, units) == 0)
             {
