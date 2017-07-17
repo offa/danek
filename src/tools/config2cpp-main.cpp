@@ -284,6 +284,7 @@ int main(int argc, char** argv)
     }
 
     cfg->destroy();
+    schemaCfg->destroy();
 
     return ( ok ? 0 : 1 );
 }
