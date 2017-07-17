@@ -17,9 +17,6 @@ Problem and bug reports ***need also***:
 - Minimal example or steps to reproduce
 
 
-*Please note:* As the primary goal is to modernize the current project, new features are no primary priority at the moment.
-
-
 ## Pull Requests
 
 **Pull requests** are used to submit contributions to the project. A pull request ***should include***:
