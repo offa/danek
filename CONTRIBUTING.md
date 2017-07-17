@@ -1,7 +1,6 @@
 # Contributing
 
 
-
 ## Issues
 
 **Issues** are used to report bugs, problems, feature requests, ask questions or other kind of suggestions. An issue ***should include***:
