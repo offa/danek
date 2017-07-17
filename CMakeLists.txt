@@ -19,7 +19,13 @@ if( ENABLE_CPPCHECK )
     include(CppCheck)
 endif()
 
-add_definitions(-Wall -Wextra -pedantic -Werror -Wshadow -Wold-style-cast)
+add_definitions(-Wall
+                -Wextra
+                -pedantic
+                -Werror
+                -Wshadow
+                -Wold-style-cast
+                )
 
 include_directories("include")
 
