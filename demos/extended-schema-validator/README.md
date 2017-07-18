@@ -11,13 +11,11 @@ validation for hexadecimal numbers.
 
 A class that provides a new schema type must implement two operations:
 
-```
-checkRule() is invoked when the schema type is used in a schema
+- `checkRule()` is invoked when the schema type is used in a schema
 rule.
 
-isA() is invoked during schema validation of a configuration
+- `isA()` is invoked during schema validation of a configuration
 file.
-```
 
 The `SchemaTypeHex` class illustrates how to implement the above
 operations. In addition, the class provides some utility functions that
