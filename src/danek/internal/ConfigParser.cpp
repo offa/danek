@@ -79,6 +79,7 @@
 #include "danek/internal/platform.h"
 #include "danek/internal/ConfigItem.h"
 #include "danek/internal/Compat.h"
+#include "danek/internal/platform/Platform.h"
 #include "danek/PatternMatch.h"
 #include <fstream>
 #include <stdlib.h>
@@ -1023,17 +1024,17 @@ namespace danek
                 parseReplace(str);
                 break;
             case ConfigLex::LEX_FUNC_OS_TYPE_SYM:
-                str = CONFIG4CPP_OS_TYPE;
+                str = platform::name();
                 m_lex->nextToken(m_token);
                 accept(lex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
                 break;
             case ConfigLex::LEX_FUNC_OS_DIR_SEP_SYM:
-                str = CONFIG4CPP_DIR_SEP;
+                str = std::string{platform::directorySeparator()};
                 m_lex->nextToken(m_token);
                 accept(lex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
                 break;
             case ConfigLex::LEX_FUNC_OS_PATH_SEP_SYM:
-                str = CONFIG4CPP_PATH_SEP;
+                str = std::string{platform::pathSeparator()};
                 m_lex->nextToken(m_token);
                 accept(lex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
                 break;
@@ -1462,7 +1463,7 @@ namespace danek
         found = false;
         for (i = len - 1; i >= 0; i--)
         {
-            if (file[i] == '/' || file[i] == CONFIG4CPP_DIR_SEP[0])
+            if (file[i] == '/' || file[i] == platform::directorySeparator())
             {
                 found = true;
                 break;

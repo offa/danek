@@ -60,16 +60,25 @@ _add_test_suite(LexParserTests LexTokenTest.cpp
                             $<TARGET_OBJECTS:danek-config-types>
                             $<TARGET_OBJECTS:danek-misc>
                             $<TARGET_OBJECTS:danek-platform>
+                            $<TARGET_OBJECTS:danek-platform-impl>
                             )
 
 _add_test_suite(SchemaTests SchemaRuleInfoTest.cpp
                             )
+
+_add_test_suite(PlatformTests PlatformTest.cpp
+
+                            $<TARGET_OBJECTS:danek-platform-impl>
+                            )
+
+
 
 add_custom_target(unittest PublicMiscTests
                         COMMAND MiscTests
                         COMMAND ConfigTests
                         COMMAND LexParserTests
                         COMMAND SchemaTests
+                        COMMAND PlatformTests
 
                         COMMENT "Running unittests\n\n"
                         VERBATIM

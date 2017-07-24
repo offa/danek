@@ -1,0 +1,23 @@
+
+#include "danek/internal/platform/Platform.h"
+
+namespace danek
+{
+    namespace platform
+    {
+        std::string name()
+        {
+            return "@OS_TYPE_NAME@";
+        }
+
+        char directorySeparator()
+        {
+            return '@OS_CFG_DIRECTORY_SEPARATOR@';
+        }
+
+        char pathSeparator()
+        {
+            return '@OS_CFG_PATH_SEPARATOR@';
+        }
+    }
+}

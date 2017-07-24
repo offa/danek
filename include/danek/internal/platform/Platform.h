@@ -1,5 +1,4 @@
 // Copyright (c) 2017 offa
-// Copyright 2011 Ciaran McHale.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -8,7 +7,6 @@
 // distribute, sublicense, and/or sell copies of the Software, and to
 // permit persons to whom the Software is furnished to do so, subject to
 // the following conditions.
-//
 // The above copyright notice and this permission notice shall be
 // included in all copies or substantial portions of the Software.
 //
@@ -23,32 +21,18 @@
 
 #pragma once
 
-#ifdef WIN32
-    #include <process.h>
-    #define CONFIG4CPP_POPEN(fileName, mode) _popen(fileName, mode)
-    #define CONFIG4CPP_PCLOSE(file) _pclose(file)
-    #define CONFIG4CPP_DISCARD_STDERR "2> nul"
-#else
-    #include <unistd.h>
-    #ifndef CONFIG4CPP_POPEN
-        #define CONFIG4CPP_POPEN(fileName, mode) popen(fileName, mode)
-    #endif
-    #ifndef CONFIG4CPP_PCLOSE
-        #define CONFIG4CPP_PCLOSE(file) pclose(file)
-    #endif
-    #ifndef CONFIG4CPP_DISCARD_STDERR
-        #define CONFIG4CPP_DISCARD_STDERR "2> /dev/null"
-    #endif
-#endif /* OS */
-
-#include "danek/StringBuffer.h"
-#include <stdio.h>
-
-#include <fstream>
+#include <string>
 
 namespace danek
 {
-    extern bool execCmd(const char* cmd, StringBuffer& output);
-    extern bool isCmdInDir(const char* cmd, const char* dir);
+    namespace platform
+    {
+        // TODO: Move out of 'platform' directory after the old header has been removed
+        std::string name();
 
+        char directorySeparator();
+        char pathSeparator();
+
+    }
 }
+

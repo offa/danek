@@ -10,3 +10,23 @@ configure_file(${TEMPLATE_DIR}/DefaultSecurity.cpp.in
                 )
 add_library(DefaultSecurity OBJECT ${GENERATED_DIR}/DefaultSecurity.cpp)
 target_include_directories(DefaultSecurity PRIVATE "${PROJECT_SOURCE_DIR}/include")
+
+
+
+
+if( WIN32 )
+    set(OS_TYPE_NAME "windows")
+    set(OS_CFG_DIRECTORY_SEPARATOR "\\")
+    set(OS_CFG_PATH_SEPARATOR ";")
+else()
+    set(OS_TYPE_NAME "unix")
+    set(OS_CFG_DIRECTORY_SEPARATOR "/")
+    set(OS_CFG_PATH_SEPARATOR ":")
+endif()
+
+
+configure_file(${TEMPLATE_DIR}/Platform.cpp.in
+                ${GENERATED_DIR}/Platform.cpp
+                @ONLY
+                )
+add_library(danek-platform-impl OBJECT ${GENERATED_DIR}/Platform.cpp)

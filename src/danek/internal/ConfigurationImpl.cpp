@@ -30,6 +30,7 @@
 #include "danek/internal/ConfigItem.h"
 #include "danek/internal/Common.h"
 #include "danek/internal/Compat.h"
+#include "danek/internal/platform/Platform.h"
 #include "danek/PatternMatch.h"
 #include <algorithm>
 #include <sstream>
@@ -2216,7 +2217,7 @@ namespace danek
                 if (isCmdInDir(cmd.str().c_str(), trustedDirs[j].c_str()))
                 {
                     trustedCmdLine = "";
-                    trustedCmdLine << trustedDirs[j].c_str() << CONFIG4CPP_DIR_SEP << cmd
+                    trustedCmdLine << trustedDirs[j].c_str() << platform::directorySeparator() << cmd
                                    << &cmdLine[strlen(cmd.str().c_str())];
                     return true;
                 }

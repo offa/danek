@@ -1,5 +1,4 @@
 // Copyright (c) 2017 offa
-// Copyright 2011 Ciaran McHale.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -21,34 +20,22 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#pragma once
+#include "danek/internal/platform/Platform.h"
+#include <gmock/gmock.h>
 
-#ifdef WIN32
-    #include <process.h>
-    #define CONFIG4CPP_POPEN(fileName, mode) _popen(fileName, mode)
-    #define CONFIG4CPP_PCLOSE(file) _pclose(file)
-    #define CONFIG4CPP_DISCARD_STDERR "2> nul"
-#else
-    #include <unistd.h>
-    #ifndef CONFIG4CPP_POPEN
-        #define CONFIG4CPP_POPEN(fileName, mode) popen(fileName, mode)
-    #endif
-    #ifndef CONFIG4CPP_PCLOSE
-        #define CONFIG4CPP_PCLOSE(file) pclose(file)
-    #endif
-    #ifndef CONFIG4CPP_DISCARD_STDERR
-        #define CONFIG4CPP_DISCARD_STDERR "2> /dev/null"
-    #endif
-#endif /* OS */
+using namespace danek::platform;
+using namespace testing;
 
-#include "danek/StringBuffer.h"
-#include <stdio.h>
-
-#include <fstream>
-
-namespace danek
+class PlatformTest : public testing::Test
 {
-    extern bool execCmd(const char* cmd, StringBuffer& output);
-    extern bool isCmdInDir(const char* cmd, const char* dir);
+};
 
+TEST_F(PlatformTest, name)
+{
+    EXPECT_THAT(name(), AnyOf(StrEq("unix"), StrEq("windows")));
+}
+
+TEST_F(PlatformTest, configs)
+{
+    EXPECT_THAT(directorySeparator(), AnyOf(Eq('/'), Eq('\\')));
 }
