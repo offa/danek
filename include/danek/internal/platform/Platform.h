@@ -33,6 +33,11 @@ namespace danek
         char directorySeparator();
         char pathSeparator();
 
+
+
+        std::string execCmd(const std::string& cmd);
+        bool isCmdInDir(const std::string& cmd, const std::string& dir);
+
     }
 }
 
