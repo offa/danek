@@ -26,20 +26,20 @@
 #include <stdlib.h>
 #include "danek/StringBuffer.h"
 #ifdef P_STDIO_HAS_LIMITED_FDS
-#ifdef WIN32
-//--------
-// Windows does NOT suffer from this problem. However, we can
-// pretend it does so we can compile and test both versions of
-// the BufferedFileReader class on Windows.
-//--------
-#include <io.h>
-#include <fcntl.h>
-#else
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#endif
-#endif
+    #ifdef WIN32
+        //--------
+        // Windows does NOT suffer from this problem. However, we can
+        // pretend it does so we can compile and test both versions of
+        // the BufferedFileReader class on Windows.
+        //--------
+        #include <io.h>
+        #include <fcntl.h>
+    #else
+        #include <sys/types.h>
+        #include <sys/stat.h>
+        #include <fcntl.h>
+    #endif /* WIN32 */
+#endif /* P_STDIO_HAS_LIMITED_FDS */
 
 namespace danek
 {
