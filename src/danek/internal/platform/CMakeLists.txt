@@ -1,8 +1,8 @@
 
 if( WIN32 )
-    add_library(danek-platform-impl-win OBJECT Windows.cpp)
+    set(PLATFORM_IMPL Windows.cpp)
 else()
-    add_library(danek-platform-impl-unix OBJECT Unix.cpp)
+    set(PLATFORM_IMPL Unix.cpp)
 endif()
 
-add_library(danek-platform-impl-common OBJECT Platform.cpp)
+add_library(danek-platform-impl-common OBJECT Platform.cpp ${PLATFORM_IMPL})

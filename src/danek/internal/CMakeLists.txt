@@ -27,7 +27,6 @@ add_library(danek-misc OBJECT UidIdentifierProcessor.cpp
                         ToString.cpp
                         MBChar.cpp
                         )
-add_library(danek-platform OBJECT platform.cpp)
 
 add_library(danek-lexparser OBJECT SchemaLex.cpp
                         SchemaParser.cpp

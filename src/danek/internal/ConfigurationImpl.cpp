@@ -23,7 +23,6 @@
 
 #include "danek/internal/ConfigurationImpl.h"
 #include "danek/internal/Util.h"
-#include "danek/internal/platform.h"
 #include "danek/internal/DefaultSecurityConfiguration.h"
 #include "danek/internal/ConfigParser.h"
 #include "danek/internal/ToString.h"
@@ -2214,7 +2213,7 @@ namespace danek
             // trusted_directories.
             for (std::size_t j = 0; j < trustedDirs.size(); ++j)
             {
-                if (isCmdInDir(cmd.str().c_str(), trustedDirs[j].c_str()))
+                if (platform::isCmdInDir(cmd.str(), trustedDirs[j]))
                 {
                     trustedCmdLine = "";
                     trustedCmdLine << trustedDirs[j].c_str() << platform::directorySeparator() << cmd

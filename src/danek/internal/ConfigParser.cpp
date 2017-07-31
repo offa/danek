@@ -76,7 +76,6 @@
 //----------------------------------------------------------------------
 
 #include "danek/internal/ConfigParser.h"
-#include "danek/internal/platform.h"
 #include "danek/internal/ConfigItem.h"
 #include "danek/internal/Compat.h"
 #include "danek/internal/platform/Platform.h"

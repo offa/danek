@@ -21,6 +21,7 @@
 // SOFTWARE.
 
 #include "danek/internal/platform/Platform.h"
+#include "danek/StringBuffer.h"
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
@@ -29,11 +30,11 @@ namespace danek
 {
     namespace platform
     {
-
         bool isCmdInDir(const std::string& cmd, const std::string& dir)
         {
-            const std::string fileName = dir + pathSeparator() + cmd;
+            const std::string fileName = dir + directorySeparator() + cmd;
             struct stat sb;
+
             return ( stat(fileName.c_str(), &sb) == 0 );
         }
 
