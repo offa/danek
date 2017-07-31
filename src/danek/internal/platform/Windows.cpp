@@ -35,7 +35,7 @@ namespace danek
 
             for( const auto& ext : extensions )
             {
-                const std::string fileName = dir + pathSeparator() + cmd + ext;
+                const std::string fileName = dir + directorySeparator() + cmd + ext;
                 DWORD fileAttr = GetFileAttributes(fileName.c_str());
 
                 if (fileAttr != 0xFFFFFFFF)
