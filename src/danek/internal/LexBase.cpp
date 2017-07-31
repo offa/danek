@@ -24,7 +24,7 @@
 #include "danek/internal/LexBase.h"
 #include "danek/internal/UidIdentifierDummyProcessor.h"
 #include "danek/internal/Compat.h"
-#include "danek/internal/platform.h"
+#include "danek/internal/platform/Platform.h"
 #include <stdlib.h>
 #include <errno.h>
 #include <string.h>
@@ -135,12 +135,11 @@ namespace danek
                 m_ptr = m_source;
                 break;
             case Configuration::SourceType::Exec:
-                if (!execCmd(source, m_execOutput))
                 {
-                    msg << "cannot parse 'exec#" << source << "': " << m_execOutput.str();
-                    throw ConfigurationException(msg.str());
+                    const auto output = platform::execCmd(source);
+                    m_execOutput = output;
+                    m_ptr = m_execOutput.str().c_str();
                 }
-                m_ptr = m_execOutput.str().c_str();
                 break;
             default:
                 throw std::exception{}; // Bug!

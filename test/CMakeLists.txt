@@ -61,6 +61,7 @@ _add_test_suite(LexParserTests LexTokenTest.cpp
                             $<TARGET_OBJECTS:danek-misc>
                             $<TARGET_OBJECTS:danek-platform>
                             $<TARGET_OBJECTS:danek-platform-impl>
+                            $<TARGET_OBJECTS:danek-platform-impl-common>
                             )
 
 _add_test_suite(SchemaTests SchemaRuleInfoTest.cpp
