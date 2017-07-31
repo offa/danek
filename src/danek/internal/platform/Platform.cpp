@@ -45,9 +45,9 @@ namespace danek
                 throw std::system_error{errorCode, std::system_category()};
             }
 
-            while( !feof(pipe.get()) )
+            while( !std::feof(pipe.get()) )
             {
-                if( fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr )
+                if( std::fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr )
                 {
                     output << buffer.data();
                 }
