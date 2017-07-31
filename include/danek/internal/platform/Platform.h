@@ -28,7 +28,6 @@ namespace danek
 {
     namespace platform
     {
-        // TODO: Move out of 'platform' directory after the old header has been removed
         std::string name();
 
         char directorySeparator();
