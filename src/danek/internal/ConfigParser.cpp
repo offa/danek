@@ -1330,7 +1330,6 @@ namespace danek
         StringBuffer cmd;
         bool hasDefaultStr;
         StringBuffer defaultStr;
-        bool execStatus;
         StringBuffer trustedCmdLine;
 
         //--------
@@ -1360,19 +1359,21 @@ namespace danek
         // return the default value, if any, or return the output of
         // the successful execCmd().
         //--------
-        execStatus = execCmd(trustedCmdLine.str().c_str(), str);
-        if (!execStatus && !hasDefaultStr)
+        const auto output = platform::execCmd(trustedCmdLine.str());
+        str = output;
+
+        if (!hasDefaultStr)
         {
-            msg << "os.exec(\"" << cmd << "\") failed: " << str;
+            msg << "os.exec(\"" << cmd << "\") failed: " << output;
             throw ConfigurationException(msg.str());
         }
-        else if (!execStatus && hasDefaultStr)
+        else if (hasDefaultStr)
         {
             str = defaultStr;
         }
         else
         {
-            compat::checkAssertion(execStatus == true);
+            // Empty
         }
 
         accept(lex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
