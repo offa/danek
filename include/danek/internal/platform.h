@@ -48,8 +48,6 @@
 
 namespace danek
 {
-    [[deprecated]]
-    extern bool execCmd(const char* cmd, StringBuffer& output);
     extern bool isCmdInDir(const char* cmd, const char* dir);
 
 }

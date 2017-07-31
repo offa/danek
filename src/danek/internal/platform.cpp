@@ -43,55 +43,6 @@
 
 namespace danek
 {
-    bool execCmd(const char* cmd, StringBuffer& output)
-    {
-        StringBuffer modifiedCmd;
-        FILE* pipe;
-        int ch;
-        int len;
-        int pcloseStatus;
-
-        output.clear();
-
-        //--------
-        // Execute the command with its stderr and stdout merged together.
-        // TO DO: the "modifiedCmd" below works on Linux and in a cmd
-        // shell on Windows, but sometimes it does not work in a Cygwin
-        // shell.
-        //--------
-        modifiedCmd << cmd << " 2>&1";
-        // modifiedCmd << cmd;
-        pipe = CONFIG4CPP_POPEN(modifiedCmd.str().c_str(), "r");
-        if (!pipe)
-        {
-            output << "cannot execute '" << cmd << "': popen() failed";
-            return false;
-        }
-
-        //--------
-        // Read from the pipe and delete the final '\n', if any.
-        //--------
-        while ((ch = fgetc(pipe)) != EOF)
-        {
-            if (ch != '\r')
-            {
-                output.append(static_cast<char>(ch));
-            }
-        }
-        len = output.size();
-        if (len > 0 && output[len - 1] == '\n')
-        {
-            output.deleteLastChar();
-        }
-
-        //--------
-        // We're done. Return success (true) if the exit status of
-        // the command was 0.
-        //--------
-        pcloseStatus = CONFIG4CPP_PCLOSE(pipe);
-        return (pcloseStatus == 0);
-    }
-
 #ifdef WIN32
 //--------
 // Windows version.
