@@ -29,12 +29,6 @@ namespace danek
     namespace platform
     {
 
-        std::string execCmd(const std::string& cmd)
-        {
-            (void) cmd;
-            throw "Not implemented yet";
-        }
-
         bool isCmdInDir(const std::string& cmd, const std::string& dir)
         {
             std::array<std::string, 3> extensions{{"", ".exe", ".bat"}};

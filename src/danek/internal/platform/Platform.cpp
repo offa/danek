@@ -1,5 +1,4 @@
 // Copyright (c) 2017 offa
-// Copyright 2011 Ciaran McHale.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -21,22 +20,40 @@
 // SOFTWARE.
 
 #include "danek/internal/platform/Platform.h"
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
+#include <array>
+#include <memory>
+#include <sstream>
+#include <system_error>
+#include <cstdio>
 
 namespace danek
 {
     namespace platform
     {
 
-        bool isCmdInDir(const std::string& cmd, const std::string& dir)
+        std::string execCmd(const std::string& cmd)
         {
-            const std::string fileName = dir + pathSeparator() + cmd;
-            struct stat sb;
-            return ( stat(fileName.c_str(), &sb) == 0 );
-        }
+            constexpr std::size_t bufferSize = 128;
+            std::array<char, bufferSize> buffer;
+            std::ostringstream output;
+            const std::string cmdStr = cmd + " 2>&1";
+            std::shared_ptr<FILE> pipe(popen(cmdStr.c_str(), "r"), pclose);
 
+            if( !pipe )
+            {
+                const auto errorCode = errno;
+                throw std::system_error{errorCode, std::system_category()};
+            }
+
+            while( !feof(pipe.get()) )
+            {
+                if( fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr )
+                {
+                    output << buffer.data();
+                }
+            }
+
+            return output.str();
+        }
     }
 }
-
