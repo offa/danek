@@ -26,7 +26,6 @@ endmacro()
 _add_test_suite(PublicMiscTests ConfigurationExceptionTest.cpp
                                 StringVectorTest.cpp
                                 StringBufferTest.cpp
-
                                 $<TARGET_OBJECTS:danek-public-misc>
                                 )
 
@@ -34,7 +33,6 @@ _add_test_suite(MiscTests ToStringTest.cpp
                         UtilTest.cpp
                         UidIdentifierProcessorTest.cpp
                         UidIdentifierDummyProcessorTest.cpp
-
                         $<TARGET_OBJECTS:danek-misc>
                         $<TARGET_OBJECTS:danek-config-types>
                         $<TARGET_OBJECTS:danek-public-misc>
@@ -49,7 +47,6 @@ _add_test_suite(ConfigTests ConfigItemTest.cpp
                             )
 
 _add_test_suite(LexParserTests LexTokenTest.cpp
-
                             $<TARGET_OBJECTS:danek-lexparser>
                             $<TARGET_OBJECTS:danek-config-impl>
                             $<TARGET_OBJECTS:danek-public>
@@ -59,7 +56,7 @@ _add_test_suite(LexParserTests LexTokenTest.cpp
                             $<TARGET_OBJECTS:danek-public-misc>
                             $<TARGET_OBJECTS:danek-config-types>
                             $<TARGET_OBJECTS:danek-misc>
-                            $<TARGET_OBJECTS:danek-platform-impl>
+                            $<TARGET_OBJECTS:danek-platform-config>
                             $<TARGET_OBJECTS:danek-platform-impl-common>
                             )
 
@@ -67,8 +64,7 @@ _add_test_suite(SchemaTests SchemaRuleInfoTest.cpp
                             )
 
 _add_test_suite(PlatformTests PlatformTest.cpp
-
-                            $<TARGET_OBJECTS:danek-platform-impl>
+                            $<TARGET_OBJECTS:danek-platform-config>
                             )
 
 

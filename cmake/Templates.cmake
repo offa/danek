@@ -25,8 +25,8 @@ else()
 endif()
 
 
-configure_file(${TEMPLATE_DIR}/Platform.cpp.in
-                ${GENERATED_DIR}/Platform.cpp
+configure_file(${TEMPLATE_DIR}/PlatformConfig.cpp.in
+                ${GENERATED_DIR}/PlatformConfig.cpp
                 @ONLY
                 )
-add_library(danek-platform-impl OBJECT ${GENERATED_DIR}/Platform.cpp)
+add_library(danek-platform-config OBJECT ${GENERATED_DIR}/PlatformConfig.cpp)
