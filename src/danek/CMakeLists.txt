@@ -16,7 +16,7 @@ add_library(danek $<TARGET_OBJECTS:danek-public>
                     $<TARGET_OBJECTS:danek-lexparser>
                     $<TARGET_OBJECTS:danek-misc>
                     $<TARGET_OBJECTS:danek-platform-config>
-                    $<TARGET_OBJECTS:danek-platform-impl-common>
+                    $<TARGET_OBJECTS:danek-platform-impl>
                     $<TARGET_OBJECTS:danek-security>
                     $<TARGET_OBJECTS:DefaultSecurity>
                     )

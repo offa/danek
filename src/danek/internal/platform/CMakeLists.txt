@@ -5,4 +5,4 @@ else()
     set(PLATFORM_IMPL Unix.cpp)
 endif()
 
-add_library(danek-platform-impl-common OBJECT Platform.cpp ${PLATFORM_IMPL})
+add_library(danek-platform-impl OBJECT Platform.cpp ${PLATFORM_IMPL})

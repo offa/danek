@@ -57,7 +57,7 @@ _add_test_suite(LexParserTests LexTokenTest.cpp
                             $<TARGET_OBJECTS:danek-config-types>
                             $<TARGET_OBJECTS:danek-misc>
                             $<TARGET_OBJECTS:danek-platform-config>
-                            $<TARGET_OBJECTS:danek-platform-impl-common>
+                            $<TARGET_OBJECTS:danek-platform-impl>
                             )
 
 _add_test_suite(SchemaTests SchemaRuleInfoTest.cpp
