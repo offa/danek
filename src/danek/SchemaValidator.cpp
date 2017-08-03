@@ -119,7 +119,7 @@ namespace danek
         }
         else
         {
-            for (int i = 0; i < m_typesCurrSize; i++)
+            for (int i = 0; i < m_typesCurrSize; ++i)
             {
                 SchemaType* typeDef = m_types[i];
                 if (strcmp(typeDef->typeName(), name) == 0)
@@ -157,21 +157,19 @@ namespace danek
 
     SchemaValidator::~SchemaValidator()
     {
-        int i;
-
-        for (i = 0; i < m_idRulesCurrSize; i++)
+        for (int i = 0; i < m_idRulesCurrSize; ++i)
         {
             delete m_idRules[i];
         }
         delete[] m_idRules;
 
-        for (i = 0; i < m_ignoreRulesCurrSize; i++)
+        for ( int i = 0; i < m_ignoreRulesCurrSize; ++i)
         {
             delete m_ignoreRules[i];
         }
         delete[] m_ignoreRules;
 
-        for (i = 0; i < m_typesCurrSize; i++)
+        for ( int i = 0; i < m_typesCurrSize; ++i)
         {
             delete m_types[i];
         }
@@ -211,7 +209,7 @@ namespace danek
         checkTypeDoesNotExist(type->typeName());
         ensureSpaceInTypesArray();
         m_types[m_typesCurrSize] = type;
-        m_typesCurrSize++;
+        ++m_typesCurrSize;
         m_areTypesSorted = false;
     }
 
@@ -220,16 +218,15 @@ namespace danek
         checkTypeDoesNotExist(typeName);
         ensureSpaceInTypesArray();
         m_types[m_typesCurrSize] = new SchemaTypeTypedef(typeName, cfgType, baseTypeName, baseTypeArgs);
-        m_typesCurrSize++;
+        ++m_typesCurrSize;
         m_areTypesSorted = false;
     }
 
     void SchemaValidator::checkTypeDoesNotExist(const char* typeName)
     {
         StringBuffer msg;
-        int i;
 
-        for (i = 0; i < m_typesCurrSize; i++)
+        for (int i = 0; i < m_typesCurrSize; ++i)
         {
             if (strcmp(m_types[i]->typeName(), typeName) == 0)
             {
@@ -245,7 +242,7 @@ namespace danek
         {
             m_typesMaxSize = m_typesMaxSize * 2;
             SchemaType** newArray = new SchemaType*[m_typesMaxSize];
-            for (int i = 0; i < m_typesCurrSize; i++)
+            for (int i = 0; i < m_typesCurrSize; ++i)
             {
                 newArray[i] = m_types[i];
             }
@@ -256,9 +253,8 @@ namespace danek
 
     void SchemaValidator::parseSchema(const char** nullTerminatedRulesArray)
     {
-        int size;
-
-        for (size = 0; nullTerminatedRulesArray[size] != nullptr; size++)
+        int size = 0;
+        for ( ; nullTerminatedRulesArray[size] != nullptr; ++size)
         {
         }
         parseSchema(nullTerminatedRulesArray, size);
@@ -322,8 +318,8 @@ namespace danek
         }
 
         // Compare every name in itemNames with m_ignoreRules and m_idRules.
-        int len = itemNames.size();
-        for (int i = 0; i < len; i++)
+        const int len = itemNames.size();
+        for (int i = 0; i < len; ++i)
         {
             const char* iName = itemNames[i].data();
             const std::string unexpandedName = cfg->unexpandUid(iName, buf);
@@ -400,7 +396,7 @@ namespace danek
             return;
         }
         cfg->mergeNames(scope, localName, fullyScopedName);
-        for (int i = 0; i < m_idRulesCurrSize; i++)
+        for (int i = 0; i < m_idRulesCurrSize; ++i)
         {
             SchemaIdRuleInfo* idRule = m_idRules[i];
             bool isOptional = idRule->isOptional();
@@ -455,7 +451,7 @@ namespace danek
         }
         cfg->listFullyScopedNames(fullScope, "", ConfType::Scope, true, parentScopePattern.str().c_str(), parentScopes);
         int len = parentScopes.size();
-        for (int i = 0; i < len; i++)
+        for (int i = 0; i < len; ++i)
         {
             if (cfg->type(parentScopes[i].c_str(), lastDot + 1) == ConfType::NoValue)
             {
@@ -473,7 +469,7 @@ namespace danek
     {
         ConfType cfgType = ConfType::NoValue;
 
-        for (int i = 0; i < m_ignoreRulesCurrSize; i++)
+        for (int i = 0; i < m_ignoreRulesCurrSize; ++i)
         {
             // Does unexpandedName start with rule.m_locallyScopedName
             // followed by "."?
@@ -557,9 +553,7 @@ namespace danek
 
     void SchemaValidator::indent(int indentLevel) const
     {
-        int i;
-
-        for (i = 0; i < indentLevel; i++)
+        for (int i = 0; i < indentLevel; ++i)
         {
             printf("  ");
         }
@@ -567,13 +561,10 @@ namespace danek
 
     void SchemaValidator::printTypeArgs(const StringVector& typeArgs, int indentLevel) const
     {
-        int len;
-        int i;
-
         indent(indentLevel);
         printf("typeArgs = [");
-        len = typeArgs.size();
-        for (i = 0; i < len; i++)
+        const int len = typeArgs.size();
+        for (int i = 0; i < len; ++i)
         {
             printf("\"%s\"", typeArgs[i].c_str());
             if (i < len - 1)
@@ -587,13 +578,10 @@ namespace danek
     void SchemaValidator::printTypeNameAndArgs(
         const char* typeName, const StringVector& typeArgs, int indentLevel) const
     {
-        int len;
-        int i;
-
         indent(indentLevel);
         printf("typeName = \"%s\"; typeArgs = [", typeName);
-        len = typeArgs.size();
-        for (i = 0; i < len; i++)
+        const int len = typeArgs.size();
+        for (int i = 0; i < len; i++)
         {
             printf("\"%s\"", typeArgs[i].c_str());
             if (i < len - 1)
