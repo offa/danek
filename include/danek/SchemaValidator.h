@@ -47,6 +47,7 @@ namespace danek
         };
 
         SchemaValidator();
+        SchemaValidator(const SchemaValidator&) = delete;
         virtual ~SchemaValidator();
 
         inline void wantDiagnostics(bool value);
@@ -56,10 +57,15 @@ namespace danek
         inline void validate(const Configuration* cfg, const char* scope, const char* localName, ForceMode forceMode = ForceMode::None) const;
         void validate(const Configuration* cfg, const char* scope, const char* localName, bool recurseIntoSubscopes, ConfType typeMask, ForceMode forceMode = ForceMode::None) const;
 
+
+        SchemaValidator& operator=(const SchemaValidator&) = delete;
+
+
     protected:
 
         // Operations that can be called by a subclass.
         void registerType(SchemaType* type);
+
 
     private:
 
@@ -112,10 +118,6 @@ namespace danek
         int m_typesMaxSize;
         bool m_areTypesSorted;
         bool m_wantDiagnostics;
-
-        // The following are unimplemented
-        SchemaValidator(const SchemaValidator&);
-        SchemaValidator& operator=(const SchemaValidator&);
     };
 
 
