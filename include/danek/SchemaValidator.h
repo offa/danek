@@ -50,11 +50,24 @@ namespace danek
         SchemaValidator(const SchemaValidator&) = delete;
         virtual ~SchemaValidator();
 
-        inline void wantDiagnostics(bool value);
-        inline bool wantDiagnostics();
+        void wantDiagnostics(bool value)
+        {
+            m_wantDiagnostics = value;
+        }
+
+        bool wantDiagnostics() const
+        {
+            return m_wantDiagnostics;
+        }
+
         void parseSchema(const char** schema, int schemaSize);
         void parseSchema(const char** nullTerminatedSchema);
-        inline void validate(const Configuration* cfg, const char* scope, const char* localName, ForceMode forceMode = ForceMode::None) const;
+
+        void validate(const Configuration* cfg, const char* scope, const char* localName, ForceMode forceMode = ForceMode::None) const
+        {
+            validate(cfg, scope, localName, true, ConfType::ScopesAndVars, forceMode);
+        }
+
         void validate(const Configuration* cfg, const char* scope, const char* localName, bool recurseIntoSubscopes, ConfType typeMask, ForceMode forceMode = ForceMode::None) const;
 
 
@@ -120,19 +133,4 @@ namespace danek
         bool m_wantDiagnostics;
     };
 
-
-    inline void SchemaValidator::validate(const Configuration* cfg, const char* scope, const char* localName, ForceMode forceMode) const
-    {
-        validate(cfg, scope, localName, true, ConfType::ScopesAndVars, forceMode);
-    }
-
-    inline void SchemaValidator::wantDiagnostics(bool value)
-    {
-        m_wantDiagnostics = value;
-    }
-
-    inline bool SchemaValidator::wantDiagnostics()
-    {
-        return m_wantDiagnostics;
-    }
 }
