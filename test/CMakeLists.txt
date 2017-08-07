@@ -67,6 +67,21 @@ _add_test_suite(PlatformTests PlatformTest.cpp
                             $<TARGET_OBJECTS:danek-platform-config>
                             )
 
+_add_test_suite(SchemaValidatorTest SchemaValidatorTest.cpp
+                            $<TARGET_OBJECTS:danek-public>
+                            $<TARGET_OBJECTS:danek-public-misc>
+                            $<TARGET_OBJECTS:danek-schematypes>
+                            $<TARGET_OBJECTS:danek-config-types>
+                            $<TARGET_OBJECTS:danek-lexparser>
+                            $<TARGET_OBJECTS:danek-platform-impl>
+                            $<TARGET_OBJECTS:danek-platform-config>
+                            $<TARGET_OBJECTS:danek-misc>
+                            $<TARGET_OBJECTS:danek-security>
+                            $<TARGET_OBJECTS:DefaultSecurity>
+                            $<TARGET_OBJECTS:danek-config-impl>
+                            )
+
+
 
 
 add_custom_target(unittest PublicMiscTests
@@ -75,6 +90,7 @@ add_custom_target(unittest PublicMiscTests
                         COMMAND LexParserTests
                         COMMAND SchemaTests
                         COMMAND PlatformTests
+                        COMMAND SchemaValidatorTest
 
                         COMMENT "Running unittests\n\n"
                         VERBATIM
