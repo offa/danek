@@ -224,12 +224,12 @@ namespace danek
 
     void SchemaValidator::checkTypeDoesNotExist(const char* typeName)
     {
-        StringBuffer msg;
 
         for (int i = 0; i < m_typesCurrSize; ++i)
         {
             if (strcmp(m_types[i]->typeName(), typeName) == 0)
             {
+                StringBuffer msg;
                 msg << "schema type '" << typeName << "' is already registed";
                 throw ConfigurationException(msg.str());
             }
