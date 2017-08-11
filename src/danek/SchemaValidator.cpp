@@ -318,8 +318,8 @@ namespace danek
         }
 
         // Compare every name in itemNames with m_ignoreRules and m_idRules.
-        const int len = itemNames.size();
-        for (int i = 0; i < len; ++i)
+        const std::size_t len = itemNames.size();
+        for (std::size_t i = 0; i < len; ++i)
         {
             const char* iName = itemNames[i].data();
             const std::string unexpandedName = cfg->unexpandUid(iName, buf);
@@ -450,8 +450,8 @@ namespace danek
             parentScopePattern.append(*ptr);
         }
         cfg->listFullyScopedNames(fullScope, "", ConfType::Scope, true, parentScopePattern.str().c_str(), parentScopes);
-        int len = parentScopes.size();
-        for (int i = 0; i < len; ++i)
+        const std::size_t len = parentScopes.size();
+        for (std::size_t i = 0; i < len; ++i)
         {
             if (cfg->type(parentScopes[i].c_str(), lastDot + 1) == ConfType::NoValue)
             {
@@ -563,8 +563,8 @@ namespace danek
     {
         indent(indentLevel);
         printf("typeArgs = [");
-        const int len = typeArgs.size();
-        for (int i = 0; i < len; ++i)
+        const std::size_t len = typeArgs.size();
+        for (std::size_t i = 0; i < len; ++i)
         {
             printf("\"%s\"", typeArgs[i].c_str());
             if (i < len - 1)
@@ -580,8 +580,8 @@ namespace danek
     {
         indent(indentLevel);
         printf("typeName = \"%s\"; typeArgs = [", typeName);
-        const int len = typeArgs.size();
-        for (int i = 0; i < len; i++)
+        const std::size_t len = typeArgs.size();
+        for (std::size_t i = 0; i < len; ++i)
         {
             printf("\"%s\"", typeArgs[i].c_str());
             if (i < len - 1)
