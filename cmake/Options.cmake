@@ -6,29 +6,29 @@ else()
 endif()
 
 
-macro(_print_option _option _name)
-    message(STATUS "${_name} : ${${_option}}")
-endmacro()
+function(print_option opt name)
+    message(STATUS "${name} : ${${opt}}")
+endfunction()
 
 
 
 option(UNIT_TESTS "Build Unit Tests" ON)
-_print_option(UNIT_TESTS "Unit Tests")
+print_option(UNIT_TESTS "Unit Tests")
 
 option(COVERAGE "Enable Coverage" OFF)
-_print_option(COVERAGE "Coverage")
+print_option(COVERAGE "Coverage")
 
 option(BUILD_TOOLS "Build the tools" ON)
-_print_option(BUILD_TOOLS "Build Tools")
+print_option(BUILD_TOOLS "Build Tools")
 
 option(BUILD_SCHEMA_TESTS "Build the Schema Tests" OFF)
-_print_option(BUILD_SCHEMA_TESTS "Build Schema Tests")
+print_option(BUILD_SCHEMA_TESTS "Build Schema Tests")
 
 option(BUILD_DEMOS "Build the Demos" OFF)
-_print_option(BUILD_DEMOS "Build Demos")
+print_option(BUILD_DEMOS "Build Demos")
 
 option(BUILD_SHARED_LIBS "Build Shared Library" OFF)
-_print_option(BUILD_SHARED_LIBS "Build shared library")
+print_option(BUILD_SHARED_LIBS "Build shared library")
 
 option(ENABLE_CPPCHECK "Enables CppCheck (Requires Compile Commands)" OFF)
-_print_option(ENABLE_CPPCHECK "Enable CppCheck")
+print_option(ENABLE_CPPCHECK "Enable CppCheck")
