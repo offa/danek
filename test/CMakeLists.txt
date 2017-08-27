@@ -3,7 +3,7 @@ find_package(Threads REQUIRED)
 find_package(GTest REQUIRED)
 
 
-macro(_add_test_suite _name)
+function(_add_test_suite _name)
     set(source_list)
 
     foreach( arg ${ARGN} )
@@ -20,7 +20,7 @@ macro(_add_test_suite _name)
     target_link_libraries(${_name} ${GTest_LIBRARIES}
                                     ${CMAKE_THREAD_LIBS_INIT}
                                     )
-endmacro()
+endfunction()
 
 
 _add_test_suite(PublicMiscTests ConfigurationExceptionTest.cpp
