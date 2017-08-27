@@ -3,33 +3,33 @@ find_package(Threads REQUIRED)
 find_package(GTest REQUIRED)
 
 
-function(_add_test_suite _name)
+function(add_test_suite name)
     set(source_list)
 
     foreach( arg ${ARGN} )
         list(APPEND source_list ${arg})
     endforeach()
 
-    add_executable(${_name} ${source_list})
-    add_test(NAME ${_name} COMMAND ${_name})
+    add_executable(${name} ${source_list})
+    add_test(NAME ${name} COMMAND ${name})
 
-    target_include_directories(${_name} SYSTEM PUBLIC
+    target_include_directories(${name} SYSTEM PUBLIC
                                 ${GTest_INCLUDE_DIR}
                                 ${GTest_Mock_INCLUDE_DIR}
                                 )
-    target_link_libraries(${_name} ${GTest_LIBRARIES}
+    target_link_libraries(${name} ${GTest_LIBRARIES}
                                     ${CMAKE_THREAD_LIBS_INIT}
                                     )
 endfunction()
 
 
-_add_test_suite(PublicMiscTests ConfigurationExceptionTest.cpp
+add_test_suite(PublicMiscTests ConfigurationExceptionTest.cpp
                                 StringVectorTest.cpp
                                 StringBufferTest.cpp
                                 $<TARGET_OBJECTS:danek-public-misc>
                                 )
 
-_add_test_suite(MiscTests ToStringTest.cpp
+add_test_suite(MiscTests ToStringTest.cpp
                         UtilTest.cpp
                         UidIdentifierProcessorTest.cpp
                         UidIdentifierDummyProcessorTest.cpp
@@ -38,7 +38,7 @@ _add_test_suite(MiscTests ToStringTest.cpp
                         $<TARGET_OBJECTS:danek-public-misc>
                         )
 
-_add_test_suite(ConfigTests ConfigItemTest.cpp
+add_test_suite(ConfigTests ConfigItemTest.cpp
                             ConfigScopeTest.cpp
 
                             $<TARGET_OBJECTS:danek-config-types>
@@ -46,7 +46,7 @@ _add_test_suite(ConfigTests ConfigItemTest.cpp
                             $<TARGET_OBJECTS:danek-misc>
                             )
 
-_add_test_suite(LexParserTests LexTokenTest.cpp
+add_test_suite(LexParserTests LexTokenTest.cpp
                             $<TARGET_OBJECTS:danek-lexparser>
                             $<TARGET_OBJECTS:danek-config-impl>
                             $<TARGET_OBJECTS:danek-public>
@@ -60,14 +60,14 @@ _add_test_suite(LexParserTests LexTokenTest.cpp
                             $<TARGET_OBJECTS:danek-platform-impl>
                             )
 
-_add_test_suite(SchemaTests SchemaRuleInfoTest.cpp
+add_test_suite(SchemaTests SchemaRuleInfoTest.cpp
                             )
 
-_add_test_suite(PlatformTests PlatformTest.cpp
+add_test_suite(PlatformTests PlatformTest.cpp
                             $<TARGET_OBJECTS:danek-platform-config>
                             )
 
-_add_test_suite(SchemaValidatorTest SchemaValidatorTest.cpp
+add_test_suite(SchemaValidatorTest SchemaValidatorTest.cpp
                             $<TARGET_OBJECTS:danek-public>
                             $<TARGET_OBJECTS:danek-public-misc>
                             $<TARGET_OBJECTS:danek-schematypes>
