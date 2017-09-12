@@ -1,5 +1,5 @@
-subdirs(danek)
+add_subdirectory(danek)
 
 if( BUILD_TOOLS )
-    subdirs(tools)
+    add_subdirectory(tools)
 endif()

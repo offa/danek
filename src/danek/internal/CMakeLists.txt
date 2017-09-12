@@ -1,4 +1,4 @@
-subdirs(platform)
+add_subdirectory(platform)
 
 add_library(danek-schematypes OBJECT SchemaTypeBoolean.cpp
                             SchemaTypeDurationMicroseconds.cpp

@@ -29,18 +29,18 @@ add_compile_options(-Wall
 
 include_directories("include")
 
-subdirs(src)
+add_subdirectory(src)
 
 
 if( UNIT_TESTS )
     enable_testing()
-    subdirs(test)
+    add_subdirectory(test)
 endif()
 
 if( BUILD_SCHEMA_TESTS )
-    subdirs(tests/schema-types)
+    add_subdirectory(tests/schema-types)
 endif()
 
 if( BUILD_DEMOS )
-    subdirs(demos)
+    add_subdirectory(demos)
 endif()

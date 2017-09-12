@@ -1,4 +1,4 @@
-subdirs(internal)
+add_subdirectory(internal)
 
 add_library(danek-public OBJECT SchemaValidator.cpp
                         Configuration.cpp
