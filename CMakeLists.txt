@@ -20,30 +20,6 @@ if( ENABLE_CPPCHECK )
 endif()
 
 
-include(CheckCXXCompilerFlag)
-
-function(add_compile_options_if_supported)
-    foreach(flag ${ARGN})
-        set(option_var option_supported${flag})
-        CHECK_CXX_COMPILER_FLAG(${flag} ${option_var})
-
-        if( ${option_var} )
-            add_compile_options(${flag})
-        endif()
-    endforeach()
-endfunction()
-
-
-add_compile_options_if_supported(-Wduplicated-cond
-                                -Wduplicated-branches
-                                -Wlogical-op
-                                -Wnull-dereference
-                                -Wuseless-cast
-                                )
-
-
-
-
 add_compile_options(-Wall
                     -Wextra
                     -pedantic
@@ -51,6 +27,12 @@ add_compile_options(-Wall
                     -Wshadow
                     -Wold-style-cast
                     )
+add_compile_options_if_supported(-Wduplicated-cond
+                                -Wduplicated-branches
+                                -Wlogical-op
+                                -Wnull-dereference
+                                -Wuseless-cast
+                                )
 
 include_directories("include")
 
