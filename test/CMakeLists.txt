@@ -11,7 +11,7 @@ function(add_test_suite name)
     endforeach()
 
     add_executable(${name} ${source_list})
-    add_test(NAME ${name} COMMAND ${name})
+    add_test(${name} ${name})
 
     target_include_directories(${name} SYSTEM PUBLIC
                                 ${GTest_INCLUDE_DIR}
