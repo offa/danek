@@ -10,7 +10,7 @@ function(add_test_suite name)
                                 ${GTest_INCLUDE_DIR}
                                 ${GTest_Mock_INCLUDE_DIR}
                                 )
-    target_link_libraries(${name} ${GTest_LIBRARIES}
+    target_link_libraries(${name} PRIVATE ${GTest_LIBRARIES}
                                     ${CMAKE_THREAD_LIBS_INIT}
                                     )
 endfunction()
@@ -20,7 +20,9 @@ add_executable(PublicMiscTests ConfigurationExceptionTest.cpp
                             StringVectorTest.cpp
                             StringBufferTest.cpp
                             )
-target_link_libraries(PublicMiscTests danek-public-misc)
+target_link_libraries(PublicMiscTests PRIVATE
+                                    danek-public-misc
+                                    )
 add_test_suite(PublicMiscTests)
 
 
@@ -30,7 +32,8 @@ add_executable(MiscTests ToStringTest.cpp
                         UidIdentifierProcessorTest.cpp
                         UidIdentifierDummyProcessorTest.cpp
                         )
-target_link_libraries(MiscTests danek-misc
+target_link_libraries(MiscTests PRIVATE
+                                danek-misc
                                 danek-config-types
                                 danek-public-misc
                                 )
@@ -41,7 +44,8 @@ add_test_suite(MiscTests)
 add_executable(ConfigTests ConfigItemTest.cpp
                         ConfigScopeTest.cpp
                         )
-target_link_libraries(ConfigTests danek-config-types
+target_link_libraries(ConfigTests PRIVATE
+                                danek-config-types
                                 danek-public-misc
                                 danek-misc
                                 )
@@ -51,7 +55,8 @@ add_test_suite(ConfigTests)
 
 add_executable(LexParserTests LexTokenTest.cpp
                             )
-target_link_libraries(LexParserTests danek-lexparser
+target_link_libraries(LexParserTests PRIVATE
+                                    danek-lexparser
                                     danek-config-impl
                                     danek-public
                                     danek-schematypes
@@ -74,7 +79,8 @@ add_test_suite(SchemaTests)
 
 add_executable(PlatformTests PlatformTest.cpp
                             )
-target_link_libraries(PlatformTests danek-platform-config
+target_link_libraries(PlatformTests PRIVATE
+                                    danek-platform-config
                                     )
 add_test_suite(PlatformTests)
 
@@ -82,7 +88,8 @@ add_test_suite(PlatformTests)
 
 add_executable(SchemaValidatorTests SchemaValidatorTest.cpp
                                     )
-target_link_libraries(SchemaValidatorTests danek-public
+target_link_libraries(SchemaValidatorTests PRIVATE
+                                        danek-public
                                         danek-config-impl
                                         danek-public-misc
                                         danek-schematypes
