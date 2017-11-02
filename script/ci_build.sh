@@ -3,7 +3,7 @@
 set -ex
 
 
-if [[ "$CXX" == clang* ]]
+if [[ "${CXX}" == clang* ]]
 then
     export CXXFLAGS="-stdlib=libc++"
 fi
