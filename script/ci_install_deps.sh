@@ -15,7 +15,7 @@ fi
 
 
 cd googletest
-mkdir build && cd build
+mkdir -p build && cd build
 
 if [[ "${CXX}" = clang* ]] ; then
     export CXXFLAGS="-stdlib=libc++"
