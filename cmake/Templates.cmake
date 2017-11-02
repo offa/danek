@@ -29,4 +29,4 @@ configure_file(${TEMPLATE_DIR}/PlatformConfig.cpp.in
                 ${GENERATED_DIR}/PlatformConfig.cpp
                 @ONLY
                 )
-add_library(danek-platform-config OBJECT ${GENERATED_DIR}/PlatformConfig.cpp)
+add_library(danek-platform-config ${GENERATED_DIR}/PlatformConfig.cpp)

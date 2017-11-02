@@ -1,25 +1,27 @@
 add_subdirectory(internal)
 
-add_library(danek-public OBJECT SchemaValidator.cpp
+add_library(danek-public SchemaValidator.cpp
                         Configuration.cpp
                         SchemaType.cpp
                         )
-add_library(danek-public-misc OBJECT StringBuffer.cpp
-                                    PatternMatch.cpp
-                                    )
+add_library(danek-public-misc StringBuffer.cpp
+                                PatternMatch.cpp
+                                )
 
-add_library(danek $<TARGET_OBJECTS:danek-public>
-                    $<TARGET_OBJECTS:danek-public-misc>
-                    $<TARGET_OBJECTS:danek-config-types>
-                    $<TARGET_OBJECTS:danek-config-impl>
-                    $<TARGET_OBJECTS:danek-schematypes>
-                    $<TARGET_OBJECTS:danek-lexparser>
-                    $<TARGET_OBJECTS:danek-misc>
-                    $<TARGET_OBJECTS:danek-platform-config>
-                    $<TARGET_OBJECTS:danek-platform-impl>
-                    $<TARGET_OBJECTS:danek-security>
-                    $<TARGET_OBJECTS:DefaultSecurity>
-                    )
+
+add_library(danek $<TARGET_OBJECTS:DefaultSecurity>)
+target_link_libraries(danek
+                        danek-public
+                        danek-config-impl
+                        danek-public-misc
+                        danek-config-types
+                        danek-schematypes
+                        danek-lexparser
+                        danek-misc
+                        danek-platform-config
+                        danek-platform-impl
+                        danek-security
+                        )
 
 
 install(TARGETS danek

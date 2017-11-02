@@ -1,6 +1,6 @@
 add_subdirectory(platform)
 
-add_library(danek-schematypes OBJECT SchemaTypeBoolean.cpp
+add_library(danek-schematypes SchemaTypeBoolean.cpp
                             SchemaTypeDurationMicroseconds.cpp
                             SchemaTypeDurationMilliseconds.cpp
                             SchemaTypeDurationSeconds.cpp
@@ -22,13 +22,13 @@ add_library(danek-schematypes OBJECT SchemaTypeBoolean.cpp
                             SchemaTypeTypedef.cpp
                             )
 
-add_library(danek-misc OBJECT UidIdentifierProcessor.cpp
+add_library(danek-misc UidIdentifierProcessor.cpp
                         Util.cpp
                         ToString.cpp
                         MBChar.cpp
                         )
 
-add_library(danek-lexparser OBJECT SchemaLex.cpp
+add_library(danek-lexparser SchemaLex.cpp
                         SchemaParser.cpp
                         ConfigParser.cpp
                         LexToken.cpp
@@ -36,13 +36,14 @@ add_library(danek-lexparser OBJECT SchemaLex.cpp
                         ConfigLex.cpp
                         )
 
-add_library(danek-config-impl OBJECT ConfigurationImpl.cpp
-                                    )
+add_library(danek-config-impl ConfigurationImpl.cpp
+                            )
 
-add_library(danek-config-types OBJECT ConfigScope.cpp
-                                    ConfigItem.cpp
-                                    )
+add_library(danek-config-types ConfigScope.cpp
+                                ConfigItem.cpp
+                                )
 
-add_library(danek-security OBJECT DefaultSecurityConfiguration.cpp
+add_library(danek-security DefaultSecurityConfiguration.cpp
+                        $<TARGET_OBJECTS:DefaultSecurity>
                         )
 
