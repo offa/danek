@@ -2,6 +2,11 @@
 
 set -ex
 
+if [[ "${CXX}" = clang* ]] ; then
+    export CXXFLAGS="-stdlib=libc++"
+fi
+
+
 BUILD_DIR=${TRAVIS_BUILD_DIR}
 
 mkdir -p "${DEPENDENCY_DIR}" && cd "${DEPENDENCY_DIR}"
@@ -17,12 +22,8 @@ fi
 cd googletest
 mkdir -p build && cd build
 
-if [[ "${CXX}" = clang* ]] ; then
-    export CXXFLAGS="-stdlib=libc++"
-fi
-
 cmake ..
-make -j 4
+make -j4
 sudo make install
 
 
