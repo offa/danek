@@ -10,10 +10,12 @@ add_library(danek-public-misc StringBuffer.cpp
 
 
 add_library(danek $<TARGET_OBJECTS:DefaultSecurity>)
-target_link_libraries(danek
+target_link_libraries(danek PUBLIC
                         danek-public
                         danek-config-impl
                         danek-public-misc
+                        )
+target_link_libraries(danek PRIVATE
                         danek-config-types
                         danek-schematypes
                         danek-lexparser
