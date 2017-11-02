@@ -62,6 +62,5 @@ install:
     - script/ci_install_deps.sh
 
 script:
-    - if [[ "$CXX" == clang* ]]; then export CXXFLAGS="-stdlib=libc++"; fi
     - script/ci_build.sh
 
