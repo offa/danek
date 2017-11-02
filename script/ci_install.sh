@@ -2,14 +2,19 @@
 
 set -ex
 
-## Install GTest
-GTEST_VERSION=master
-GTEST=googletest-${GTEST_VERSION}
-OlD_DIR=$PWD
+BUILD_DIR=${TRAVIS_BUILD_DIR}
 
-wget https://github.com/google/googletest/archive/${GTEST_VERSION}.tar.gz
-tar -xzf *.tar.gz
-cd ${GTEST}
+mkdir -p "${DEPENDENCY_DIR}" && cd "${DEPENDENCY_DIR}"
+
+
+#--- GTest
+if [[ ! -d "${DEPENDENCY_DIR}/googletest" ]]
+then
+    git clone --depth=1 -b master https://github.com/google/googletest googletest
+fi
+
+
+cd googletest
 mkdir build && cd build
 
 if [[ "${CXX}" = clang* ]] ; then
@@ -19,5 +24,7 @@ fi
 cmake ..
 make -j 4
 sudo make install
-cd ${OLD_DIR}
+
+
+cd ${BUILD_DIR}
 
