@@ -60,7 +60,7 @@ matrix:
           sources: *sources
 
 
-before_install:
+install:
     - script/ci_install.sh
 
 script:
