@@ -2,10 +2,6 @@
 
 set -ex
 
-if [[ "${CXX}" = clang* ]] ; then
-    export CXXFLAGS="-stdlib=libc++"
-fi
-
 
 BUILD_DIR=${TRAVIS_BUILD_DIR}
 
@@ -18,11 +14,16 @@ then
     git clone --depth=1 -b master https://github.com/google/googletest googletest
 fi
 
-
 cd googletest
-mkdir -p build && cd build
 
-cmake ..
+if [[ "$CXX" == clang* ]]
+then
+    BUILD_FLAGS="${BUILD_FLAGS} -DCMAKE_CXX_FLAGS=-stdlib=libc++"
+fi
+
+mkdir -p build-${CC} && cd build-${CC}
+
+cmake -D${BUILD_FLAGS} ..
 make -j4
 sudo make install
 
