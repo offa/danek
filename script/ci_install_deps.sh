@@ -28,7 +28,9 @@ then
     echo "++++++++++++++"
     find ${DEPENDENCY_DIR} -type f -name "cxxabi.h"
 
-    sudo ln -s /usr/local/clang-3.9.0/include/c++/v1/cxxabi.h /usr/include/cxxabi.h
+    sudo ln -s ${DEPENDENCY_DIR}/llvm-source/projects/libcxxabi/include/cxxabi.h /usr/include/cxxabi.h
+    ls ${DEPENDENCY_DIR}/llvm-source/projects/libcxxabi/include/
+    sudo ln -s ${DEPENDENCY_DIR}/llvm-source/projects/libcxxabi/include/__cxxabi_config.h /usr/include/__cxxabi.h
     ls -l /usr/include/
 
 fi
