@@ -18,7 +18,7 @@ cd googletest
 
 if [[ "${CXX}" == clang* ]]
 then
-    BUILD_FLAGS="${BUILD_FLAGS} -DCMAKE_CXX_FLAGS=\"-stdlib=libc++ -I/usr/local/clang-3.9.0/include/c++/v1 -I/usr/include/c++/4.8\""
+    BUILD_FLAGS="${BUILD_FLAGS} -DCMAKE_CXX_FLAGS=-stdlib=libc++"
 
 
     echo "*** Searching for cxxabi.h ***"
@@ -27,6 +27,10 @@ then
     ls /usr/local/clang-3.9.0/include/c++/v1
     echo "++++++++++++++"
     find ${DEPENDENCY_DIR} -type f -name "cxxabi.h"
+
+    sudo ln -s /usr/local/clang-3.9.0/include/c++/v1/cxxabi.h /usr/include/cxxabi.h
+    ls -l /usr/include/
+
 fi
 
 mkdir -p build-${CC} && cd build-${CC}
