@@ -25,6 +25,8 @@ then
     find /usr/ -type f -name "cxxabi.h"
     echo "****"
     ls /usr/local/clang-3.9.0/include/c++/v1
+    echo "++++++++++++++"
+    find ${DEPENDENCY_DIR} -type f -name "cxxabi.h"
 fi
 
 mkdir -p build-${CC} && cd build-${CC}
