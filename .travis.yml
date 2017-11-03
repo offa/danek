@@ -7,9 +7,9 @@ env:
   global:
     - DEPENDENCY_DIR="${TRAVIS_BUILD_DIR}/dependencies"
 
-#cache:
-  #directories:
-    #- ${DEPENDENCY_DIR}
+cache:
+  directories:
+    - ${DEPENDENCY_DIR}
 
 
 matrix:
