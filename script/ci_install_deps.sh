@@ -30,7 +30,7 @@ then
 
     sudo ln -s ${DEPENDENCY_DIR}/llvm-source/projects/libcxxabi/include/cxxabi.h /usr/include/cxxabi.h
     ls ${DEPENDENCY_DIR}/llvm-source/projects/libcxxabi/include/
-    sudo ln -s ${DEPENDENCY_DIR}/llvm-source/projects/libcxxabi/include/__cxxabi_config.h /usr/include/__cxxabi.h
+    sudo ln -s ${DEPENDENCY_DIR}/llvm-source/projects/libcxxabi/include/__cxxabi_config.h /usr/include/__cxxabi_config.h
     ls -l /usr/include/
 
 fi
