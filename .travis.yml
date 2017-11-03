@@ -59,6 +59,7 @@ matrix:
 
 install:
     - script/ci_install.sh
+    - script/ci_travis_clang_workaround.sh
     - script/ci_install_deps.sh
 
 script:

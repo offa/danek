@@ -19,9 +19,6 @@ cd googletest
 if [[ "${CXX}" == clang* ]]
 then
     BUILD_FLAGS="${BUILD_FLAGS} -DCMAKE_CXX_FLAGS=-stdlib=libc++"
-
-    sudo ln -s ${DEPENDENCY_DIR}/llvm-source/projects/libcxxabi/include/cxxabi.h /usr/include/cxxabi.h
-    sudo ln -s ${DEPENDENCY_DIR}/llvm-source/projects/libcxxabi/include/__cxxabi_config.h /usr/include/__cxxabi_config.h
 fi
 
 mkdir -p build-${CC} && cd build-${CC}
