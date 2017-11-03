@@ -18,7 +18,7 @@ cd googletest
 
 if [[ "${CXX}" == clang* ]]
 then
-    BUILD_FLAGS="${BUILD_FLAGS} -DCMAKE_CXX_FLAGS=-stdlib=libc++ -I/usr/include/libcxxabi"
+    BUILD_FLAGS="${BUILD_FLAGS} -DCMAKE_CXX_FLAGS=-stdlib=libc++ -I/usr/local/clang-3.9.0/include/c++/v1/"
 
 
     echo "*** Searching for cxxabi.h ***"
