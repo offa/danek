@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.8.2)
 
-project(danek VERSION 0.0.5)
+project(danek VERSION 0.0.6)
 message(STATUS "~~~ ${PROJECT_NAME} ${PROJECT_VERSION} ~~~")
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
