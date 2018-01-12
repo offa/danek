@@ -22,16 +22,16 @@
 // SOFTWARE.
 
 #include "SchemaTypeHex.h"
-#include <string.h>
-#include <stdio.h>
 #include <ctype.h>
+#include <stdio.h>
+#include <string.h>
 
 SchemaTypeHex::~SchemaTypeHex()
 {
 }
 
 void SchemaTypeHex::checkRule(const SchemaValidator* sv, const Configuration* cfg, const char* typeName,
-    const StringVector& typeArgs, const char* rule) const
+                              const StringVector& typeArgs, const char* rule) const
 {
     (void) sv;
     StringBuffer msg;
@@ -69,8 +69,8 @@ void SchemaTypeHex::checkRule(const SchemaValidator* sv, const Configuration* cf
 }
 
 void SchemaTypeHex::validate(const SchemaValidator* sv, const Configuration* cfg, const char* scope,
-    const char* name, const char* typeName, const char* origTypeName, const StringVector& typeArgs,
-    int indentLevel) const
+                             const char* name, const char* typeName, const char* origTypeName, const StringVector& typeArgs,
+                             int indentLevel) const
 {
     (void) sv;
     (void) cfg;
@@ -83,7 +83,7 @@ void SchemaTypeHex::validate(const SchemaValidator* sv, const Configuration* cfg
 }
 
 bool SchemaTypeHex::isA(const SchemaValidator* sv, const Configuration* cfg, const char* value,
-    const char* typeName, const StringVector& typeArgs, int indentLevel, StringBuffer& errSuffix) const
+                        const char* typeName, const StringVector& typeArgs, int indentLevel, StringBuffer& errSuffix) const
 {
     (void) sv;
     (void) typeName;
@@ -118,7 +118,7 @@ int SchemaTypeHex::lookupHex(const Configuration* cfg, const char* scope, const 
 }
 
 int SchemaTypeHex::lookupHex(const Configuration* cfg, const char* scope, const char* localName,
-    int defaultVal)
+                             int defaultVal)
 {
     const char* str;
 
@@ -131,7 +131,7 @@ int SchemaTypeHex::lookupHex(const Configuration* cfg, const char* scope, const 
 }
 
 int SchemaTypeHex::stringToHex(const Configuration* cfg, const char* scope, const char* localName,
-    const char* str, const char* typeName)
+                               const char* str, const char* typeName)
 {
     unsigned int value;
     int status;

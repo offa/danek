@@ -25,8 +25,8 @@
 
 #include "danek/ConfType.h"
 #include <memory>
-#include <vector>
 #include <string>
+#include <vector>
 
 namespace danek
 {
@@ -45,7 +45,6 @@ namespace danek
     class ConfigItem
     {
     public:
-
         ConfigItem(const std::string& name, const std::string& str);
         ConfigItem(const std::string& name, const std::vector<std::string>& v);
         ConfigItem(const std::string& name, std::unique_ptr<ConfigScope> scope);
@@ -63,7 +62,6 @@ namespace danek
 
 
     private:
-
         void checkVariantType(ConfType expected) const;
 
         const ConfType m_type;
@@ -71,6 +69,5 @@ namespace danek
         const std::string m_stringVal;
         const std::vector<std::string> m_listVal;
         const std::unique_ptr<ConfigScope> m_scope;
-
     };
 }

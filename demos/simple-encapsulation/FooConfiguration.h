@@ -31,7 +31,7 @@ public:
     ~FooConfiguration();
 
     void parse(const char* cfgInput, const char* cfgScope = "", const char* secInput = "",
-        const char* secScope = "");
+               const char* secScope = "");
 
     int getConnectionTimeout()
     {
@@ -72,7 +72,6 @@ public:
 
 
 private:
-
     void* m_cfg; // opaque pointer to Config4Cpp config object
     bool m_wantDiagnostics;
 

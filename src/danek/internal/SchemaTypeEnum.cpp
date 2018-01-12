@@ -27,7 +27,7 @@
 namespace danek
 {
     void SchemaTypeEnum::checkRule(const SchemaValidator* sv, const Configuration* cfg, const char* typeName,
-        const StringVector& typeArgs, const char* rule) const
+                                   const StringVector& typeArgs, const char* rule) const
     {
         unused(sv);
         unused(cfg);
@@ -43,7 +43,7 @@ namespace danek
     }
 
     bool SchemaTypeEnum::isA(const SchemaValidator* sv, const Configuration* cfg, const char* value,
-        const char* typeName, const StringVector& typeArgs, int indentLevel, StringBuffer& errSuffix) const
+                             const char* typeName, const StringVector& typeArgs, int indentLevel, StringBuffer& errSuffix) const
     {
         unused(sv);
         unused(cfg);

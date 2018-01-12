@@ -30,7 +30,6 @@ namespace danek
     class UidIdentifierDummyProcessor : public UidIdentifierProcessor
     {
     public:
-
         std::string expand(const std::string& spelling) override
         {
             return spelling;
@@ -40,6 +39,5 @@ namespace danek
         {
             return spelling;
         }
-
     };
 }

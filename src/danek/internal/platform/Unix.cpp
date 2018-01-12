@@ -20,10 +20,10 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "danek/internal/platform/Platform.h"
 #include "danek/StringBuffer.h"
-#include <sys/types.h>
+#include "danek/internal/platform/Platform.h"
 #include <sys/stat.h>
+#include <sys/types.h>
 #include <unistd.h>
 
 namespace danek
@@ -35,9 +35,7 @@ namespace danek
             const std::string fileName = dir + directorySeparator() + cmd;
             struct stat sb;
 
-            return ( stat(fileName.c_str(), &sb) == 0 );
+            return (stat(fileName.c_str(), &sb) == 0);
         }
-
     }
 }
-

@@ -30,7 +30,8 @@ namespace danek
     class SchemaTypeTuple : public SchemaType
     {
     public:
-        SchemaTypeTuple() : SchemaType("tuple", "danek::SchemaTypeTuple", ConfType::String)
+        SchemaTypeTuple()
+            : SchemaType("tuple", "danek::SchemaTypeTuple", ConfType::String)
         {
         }
         virtual ~SchemaTypeTuple()
@@ -39,10 +40,10 @@ namespace danek
 
     protected:
         virtual void checkRule(const SchemaValidator* sv, const Configuration* cfg, const char* typeName,
-            const StringVector& typeArgs, const char* rule) const;
+                               const StringVector& typeArgs, const char* rule) const;
 
         virtual void validate(const SchemaValidator* sv, const Configuration* cfg, const char* scope,
-            const char* name, const char* typeName, const char* origTypeName, const StringVector& typeArgs,
-            int indentLevel) const;
+                              const char* name, const char* typeName, const char* origTypeName, const StringVector& typeArgs,
+                              int indentLevel) const;
     };
 }

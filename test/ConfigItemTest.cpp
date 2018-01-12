@@ -77,4 +77,3 @@ TEST_F(ConfigItemTest, scopeItemThrowsOnInvalidTypeAccess)
     const ConfigItem item{"bad", "value"};
     EXPECT_THROW(item.scopeVal(), std::domain_error);
 }
-

@@ -75,13 +75,11 @@ namespace danek
 
 
     protected:
-
         // Operations that can be called by a subclass.
         void registerType(SchemaType* type);
 
 
     private:
-
         friend int compareSchemaIdRuleInfo(const void*, const void*);
         friend int compareSchemaType(const void*, const void*);
         friend class SchemaParser;
@@ -132,5 +130,4 @@ namespace danek
         bool m_areTypesSorted;
         bool m_wantDiagnostics;
     };
-
 }

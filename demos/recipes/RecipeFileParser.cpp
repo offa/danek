@@ -31,7 +31,8 @@ using danek::Configuration;
 using danek::ConfigurationException;
 using danek::SchemaValidator;
 
-RecipeFileParser::RecipeFileParser() : m_cfg(nullptr), m_parseCalled(false)
+RecipeFileParser::RecipeFileParser()
+    : m_cfg(nullptr), m_parseCalled(false)
 {
 }
 
@@ -45,7 +46,7 @@ void RecipeFileParser::parse(const char* recipeFilename, const char* scope)
     SchemaValidator sv;
     StringBuffer filter;
 
-    if( m_parseCalled == true )
+    if (m_parseCalled == true)
     {
         throw std::logic_error{"Already parsed"};
     }
@@ -57,10 +58,10 @@ void RecipeFileParser::parse(const char* recipeFilename, const char* scope)
     try
     {
         const char* schema[] = {"uid-recipe = scope",
-            "uid-recipe.ingredients = list[string]",
-            "uid-recipe.name = string",
-            "uid-recipe.uid-step = string",
-            0};
+                                "uid-recipe.ingredients = list[string]",
+                                "uid-recipe.name = string",
+                                "uid-recipe.uid-step = string",
+                                0};
 
         m_cfg->parse(recipeFilename);
         sv.parseSchema(schema);
@@ -131,7 +132,7 @@ void RecipeFileParser::getRecipeSteps(const char* recipeScope, StringVector& res
         for (int i = 0; i < len; i++)
         {
 
-            if( m_cfg->uidEquals("uid-step", namesVec[i].c_str()) == false )
+            if (m_cfg->uidEquals("uid-step", namesVec[i].c_str()) == false)
             {
                 throw std::invalid_argument{"Invalid uid"};
             }
@@ -148,9 +149,8 @@ void RecipeFileParser::getRecipeSteps(const char* recipeScope, StringVector& res
 
 void RecipeFileParser::checkState() const
 {
-    if( m_parseCalled == false )
+    if (m_parseCalled == false)
     {
         throw std::logic_error{"Not parsed yet"};
     }
 }
-

@@ -22,14 +22,14 @@
 
 #pragma once
 
-#include <string>
 #include <exception>
+#include <string>
 
 class FooConfigurationException : public std::exception
 {
 public:
-
-    explicit FooConfigurationException(const std::string& str) : m_str(str)
+    explicit FooConfigurationException(const std::string& str)
+        : m_str(str)
     {
     }
 
@@ -40,7 +40,5 @@ public:
 
 
 private:
-
     const std::string m_str;
 };
-

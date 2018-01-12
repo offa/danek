@@ -22,30 +22,31 @@
 // SOFTWARE.
 
 #include "danek/internal/ConfigurationImpl.h"
-#include "danek/internal/Util.h"
-#include "danek/internal/DefaultSecurityConfiguration.h"
-#include "danek/internal/ConfigParser.h"
-#include "danek/internal/ToString.h"
-#include "danek/internal/ConfigItem.h"
+#include "danek/PatternMatch.h"
 #include "danek/internal/Common.h"
 #include "danek/internal/Compat.h"
+#include "danek/internal/ConfigItem.h"
+#include "danek/internal/ConfigParser.h"
+#include "danek/internal/DefaultSecurityConfiguration.h"
+#include "danek/internal/ToString.h"
+#include "danek/internal/Util.h"
 #include "danek/internal/platform/Platform.h"
-#include "danek/PatternMatch.h"
 #include <algorithm>
+#include <ctype.h>
 #include <sstream>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
 
 namespace danek
 {
-    ConfigurationImpl::ConfigurationImpl() : m_securityCfg(&DefaultSecurityConfiguration::singleton),
-                                             m_fileName("<no file>"),
-                                             m_rootScope(std::make_unique<ConfigScope>(nullptr, "")),
-                                             m_currScope(m_rootScope.get()),
-                                             m_fallbackCfg(nullptr),
-                                             m_amOwnerOfSecurityCfg(false),
-                                             m_amOwnerOfFallbackCfg(false)
+    ConfigurationImpl::ConfigurationImpl()
+        : m_securityCfg(&DefaultSecurityConfiguration::singleton),
+          m_fileName("<no file>"),
+          m_rootScope(std::make_unique<ConfigScope>(nullptr, "")),
+          m_currScope(m_rootScope.get()),
+          m_fallbackCfg(nullptr),
+          m_amOwnerOfSecurityCfg(false),
+          m_amOwnerOfFallbackCfg(false)
     {
     }
 
@@ -72,7 +73,7 @@ namespace danek
     }
 
     void ConfigurationImpl::setFallbackConfiguration(Configuration::SourceType sourceType, const char* source,
-        const char* sourceDescription)
+                                                     const char* sourceDescription)
     {
         Configuration* cfg;
 
@@ -329,7 +330,8 @@ namespace danek
         if (!scopeObj->addOrReplaceString(vec[len - 1].c_str(), str))
         {
             std::stringstream msg;
-            msg << fileName() << ": " << "variable '" << fullyScopedName.str() << "' was previously used as a scope";
+            msg << fileName() << ": "
+                << "variable '" << fullyScopedName.str() << "' was previously used as a scope";
             throw ConfigurationException(msg.str());
         }
     }
@@ -364,7 +366,8 @@ namespace danek
         if (!scopeObj->addOrReplaceList(vec[len - 1].c_str(), data))
         {
             std::stringstream msg;
-            msg << fileName() << ": " << "variable '" << fullyScopedName.str() << "' was previously used as a scope";
+            msg << fileName() << ": "
+                << "variable '" << fullyScopedName.str() << "' was previously used as a scope";
             throw ConfigurationException(msg.str());
         }
     }
@@ -401,7 +404,8 @@ namespace danek
         if (!scope->addOrReplaceList(vec[len - 1].c_str(), list.get()))
         {
             std::stringstream msg;
-            msg << fileName() << ": " << "variable '" << name << "' was previously used as a scope";
+            msg << fileName() << ": "
+                << "variable '" << name << "' was previously used as a scope";
             throw ConfigurationException(msg.str());
         }
     }
@@ -570,7 +574,7 @@ namespace danek
     }
 
     void ConfigurationImpl::listFullyScopedNames(const char* scope, const char* localName, ConfType typeMask,
-        bool recursive, StringVector& names) const
+                                                 bool recursive, StringVector& names) const
     {
         StringVector filterPatterns;
 
@@ -578,7 +582,7 @@ namespace danek
     }
 
     void ConfigurationImpl::listFullyScopedNames(const char* scope, const char* localName, ConfType typeMask,
-        bool recursive, const char* filterPattern, StringVector& names) const
+                                                 bool recursive, const char* filterPattern, StringVector& names) const
     {
         StringVector filterPatterns;
 
@@ -587,7 +591,7 @@ namespace danek
     }
 
     void ConfigurationImpl::listFullyScopedNames(const char* scope, const char* localName, ConfType typeMask,
-        bool recursive, const StringVector& filterPatterns, StringVector& names) const
+                                                 bool recursive, const StringVector& filterPatterns, StringVector& names) const
 
     {
         StringBuffer fullyScopedName;
@@ -616,7 +620,7 @@ namespace danek
     }
 
     void ConfigurationImpl::listLocallyScopedNames(const char* scope, const char* localName, ConfType typeMask,
-        bool recursive, const char* filterPattern, StringVector& names) const
+                                                   bool recursive, const char* filterPattern, StringVector& names) const
     {
         StringVector filterPatterns;
 
@@ -625,7 +629,7 @@ namespace danek
     }
 
     void ConfigurationImpl::listLocallyScopedNames(const char* scope, const char* localName, ConfType typeMask,
-        bool recursive, StringVector& names) const
+                                                   bool recursive, StringVector& names) const
     {
         StringVector filterPatterns;
 
@@ -633,7 +637,7 @@ namespace danek
     }
 
     void ConfigurationImpl::listLocallyScopedNames(const char* scope, const char* localName, ConfType typeMask,
-        bool recursive, const StringVector& filterPatterns, StringVector& names) const
+                                                   bool recursive, const StringVector& filterPatterns, StringVector& names) const
 
     {
         StringBuffer fullyScopedName;
@@ -836,7 +840,7 @@ namespace danek
     }
 
     int ConfigurationImpl::lookupEnum(const char* scope, const char* localName, const char* typeName,
-        const EnumNameAndValue* enumInfo, int numEnums, const char* defaultVal) const
+                                      const EnumNameAndValue* enumInfo, int numEnums, const char* defaultVal) const
     {
         int result;
         StringBuffer fullyScopedName;
@@ -869,7 +873,7 @@ namespace danek
     }
 
     int ConfigurationImpl::lookupEnum(const char* scope, const char* localName, const char* typeName,
-        const EnumNameAndValue* enumInfo, int numEnums, int defaultVal) const
+                                      const EnumNameAndValue* enumInfo, int numEnums, int defaultVal) const
     {
         int result;
         StringBuffer fullyScopedName;
@@ -907,7 +911,7 @@ namespace danek
     }
 
     int ConfigurationImpl::lookupEnum(const char* scope, const char* localName, const char* typeName,
-        const EnumNameAndValue* enumInfo, int numEnums) const
+                                      const EnumNameAndValue* enumInfo, int numEnums) const
     {
         int result;
         StringBuffer fullyScopedName;
@@ -1086,7 +1090,7 @@ namespace danek
     }
 
     int ConfigurationImpl::stringToEnum(const char* scope, const char* localName, const char* typeName,
-        const char* str, const EnumNameAndValue* enumInfo, int numEnums) const
+                                        const char* str, const EnumNameAndValue* enumInfo, int numEnums) const
     {
         StringBuffer fullyScopedName;
         int result;
@@ -1121,8 +1125,8 @@ namespace danek
     }
 
     void ConfigurationImpl::lookupFloatWithUnits(const char* scope, const char* localName,
-        const char* typeName, const char** allowedUnits, int allowedUnitsSize, float& floatResult,
-        const char*& unitsResult) const
+                                                 const char* typeName, const char** allowedUnits, int allowedUnitsSize, float& floatResult,
+                                                 const char*& unitsResult) const
     {
         const char* str = lookupString(scope, localName);
         stringToFloatWithUnits(
@@ -1130,8 +1134,8 @@ namespace danek
     }
 
     void ConfigurationImpl::lookupFloatWithUnits(const char* scope, const char* localName,
-        const char* typeName, const char** allowedUnits, int allowedUnitsSize, float& floatResult,
-        const char*& unitsResult, float defaultFloat, const char* defaultUnits) const
+                                                 const char* typeName, const char** allowedUnits, int allowedUnitsSize, float& floatResult,
+                                                 const char*& unitsResult, float defaultFloat, const char* defaultUnits) const
     {
         if (type(scope, localName) == ConfType::NoValue)
         {
@@ -1141,14 +1145,14 @@ namespace danek
         else
         {
             lookupFloatWithUnits(scope,
-                localName,
-                typeName,
-                allowedUnits,
-                allowedUnitsSize,
-                floatResult,
-                unitsResult,
-                defaultFloat,
-                defaultUnits);
+                                 localName,
+                                 typeName,
+                                 allowedUnits,
+                                 allowedUnitsSize,
+                                 floatResult,
+                                 unitsResult,
+                                 defaultFloat,
+                                 defaultUnits);
         }
     }
 
@@ -1161,14 +1165,14 @@ namespace danek
 
         ss >> fVal >> unitSpelling;
 
-        if( ss.fail() == true )
+        if (ss.fail() == true)
         {
             return false;
         }
 
         // The entry appears to be in the correct format. Find out
         // what the specified units are.
-        for (int i=0; i<allowedUnitsSize; ++i)
+        for (int i = 0; i < allowedUnitsSize; ++i)
         {
             if (strcmp(unitSpelling.c_str(), allowedUnits[i]) == 0)
             {
@@ -1181,8 +1185,8 @@ namespace danek
     }
 
     void ConfigurationImpl::lookupUnitsWithFloat(const char* scope, const char* localName,
-        const char* typeName, const char** allowedUnits, int allowedUnitsSize, float& floatResult,
-        const char*& unitsResult) const
+                                                 const char* typeName, const char** allowedUnits, int allowedUnitsSize, float& floatResult,
+                                                 const char*& unitsResult) const
     {
         const char* str = lookupString(scope, localName);
         stringToUnitsWithFloat(
@@ -1190,8 +1194,8 @@ namespace danek
     }
 
     void ConfigurationImpl::lookupUnitsWithFloat(const char* scope, const char* localName,
-        const char* typeName, const char** allowedUnits, int allowedUnitsSize, float& floatResult,
-        const char*& unitsResult, float defaultFloat, const char* defaultUnits) const
+                                                 const char* typeName, const char** allowedUnits, int allowedUnitsSize, float& floatResult,
+                                                 const char*& unitsResult, float defaultFloat, const char* defaultUnits) const
     {
         if (type(scope, localName) == ConfType::NoValue)
         {
@@ -1201,14 +1205,14 @@ namespace danek
         else
         {
             lookupFloatWithUnits(scope,
-                localName,
-                typeName,
-                allowedUnits,
-                allowedUnitsSize,
-                floatResult,
-                unitsResult,
-                defaultFloat,
-                defaultUnits);
+                                 localName,
+                                 typeName,
+                                 allowedUnits,
+                                 allowedUnitsSize,
+                                 floatResult,
+                                 unitsResult,
+                                 defaultFloat,
+                                 defaultUnits);
         }
     }
 
@@ -1224,7 +1228,7 @@ namespace danek
                 maxUnitsLen = len;
             }
         }
-        char* formatStr = new char[maxUnitsLen + 7]; // big enough
+        char* formatStr = new char[maxUnitsLen + 7];    // big enough
         char* unitSpelling = new char[strlen(str) + 1]; // big enough
 
         // See if the string is in the form "allowedUnits[index] <float>"
@@ -1248,8 +1252,8 @@ namespace danek
     }
 
     void ConfigurationImpl::stringToIntWithUnits(const char* scope, const char* localName,
-        const char* typeName, const char* str, const char** allowedUnits, int allowedUnitsSize,
-        int& intResult, const char*& unitsResult) const
+                                                 const char* typeName, const char* str, const char** allowedUnits, int allowedUnitsSize,
+                                                 int& intResult, const char*& unitsResult) const
     {
         StringBuffer fullyScopedName;
         std::stringstream msg;
@@ -1261,7 +1265,7 @@ namespace danek
 
         ss >> intVal >> unitSpelling;
 
-        if ( ss.fail() == true )
+        if (ss.fail() == true)
         {
             mergeNames(scope, localName, fullyScopedName);
             msg << fileName() << ": invalid " << typeName << " ('" << str << "') specified for '"
@@ -1308,7 +1312,7 @@ namespace danek
     }
 
     void ConfigurationImpl::lookupIntWithUnits(const char* scope, const char* localName, const char* typeName,
-        const char** allowedUnits, int allowedUnitsSize, int& intResult, const char*& unitsResult) const
+                                               const char** allowedUnits, int allowedUnitsSize, int& intResult, const char*& unitsResult) const
     {
         const char* str = lookupString(scope, localName);
         stringToIntWithUnits(
@@ -1316,8 +1320,8 @@ namespace danek
     }
 
     void ConfigurationImpl::lookupIntWithUnits(const char* scope, const char* localName, const char* typeName,
-        const char** allowedUnits, int allowedUnitsSize, int& intResult, const char*& unitsResult,
-        int defaultInt, const char* defaultUnits) const
+                                               const char** allowedUnits, int allowedUnitsSize, int& intResult, const char*& unitsResult,
+                                               int defaultInt, const char* defaultUnits) const
     {
         if (type(scope, localName) == ConfType::NoValue)
         {
@@ -1327,14 +1331,14 @@ namespace danek
         else
         {
             lookupIntWithUnits(scope,
-                localName,
-                typeName,
-                allowedUnits,
-                allowedUnitsSize,
-                intResult,
-                unitsResult,
-                defaultInt,
-                defaultUnits);
+                               localName,
+                               typeName,
+                               allowedUnits,
+                               allowedUnitsSize,
+                               intResult,
+                               unitsResult,
+                               defaultInt,
+                               defaultUnits);
         }
     }
 
@@ -1348,7 +1352,7 @@ namespace danek
 
         ss >> intVal >> unitSpelling;
 
-        if ( ss.fail() == true )
+        if (ss.fail() == true)
         {
             return false;
         }
@@ -1368,8 +1372,8 @@ namespace danek
     }
 
     void ConfigurationImpl::stringToUnitsWithInt(const char* scope, const char* localName,
-        const char* typeName, const char* str, const char** allowedUnits, int allowedUnitsSize,
-        int& intResult, const char*& unitsResult) const
+                                                 const char* typeName, const char* str, const char** allowedUnits, int allowedUnitsSize,
+                                                 int& intResult, const char*& unitsResult) const
     {
         StringBuffer fullyScopedName;
         int maxUnitsLen = 0;
@@ -1383,7 +1387,7 @@ namespace danek
                 maxUnitsLen = len;
             }
         }
-        char* formatStr = new char[maxUnitsLen + 7]; // big enough
+        char* formatStr = new char[maxUnitsLen + 7];    // big enough
         char* unitSpelling = new char[strlen(str) + 1]; // big enough
 
         // See if the string is in the form "allowedUnits[index] <int>"
@@ -1422,7 +1426,7 @@ namespace danek
     }
 
     void ConfigurationImpl::lookupUnitsWithInt(const char* scope, const char* localName, const char* typeName,
-        const char** allowedUnits, int allowedUnitsSize, int& intResult, const char*& unitsResult) const
+                                               const char** allowedUnits, int allowedUnitsSize, int& intResult, const char*& unitsResult) const
     {
         const char* str = lookupString(scope, localName);
         stringToUnitsWithInt(
@@ -1430,8 +1434,8 @@ namespace danek
     }
 
     void ConfigurationImpl::lookupUnitsWithInt(const char* scope, const char* localName, const char* typeName,
-        const char** allowedUnits, int allowedUnitsSize, int& intResult, const char*& unitsResult,
-        int defaultInt, const char* defaultUnits) const
+                                               const char** allowedUnits, int allowedUnitsSize, int& intResult, const char*& unitsResult,
+                                               int defaultInt, const char* defaultUnits) const
     {
         if (type(scope, localName) == ConfType::NoValue)
         {
@@ -1441,14 +1445,14 @@ namespace danek
         else
         {
             lookupIntWithUnits(scope,
-                localName,
-                typeName,
-                allowedUnits,
-                allowedUnitsSize,
-                intResult,
-                unitsResult,
-                defaultInt,
-                defaultUnits);
+                               localName,
+                               typeName,
+                               allowedUnits,
+                               allowedUnitsSize,
+                               intResult,
+                               unitsResult,
+                               defaultInt,
+                               defaultUnits);
         }
     }
 
@@ -1464,7 +1468,7 @@ namespace danek
                 maxUnitsLen = len;
             }
         }
-        char* formatStr = new char[maxUnitsLen + 7]; // big enough
+        char* formatStr = new char[maxUnitsLen + 7];    // big enough
         char* unitSpelling = new char[strlen(str) + 1]; // big enough
 
         // See if the string is in the form "allowedUnits[index] <int>"
@@ -1501,7 +1505,12 @@ namespace danek
         sizeof(durationMicrosecondsUnitsInfo) / sizeof(durationMicrosecondsUnitsInfo[0]);
 
     static const char* allowedDurationMicrosecondsUnits[] = {
-        "millisecond", "milliseconds", "second", "seconds", "minute", "minutes",
+        "millisecond",
+        "milliseconds",
+        "second",
+        "seconds",
+        "minute",
+        "minutes",
     };
     static const int countAllowedDurationMicrosecondsUnits =
         sizeof(allowedDurationMicrosecondsUnits) / sizeof(allowedDurationMicrosecondsUnits[0]);
@@ -1524,17 +1533,17 @@ namespace danek
         sizeof(durationMillisecondsUnitsInfo) / sizeof(durationMillisecondsUnitsInfo[0]);
 
     static const char* allowedDurationMillisecondsUnits[] = {"millisecond",
-        "milliseconds",
-        "second",
-        "seconds",
-        "minute",
-        "minutes",
-        "hour",
-        "hours",
-        "day",
-        "days",
-        "week",
-        "weeks"};
+                                                             "milliseconds",
+                                                             "second",
+                                                             "seconds",
+                                                             "minute",
+                                                             "minutes",
+                                                             "hour",
+                                                             "hours",
+                                                             "day",
+                                                             "days",
+                                                             "week",
+                                                             "weeks"};
     static const int countAllowedDurationMillisecondsUnits =
         sizeof(allowedDurationMillisecondsUnits) / sizeof(allowedDurationMillisecondsUnits[0]);
 
@@ -1586,15 +1595,25 @@ namespace danek
     }
 
     static SpellingAndValue MemorySizeBytesUnitsInfo[] = {
-        {"byte", 1}, {"bytes", 1}, {"KB", 1024}, {"MB", 1024 * 1024}, {"GB", 1024 * 1024 * 1024},
+        {"byte", 1},
+        {"bytes", 1},
+        {"KB", 1024},
+        {"MB", 1024 * 1024},
+        {"GB", 1024 * 1024 * 1024},
     };
 
     static SpellingAndValue MemorySizeKBUnitsInfo[] = {
-        {"KB", 1}, {"MB", 1024}, {"GB", 1024 * 1024}, {"TB", 1024 * 1024 * 1024},
+        {"KB", 1},
+        {"MB", 1024},
+        {"GB", 1024 * 1024},
+        {"TB", 1024 * 1024 * 1024},
     };
 
     static SpellingAndValue MemorySizeMBUnitsInfo[] = {
-        {"MB", 1}, {"GB", 1024}, {"TB", 1024 * 1024}, {"PB", 1024 * 1024 * 1024},
+        {"MB", 1},
+        {"GB", 1024},
+        {"TB", 1024 * 1024},
+        {"PB", 1024 * 1024 * 1024},
     };
 
     bool ConfigurationImpl::isMemorySizeBytes(const char* str) const
@@ -1616,8 +1635,8 @@ namespace danek
     }
 
     void ConfigurationImpl::stringToUnitsWithFloat(const char* scope, const char* localName,
-        const char* typeName, const char* str, const char** allowedUnits, int allowedUnitsSize,
-        float& floatResult, const char*& unitsResult) const
+                                                   const char* typeName, const char* str, const char** allowedUnits, int allowedUnitsSize,
+                                                   float& floatResult, const char*& unitsResult) const
     {
         std::stringstream msg;
         StringBuffer fullyScopedName;
@@ -1631,7 +1650,7 @@ namespace danek
                 maxUnitsLen = len;
             }
         }
-        char* formatStr = new char[maxUnitsLen + 7]; // big enough
+        char* formatStr = new char[maxUnitsLen + 7];    // big enough
         char* unitSpelling = new char[strlen(str) + 1]; // big enough
 
         // See if the string is in the form "allowedUnits[index] <float>"
@@ -1670,8 +1689,8 @@ namespace danek
     }
 
     void ConfigurationImpl::stringToFloatWithUnits(const char* scope, const char* localName,
-        const char* typeName, const char* str, const char** allowedUnits, int allowedUnitsSize,
-        float& floatResult, const char*& unitsResult) const
+                                                   const char* typeName, const char* str, const char** allowedUnits, int allowedUnitsSize,
+                                                   float& floatResult, const char*& unitsResult) const
     {
         StringBuffer fullyScopedName;
         std::stringstream msg;
@@ -1682,7 +1701,7 @@ namespace danek
         std::string unitSpelling;
         ss >> fVal >> unitSpelling;
 
-        if ( ss.fail() == true )
+        if (ss.fail() == true)
         {
             mergeNames(scope, localName, fullyScopedName);
             msg << fileName() << ": invalid " << typeName << " ('" << str << "') specified for '"
@@ -1717,7 +1736,7 @@ namespace danek
         msg << fileName() << ": invalid " << typeName << " ('" << str << "') specified for '"
             << fullyScopedName.str() << "': should be"
             << " '<float> <units>' where <units> are";
-        for( int i = 0; i < allowedUnitsSize; ++i )
+        for (int i = 0; i < allowedUnitsSize; ++i)
         {
             msg << " '" << allowedUnits[i] << "'";
             if (i < allowedUnitsSize - 1)
@@ -1746,13 +1765,13 @@ namespace danek
         try
         {
             stringToFloatWithUnits(scope,
-                localName,
-                "durationMicroseconds",
-                str,
-                allowedDurationMicrosecondsUnits,
-                countAllowedDurationMicrosecondsUnits,
-                floatVal,
-                units);
+                                   localName,
+                                   "durationMicroseconds",
+                                   str,
+                                   allowedDurationMicrosecondsUnits,
+                                   countAllowedDurationMicrosecondsUnits,
+                                   floatVal,
+                                   units);
         }
         catch (const ConfigurationException& ex)
         {
@@ -1793,13 +1812,13 @@ namespace danek
         try
         {
             stringToFloatWithUnits(scope,
-                localName,
-                "durationMilliseconds",
-                str,
-                allowedDurationMillisecondsUnits,
-                countAllowedDurationMillisecondsUnits,
-                floatVal,
-                units);
+                                   localName,
+                                   "durationMilliseconds",
+                                   str,
+                                   allowedDurationMillisecondsUnits,
+                                   countAllowedDurationMillisecondsUnits,
+                                   floatVal,
+                                   units);
         }
         catch (const ConfigurationException& ex)
         {
@@ -1840,13 +1859,13 @@ namespace danek
         try
         {
             stringToFloatWithUnits(scope,
-                localName,
-                "durationSeconds",
-                str,
-                allowedDurationSecondsUnits,
-                countAllowedDurationSecondsUnits,
-                floatVal,
-                units);
+                                   localName,
+                                   "durationSeconds",
+                                   str,
+                                   allowedDurationSecondsUnits,
+                                   countAllowedDurationSecondsUnits,
+                                   floatVal,
+                                   units);
         }
         catch (const ConfigurationException& ex)
         {
@@ -1942,8 +1961,8 @@ namespace danek
     }
 
     int ConfigurationImpl::stringToMemorySizeGeneric(const char* typeName, SpellingAndValue unitsInfo[],
-        int unitsInfoSize, const char* allowedUnits[], const char* scope, const char* localName,
-        const char* str) const
+                                                     int unitsInfoSize, const char* allowedUnits[], const char* scope, const char* localName,
+                                                     const char* str) const
     {
         float floatVal;
         const char* units;

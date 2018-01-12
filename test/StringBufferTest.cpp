@@ -133,4 +133,3 @@ TEST_F(StringBufferTest, assignNewValue)
     sb = "new_string";
     EXPECT_THAT(sb.str(), StrEq("new_string"));
 }
-

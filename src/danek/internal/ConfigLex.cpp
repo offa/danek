@@ -75,7 +75,7 @@ namespace danek
     const static int funcInfoArraySize = sizeof(funcInfoArray) / sizeof(funcInfoArray[0]);
 
     ConfigLex::ConfigLex(Configuration::SourceType sourceType, const char* source,
-        UidIdentifierProcessor* uidIdentifierProcessor)
+                         UidIdentifierProcessor* uidIdentifierProcessor)
         : LexBase(sourceType, source, uidIdentifierProcessor)
     {
         m_keywordInfoArray = keywordInfoArray;

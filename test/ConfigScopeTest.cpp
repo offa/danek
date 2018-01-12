@@ -530,4 +530,3 @@ TEST_F(ConfigScopeTest, listLocallyScopedNamesOfMultipleNodesRecursiveScope)
 
     EXPECT_THAT(v, UnorderedElementsAre("sn1"));
 }
-

@@ -22,17 +22,19 @@
 // SOFTWARE.
 
 #include "danek/StringBuffer.h"
-#include <string.h>
-#include <stdio.h>
 #include <ctype.h>
+#include <stdio.h>
+#include <string.h>
 
 namespace danek
 {
-    StringBuffer::StringBuffer() : m_string()
+    StringBuffer::StringBuffer()
+        : m_string()
     {
     }
 
-    StringBuffer::StringBuffer(const std::string& str) : m_string(str)
+    StringBuffer::StringBuffer(const std::string& str)
+        : m_string(str)
     {
     }
 
@@ -132,5 +134,4 @@ namespace danek
         m_string = str;
         return *this;
     }
-
 }

@@ -36,7 +36,4 @@ namespace danek
         List = 3,
         Bool = 4
     };
-
 }
-
-

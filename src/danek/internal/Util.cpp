@@ -25,29 +25,28 @@
 
 namespace danek
 {
-namespace util
-{
-
-    std::vector<std::string> splitScopes(const std::string& input)
+    namespace util
     {
-        constexpr auto delim = '.';
 
-        if( input.empty() == true || input.find(delim) == false )
+        std::vector<std::string> splitScopes(const std::string& input)
         {
-            return { input };
+            constexpr auto delim = '.';
+
+            if (input.empty() == true || input.find(delim) == false)
+            {
+                return {input};
+            }
+
+            std::vector<std::string> tokens;
+            std::stringstream ss{input};
+            std::string token;
+
+            while (std::getline(ss, token, delim))
+            {
+                tokens.push_back(token);
+            }
+
+            return tokens;
         }
-
-        std::vector<std::string> tokens;
-        std::stringstream ss{input};
-        std::string token;
-
-        while( std::getline(ss, token, delim) )
-        {
-            tokens.push_back(token);
-        }
-
-        return tokens;
     }
-
-}
 }

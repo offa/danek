@@ -71,4 +71,3 @@ TEST(SchemaIdRuleInfoTest, ignoreRuleInfoSetter)
     EXPECT_THAT(info.symbol(), Eq(9));
     EXPECT_THAT(info.locallyScopedName(), StrEq("abc"));
 }
-

@@ -23,21 +23,20 @@
 
 #pragma once
 
-#include <wchar.h>
-#include "danek/Configuration.h"
-#include "danek/internal/FunctionType.h"
+#include "LexBaseSymbols.h"
 #include "LexToken.h"
 #include "MBChar.h"
 #include "UidIdentifierProcessor.h"
-#include "LexBaseSymbols.h"
+#include "danek/Configuration.h"
+#include "danek/internal/FunctionType.h"
 #include <fstream>
+#include <wchar.h>
 
 namespace danek
 {
     class LexBase
     {
     public:
-
         void nextToken(LexToken& token);
 
 
@@ -56,7 +55,7 @@ namespace danek
     protected:
         // Constructors and destructor
         LexBase(Configuration::SourceType sourceType, const char* source,
-            UidIdentifierProcessor* uidIdentifierProcessor);
+                UidIdentifierProcessor* uidIdentifierProcessor);
         explicit LexBase(const char* str);
         virtual ~LexBase();
 
@@ -68,7 +67,6 @@ namespace danek
         int m_funcInfoArraySize;
 
     private:
-
         void searchForKeyword(const char* spelling, bool& found, short& symbol);
         void searchForFunction(const char* spelling, bool& found, FunctionType& funcType, short& symbol);
 
@@ -82,7 +80,7 @@ namespace danek
         UidIdentifierProcessor* m_uidIdentifierProcessor;
         bool m_amOwnerOfUidIdentifierProcessor;
         int m_lineNum; // Used for error reporting
-        MBChar m_ch; // Lookahead character
+        MBChar m_ch;   // Lookahead character
         Configuration::SourceType m_sourceType;
         const char* m_source;
         bool m_atEOF;

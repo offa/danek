@@ -111,4 +111,3 @@ TEST_F(LexTokenTest, resetWithFunctionType)
     EXPECT_THAT(t.spelling(), StrEq("xyz"));
     EXPECT_TRUE(t.isBoolFunc());
 }
-

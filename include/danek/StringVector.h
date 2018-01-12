@@ -23,8 +23,8 @@
 
 #pragma once
 
-#include <vector>
 #include <string>
+#include <vector>
 
 namespace danek
 {
@@ -40,7 +40,8 @@ namespace danek
             m_data.reserve(initialCapacity);
         }
 
-        explicit StringVector(const std::vector<std::string>& data) : m_data(data)
+        explicit StringVector(const std::vector<std::string>& data)
+            : m_data(data)
         {
         }
 
@@ -103,5 +104,4 @@ namespace danek
     private:
         std::vector<std::string> m_data;
     };
-
 }

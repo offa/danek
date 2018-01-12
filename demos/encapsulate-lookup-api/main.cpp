@@ -23,12 +23,12 @@
 
 #include "FooConfiguration.h"
 #include "FooConfigurationException.h"
-#include <memory>
 #include <iostream>
+#include <locale.h>
+#include <memory>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <locale.h>
 
 static void parseCmdLineArgs(int argc, char** argv, const char*& cfgSource, const char*& scope);
 static void usage();
@@ -53,9 +53,9 @@ int main(int argc, char** argv)
         // Query the configuration object.
         //--------
         std::cout << "host = \"" << cfg->lookupString("host") << "\"\n"
-                    << "port = " << cfg->lookupInt("port") << "\n"
-                    << "timeout = " << cfg->lookupDurationMilliseconds("timeout")
-                    << " (\"" << cfg->lookupString("timeout") << "\")\n";
+                  << "port = " << cfg->lookupInt("port") << "\n"
+                  << "timeout = " << cfg->lookupDurationMilliseconds("timeout")
+                  << " (\"" << cfg->lookupString("timeout") << "\")\n";
     }
     catch (const FooConfigurationException& ex)
     {
@@ -106,16 +106,16 @@ static void parseCmdLineArgs(int argc, char** argv, const char*& cfgSource, cons
 static void usage()
 {
     std::cerr << "\n"
-            << "usage: demo <options>\n"
-            << "\n"
-            << "The <options> can be:\n"
-            << "  -h             Print this usage statement\n"
-            << "  -cfg <source>  Parse the specified configuration file\n"
-            << "  -scope <name>  Application scope in the configuration source\n"
-            << "\n"
-            << "A configuration <source> can be one of the following:\n"
-            << "  file.cfg       A configuration file\n"
-            << "  file#file.cfg  A configuration file\n"
-            << "  exec#<command> Output from executing the specified command\n\n";
+              << "usage: demo <options>\n"
+              << "\n"
+              << "The <options> can be:\n"
+              << "  -h             Print this usage statement\n"
+              << "  -cfg <source>  Parse the specified configuration file\n"
+              << "  -scope <name>  Application scope in the configuration source\n"
+              << "\n"
+              << "A configuration <source> can be one of the following:\n"
+              << "  file.cfg       A configuration file\n"
+              << "  file#file.cfg  A configuration file\n"
+              << "  exec#<command> Output from executing the specified command\n\n";
     exit(1);
 }

@@ -28,7 +28,6 @@
 class A
 {
 public:
-
     explicit A(const FooConfiguration* cfg);
     A(const A&) = delete;
 
@@ -40,7 +39,6 @@ public:
 
 
 private:
-
     Logger::LogLevel m_logLevelOp1;
     Logger::LogLevel m_logLevelOp2;
     Logger::LogLevel m_logLevelOp3;

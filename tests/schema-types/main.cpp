@@ -22,12 +22,12 @@
 // SOFTWARE.
 
 #include "danek/Configuration.h"
-#include "danek/SchemaValidator.h"
 #include "danek/PatternMatch.h"
+#include "danek/SchemaValidator.h"
+#include <locale.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <locale.h>
 
 using namespace danek;
 
@@ -78,7 +78,7 @@ int main(int argc, char** argv)
         std::vector<const char*> v;
         v.reserve(testSchema.size());
 
-        for( const auto& s : testSchema.get() )
+        for (const auto& s : testSchema.get())
         {
             v.push_back(s.c_str());
         }
@@ -94,7 +94,7 @@ int main(int argc, char** argv)
     //--------
     // Schema validation should succeed for every sub-scope withinin "good".
     //--------
-    for ( std::size_t i = 0; i < goodScopes.size(); ++i)
+    for (std::size_t i = 0; i < goodScopes.size(); ++i)
     {
         try
         {
@@ -119,7 +119,7 @@ int main(int argc, char** argv)
     //--------
     // Schema validation should fail for every sub-scope within "bad".
     //--------
-    for ( std::size_t i = 0; i < badScopes.size(); ++i)
+    for (std::size_t i = 0; i < badScopes.size(); ++i)
     {
         try
         {
@@ -148,9 +148,9 @@ int main(int argc, char** argv)
                 printf("Unexpected exception for scope \"%s\"\n"
                        "Pattern \"%s\" does not match "
                        "exception\n\"%s\"\n--------\n\n",
-                    badScopes[i].c_str(),
-                    exPattern,
-                    ex.message().c_str());
+                       badScopes[i].c_str(),
+                       exPattern,
+                       ex.message().c_str());
             }
         }
     }
@@ -206,14 +206,14 @@ static void parseCmdLineArgs(int argc, char** argv, const char*& cfgFile, bool& 
 static void usage()
 {
     fprintf(stderr,
-        "\n"
-        "usage: schema-testsuite <options>\n"
-        "\n"
-        "The <options> can be:\n"
-        "  -h               Print this usage statement\n"
-        "  -cfg <file.cfg>  Parse specified configuration file\n"
-        "  -diagnostics     Prints diagnostics from schema validator\n"
-        "  -nodiagnostics   No diagnostics (default)\n"
-        "\n");
+            "\n"
+            "usage: schema-testsuite <options>\n"
+            "\n"
+            "The <options> can be:\n"
+            "  -h               Print this usage statement\n"
+            "  -cfg <file.cfg>  Parse specified configuration file\n"
+            "  -diagnostics     Prints diagnostics from schema validator\n"
+            "  -nodiagnostics   No diagnostics (default)\n"
+            "\n");
     exit(1);
 }

@@ -145,4 +145,3 @@ TEST_F(ToStringTest, configScopeMixedType)
     const auto str = toString(root, true);
     EXPECT_THAT(str, StrEq("sn0 {\n    a = \"b\";\n    sn1 {\n        x = \"y\";\n    }\n}\n"));
 }
-

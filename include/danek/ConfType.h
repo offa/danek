@@ -31,8 +31,7 @@ namespace danek
         String = 0b0001,
         List = 0b0010,
         Scope = 0b0100,
-        Variables = 0b0011, // String or List
+        Variables = 0b0011,    // String or List
         ScopesAndVars = 0b0111 // 0111 = String or List or Scope
     };
-
 }

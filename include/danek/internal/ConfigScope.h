@@ -23,10 +23,10 @@
 
 #pragma once
 
-#include "danek/StringBuffer.h"
 #include "danek/ConfType.h"
-#include <vector>
+#include "danek/StringBuffer.h"
 #include <memory>
+#include <vector>
 
 namespace danek
 {
@@ -41,7 +41,6 @@ namespace danek
     class ConfigScope
     {
     public:
-
         ConfigScope(ConfigScope* parentScope, const std::string& name);
         ConfigScope(const ConfigScope&) = delete;
 
@@ -70,7 +69,6 @@ namespace danek
 
 
     private:
-
         std::vector<std::string> listScopedNamesHelper(const std::string& prefix, ConfType typeMask, bool recursive, const std::vector<std::string>& filterPatterns) const;
         bool listFilter(const std::string& name, const std::vector<std::string>& filterPatterns) const;
 

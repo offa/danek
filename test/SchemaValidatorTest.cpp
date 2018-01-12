@@ -21,8 +21,8 @@
 // SOFTWARE.
 
 #include "danek/SchemaValidator.h"
-#include <memory>
 #include <gmock/gmock.h>
+#include <memory>
 
 using danek::SchemaValidator;
 using namespace testing;
@@ -30,7 +30,6 @@ using namespace testing;
 class SchemaValidatorTest : public testing::Test
 {
 protected:
-
     void SetUp() override
     {
         validator = std::make_unique<SchemaValidator>();
@@ -49,4 +48,3 @@ TEST_F(SchemaValidatorTest, diagnosticsOptions)
     validator->wantDiagnostics(true);
     EXPECT_TRUE(validator->wantDiagnostics());
 }
-

@@ -46,11 +46,10 @@ namespace danek
          */
         inline void checkAssertion(bool condition)
         {
-            if( condition == false )
+            if (condition == false)
             {
                 throw AssertionException{};
             }
         }
-
     }
 }

@@ -22,27 +22,27 @@
 // SOFTWARE.
 
 #include "danek/Configuration.h"
-#include "danek/StringBuffer.h"
 #include "danek/SchemaValidator.h"
+#include "danek/StringBuffer.h"
 #include <iostream>
-#include <string.h>
-#include <stdlib.h>
 #include <locale.h>
+#include <stdlib.h>
+#include <string.h>
 
+using danek::ConfType;
 using danek::Configuration;
 using danek::ConfigurationException;
 using danek::SchemaValidator;
 using danek::StringBuffer;
 using danek::StringVector;
-using danek::ConfType;
 
 static void usage(const char* optMsg);
 
 static void parseCmdLineArgs(int argc, char** argv, const char*& cmd, bool& isRecursive,
-    bool& wantExpandedUidNames, StringVector& filterPatterns, const char*& scope, const char*& name,
-    const char*& cfgSource, const char*& secSource, const char*& secScope, const char*& schemaSource,
-    const char*& schemaName, SchemaValidator::ForceMode& forceMode, bool& wantDiagnostics,
-    ConfType& types, Configuration* cfg);
+                             bool& wantExpandedUidNames, StringVector& filterPatterns, const char*& scope, const char*& name,
+                             const char*& cfgSource, const char*& secSource, const char*& secScope, const char*& schemaSource,
+                             const char*& schemaName, SchemaValidator::ForceMode& forceMode, bool& wantDiagnostics,
+                             ConfType& types, Configuration* cfg);
 
 static ConfType stringToTypes(const char* str);
 
@@ -79,22 +79,22 @@ int main(int argc, char** argv)
     Configuration* schemaCfg = Configuration::create();
 
     parseCmdLineArgs(argc,
-        argv,
-        cmd,
-        isRecursive,
-        wantExpandedUidNames,
-        filterPatterns,
-        scope,
-        name,
-        cfgSource,
-        secSource,
-        secScope,
-        schemaSource,
-        schemaName,
-        forceMode,
-        wantDiagnostics,
-        types,
-        cfg);
+                     argv,
+                     cmd,
+                     isRecursive,
+                     wantExpandedUidNames,
+                     filterPatterns,
+                     scope,
+                     name,
+                     cfgSource,
+                     secSource,
+                     secScope,
+                     schemaSource,
+                     schemaName,
+                     forceMode,
+                     wantDiagnostics,
+                     types,
+                     cfg);
 
     try
     {
@@ -130,7 +130,7 @@ int main(int argc, char** argv)
 
             std::vector<const char*> schemaVec; // Deprecated conversion; kept for compatibility
 
-            for( const auto& s : outputData )
+            for (const auto& s : outputData)
             {
                 schemaVec.push_back(&s.front());
             }
@@ -207,15 +207,15 @@ int main(int argc, char** argv)
                     std::cout << str << "\n";
                     break;
                 case ConfType::List:
+                {
+                    std::vector<std::string> vec;
+                    cfg->lookupList(scope, name, vec);
+                    for (i = 0; i < vec.size(); i++)
                     {
-                        std::vector<std::string> vec;
-                        cfg->lookupList(scope, name, vec);
-                        for (i = 0; i < vec.size(); i++)
-                        {
-                            std::cout << vec[i] << "\n";
-                        }
+                        std::cout << vec[i] << "\n";
                     }
-                    break;
+                }
+                break;
                 case ConfType::Scope:
                     std::cerr << "'" << fullyScopedName.str() << "' is a scope\n";
                     break;
@@ -276,10 +276,10 @@ int main(int argc, char** argv)
 }
 
 static void parseCmdLineArgs(int argc, char** argv, const char*& cmd, bool& isRecursive,
-    bool& wantExpandedUidNames, StringVector& filterPatterns, const char*& scope, const char*& name,
-    const char*& cfgSource, const char*& secSource, const char*& secScope, const char*& schemaSource,
-    const char*& schemaName, SchemaValidator::ForceMode& forceMode, bool& wantDiagnostics,
-    ConfType& types, Configuration* cfg)
+                             bool& wantExpandedUidNames, StringVector& filterPatterns, const char*& scope, const char*& name,
+                             const char*& cfgSource, const char*& secSource, const char*& secScope, const char*& schemaSource,
+                             const char*& schemaName, SchemaValidator::ForceMode& forceMode, bool& wantDiagnostics,
+                             ConfType& types, Configuration* cfg)
 {
     int i;
     StringBuffer msg;

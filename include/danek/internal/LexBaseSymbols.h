@@ -65,5 +65,4 @@ namespace danek
             LEX_SOLE_DOT_IDENT_SYM = 28
         };
     }
-
 }

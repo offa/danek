@@ -46,4 +46,3 @@ TEST(UtilTest, splitScopedNameReturnsSplittedResults)
     EXPECT_THAT(v[1], Eq("b"));
     EXPECT_THAT(v[2], Eq("c"));
 }
-

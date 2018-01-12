@@ -21,8 +21,8 @@
 // SOFTWARE.
 
 #include "danek/internal/UidIdentifierDummyProcessor.h"
-#include <memory>
 #include <gmock/gmock.h>
+#include <memory>
 
 using danek::UidIdentifierDummyProcessor;
 using namespace testing;
@@ -30,7 +30,6 @@ using namespace testing;
 class UidIdentifierDummyProcessorTest : public testing::Test
 {
 public:
-
     void SetUp() override
     {
         processor = std::make_unique<UidIdentifierDummyProcessor>();
@@ -50,4 +49,3 @@ TEST_F(UidIdentifierDummyProcessorTest, unexpandExpandsNothing)
     const auto result = processor->unexpand("uid-a.b.uid-123-c");
     EXPECT_THAT(result, StrEq("uid-a.b.uid-123-c"));
 }
-

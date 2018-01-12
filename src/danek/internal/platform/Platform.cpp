@@ -21,10 +21,10 @@
 
 #include "danek/internal/platform/Platform.h"
 #include <array>
+#include <cstdio>
 #include <memory>
 #include <sstream>
 #include <system_error>
-#include <cstdio>
 
 namespace danek
 {
@@ -39,15 +39,15 @@ namespace danek
             const std::string cmdStr = cmd + " 2>&1";
             std::shared_ptr<FILE> pipe(popen(cmdStr.c_str(), "r"), pclose);
 
-            if( !pipe )
+            if (!pipe)
             {
                 const auto errorCode = errno;
                 throw std::system_error{errorCode, std::system_category()};
             }
 
-            while( !std::feof(pipe.get()) )
+            while (!std::feof(pipe.get()))
             {
-                if( std::fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr )
+                if (std::fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr)
                 {
                     output << buffer.data();
                 }

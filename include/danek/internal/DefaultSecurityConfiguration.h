@@ -41,8 +41,6 @@ namespace danek
         static DefaultSecurityConfiguration singleton;
 
     private:
-
         const DefaultSecurity m_cfgStr;
-
     };
 }

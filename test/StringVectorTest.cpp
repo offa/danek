@@ -21,8 +21,8 @@
 // SOFTWARE.
 
 #include "danek/StringVector.h"
-#include <memory>
 #include <gmock/gmock.h>
+#include <memory>
 
 using danek::StringVector;
 using namespace testing;
@@ -105,7 +105,7 @@ TEST_F(StringVectorTest, addStringVector)
 
     StringVector v;
 
-    for(const auto& str : toAdd )
+    for (const auto& str : toAdd)
     {
         v.push_back(str);
     }
@@ -159,4 +159,3 @@ TEST_F(StringVectorTest, removeLastRemovesLastElement)
     EXPECT_EQ(1, v.size());
     EXPECT_THAT(v[v.size() - 1], StrEq("x"));
 }
-

@@ -27,7 +27,7 @@
 namespace danek
 {
     void SchemaTypeIntWithUnits::checkRule(const SchemaValidator* sv, const Configuration* cfg,
-        const char* typeName, const StringVector& typeArgs, const char* rule) const
+                                           const char* typeName, const StringVector& typeArgs, const char* rule) const
 
     {
         unused(sv);
@@ -44,7 +44,7 @@ namespace danek
     }
 
     bool SchemaTypeIntWithUnits::isA(const SchemaValidator* sv, const Configuration* cfg, const char* value,
-        const char* typeName, const StringVector& typeArgs, int indentLevel, StringBuffer& errSuffix) const
+                                     const char* typeName, const StringVector& typeArgs, int indentLevel, StringBuffer& errSuffix) const
     {
         unused(sv);
         unused(typeName);
@@ -53,7 +53,7 @@ namespace danek
         const auto data = typeArgs.get();
         std::vector<const char*> buffer; // Deprecated conversion; kept for compatibility
 
-        for( const auto& str : data )
+        for (const auto& str : data)
         {
             buffer.push_back(&str.front());
         }

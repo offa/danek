@@ -33,7 +33,7 @@ public:
     FooConfiguration(const FooConfiguration&) = delete;
 
     void parse(const char* cfgInput, const char* cfgScope = "", const char* secInput = "",
-        const char* secScope = "");
+               const char* secScope = "");
 
     // Acccessors for configuration variables.
     int getTimeout() const
@@ -66,7 +66,6 @@ public:
 
 
 private:
-
     void* m_cfg; // opaque pointer to Config4Cpp config object
     bool m_wantDiagnostics;
 
@@ -77,5 +76,4 @@ private:
     int m_hexWord;
     std::vector<int> m_hexList;
     int m_hexListSize;
-
 };

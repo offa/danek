@@ -22,22 +22,23 @@
 // SOFTWARE.
 
 #include "danek/internal/ConfigScope.h"
-#include "danek/internal/ConfigItem.h"
-#include "danek/internal/UidIdentifierProcessor.h"
-#include "danek/internal/ToString.h"
 #include "danek/Configuration.h"
 #include "danek/PatternMatch.h"
+#include "danek/internal/ConfigItem.h"
+#include "danek/internal/ToString.h"
+#include "danek/internal/UidIdentifierProcessor.h"
 #include <algorithm>
 #include <sstream>
 
 namespace danek
 {
 
-    ConfigScope::ConfigScope(ConfigScope* parentScope, const std::string& name) : m_parentScope(parentScope)
+    ConfigScope::ConfigScope(ConfigScope* parentScope, const std::string& name)
+        : m_parentScope(parentScope)
     {
         if (m_parentScope == nullptr)
         {
-            if( name.empty() == false )
+            if (name.empty() == false)
             {
                 throw std::invalid_argument("Name is invalid on root element");
             }
@@ -79,9 +80,9 @@ namespace danek
     {
         auto pos = std::find_if(m_table.begin(), m_table.end(), [&name](const auto& v) { return v->name() == name; });
 
-        if( pos != m_table.cend() )
+        if (pos != m_table.cend())
         {
-            if( (*pos)->type() == ConfType::Scope )
+            if ((*pos)->type() == ConfType::Scope)
             {
                 return false;
             }
@@ -100,9 +101,9 @@ namespace danek
     {
         auto pos = std::find_if(m_table.begin(), m_table.end(), [&name](const auto& v) { return v->name() == name; });
 
-        if( pos != m_table.cend() )
+        if (pos != m_table.cend())
         {
-            if( (*pos)->type() == ConfType::Scope )
+            if ((*pos)->type() == ConfType::Scope)
             {
                 return false;
             }
@@ -121,9 +122,9 @@ namespace danek
     {
         auto pos = std::find_if(m_table.cbegin(), m_table.cend(), [&name](const auto& v) { return v->name() == name; });
 
-        if( pos != m_table.cend() )
+        if (pos != m_table.cend())
         {
-            if( (*pos)->type() != ConfType::Scope )
+            if ((*pos)->type() != ConfType::Scope)
             {
                 scope = nullptr;
                 return false;
@@ -145,7 +146,7 @@ namespace danek
     {
         auto pos = std::find_if(m_table.cbegin(), m_table.cend(), [&name](const auto& v) { return v->name() == name; });
 
-        if( pos != m_table.cend() )
+        if (pos != m_table.cend())
         {
             return pos->get();
         }
@@ -157,7 +158,7 @@ namespace danek
     {
         auto pos = std::find_if(m_table.cbegin(), m_table.cend(), [&name](const auto& v) { return v->name() == name; });
 
-        if( pos != m_table.cend() )
+        if (pos != m_table.cend())
         {
             m_table.erase(pos);
             return true;
@@ -173,7 +174,7 @@ namespace danek
 
     std::vector<std::string> ConfigScope::listFullyScopedNames(ConfType typeMask, bool recursive) const
     {
-        return listScopedNamesHelper(m_scopedName, typeMask, recursive, { });
+        return listScopedNamesHelper(m_scopedName, typeMask, recursive, {});
     }
 
     std::vector<std::string> ConfigScope::listFullyScopedNames(ConfType typeMask, bool recursive, const std::vector<std::string>& filterPatterns) const
@@ -191,12 +192,11 @@ namespace danek
         std::vector<std::string> vec;
         vec.reserve(m_table.size());
 
-        std::for_each(m_table.cbegin(), m_table.cend(), [this, typeMask, &filterPatterns, &prefix, &vec, recursive](const auto& v)
-        {
+        std::for_each(m_table.cbegin(), m_table.cend(), [this, typeMask, &filterPatterns, &prefix, &vec, recursive](const auto& v) {
             std::stringstream scopedName;
             scopedName << prefix;
 
-            if( prefix.empty() == false )
+            if (prefix.empty() == false)
             {
                 scopedName << ".";
             }
@@ -237,5 +237,4 @@ namespace danek
         }
         return false;
     }
-
 }

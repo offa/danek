@@ -24,18 +24,18 @@
 //--------
 // #include's
 //--------
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
 #include "Config2Cpp.h"
 #include "danek/Configuration.h"
-#include "danek/SchemaValidator.h"
 #include "danek/PatternMatch.h"
+#include "danek/SchemaValidator.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 using namespace danek;
 
 void calculateRuleForName(const Configuration* cfg, const char* name, const char* uName,
-    const StringVector& wildcardedNamesAndTypes, StringBuffer& rule)
+                          const StringVector& wildcardedNamesAndTypes, StringBuffer& rule)
 {
     rule.clear();
     int len = wildcardedNamesAndTypes.size();
@@ -123,8 +123,8 @@ bool doesVectorcontainString(const StringVector& vec, const char* str)
 }
 
 void calculateSchema(const Configuration* cfg, const StringVector& namesList,
-    const StringVector& recipeUserTypes, const StringVector& wildcardedNamesAndTypes,
-    const StringVector& recipeIgnoreRules, StringVector& schema)
+                     const StringVector& recipeUserTypes, const StringVector& wildcardedNamesAndTypes,
+                     const StringVector& recipeIgnoreRules, StringVector& schema)
 {
     StringBuffer rule;
     StringBuffer buf;
@@ -132,12 +132,12 @@ void calculateSchema(const Configuration* cfg, const StringVector& namesList,
 
     schema.clear();
 
-    for( const auto& str : recipeIgnoreRules )
+    for (const auto& str : recipeIgnoreRules)
     {
         schema.push_back(str);
     }
 
-    for( const auto& str : recipeUserTypes )
+    for (const auto& str : recipeUserTypes)
     {
         schema.push_back(str);
     }
@@ -182,8 +182,8 @@ bool doesPatternMatchAnyUnexpandedNameInList(
 }
 
 void checkForUnmatchedPatterns(const Configuration* cfg, const StringVector& namesList,
-    const StringVector& wildcardedNamesAndTypes,
-    StringVector& unmatchedPatterns)
+                               const StringVector& wildcardedNamesAndTypes,
+                               StringVector& unmatchedPatterns)
 {
     unmatchedPatterns.clear();
     //--------
@@ -259,9 +259,9 @@ int main(int argc, char** argv)
         if (len != 0)
         {
             fprintf(stderr,
-                "%s %s\n",
-                "Error: the following patterns in the schema",
-                "recipe did not match anything");
+                    "%s %s\n",
+                    "Error: the following patterns in the schema",
+                    "recipe did not match anything");
             for (int i = 0; i < len; i++)
             {
                 fprintf(stderr, "\t'%s'\n", unmatchedPatterns[i].c_str());
@@ -275,7 +275,7 @@ int main(int argc, char** argv)
         const auto data = schema.get();
         std::vector<const char*> buffer; // Deprecated conversion; kept for compatibility
 
-        for( const auto& str : data )
+        for (const auto& str : data)
         {
             buffer.push_back(&str.front());
         }
@@ -286,5 +286,5 @@ int main(int argc, char** argv)
     cfg->destroy();
     schemaCfg->destroy();
 
-    return ( ok ? 0 : 1 );
+    return (ok ? 0 : 1);
 }

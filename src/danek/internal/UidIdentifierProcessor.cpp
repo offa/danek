@@ -22,13 +22,13 @@
 // SOFTWARE.
 
 #include "danek/internal/UidIdentifierProcessor.h"
-#include "danek/internal/Util.h"
 #include "danek/ConfigurationException.h"
+#include "danek/internal/Util.h"
 #include <algorithm>
-#include <sstream>
-#include <iterator>
-#include <iomanip>
 #include <cctype>
+#include <iomanip>
+#include <iterator>
+#include <sstream>
 
 //----------------------------------------------------------------------
 // Spelling must be in one of the following forms:
@@ -41,13 +41,14 @@
 namespace danek
 {
 
-    UidIdentifierProcessor::UidIdentifierProcessor() : m_count(0), m_uidToken("uid-")
+    UidIdentifierProcessor::UidIdentifierProcessor()
+        : m_count(0), m_uidToken("uid-")
     {
     }
 
     std::string UidIdentifierProcessor::expand(const std::string& spelling)
     {
-        if( spelling.find(m_uidToken) == std::string::npos )
+        if (spelling.find(m_uidToken) == std::string::npos)
         {
             return spelling;
         }
@@ -66,7 +67,7 @@ namespace danek
 
     std::string UidIdentifierProcessor::expandOne(const std::string& spelling)
     {
-        if( startsWithUidToken(spelling) == false )
+        if (startsWithUidToken(spelling) == false)
         {
             return spelling;
         }
@@ -76,7 +77,7 @@ namespace danek
         const auto startPayload = std::next(spelling.cbegin(), m_uidToken.size());
         auto digitsEnd = std::find_if_not(startPayload, spelling.cend(), [](auto v) { return std::isdigit(v); });
 
-        if( digitsEnd == startPayload )
+        if (digitsEnd == startPayload)
         {
             return formatExpanded(std::string(digitsEnd, spelling.cend()));
         }
@@ -88,14 +89,14 @@ namespace danek
 
     std::string UidIdentifierProcessor::unexpand(const std::string& spelling) const
     {
-        if( spelling.find(m_uidToken) == std::string::npos )
+        if (spelling.find(m_uidToken) == std::string::npos)
         {
             return spelling;
         }
 
         using OItr = std::ostream_iterator<std::string>;
 
-        const auto scopes =  util::splitScopes(spelling);
+        const auto scopes = util::splitScopes(spelling);
         const auto f = [this](auto s) { return this->unexpandOne(s); };
         std::ostringstream result;
 
@@ -107,7 +108,7 @@ namespace danek
 
     std::string UidIdentifierProcessor::unexpandOne(const std::string& spelling) const
     {
-        if( startsWithUidToken(spelling) == false )
+        if (startsWithUidToken(spelling) == false)
         {
             return spelling;
         }
@@ -115,7 +116,7 @@ namespace danek
         const auto startPayload = std::next(spelling.cbegin(), m_uidToken.size());
         auto digitsEnd = std::find_if_not(startPayload, spelling.cend(), [](auto v) { return std::isdigit(v); });
 
-        if( digitsEnd == startPayload )
+        if (digitsEnd == startPayload)
         {
             return spelling;
         }
@@ -125,7 +126,7 @@ namespace danek
 
     std::size_t UidIdentifierProcessor::nextCount(std::size_t current)
     {
-        if( m_count >= 1'000'000'000 )
+        if (m_count >= 1'000'000'000)
         {
             throw std::domain_error{"Count has exceeded 9 digits"};
         }
@@ -141,7 +142,7 @@ namespace danek
 
     bool UidIdentifierProcessor::hasValidPrefix(const std::string& str) const
     {
-        return ( str != m_uidToken ) && ( str.at(m_uidToken.size()) != '-' );
+        return (str != m_uidToken) && (str.at(m_uidToken.size()) != '-');
     }
 
     std::string UidIdentifierProcessor::formatExpanded(const std::string& suffix)
@@ -161,10 +162,9 @@ namespace danek
 
     void UidIdentifierProcessor::checkCondition(bool result, const std::string& input) const
     {
-        if( result == false )
+        if (result == false)
         {
             throw ConfigurationException{"'" + input + "' is not a legal identifier"};
         }
     }
-
 }

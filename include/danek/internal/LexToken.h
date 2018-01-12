@@ -24,15 +24,14 @@
 #pragma once
 
 #include "danek/internal/FunctionType.h"
-#include <string>
 #include <cstdint>
+#include <string>
 
 namespace danek
 {
     class LexToken
     {
     public:
-
         LexToken();
         LexToken(short type, std::int32_t lineNum, const std::string& spelling);
 
@@ -49,8 +48,7 @@ namespace danek
 
 
     private:
-
-        short m_type;   //  LexBaseSymbols
+        short m_type; //  LexBaseSymbols
         std::string m_spelling;
         std::int32_t m_lineNum;
         FunctionType m_funcType;

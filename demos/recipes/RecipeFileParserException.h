@@ -29,8 +29,8 @@
 class RecipeFileParserException : public std::exception
 {
 public:
-
-    explicit RecipeFileParserException(const std::string& str) : m_str(str)
+    explicit RecipeFileParserException(const std::string& str)
+        : m_str(str)
     {
     }
 
@@ -42,7 +42,5 @@ public:
 
 
 private:
-
     std::string m_str;
-
 };

@@ -22,21 +22,22 @@
 // SOFTWARE.
 
 #include "danek/internal/SchemaParser.h"
+#include "danek/ConfigurationException.h"
 #include "danek/internal/ConfigItem.h"
 #include "danek/internal/SchemaIdRuleInfo.h"
 #include "danek/internal/SchemaIgnoreRuleInfo.h"
-#include "danek/ConfigurationException.h"
-#include <sstream>
-#include <string.h>
 #include <ctype.h>
+#include <sstream>
 #include <stdlib.h>
+#include <string.h>
 
 namespace danek
 {
     extern "C" int danek_compareSchemaIdRuleInfo_c(const void* p1, const void* p2);
 
 
-    SchemaParser::SchemaParser(SchemaValidator* sv) : m_lex(), m_sv(sv), m_cfg(Configuration::create())
+    SchemaParser::SchemaParser(SchemaValidator* sv)
+        : m_lex(), m_sv(sv), m_cfg(Configuration::create())
     {
     }
 
@@ -102,9 +103,9 @@ namespace danek
         // Sort the rules.
         //--------
         qsort(m_sv->m_idRules,
-            m_sv->m_idRulesCurrSize,
-            sizeof(SchemaIdRuleInfo*),
-            danek_compareSchemaIdRuleInfo_c);
+              m_sv->m_idRulesCurrSize,
+              sizeof(SchemaIdRuleInfo*),
+              danek_compareSchemaIdRuleInfo_c);
 
         //--------
         // Check if multiple rules have the same name.

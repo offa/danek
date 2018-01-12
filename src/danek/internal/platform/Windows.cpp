@@ -33,7 +33,7 @@ namespace danek
         {
             std::array<std::string, 3> extensions{{"", ".exe", ".bat"}};
 
-            for( const auto& ext : extensions )
+            for (const auto& ext : extensions)
             {
                 const std::string fileName = dir + directorySeparator() + cmd + ext;
                 DWORD fileAttr = GetFileAttributes(fileName.c_str());
@@ -45,8 +45,5 @@ namespace danek
             }
             return false;
         }
-
     }
 }
-
-

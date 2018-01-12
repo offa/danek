@@ -22,11 +22,11 @@
 // SOFTWARE.
 
 #include "danek/Configuration.h"
+#include "danek/internal/Compat.h"
 #include "danek/internal/ConfigurationImpl.h"
 #include "danek/internal/MBChar.h"
-#include "danek/internal/Compat.h"
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
 
 namespace danek
 {
@@ -107,5 +107,4 @@ namespace danek
         }
         return count;
     }
-
 }

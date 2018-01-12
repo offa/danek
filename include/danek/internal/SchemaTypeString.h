@@ -30,7 +30,8 @@ namespace danek
     class SchemaTypeString : public SchemaType
     {
     public:
-        SchemaTypeString() : SchemaType("string", "danek::SchemaTypeString", ConfType::String)
+        SchemaTypeString()
+            : SchemaType("string", "danek::SchemaTypeString", ConfType::String)
         {
         }
         virtual ~SchemaTypeString()
@@ -39,10 +40,10 @@ namespace danek
 
     protected:
         virtual void checkRule(const SchemaValidator* sv, const Configuration* cfg, const char* typeName,
-            const StringVector& typeArgs, const char* rule) const;
+                               const StringVector& typeArgs, const char* rule) const;
 
         virtual bool isA(const SchemaValidator* sv, const Configuration* cfg, const char* value,
-            const char* typeName, const StringVector& typeArgs, int indentLevel,
-            StringBuffer& errSuffix) const;
+                         const char* typeName, const StringVector& typeArgs, int indentLevel,
+                         StringBuffer& errSuffix) const;
     };
 }

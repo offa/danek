@@ -22,13 +22,14 @@
 // SOFTWARE.
 
 #include "danek/SchemaValidator.h"
-#include "danek/internal/SchemaParser.h"
+#include "danek/internal/Compat.h"
 #include "danek/internal/SchemaIdRuleInfo.h"
+#include "danek/internal/SchemaParser.h"
 #include "danek/internal/SchemaTypeBoolean.h"
+#include "danek/internal/SchemaTypeDummy.h"
 #include "danek/internal/SchemaTypeDurationMicroseconds.h"
 #include "danek/internal/SchemaTypeDurationMilliseconds.h"
 #include "danek/internal/SchemaTypeDurationSeconds.h"
-#include "danek/internal/SchemaTypeDummy.h"
 #include "danek/internal/SchemaTypeEnum.h"
 #include "danek/internal/SchemaTypeFloat.h"
 #include "danek/internal/SchemaTypeFloatWithUnits.h"
@@ -45,10 +46,9 @@
 #include "danek/internal/SchemaTypeTypedef.h"
 #include "danek/internal/SchemaTypeUnitsWithFloat.h"
 #include "danek/internal/SchemaTypeUnitsWithInt.h"
-#include "danek/internal/Compat.h"
-#include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
+#include <string.h>
 
 namespace danek
 {
@@ -163,13 +163,13 @@ namespace danek
         }
         delete[] m_idRules;
 
-        for ( int i = 0; i < m_ignoreRulesCurrSize; ++i)
+        for (int i = 0; i < m_ignoreRulesCurrSize; ++i)
         {
             delete m_ignoreRules[i];
         }
         delete[] m_ignoreRules;
 
-        for ( int i = 0; i < m_typesCurrSize; ++i)
+        for (int i = 0; i < m_typesCurrSize; ++i)
         {
             delete m_types[i];
         }
@@ -254,7 +254,7 @@ namespace danek
     void SchemaValidator::parseSchema(const char** nullTerminatedRulesArray)
     {
         int size = 0;
-        for ( ; nullTerminatedRulesArray[size] != nullptr; ++size)
+        for (; nullTerminatedRulesArray[size] != nullptr; ++size)
         {
         }
         parseSchema(nullTerminatedRulesArray, size);
@@ -288,7 +288,7 @@ namespace danek
     }
 
     void SchemaValidator::validate(const Configuration* cfg, const char* scope, const char* localName,
-        bool recurseIntoSubscopes, ConfType typeMask, ForceMode forceMode) const
+                                   bool recurseIntoSubscopes, ConfType typeMask, ForceMode forceMode) const
     {
         StringBuffer fullyScopedName;
         StringVector itemNames;
@@ -302,7 +302,7 @@ namespace danek
     }
 
     void SchemaValidator::validate(const Configuration* cfg, const char* scope, const char* localName,
-        const StringVector& itemNames, ForceMode forceMode) const
+                                   const StringVector& itemNames, ForceMode forceMode) const
     {
         StringBuffer fullyScopedName;
         StringBuffer unlistedName;
@@ -385,7 +385,7 @@ namespace danek
     }
 
     void SchemaValidator::validateForceMode(const Configuration* cfg, const char* scope,
-        const char* localName, ForceMode forceMode) const
+                                            const char* localName, ForceMode forceMode) const
     {
         StringBuffer fullyScopedName;
         StringBuffer nameOfMissingEntry;
@@ -424,7 +424,7 @@ namespace danek
     }
 
     void SchemaValidator::validateRequiredUidEntry(const Configuration* cfg, const char* fullScope,
-        SchemaIdRuleInfo* idRule) const
+                                                   SchemaIdRuleInfo* idRule) const
     {
         const char* lastDot;
         StringBuffer parentScopePattern;
@@ -465,7 +465,7 @@ namespace danek
     }
 
     bool SchemaValidator::shouldIgnore(const Configuration* cfg, const char* scope, const char* expandedName,
-        const char* unexpandedName) const
+                                       const char* unexpandedName) const
     {
         ConfType cfgType = ConfType::NoValue;
 
@@ -593,7 +593,7 @@ namespace danek
     }
 
     void SchemaValidator::callCheckRule(const SchemaType* target, const Configuration* cfg,
-        const char* typeName, const StringVector& typeArgs, const char* rule, int indentLevel) const
+                                        const char* typeName, const StringVector& typeArgs, const char* rule, int indentLevel) const
     {
         try
         {
@@ -626,8 +626,8 @@ namespace danek
     }
 
     void SchemaValidator::callValidate(const SchemaType* target, const Configuration* cfg, const char* scope,
-        const char* name, const char* typeName, const char* origTypeName, const StringVector& typeArgs,
-        int indentLevel) const
+                                       const char* name, const char* typeName, const char* origTypeName, const StringVector& typeArgs,
+                                       int indentLevel) const
     {
         try
         {
@@ -662,7 +662,7 @@ namespace danek
     }
 
     bool SchemaValidator::callIsA(const SchemaType* target, const Configuration* cfg, const char* value,
-        const char* typeName, const StringVector& typeArgs, int indentLevel, StringBuffer& errSuffix) const
+                                  const char* typeName, const StringVector& typeArgs, int indentLevel, StringBuffer& errSuffix) const
     {
         bool result;
 

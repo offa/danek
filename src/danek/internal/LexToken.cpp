@@ -26,14 +26,16 @@
 
 namespace danek
 {
-    LexToken::LexToken() : LexToken(lex::LEX_UNKNOWN_SYM, -1, "")
+    LexToken::LexToken()
+        : LexToken(lex::LEX_UNKNOWN_SYM, -1, "")
     {
     }
 
-    LexToken::LexToken(short type, std::int32_t lineNum, const std::string& spelling) : m_type(type),
-                                                                                    m_spelling(spelling),
-                                                                                    m_lineNum(lineNum),
-                                                                                    m_funcType(FunctionType::None)
+    LexToken::LexToken(short type, std::int32_t lineNum, const std::string& spelling)
+        : m_type(type),
+          m_spelling(spelling),
+          m_lineNum(lineNum),
+          m_funcType(FunctionType::None)
     {
     }
 

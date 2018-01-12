@@ -27,7 +27,7 @@
 namespace danek
 {
     void SchemaTypeBoolean::checkRule(const SchemaValidator* sv, const Configuration* cfg,
-        const char* typeName, const StringVector& typeArgs, const char* rule) const
+                                      const char* typeName, const StringVector& typeArgs, const char* rule) const
 
     {
         unused(sv);
@@ -44,7 +44,7 @@ namespace danek
     }
 
     bool SchemaTypeBoolean::isA(const SchemaValidator* sv, const Configuration* cfg, const char* value,
-        const char* typeName, const StringVector& typeArgs, int indentLevel, StringBuffer& errSuffix) const
+                                const char* typeName, const StringVector& typeArgs, int indentLevel, StringBuffer& errSuffix) const
     {
         unused(sv);
         unused(typeArgs);

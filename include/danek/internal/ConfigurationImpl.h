@@ -26,9 +26,9 @@
 //--------
 // #include's
 //--------
-#include "danek/Configuration.h"
 #include "ConfigScope.h"
 #include "UidIdentifierProcessor.h"
+#include "danek/Configuration.h"
 
 namespace danek
 {
@@ -74,18 +74,18 @@ namespace danek
         virtual ConfType type(const char* scope, const char* localName) const;
 
         virtual void listFullyScopedNames(const char* scope, const char* localName, ConfType typeMask,
-            bool recursive, StringVector& names) const;
+                                          bool recursive, StringVector& names) const;
         virtual void listFullyScopedNames(const char* scope, const char* localName, ConfType typeMask,
-            bool recursive, const char* filterPattern, StringVector& names) const;
+                                          bool recursive, const char* filterPattern, StringVector& names) const;
         virtual void listFullyScopedNames(const char* scope, const char* localName, ConfType typeMask,
-            bool recursive, const StringVector& filterPatterns, StringVector& names) const;
+                                          bool recursive, const StringVector& filterPatterns, StringVector& names) const;
 
         virtual void listLocallyScopedNames(const char* scope, const char* localName, ConfType typeMask,
-            bool recursive, StringVector& names) const;
+                                            bool recursive, StringVector& names) const;
         virtual void listLocallyScopedNames(const char* scope, const char* localName, ConfType typeMask,
-            bool recursive, const char* filterPattern, StringVector& names) const;
+                                            bool recursive, const char* filterPattern, StringVector& names) const;
         virtual void listLocallyScopedNames(const char* scope, const char* localName, ConfType typeMask,
-            bool recursive, const StringVector& filterPatterns, StringVector& names) const;
+                                            bool recursive, const StringVector& filterPatterns, StringVector& names) const;
 
         virtual bool uidEquals(const char* s1, const char* s2) const;
         virtual void expandUid(StringBuffer& spelling);
@@ -124,31 +124,31 @@ namespace danek
         virtual int stringToMemorySizeKB(const char* scope, const char* localName, const char* str) const;
         virtual int stringToMemorySizeMB(const char* scope, const char* localName, const char* str) const;
         virtual int stringToEnum(const char* scope, const char* localName, const char* typeName,
-            const char* str, const EnumNameAndValue* enumInfo, int numEnums) const;
+                                 const char* str, const EnumNameAndValue* enumInfo, int numEnums) const;
         virtual void stringToFloatWithUnits(const char* scope, const char* localName, const char* typeName,
-            const char* str, const char** allowedUnits, int allowedUnitsSize, float& floatResult,
-            const char*& unitsResult) const;
+                                            const char* str, const char** allowedUnits, int allowedUnitsSize, float& floatResult,
+                                            const char*& unitsResult) const;
         virtual void stringToUnitsWithFloat(const char* scope, const char* localName, const char* typeName,
-            const char* str, const char** allowedUnits, int allowedUnitsSize, float& floatResult,
-            const char*& unitsResult) const;
+                                            const char* str, const char** allowedUnits, int allowedUnitsSize, float& floatResult,
+                                            const char*& unitsResult) const;
         virtual void stringToIntWithUnits(const char* scope, const char* localName, const char* typeName,
-            const char* str, const char** allowedUnits, int allowedUnitsSize, int& intResult,
-            const char*& unitsResult) const;
+                                          const char* str, const char** allowedUnits, int allowedUnitsSize, int& intResult,
+                                          const char*& unitsResult) const;
         virtual void stringToUnitsWithInt(const char* scope, const char* localName, const char* typeName,
-            const char* str, const char** allowedUnits, int allowedUnitsSize, int& intResult,
-            const char*& unitsResult) const;
+                                          const char* str, const char** allowedUnits, int allowedUnitsSize, int& intResult,
+                                          const char*& unitsResult) const;
 
         virtual const char* lookupString(
             const char* scope, const char* localName, const char* defaultVal) const;
         virtual const char* lookupString(const char* scope, const char* localName) const;
 
         virtual void lookupList(const char* scope, const char* localName, std::vector<std::string>& data,
-            const char** defaultArray, int defaultArraySize) const;
+                                const char** defaultArray, int defaultArraySize) const;
         virtual void lookupList(
             const char* scope, const char* localName, std::vector<std::string>& data) const;
 
         virtual void lookupList(const char* scope, const char* localName, StringVector& list,
-            const StringVector& defaultList) const;
+                                const StringVector& defaultList) const;
         virtual void lookupList(const char* scope, const char* localName, StringVector& list) const;
 
         virtual int lookupInt(const char* scope, const char* localName, int defaultVal) const;
@@ -158,40 +158,40 @@ namespace danek
         virtual float lookupFloat(const char* scope, const char* localName) const;
 
         virtual int lookupEnum(const char* scope, const char* localName, const char* typeName,
-            const EnumNameAndValue* enumInfo, int numEnums, const char* defaultVal) const;
+                               const EnumNameAndValue* enumInfo, int numEnums, const char* defaultVal) const;
         virtual int lookupEnum(const char* scope, const char* localName, const char* typeName,
-            const EnumNameAndValue* enumInfo, int numEnums, int defaultVal) const;
+                               const EnumNameAndValue* enumInfo, int numEnums, int defaultVal) const;
         virtual int lookupEnum(const char* scope, const char* localName, const char* typeName,
-            const EnumNameAndValue* enumInfo, int numEnums) const;
+                               const EnumNameAndValue* enumInfo, int numEnums) const;
 
         virtual bool lookupBoolean(const char* scope, const char* localName, bool defaultVal) const;
         virtual bool lookupBoolean(const char* scope, const char* localName) const;
 
         virtual void lookupFloatWithUnits(const char* scope, const char* localName, const char* typeName,
-            const char** allowedUnits, int allowedUnitsSize, float& floatResult,
-            const char*& unitsResult) const;
+                                          const char** allowedUnits, int allowedUnitsSize, float& floatResult,
+                                          const char*& unitsResult) const;
         virtual void lookupFloatWithUnits(const char* scope, const char* localName, const char* typeName,
-            const char** allowedUnits, int allowedUnitsSize, float& floatResult, const char*& unitsResult,
-            float defaultFloat, const char* defaultUnits) const;
+                                          const char** allowedUnits, int allowedUnitsSize, float& floatResult, const char*& unitsResult,
+                                          float defaultFloat, const char* defaultUnits) const;
 
         virtual void lookupUnitsWithFloat(const char* scope, const char* localName, const char* typeName,
-            const char** allowedUnits, int allowedUnitsSize, float& floatResult,
-            const char*& unitsResult) const;
+                                          const char** allowedUnits, int allowedUnitsSize, float& floatResult,
+                                          const char*& unitsResult) const;
         virtual void lookupUnitsWithFloat(const char* scope, const char* localName, const char* typeName,
-            const char** allowedUnits, int allowedUnitsSize, float& floatResult, const char*& unitsResult,
-            float defaultFloat, const char* defaultUnits) const;
+                                          const char** allowedUnits, int allowedUnitsSize, float& floatResult, const char*& unitsResult,
+                                          float defaultFloat, const char* defaultUnits) const;
 
         virtual void lookupIntWithUnits(const char* scope, const char* localName, const char* typeName,
-            const char** allowedUnits, int allowedUnitsSize, int& intResult, const char*& unitsResult) const;
+                                        const char** allowedUnits, int allowedUnitsSize, int& intResult, const char*& unitsResult) const;
         virtual void lookupIntWithUnits(const char* scope, const char* localName, const char* typeName,
-            const char** allowedUnits, int allowedUnitsSize, int& intResult, const char*& unitsResult,
-            int defaultInt, const char* defaultUnits) const;
+                                        const char** allowedUnits, int allowedUnitsSize, int& intResult, const char*& unitsResult,
+                                        int defaultInt, const char* defaultUnits) const;
 
         virtual void lookupUnitsWithInt(const char* scope, const char* localName, const char* typeName,
-            const char** allowedUnits, int allowedUnitsSize, int& intResult, const char*& unitsResult) const;
+                                        const char** allowedUnits, int allowedUnitsSize, int& intResult, const char*& unitsResult) const;
         virtual void lookupUnitsWithInt(const char* scope, const char* localName, const char* typeName,
-            const char** allowedUnits, int allowedUnitsSize, int& intResult, const char*& unitsResult,
-            int defaultInt, const char* defaultUnits) const;
+                                        const char** allowedUnits, int allowedUnitsSize, int& intResult, const char*& unitsResult,
+                                        int defaultInt, const char* defaultUnits) const;
 
         virtual int lookupDurationMicroseconds(
             const char* scope, const char* localName, int defaultVal) const;
@@ -251,7 +251,7 @@ namespace danek
         void listValue(
             const char* fullyScopedName, const char* localName, StringVector& list, ConfType& type) const;
         void listValue(const char* fullyScopedName, const char* localName, std::vector<std::string>& list,
-            ConfType& type) const;
+                       ConfType& type) const;
         virtual bool enumVal(
             const char* description, const EnumNameAndValue* enumInfo, int numEnums, int& val) const;
 
@@ -260,7 +260,7 @@ namespace danek
         void checkForCircularIncludes(const char* fileName, int includeLineNum);
 
         int stringToMemorySizeGeneric(const char* typeName, SpellingAndValue unitsInfo[], int unitsInfoSize,
-            const char* allowedSizes[], const char* scope, const char* localName, const char* str) const;
+                                      const char* allowedSizes[], const char* scope, const char* localName, const char* str) const;
 
     protected:
         //--------

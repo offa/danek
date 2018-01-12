@@ -22,14 +22,13 @@
 
 #pragma once
 
-#include <vector>
 #include <string>
+#include <vector>
 
 namespace danek
 {
-namespace util
-{
-    std::vector<std::string> splitScopes(const std::string& input);
-
-}
+    namespace util
+    {
+        std::vector<std::string> splitScopes(const std::string& input);
+    }
 }

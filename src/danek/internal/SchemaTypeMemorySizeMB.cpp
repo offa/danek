@@ -27,7 +27,7 @@
 namespace danek
 {
     void SchemaTypeMemorySizeMB::checkRule(const SchemaValidator* sv, const Configuration* cfg,
-        const char* typeName, const StringVector& typeArgs, const char* rule) const
+                                           const char* typeName, const StringVector& typeArgs, const char* rule) const
 
     {
         unused(sv);
@@ -87,7 +87,7 @@ namespace danek
     }
 
     bool SchemaTypeMemorySizeMB::isA(const SchemaValidator* sv, const Configuration* cfg, const char* value,
-        const char* typeName, const StringVector& typeArgs, int indentLevel, StringBuffer& errSuffix) const
+                                     const char* typeName, const StringVector& typeArgs, int indentLevel, StringBuffer& errSuffix) const
     {
         unused(sv);
         unused(value);

@@ -23,9 +23,9 @@
 
 #pragma once
 
-#include "danek/SchemaValidator.h"
-#include "danek/Configuration.h"
 #include "SchemaLex.h"
+#include "danek/Configuration.h"
+#include "danek/SchemaValidator.h"
 #include <memory>
 
 namespace danek
@@ -37,7 +37,6 @@ namespace danek
     class SchemaParser
     {
     public:
-
         explicit SchemaParser(SchemaValidator* sv);
         SchemaParser(const SchemaParser&) = delete;
         ~SchemaParser();
@@ -49,7 +48,6 @@ namespace danek
 
 
     private:
-
         void parseIdRule(const char* rule, SchemaIdRuleInfo* SchemaIdRuleInfo);
         void parseIgnoreRule(const char* rule, SchemaIgnoreRuleInfo* SchemaIgnoreRuleInfo);
 

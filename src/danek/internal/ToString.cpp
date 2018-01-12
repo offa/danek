@@ -25,21 +25,19 @@
 #include "danek/internal/ConfigScope.h"
 #include "danek/internal/UidIdentifierProcessor.h"
 #include <algorithm>
+#include <array>
 #include <iterator>
 #include <sstream>
-#include <array>
 
 namespace danek
 {
 
     namespace
     {
-        const std::array<std::pair<std::string, std::string>, 4> escapeSequences{{
-            {"%", "%%"},
-            {"\t", "%t"},
-            {"\n", "%n"},
-            {"\"", "%\""}
-        }};
+        const std::array<std::pair<std::string, std::string>, 4> escapeSequences{{{"%", "%%"},
+                                                                                  {"\t", "%t"},
+                                                                                  {"\n", "%n"},
+                                                                                  {"\"", "%\""}}};
 
         std::string indent(std::size_t level)
         {
@@ -50,11 +48,11 @@ namespace danek
 
         void replaceInplace(std::string& input, const std::string& str, const std::string& replacement)
         {
-            if( str.empty() == false )
+            if (str.empty() == false)
             {
                 std::size_t pos = 0;
 
-                while( ( pos = input.find(str, pos) ) != std::string::npos )
+                while ((pos = input.find(str, pos)) != std::string::npos)
                 {
                     input.replace(pos, str.size(), replacement);
                     pos += replacement.size();
@@ -67,8 +65,7 @@ namespace danek
         {
             auto output = str;
 
-            std::for_each(escapeSequences.cbegin(), escapeSequences.cend(), [&output](const auto& v)
-            {
+            std::for_each(escapeSequences.cbegin(), escapeSequences.cend(), [&output](const auto& v) {
                 replaceInplace(output, v.first, v.second);
             });
 
@@ -78,7 +75,7 @@ namespace danek
 
         std::string expandUid(const std::string& name, bool expand)
         {
-            if( expand == false )
+            if (expand == false)
             {
                 UidIdentifierProcessor uidIdProc;
                 return uidIdProc.unexpand(name);
@@ -88,16 +85,14 @@ namespace danek
 
         void appendConfType(std::stringstream& stream, const ConfigScope& scope, ConfType type, bool expandUid, std::size_t indentLevel)
         {
-            auto names = scope.listLocallyScopedNames(type, false, { });
+            auto names = scope.listLocallyScopedNames(type, false, {});
             std::sort(names.begin(), names.end());
 
-            std::for_each(names.cbegin(), names.cend(), [&stream, &scope, expandUid, indentLevel](const auto s)
-            {
+            std::for_each(names.cbegin(), names.cend(), [&stream, &scope, expandUid, indentLevel](const auto s) {
                 const auto item = scope.findItem(s);
                 stream << toString(*item, item->name(), expandUid, indentLevel);
             });
         }
-
     }
 
 
@@ -108,33 +103,33 @@ namespace danek
 
         os << indent(indentLevel);
 
-        switch(item.type())
+        switch (item.type())
         {
             case ConfType::String:
                 os << nameStr << " = " << escape(item.stringVal()) << ";\n";
                 break;
             case ConfType::List:
+            {
+                os << nameStr << " = [";
+                const auto values = item.listVal();
+
+                if (values.empty() == false)
                 {
-                    os << nameStr << " = [";
-                    const auto values = item.listVal();
-
-                    if( values.empty() == false )
-                    {
-                        using OItr = std::ostream_iterator<std::string>;
-                        std::transform(values.cbegin(), std::prev(values.cend()), OItr{os, ", "}, escape);
-                        std::transform(std::prev(values.cend()), values.cend(), OItr{os}, escape);
-                    }
-
-                    os << "];\n";
+                    using OItr = std::ostream_iterator<std::string>;
+                    std::transform(values.cbegin(), std::prev(values.cend()), OItr{os, ", "}, escape);
+                    std::transform(std::prev(values.cend()), values.cend(), OItr{os}, escape);
                 }
-                break;
+
+                os << "];\n";
+            }
+            break;
             case ConfType::Scope:
-                {
-                    os << nameStr << " {\n"
-                        << toString(*(item.scopeVal()), expandUidNames, indentLevel + 1)
-                        << indent(indentLevel) << "}\n";
-                }
-                break;
+            {
+                os << nameStr << " {\n"
+                   << toString(*(item.scopeVal()), expandUidNames, indentLevel + 1)
+                   << indent(indentLevel) << "}\n";
+            }
+            break;
             default:
                 break;
         }
@@ -151,5 +146,4 @@ namespace danek
 
         return ss.str();
     }
-
 }

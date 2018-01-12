@@ -21,19 +21,19 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "FooConfiguration.h"
-#include "FooConfigurationException.h"
 #include "A.h"
 #include "B.h"
-#include <memory>
+#include "FooConfiguration.h"
+#include "FooConfigurationException.h"
 #include <iostream>
+#include <locale.h>
+#include <memory>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <locale.h>
 
 static void parseCmdLineArgs(int argc, char** argv, const char*& cfgInput, const char*& cfgScope,
-    const char*& secInput, const char*& secScope);
+                             const char*& secInput, const char*& secScope);
 static void usage();
 
 int main(int argc, char** argv)
@@ -141,20 +141,20 @@ static void parseCmdLineArgs(int argc, char** argv, const char*& cfgInput, const
 static void usage()
 {
     fprintf(stderr,
-        "\n"
-        "usage: demo <options>\n"
-        "\n"
-        "The <options> can be:\n"
-        "  -h             Print this usage statement\n"
-        "  -cfg <source>  Parse specified configuration source\n"
-        "  -scope         Configuration scope\n"
-        "  -sec <source>  Override default security configuration\n"
-        "  -secScope      Security configuration scope\n"
-        "\n"
-        "A configuration <source> can be one of the following:\n"
-        "  file.cfg       A configuration file\n"
-        "  file#file.cfg  A configuration file\n"
-        "  exec#<command> Output from executing the specified command\n"
-        "\n");
+            "\n"
+            "usage: demo <options>\n"
+            "\n"
+            "The <options> can be:\n"
+            "  -h             Print this usage statement\n"
+            "  -cfg <source>  Parse specified configuration source\n"
+            "  -scope         Configuration scope\n"
+            "  -sec <source>  Override default security configuration\n"
+            "  -secScope      Security configuration scope\n"
+            "\n"
+            "A configuration <source> can be one of the following:\n"
+            "  file.cfg       A configuration file\n"
+            "  file#file.cfg  A configuration file\n"
+            "  exec#<command> Output from executing the specified command\n"
+            "\n");
     exit(1);
 }

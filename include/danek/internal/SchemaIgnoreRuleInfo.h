@@ -31,8 +31,8 @@ namespace danek
     class SchemaIgnoreRuleInfo
     {
     public:
-
-        SchemaIgnoreRuleInfo() : m_symbol(0), m_locallyScopedName()
+        SchemaIgnoreRuleInfo()
+            : m_symbol(0), m_locallyScopedName()
         {
         }
 
@@ -59,9 +59,7 @@ namespace danek
 
 
     private:
-
         short m_symbol;
         std::string m_locallyScopedName;
     };
 }
-

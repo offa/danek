@@ -23,8 +23,8 @@
 
 #pragma once
 
-#include "danek/SchemaValidator.h"
 #include "SchemaTypeHex.h"
+#include "danek/SchemaValidator.h"
 using danek::ConfigurationException;
 using danek::SchemaValidator;
 

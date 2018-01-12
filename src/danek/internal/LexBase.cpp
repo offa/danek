@@ -22,15 +22,15 @@
 // SOFTWARE.
 
 #include "danek/internal/LexBase.h"
-#include "danek/internal/UidIdentifierDummyProcessor.h"
 #include "danek/internal/Compat.h"
+#include "danek/internal/UidIdentifierDummyProcessor.h"
 #include "danek/internal/platform/Platform.h"
-#include <stdlib.h>
-#include <errno.h>
-#include <string.h>
 #include <ctype.h>
-#include <wchar.h>
+#include <errno.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <wchar.h>
 
 namespace danek
 {
@@ -53,10 +53,10 @@ namespace danek
             return;
         }
         result = static_cast<LexBase::KeywordInfo*>(bsearch(&searchItem,
-            m_keywordInfoArray,
-            m_keywordInfoArraySize,
-            sizeof(searchItem),
-            danek_keywordInfoCmp));
+                                                            m_keywordInfoArray,
+                                                            m_keywordInfoArraySize,
+                                                            sizeof(searchItem),
+                                                            danek_keywordInfoCmp));
         if (result == nullptr)
         {
             found = false;
@@ -100,7 +100,7 @@ namespace danek
     }
 
     LexBase::LexBase(Configuration::SourceType sourceType, const char* source,
-        UidIdentifierProcessor* uidIdentifierProcessor)
+                     UidIdentifierProcessor* uidIdentifierProcessor)
     {
         StringBuffer msg;
 
@@ -122,25 +122,25 @@ namespace danek
         switch (sourceType)
         {
             case Configuration::SourceType::File:
+            {
+                m_file.open(source);
+                if (m_file.good() == false)
                 {
-                    m_file.open(source);
-                    if( m_file.good() == false )
-                    {
-                        msg << "cannot open " << source << ": " << strerror(errno);
-                        throw ConfigurationException(msg.str());
-                    }
+                    msg << "cannot open " << source << ": " << strerror(errno);
+                    throw ConfigurationException(msg.str());
                 }
-                break;
+            }
+            break;
             case Configuration::SourceType::String:
                 m_ptr = m_source;
                 break;
             case Configuration::SourceType::Exec:
-                {
-                    const auto output = platform::execCmd(source);
-                    m_execOutput = output;
-                    m_ptr = m_execOutput.str().c_str();
-                }
-                break;
+            {
+                const auto output = platform::execCmd(source);
+                m_execOutput = output;
+                m_ptr = m_execOutput.str().c_str();
+            }
+            break;
             default:
                 throw std::exception{}; // Bug!
                 break;
@@ -720,16 +720,16 @@ namespace danek
         bool result;
 
         wCh = mbCh.getWChar();
-        result = (::iswalpha(wCh) != 0) // letter
+        result = (::iswalpha(wCh) != 0)    // letter
                  || (::iswdigit(wCh) != 0) // digit
-                 || mbCh == '-' // dash
-                 || mbCh == '_' // underscore
-                 || mbCh == '.' // dot
-                 || mbCh == ':' // For C++ nested names, e.g., Foo::Bar
-                 || mbCh == '$' // For mangled names of Java nested classes
-                 || mbCh == '?' // For Ruby identifiers, e.g., found?
-                 || mbCh == '/' // For URLs, e.g., http://foo.com/bar/
-                 || mbCh == '\\' // For Windows directory names
+                 || mbCh == '-'            // dash
+                 || mbCh == '_'            // underscore
+                 || mbCh == '.'            // dot
+                 || mbCh == ':'            // For C++ nested names, e.g., Foo::Bar
+                 || mbCh == '$'            // For mangled names of Java nested classes
+                 || mbCh == '?'            // For Ruby identifiers, e.g., found?
+                 || mbCh == '/'            // For URLs, e.g., http://foo.com/bar/
+                 || mbCh == '\\'           // For Windows directory names
             ;
         return result;
     }

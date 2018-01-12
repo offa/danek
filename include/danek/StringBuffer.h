@@ -30,7 +30,6 @@ namespace danek
     class StringBuffer
     {
     public:
-
         StringBuffer();
         explicit StringBuffer(const std::string& str);
 
@@ -61,8 +60,6 @@ namespace danek
         StringBuffer& operator=(const std::string& str);
 
     private:
-
         std::string m_string;
     };
-
 }

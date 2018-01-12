@@ -24,8 +24,8 @@
 #pragma once
 
 #include "Logger.h"
-#include <vector>
 #include <string>
+#include <vector>
 
 class FooConfiguration
 {
@@ -35,7 +35,7 @@ public:
     ~FooConfiguration();
 
     void parse(const char* cfgInput, const char* cfgScope = "", const char* secInput = "",
-        const char* secScope = "");
+               const char* secScope = "");
 
     Logger::LogLevel getLogLevel(const char* opName) const;
 
@@ -43,7 +43,6 @@ public:
 
 
 private:
-
     void* m_cfg; // opaque pointer to Config4Cpp config object
     std::vector<std::string> m_logLevels;
 };

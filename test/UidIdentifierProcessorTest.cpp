@@ -24,8 +24,8 @@
 #include "danek/ConfigurationException.h"
 #include <gmock/gmock.h>
 
-using danek::UidIdentifierProcessor;
 using danek::ConfigurationException;
+using danek::UidIdentifierProcessor;
 using namespace testing;
 
 namespace
@@ -43,7 +43,6 @@ namespace
 class UidIdentifierProcessorTest : public testing::Test
 {
 public:
-
     void SetUp() override
     {
         processor = std::make_unique<UidIdentifierProcessor>();
@@ -87,7 +86,7 @@ TEST_F(UidIdentifierProcessorTest, expandMaintaintsUidState)
     const auto result = processor->expand("uid-x");
     const auto result1 = processor->expand("uid-y");
     const auto result2 = processor->expand("uid-z33");
-    EXPECT_THAT(result , StrEq("uid-000000000-x"));
+    EXPECT_THAT(result, StrEq("uid-000000000-x"));
     EXPECT_THAT(result1, StrEq("uid-000000001-y"));
     EXPECT_THAT(result2, StrEq("uid-000000002-z33"));
 }
@@ -155,11 +154,10 @@ TEST_F(UidIdentifierProcessorTest, unexpandWithUidAndUidWithNumbers)
 
 TEST_F(UidIdentifierProcessorTest, unexpandWithDifferentUid)
 {
-    const auto result1 =  processor->unexpand("uid-000000000-x");
+    const auto result1 = processor->unexpand("uid-000000000-x");
     const auto result2 = processor->unexpand("uid-000000001-y");
     const auto result3 = processor->unexpand("uid-000000002-z");
     EXPECT_THAT(result1, StrEq("uid-x"));
     EXPECT_THAT(result2, StrEq("uid-y"));
     EXPECT_THAT(result3, StrEq("uid-z"));
 }
-

@@ -28,7 +28,7 @@
 namespace danek
 {
     void SchemaTypeTypedef::checkRule(const SchemaValidator* sv, const Configuration* cfg,
-        const char* typeName, const StringVector& typeArgs, const char* rule) const
+                                      const char* typeName, const StringVector& typeArgs, const char* rule) const
 
     {
         unused(sv);
@@ -45,8 +45,8 @@ namespace danek
     }
 
     void SchemaTypeTypedef::validate(const SchemaValidator* sv, const Configuration* cfg, const char* scope,
-        const char* name, const char* typeName, const char* origTypeName, const StringVector& typeArgs,
-        int indentLevel) const
+                                     const char* name, const char* typeName, const char* origTypeName, const StringVector& typeArgs,
+                                     int indentLevel) const
     {
         unused(typeName);
 
@@ -62,7 +62,7 @@ namespace danek
     }
 
     bool SchemaTypeTypedef::isA(const SchemaValidator* sv, const Configuration* cfg, const char* value,
-        const char* typeName, const StringVector& typeArgs, int indentLevel, StringBuffer& errSuffix) const
+                                const char* typeName, const StringVector& typeArgs, int indentLevel, StringBuffer& errSuffix) const
     {
         unused(value);
         unused(typeName);

@@ -22,10 +22,10 @@
 // SOFTWARE.
 
 #include "RecipeFileParser.h"
-#include <memory>
 #include <iostream>
-#include <tuple>
 #include <locale.h>
+#include <memory>
+#include <tuple>
 
 static std::tuple<std::string, std::string> parseCmdLineArgs(int argc, char** argv);
 static void usage();
@@ -62,7 +62,7 @@ int main(int argc, char** argv)
     const std::size_t len = recipeScopes.size();
     std::cout << "There are " << len << " recipes\n";
 
-    for ( std::size_t i = 0; i < len; ++i )
+    for (std::size_t i = 0; i < len; ++i)
     {
         const char* name = parser->getRecipeName(recipeScopes[i].c_str());
         parser->getRecipeIngredients(recipeScopes[i].c_str(), ingredients);
@@ -124,7 +124,7 @@ static std::tuple<std::string, std::string> parseCmdLineArgs(int argc, char** ar
         }
     }
 
-    if (recipeFilename.empty() == true )
+    if (recipeFilename.empty() == true)
     {
         usage();
     }
@@ -135,14 +135,14 @@ static std::tuple<std::string, std::string> parseCmdLineArgs(int argc, char** ar
 static void usage()
 {
     std::cerr << "\n"
-        << "usage: demo <options> -recipes <source>\n"
-        << "\n"
-        << "The <options> can be:\n"
-        << "  -h                Print this usage statement\n"
-        << "  -scope            scope within recipes file\n"
-        << "A <source> can be one of the following:\n"
-        << "  file.cfg          A file\n"
-        << "  file#file.cfg     A file\n"
-        << "  exec#<command>    Output from executing the specified command\n\n";
+              << "usage: demo <options> -recipes <source>\n"
+              << "\n"
+              << "The <options> can be:\n"
+              << "  -h                Print this usage statement\n"
+              << "  -scope            scope within recipes file\n"
+              << "A <source> can be one of the following:\n"
+              << "  file.cfg          A file\n"
+              << "  file#file.cfg     A file\n"
+              << "  exec#<command>    Output from executing the specified command\n\n";
     exit(1);
 }

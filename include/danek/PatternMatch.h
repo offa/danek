@@ -26,5 +26,4 @@
 namespace danek
 {
     bool patternMatch(const char* str, const char* pattern);
-
 }

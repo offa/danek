@@ -23,8 +23,8 @@
 
 #pragma once
 
-#include "danek/SchemaType.h"
 #include "Common.h"
+#include "danek/SchemaType.h"
 
 namespace danek
 {
@@ -41,7 +41,7 @@ namespace danek
 
     protected:
         virtual void checkRule(const SchemaValidator* sv, const Configuration* cfg, const char* typeName,
-            const StringVector& typeArgs, const char* rule) const
+                               const StringVector& typeArgs, const char* rule) const
         {
             unused(sv);
             unused(cfg);

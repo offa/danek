@@ -23,8 +23,8 @@
 
 #include "danek/PatternMatch.h"
 #include "danek/internal/Compat.h"
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
 
 namespace danek
 {
@@ -72,7 +72,6 @@ namespace danek
             }
             return true;
         }
-
     }
 
 
@@ -112,5 +111,4 @@ namespace danek
         delete[] wPattern;
         return result;
     }
-
 }

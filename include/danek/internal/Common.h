@@ -24,7 +24,7 @@
 
 namespace danek
 {
-    template<class T>
+    template <class T>
     void unused(T&&)
     {
     }

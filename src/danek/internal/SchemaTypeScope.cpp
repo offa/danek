@@ -27,7 +27,7 @@
 namespace danek
 {
     void SchemaTypeScope::checkRule(const SchemaValidator* sv, const Configuration* cfg, const char* typeName,
-        const StringVector& typeArgs, const char* rule) const
+                                    const StringVector& typeArgs, const char* rule) const
     {
         unused(sv);
         unused(cfg);
@@ -43,8 +43,8 @@ namespace danek
     }
 
     void SchemaTypeScope::validate(const SchemaValidator* sv, const Configuration* cfg, const char* scope,
-        const char* name, const char* typeName, const char* origTypeName, const StringVector& typeArgs,
-        int indentLevel) const
+                                   const char* name, const char* typeName, const char* origTypeName, const StringVector& typeArgs,
+                                   int indentLevel) const
     {
         unused(sv);
         unused(typeName);

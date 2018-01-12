@@ -24,9 +24,10 @@
 #include "B.h"
 #include "Logger.h"
 
-B::B(const FooConfiguration* cfg) : m_logLevelOp1(cfg->getLogLevel("B::op1")),
-                                    m_logLevelOp2(cfg->getLogLevel("B::op2")),
-                                    m_logLevelOp3(cfg->getLogLevel("B::op3"))
+B::B(const FooConfiguration* cfg)
+    : m_logLevelOp1(cfg->getLogLevel("B::op1")),
+      m_logLevelOp2(cfg->getLogLevel("B::op2")),
+      m_logLevelOp3(cfg->getLogLevel("B::op3"))
 {
 }
 

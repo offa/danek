@@ -76,14 +76,14 @@
 //----------------------------------------------------------------------
 
 #include "danek/internal/ConfigParser.h"
-#include "danek/internal/ConfigItem.h"
-#include "danek/internal/Compat.h"
-#include "danek/internal/platform/Platform.h"
 #include "danek/PatternMatch.h"
-#include <fstream>
-#include <stdlib.h>
+#include "danek/internal/Compat.h"
+#include "danek/internal/ConfigItem.h"
+#include "danek/internal/platform/Platform.h"
 #include <ctype.h>
 #include <errno.h>
+#include <fstream>
+#include <stdlib.h>
 #include <string.h>
 
 namespace danek
@@ -100,8 +100,8 @@ namespace danek
     //----------------------------------------------------------------------
 
     ConfigParser::ConfigParser(Configuration::SourceType sourceType, const char* source,
-        const char* trustedCmdLine, const char* sourceDescription, ConfigurationImpl* config,
-        bool ifExistsIsSpecified)
+                               const char* trustedCmdLine, const char* sourceDescription, ConfigurationImpl* config,
+                               bool ifExistsIsSpecified)
     {
         StringBuffer msg;
 
@@ -223,11 +223,7 @@ namespace danek
 
     void ConfigParser::parseStmtList()
     {
-        while (m_token.type() == lex::LEX_IDENT_SYM || m_token.type() == ConfigLex::LEX_INCLUDE_SYM
-               || m_token.type() == ConfigLex::LEX_IF_SYM
-               || m_token.type() == ConfigLex::LEX_REMOVE_SYM
-               || m_token.type() == ConfigLex::LEX_ERROR_SYM
-               || m_token.type() == ConfigLex::LEX_COPY_FROM_SYM)
+        while (m_token.type() == lex::LEX_IDENT_SYM || m_token.type() == ConfigLex::LEX_INCLUDE_SYM || m_token.type() == ConfigLex::LEX_IF_SYM || m_token.type() == ConfigLex::LEX_REMOVE_SYM || m_token.type() == ConfigLex::LEX_ERROR_SYM || m_token.type() == ConfigLex::LEX_COPY_FROM_SYM)
         {
             parseStmt();
         }
@@ -387,29 +383,29 @@ namespace danek
             if (startsWith(source.str().c_str(), "exec#"))
             {
                 ConfigParser tmp(Configuration::SourceType::Exec,
-                    execSource,
-                    trustedCmdLine.str().c_str(),
-                    "",
-                    m_config,
-                    ifExistsIsSpecified);
+                                 execSource,
+                                 trustedCmdLine.str().c_str(),
+                                 "",
+                                 m_config,
+                                 ifExistsIsSpecified);
             }
             else if (startsWith(source.str().c_str(), "file#"))
             {
                 ConfigParser tmp(Configuration::SourceType::File,
-                    source.str().c_str() + strlen("file#"),
-                    trustedCmdLine.str().c_str(),
-                    "",
-                    m_config,
-                    ifExistsIsSpecified);
+                                 source.str().c_str() + strlen("file#"),
+                                 trustedCmdLine.str().c_str(),
+                                 "",
+                                 m_config,
+                                 ifExistsIsSpecified);
             }
             else
             {
                 ConfigParser tmp(Configuration::SourceType::File,
-                    source.str().c_str(),
-                    trustedCmdLine.str().c_str(),
-                    "",
-                    m_config,
-                    ifExistsIsSpecified);
+                                 source.str().c_str(),
+                                 trustedCmdLine.str().c_str(),
+                                 "",
+                                 m_config,
+                                 ifExistsIsSpecified);
             }
         }
         catch (const ConfigurationException& ex)
@@ -1049,39 +1045,39 @@ namespace danek
                 str = m_fileName;
                 break;
             case ConfigLex::LEX_FUNC_CONFIG_TYPE_SYM:
+            {
+                m_lex->nextToken(m_token);
+                parseStringExpr(name);
+                accept(lex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
+                const ConfigItem* item = m_config->lookup(name.str().c_str(), name.str().c_str());
+                if (item == nullptr)
                 {
-                    m_lex->nextToken(m_token);
-                    parseStringExpr(name);
-                    accept(lex::LEX_CLOSE_PAREN_SYM, "expecting ')'");
-                    const ConfigItem* item = m_config->lookup(name.str().c_str(), name.str().c_str());
-                    if (item == nullptr)
-                    {
-                        type = ConfType::NoValue;
-                    }
-                    else
-                    {
-                        type = item->type();
-                    }
-                    switch (type)
-                    {
-                        case ConfType::String:
-                            str = "string";
-                            break;
-                        case ConfType::List:
-                            str = "list";
-                            break;
-                        case ConfType::Scope:
-                            str = "scope";
-                            break;
-                        case ConfType::NoValue:
-                            str = "no_value";
-                            break;
-                        default:
-                            throw std::exception{}; // Bug!
-                            break;
-                    }
+                    type = ConfType::NoValue;
                 }
-                break;
+                else
+                {
+                    type = item->type();
+                }
+                switch (type)
+                {
+                    case ConfType::String:
+                        str = "string";
+                        break;
+                    case ConfType::List:
+                        str = "list";
+                        break;
+                    case ConfType::Scope:
+                        str = "scope";
+                        break;
+                    case ConfType::NoValue:
+                        str = "no_value";
+                        break;
+                    default:
+                        throw std::exception{}; // Bug!
+                        break;
+                }
+            }
+            break;
             case lex::LEX_STRING_SYM:
                 str = m_token.spelling();
                 m_lex->nextToken(m_token);
@@ -1170,7 +1166,7 @@ namespace danek
         {
             error("The siblingScope() function cannot be used in the "
                   "root scope",
-                false);
+                  false);
             return;
         }
         parentScopeName = currScope->parentScope()->scopedName().c_str();
@@ -1198,7 +1194,7 @@ namespace danek
         str.clear();
         file.open(fileName.str());
 
-        if( file.good() == false )
+        if (file.good() == false)
         {
             msg << "error reading " << fileName << ": " << strerror(errno);
             throw ConfigurationException(msg.str());
@@ -1395,7 +1391,7 @@ namespace danek
             m_lex->nextToken(m_token); // consume the '+'
             parseList(expr2);
 
-            for( const auto& str : expr2 )
+            for (const auto& str : expr2)
             {
                 expr.push_back(str);
             }

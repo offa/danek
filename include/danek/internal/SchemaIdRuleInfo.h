@@ -22,16 +22,16 @@
 
 #pragma once
 
-#include <vector>
 #include <string>
+#include <vector>
 
 namespace danek
 {
     class SchemaIdRuleInfo
     {
     public:
-
-        SchemaIdRuleInfo() : m_locallyScopedName(), m_typeName(), m_arguments(), m_isOptional(false)
+        SchemaIdRuleInfo()
+            : m_locallyScopedName(), m_typeName(), m_arguments(), m_isOptional(false)
         {
         }
 
@@ -78,12 +78,9 @@ namespace danek
 
 
     private:
-
         std::string m_locallyScopedName;
         std::string m_typeName;
         std::vector<std::string> m_arguments;
         bool m_isOptional;
-
     };
-
 }

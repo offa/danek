@@ -24,16 +24,17 @@
 #include "FooConfiguration.h"
 #include "FooConfigurationException.h"
 #include "danek/Configuration.h"
-#include "danek/SchemaValidator.h"
 #include "danek/PatternMatch.h"
-#include <string.h>
+#include "danek/SchemaValidator.h"
 #include <stdlib.h>
+#include <string.h>
 
 using danek::Configuration;
 using danek::ConfigurationException;
 using danek::SchemaValidator;
 
-FooConfiguration::FooConfiguration() : m_cfg(Configuration::create()), m_logLevels()
+FooConfiguration::FooConfiguration()
+    : m_cfg(Configuration::create()), m_logLevels()
 {
 }
 
@@ -43,7 +44,7 @@ FooConfiguration::~FooConfiguration()
 }
 
 void FooConfiguration::parse(const char* cfgInput, const char* cfgScope, const char* secInput,
-    const char* secScope)
+                             const char* secScope)
 {
     SchemaValidator sv;
     Configuration* cfg = static_cast<Configuration*>(m_cfg);
@@ -84,7 +85,7 @@ Logger::LogLevel FooConfiguration::getLogLevel(const char* opName) const
 {
     int result;
 
-    for ( std::size_t i = 0; i < m_logLevels.size(); i += 2)
+    for (std::size_t i = 0; i < m_logLevels.size(); i += 2)
     {
         const char* pattern = m_logLevels[i + 0].c_str();
         const char* logLevelStr = m_logLevels[i + 1].c_str();

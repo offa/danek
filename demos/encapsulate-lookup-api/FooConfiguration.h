@@ -23,9 +23,9 @@
 
 #pragma once
 
+#include <exception>
 #include <string>
 #include <vector>
-#include <exception>
 
 class FooConfiguration
 {
@@ -50,8 +50,6 @@ public:
     FooConfiguration& operator=(const FooConfiguration&) = delete;
 
 private:
-
     std::string m_scope;
     void* m_cfg;
-
 };

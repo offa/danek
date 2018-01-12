@@ -30,7 +30,6 @@ namespace danek
     class UidIdentifierProcessor
     {
     public:
-
         UidIdentifierProcessor();
         virtual ~UidIdentifierProcessor() = default;
 
@@ -39,27 +38,25 @@ namespace danek
 
 
     protected:
-
         std::size_t nextCount(std::size_t current);
 
 
     private:
-
         std::string expandOne(const std::string& spelling);
         std::string unexpandOne(const std::string& spelling) const;
 
         bool startsWithUidToken(const std::string& str) const;
         bool hasValidPrefix(const std::string& str) const;
 
-        template<class Itr>
+        template <class Itr>
         bool hasValidPayload(Itr begin, Itr end) const
         {
-            if( (begin == end) || (*begin != '-') )
+            if ((begin == end) || (*begin != '-'))
             {
                 return false;
             }
             const auto itr = std::next(begin);
-            return ( std::distance(itr, end) > 0 ) && ( *itr != '-' ) && ( std::isdigit(*itr) == false );
+            return (std::distance(itr, end) > 0) && (*itr != '-') && (std::isdigit(*itr) == false);
         }
 
         std::string formatExpanded(const std::string& suffix);

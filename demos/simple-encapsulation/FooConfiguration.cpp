@@ -22,10 +22,10 @@
 // SOFTWARE.
 
 #include "FooConfiguration.h"
+#include "FallbackConfiguration.h"
 #include "FooConfigurationException.h"
 #include "danek/Configuration.h"
 #include "danek/SchemaValidator.h"
-#include "FallbackConfiguration.h"
 #include <string.h>
 
 using danek::Configuration;
@@ -51,7 +51,7 @@ FooConfiguration::~FooConfiguration()
 }
 
 void FooConfiguration::parse(const char* cfgInput, const char* cfgScope, const char* secInput,
-    const char* secScope)
+                             const char* secScope)
 {
     Configuration* cfg = static_cast<Configuration*>(m_cfg);
     SchemaValidator sv;

@@ -23,8 +23,8 @@
 
 #pragma once
 
-#include "danek/Configuration.h"
 #include "RecipeFileParserException.h"
+#include "danek/Configuration.h"
 
 using namespace danek;
 
@@ -55,12 +55,10 @@ public:
     void getRecipeSteps(const char* recipeScope, StringVector& vec);
 
 private:
-
     void checkState() const;
 
     danek::Configuration* m_cfg;
     StringBuffer m_scope;
     bool m_parseCalled;
     StringVector m_recipeScopeNames;
-
 };

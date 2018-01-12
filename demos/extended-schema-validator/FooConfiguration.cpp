@@ -22,24 +22,24 @@
 // SOFTWARE.
 
 #include "FooConfiguration.h"
-#include "FooConfigurationException.h"
-#include "danek/Configuration.h"
 #include "ExtendedSchemaValidator.h"
+#include "FooConfigurationException.h"
 #include "SchemaTypeHex.h"
-#include <string.h>
+#include "danek/Configuration.h"
 #include <stdio.h>
+#include <string.h>
 
 using danek::Configuration;
 using danek::ConfigurationException;
 
 FooConfiguration::FooConfiguration(bool wantDiagnostics)
-                                : m_cfg(Configuration::create()),
-                                  m_wantDiagnostics(wantDiagnostics),
-                                  m_timeout(0),
-                                  m_host(""),
-                                  m_hexByte(0x00),
-                                  m_hexWord(0x00),
-                                  m_hexListSize(0)
+    : m_cfg(Configuration::create()),
+      m_wantDiagnostics(wantDiagnostics),
+      m_timeout(0),
+      m_host(""),
+      m_hexByte(0x00),
+      m_hexWord(0x00),
+      m_hexListSize(0)
 {
 }
 
@@ -49,7 +49,7 @@ FooConfiguration::~FooConfiguration()
 }
 
 void FooConfiguration::parse(const char* cfgInput, const char* scope, const char* secInput,
-    const char* secScope)
+                             const char* secScope)
 {
     StringBuffer localName;
     StringVector strList;
