@@ -8,7 +8,7 @@ services:
 
 env:
   global:
-    - DOCKER_IMG="registry.gitlab.com/offa/docker-image-ci/dist-danek"
+    - DOCKER_IMG="registry.gitlab.com/offa/docker-images-ci/dist-danek"
 
 
 matrix:
