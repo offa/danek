@@ -1,18 +1,14 @@
 
-find_package(Threads REQUIRED)
 find_package(GTest REQUIRED)
 
 
 function(add_test_suite name)
     add_test(${name} ${name})
-
-    target_include_directories(${name} SYSTEM PUBLIC
-                                ${GTest_INCLUDE_DIR}
-                                ${GTest_Mock_INCLUDE_DIR}
-                                )
-    target_link_libraries(${name} PRIVATE ${GTest_LIBRARIES}
-                                    ${CMAKE_THREAD_LIBS_INIT}
-                                    )
+    target_link_libraries(${name} PRIVATE
+                            GTest::GTest
+                            GTest::Main
+                            GTest::Mock
+                            )
 endfunction()
 
 
