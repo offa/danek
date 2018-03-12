@@ -12,8 +12,6 @@ RUN mkdir deps && cd deps && \
             curl -sSL ${CXX_ABIURL}/__cxxabi_config.h -o /usr/include/c++/v1/__cxxabi_config.h; \
         fi && \
         cd googletest && \
-        # Workaround for #106; use commit prior the broken one
-        git checkout 0663ce9^ && \
         mkdir build && cd build && \
         cmake .. && \
         make && make install && \
