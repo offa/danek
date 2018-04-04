@@ -8,12 +8,14 @@ AllowShortLoopsOnASingleLine: 'false'
 AlwaysBreakTemplateDeclarations: 'true'
 BreakBeforeBraces: Allman
 ColumnLimit: '0'
+FixNamespaceComments: 'false'
 IndentCaseLabels: 'true'
 IndentWidth: '4'
 Language: Cpp
 MaxEmptyLinesToKeep: '2'
 NamespaceIndentation: All
 PointerAlignment: Left
+SortIncludes: 'false'
 SpaceAfterCStyleCast: 'true'
 SpaceInEmptyParentheses: 'false'
 TabWidth: '4'
