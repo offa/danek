@@ -29,9 +29,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-using danek::ConfType;
 using danek::Configuration;
 using danek::ConfigurationException;
+using danek::ConfType;
 using danek::SchemaValidator;
 using danek::StringBuffer;
 using danek::StringVector;
