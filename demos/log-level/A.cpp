@@ -33,24 +33,24 @@ A::A(const FooConfiguration* cfg)
 
 void A::op1()
 {
-    log.error(m_logLevelOp1, "A::op1(): this is an error message");
-    log.info(m_logLevelOp1, "A::op1(): this is an information message");
-    log.warn(m_logLevelOp1, "A::op1(): this is a warning message");
-    log.debug(m_logLevelOp1, "A::op1(): this is a debug message");
+    logger.error(m_logLevelOp1, "A::op1(): this is an error message");
+    logger.info(m_logLevelOp1, "A::op1(): this is an information message");
+    logger.warn(m_logLevelOp1, "A::op1(): this is a warning message");
+    logger.debug(m_logLevelOp1, "A::op1(): this is a debug message");
 }
 
 void A::op2()
 {
-    log.error(m_logLevelOp2, "A::op2(): this is an error message");
-    log.info(m_logLevelOp2, "A::op2(): this is an information message");
-    log.warn(m_logLevelOp2, "A::op2(): this is a warning message");
-    log.debug(m_logLevelOp2, "A::op2(): this is a debug message");
+    logger.error(m_logLevelOp2, "A::op2(): this is an error message");
+    logger.info(m_logLevelOp2, "A::op2(): this is an information message");
+    logger.warn(m_logLevelOp2, "A::op2(): this is a warning message");
+    logger.debug(m_logLevelOp2, "A::op2(): this is a debug message");
 }
 
 void A::op3()
 {
-    log.error(m_logLevelOp3, "A::op3(): this is an error message");
-    log.info(m_logLevelOp3, "A::op3(): this is an information message");
-    log.warn(m_logLevelOp3, "A::op3(): this is a warning message");
-    log.debug(m_logLevelOp3, "A::op3(): this is a debug message");
+    logger.error(m_logLevelOp3, "A::op3(): this is an error message");
+    logger.info(m_logLevelOp3, "A::op3(): this is an information message");
+    logger.warn(m_logLevelOp3, "A::op3(): this is a warning message");
+    logger.debug(m_logLevelOp3, "A::op3(): this is a debug message");
 }
