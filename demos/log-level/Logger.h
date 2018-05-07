@@ -43,4 +43,4 @@ public:
     static void debug(LogLevel logLevel, const std::string& msg);
 };
 
-extern Logger log;
+extern Logger logger;

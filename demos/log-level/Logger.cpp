@@ -24,7 +24,7 @@
 #include "Logger.h"
 #include <iostream>
 
-Logger log;
+Logger logger;
 
 
 void Logger::error(LogLevel logLevel, const std::string& msg)
