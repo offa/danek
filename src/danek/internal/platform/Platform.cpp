@@ -33,7 +33,7 @@ namespace danek
 
         std::string execCmd(const std::string& cmd)
         {
-            constexpr std::size_t bufferSize = 128;
+            constexpr std::size_t bufferSize{128};
             std::array<char, bufferSize> buffer;
             std::ostringstream output;
             const std::string cmdStr = cmd + " 2>&1";

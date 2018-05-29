@@ -147,7 +147,7 @@ namespace danek
 
     std::string UidIdentifierProcessor::formatExpanded(const std::string& suffix)
     {
-        constexpr std::size_t numDigits = 9;
+        constexpr std::size_t numDigits{9};
 
         std::ostringstream ss;
         ss << m_uidToken << std::setw(numDigits) << std::setfill('0') << nextCount(m_count) << "-" << suffix;

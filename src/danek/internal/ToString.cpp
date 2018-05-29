@@ -41,7 +41,7 @@ namespace danek
 
         std::string indent(std::size_t level)
         {
-            constexpr std::size_t indentCount = 4;
+            constexpr std::size_t indentCount{4};
             return std::string(level * indentCount, ' ');
         }
 

@@ -30,7 +30,7 @@ namespace danek
 
         std::vector<std::string> splitScopes(const std::string& input)
         {
-            constexpr auto delim = '.';
+            constexpr char delim{'.'};
 
             if (input.empty() == true || input.find(delim) == false)
             {
