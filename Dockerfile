@@ -13,7 +13,7 @@ RUN mkdir deps && cd deps && \
         git clone --depth=1 https://github.com/google/googletest.git && \
         cd googletest && \
         mkdir build && cd build && \
-        cmake .. && \
+        cmake -DCMAKE_CXX_STANDARD=14 .. && \
         make && make install && \
         cd ../.. && rm -rf deps
 
