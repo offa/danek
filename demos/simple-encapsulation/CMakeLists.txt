@@ -12,10 +12,10 @@ add_custom_command(OUTPUT FallbackConfiguration.h FallbackConfiguration.cpp
 add_custom_target(demo-simple-encapsulation-fallback
                             DEPENDS FallbackConfiguration.cpp
                                     FallbackConfiguration.h
-                             )
+                                    )
 
 add_executable(demo-simple-encapsulation main.cpp
-                                        FooConfiguration.cpp 
+                                        FooConfiguration.cpp
                                         ${CMAKE_CURRENT_BINARY_DIR}/FallbackConfiguration.cpp
                                         )
 target_include_directories(demo-simple-encapsulation
