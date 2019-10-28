@@ -36,8 +36,7 @@ namespace danek
     extern "C" int danek_compareSchemaIdRuleInfo_c(const void* p1, const void* p2);
 
 
-    SchemaParser::SchemaParser(SchemaValidator* sv)
-        : m_lex(), m_sv(sv), m_cfg(Configuration::create())
+    SchemaParser::SchemaParser(SchemaValidator* sv) : m_lex(), m_sv(sv), m_cfg(Configuration::create())
     {
     }
 
@@ -102,10 +101,7 @@ namespace danek
         //--------
         // Sort the rules.
         //--------
-        qsort(m_sv->m_idRules,
-              m_sv->m_idRulesCurrSize,
-              sizeof(SchemaIdRuleInfo*),
-              danek_compareSchemaIdRuleInfo_c);
+        qsort(m_sv->m_idRules, m_sv->m_idRulesCurrSize, sizeof(SchemaIdRuleInfo*), danek_compareSchemaIdRuleInfo_c);
 
         //--------
         // Check if multiple rules have the same name.
@@ -180,8 +176,7 @@ namespace danek
             if (strncmp(ptr, "uid-", 4) == 0)
             {
                 std::stringstream msg;
-                msg << "Use of '@required' is incompatible with the uid- entry ('" << ptr << "') in rule '"
-                    << rule << "'";
+                msg << "Use of '@required' is incompatible with the uid- entry ('" << ptr << "') in rule '" << rule << "'";
                 throw ConfigurationException{msg.str()};
             }
         }
@@ -288,8 +283,7 @@ namespace danek
             // and then register the new command.
             //--------
             m_sv->callCheckRule(baseTypeDef, m_cfg, baseTypeName.c_str(), baseTypeArgs, str, 1);
-            m_sv->registerTypedef(
-                typeName.c_str(), baseTypeDef->cfgType(), baseTypeName.c_str(), baseTypeArgs);
+            m_sv->registerTypedef(typeName.c_str(), baseTypeDef->cfgType(), baseTypeName.c_str(), baseTypeArgs);
             return;
         }
 
@@ -336,8 +330,7 @@ namespace danek
         else
         {
             std::stringstream msg;
-            msg << "error in validation rule '" << rule << "': " << msgPrefix << " near '"
-                << m_token.spelling() << "'";
+            msg << "error in validation rule '" << rule << "': " << msgPrefix << " near '" << m_token.spelling() << "'";
             throw ConfigurationException{msg.str()};
         }
     }

@@ -53,23 +53,21 @@ namespace danek
         virtual void checkRule(const SchemaValidator* sv, const Configuration* cfg, const char* typeName,
                                const StringVector& typeArgs, const char* rule) const = 0;
 
-        virtual void validate(const SchemaValidator* sv, const Configuration* cfg, const char* scope,
-                              const char* name, const char* typeName, const char* origTypeName, const StringVector& typeArgs,
+        virtual void validate(const SchemaValidator* sv, const Configuration* cfg, const char* scope, const char* name,
+                              const char* typeName, const char* origTypeName, const StringVector& typeArgs,
                               int indentLevel) const;
 
-        virtual bool isA(const SchemaValidator* sv, const Configuration* cfg, const char* value,
-                         const char* typeName, const StringVector& typeArgs, int indentLevel,
-                         StringBuffer& errSuffix) const;
+        virtual bool isA(const SchemaValidator* sv, const Configuration* cfg, const char* value, const char* typeName,
+                         const StringVector& typeArgs, int indentLevel, StringBuffer& errSuffix) const;
 
         SchemaType* findType(const SchemaValidator* sv, const char* name) const;
 
-        void callValidate(const SchemaType* target, const SchemaValidator* sv, const Configuration* cfg,
-                          const char* scope, const char* name, const char* typeName, const char* origTypeName,
-                          const StringVector& typeArgs, int indentLevel) const;
+        void callValidate(const SchemaType* target, const SchemaValidator* sv, const Configuration* cfg, const char* scope,
+                          const char* name, const char* typeName, const char* origTypeName, const StringVector& typeArgs,
+                          int indentLevel) const;
 
-        bool callIsA(const SchemaType* target, const SchemaValidator* sv, const Configuration* cfg,
-                     const char* value, const char* typeName, const StringVector& typeArgs, int indentLevel,
-                     StringBuffer& errSuffix) const;
+        bool callIsA(const SchemaType* target, const SchemaValidator* sv, const Configuration* cfg, const char* value,
+                     const char* typeName, const StringVector& typeArgs, int indentLevel, StringBuffer& errSuffix) const;
 
     private:
         friend class SchemaValidator;

@@ -30,29 +30,17 @@ namespace danek
 {
 
     ConfigItem::ConfigItem(const std::string& name, const std::string& str)
-        : m_type(ConfType::String),
-          m_name(name),
-          m_stringVal(str),
-          m_listVal(),
-          m_scope(nullptr)
+        : m_type(ConfType::String), m_name(name), m_stringVal(str), m_listVal(), m_scope(nullptr)
     {
     }
 
     ConfigItem::ConfigItem(const std::string& name, const std::vector<std::string>& v)
-        : m_type(ConfType::List),
-          m_name(name),
-          m_stringVal(""),
-          m_listVal(v),
-          m_scope(nullptr)
+        : m_type(ConfType::List), m_name(name), m_stringVal(""), m_listVal(v), m_scope(nullptr)
     {
     }
 
     ConfigItem::ConfigItem(const std::string& name, std::unique_ptr<ConfigScope> scope)
-        : m_type(ConfType::Scope),
-          m_name(name),
-          m_stringVal(""),
-          m_listVal(),
-          m_scope(std::move(scope))
+        : m_type(ConfType::Scope), m_name(name), m_stringVal(""), m_listVal(), m_scope(std::move(scope))
     {
     }
 

@@ -64,12 +64,10 @@ namespace danek
                 case ConfType::String:
                     break;
                 case ConfType::List:
-                    msg << "you cannot embed a list type ('" << columnType << "') inside a table in rule '"
-                        << rule << "'";
+                    msg << "you cannot embed a list type ('" << columnType << "') inside a table in rule '" << rule << "'";
                     throw ConfigurationException(msg.str());
                 case ConfType::Scope:
-                    msg << "you cannot embed a scope type ('" << columnType << "') inside a table in rule '"
-                        << rule << "'";
+                    msg << "you cannot embed a scope type ('" << columnType << "') inside a table in rule '" << rule << "'";
                     throw ConfigurationException(msg.str());
                 default:
                     throw std::exception{}; // Bug!
@@ -77,8 +75,8 @@ namespace danek
         }
     }
 
-    void SchemaTypeTable::validate(const SchemaValidator* sv, const Configuration* cfg, const char* scope,
-                                   const char* name, const char* typeName, const char* origTypeName, const StringVector& typeArgs,
+    void SchemaTypeTable::validate(const SchemaValidator* sv, const Configuration* cfg, const char* scope, const char* name,
+                                   const char* typeName, const char* origTypeName, const StringVector& typeArgs,
                                    int indentLevel) const
     {
         unused(origTypeName);
@@ -101,8 +99,8 @@ namespace danek
         if (data.size() % numColumns != 0)
         {
             cfg->mergeNames(scope, name, fullyScopedName);
-            msg << cfg->fileName() << ": the number of entries in the '" << fullyScopedName << "' "
-                << typeName << " is not a multiple of " << numColumns;
+            msg << cfg->fileName() << ": the number of entries in the '" << fullyScopedName << "' " << typeName
+                << " is not a multiple of " << numColumns;
             throw ConfigurationException(msg.str());
         }
 
@@ -117,8 +115,7 @@ namespace danek
             const char* colValue = data[i].c_str();
             const char* colTypeName = typeArgs[typeIndex].c_str();
             SchemaType* colTypeDef = findType(sv, colTypeName);
-            bool ok =
-                callIsA(colTypeDef, sv, cfg, colValue, colTypeName, emptyArgs, indentLevel + 1, errSuffix);
+            bool ok = callIsA(colTypeDef, sv, cfg, colValue, colTypeName, emptyArgs, indentLevel + 1, errSuffix);
             if (!ok)
             {
                 const char* sep;
@@ -132,8 +129,8 @@ namespace danek
                 }
                 cfg->mergeNames(scope, name, fullyScopedName);
                 msg << cfg->fileName() << ": bad " << colTypeName << " value ('" << colValue << "') for the '"
-                    << typeArgs[colNameIndex].c_str() << "' column in row " << rowNum << " of the '"
-                    << fullyScopedName << "' " << typeName << sep << errSuffix;
+                    << typeArgs[colNameIndex].c_str() << "' column in row " << rowNum << " of the '" << fullyScopedName << "' "
+                    << typeName << sep << errSuffix;
                 throw ConfigurationException(msg.str());
             }
         }

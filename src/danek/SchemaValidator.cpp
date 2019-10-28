@@ -83,11 +83,8 @@ namespace danek
 
         search.setLocallyScopedName(name);
         searchPtr = &search;
-        SchemaIdRuleInfo** result = static_cast<SchemaIdRuleInfo**>(bsearch(&searchPtr,
-                                                                            m_idRules,
-                                                                            m_idRulesCurrSize,
-                                                                            sizeof(SchemaIdRuleInfo*),
-                                                                            danek_compareSchemaIdRuleInfo_c));
+        SchemaIdRuleInfo** result = static_cast<SchemaIdRuleInfo**>(
+            bsearch(&searchPtr, m_idRules, m_idRulesCurrSize, sizeof(SchemaIdRuleInfo*), danek_compareSchemaIdRuleInfo_c));
         if (result == nullptr)
         {
             return nullptr;
@@ -108,8 +105,8 @@ namespace danek
         if (m_areTypesSorted)
         {
             SchemaType* searchPtr = &search;
-            SchemaType** result = static_cast<SchemaType**>(bsearch(
-                &searchPtr, m_types, m_typesCurrSize, sizeof(SchemaType*), danek_compareSchemaType_c));
+            SchemaType** result = static_cast<SchemaType**>(
+                bsearch(&searchPtr, m_types, m_typesCurrSize, sizeof(SchemaType*), danek_compareSchemaType_c));
             if (result == nullptr)
             {
                 return nullptr;
@@ -213,7 +210,8 @@ namespace danek
         m_areTypesSorted = false;
     }
 
-    void SchemaValidator::registerTypedef(const char* typeName, ConfType cfgType, const char* baseTypeName, const StringVector& baseTypeArgs)
+    void SchemaValidator::registerTypedef(const char* typeName, ConfType cfgType, const char* baseTypeName,
+                                          const StringVector& baseTypeArgs)
     {
         checkTypeDoesNotExist(typeName);
         ensureSpaceInTypesArray();
@@ -287,8 +285,8 @@ namespace danek
         }
     }
 
-    void SchemaValidator::validate(const Configuration* cfg, const char* scope, const char* localName,
-                                   bool recurseIntoSubscopes, ConfType typeMask, ForceMode forceMode) const
+    void SchemaValidator::validate(const Configuration* cfg, const char* scope, const char* localName, bool recurseIntoSubscopes,
+                                   ConfType typeMask, ForceMode forceMode) const
     {
         StringBuffer fullyScopedName;
         StringVector itemNames;
@@ -364,7 +362,8 @@ namespace danek
             compat::checkAssertion(typeDef != nullptr);
             try
             {
-                callValidate(typeDef, cfg, fullyScopedName.str().c_str(), iName, typeName, typeName, StringVector(idRule->args()), 1);
+                callValidate(typeDef, cfg, fullyScopedName.str().c_str(), iName, typeName, typeName, StringVector(idRule->args()),
+                             1);
             }
             catch (const ConfigurationException& ex)
             {
@@ -384,8 +383,8 @@ namespace danek
         }
     }
 
-    void SchemaValidator::validateForceMode(const Configuration* cfg, const char* scope,
-                                            const char* localName, ForceMode forceMode) const
+    void SchemaValidator::validateForceMode(const Configuration* cfg, const char* scope, const char* localName,
+                                            ForceMode forceMode) const
     {
         StringBuffer fullyScopedName;
         StringBuffer nameOfMissingEntry;
@@ -415,8 +414,7 @@ namespace danek
                 {
                     cfg->mergeNames(fullyScopedName.str().c_str(), nameInRule, nameOfMissingEntry);
                     const auto typeName = idRule->typeName();
-                    msg << cfg->fileName() << ": the " << typeName << " '" << nameOfMissingEntry
-                        << "' does not exist";
+                    msg << cfg->fileName() << ": the " << typeName << " '" << nameOfMissingEntry << "' does not exist";
                     throw ConfigurationException(msg.str());
                 }
             }
@@ -457,8 +455,7 @@ namespace danek
             {
                 cfg->mergeNames(parentScopes[i].c_str(), lastDot + 1, nameOfMissingEntry);
                 const auto typeName = idRule->typeName();
-                msg << cfg->fileName() << ": the " << typeName << " '" << nameOfMissingEntry
-                    << "' does not exist";
+                msg << cfg->fileName() << ": the " << typeName << " '" << nameOfMissingEntry << "' does not exist";
                 throw ConfigurationException(msg.str());
             }
         }
@@ -575,8 +572,7 @@ namespace danek
         printf("]\n");
     }
 
-    void SchemaValidator::printTypeNameAndArgs(
-        const char* typeName, const StringVector& typeArgs, int indentLevel) const
+    void SchemaValidator::printTypeNameAndArgs(const char* typeName, const StringVector& typeArgs, int indentLevel) const
     {
         indent(indentLevel);
         printf("typeName = \"%s\"; typeArgs = [", typeName);
@@ -592,8 +588,8 @@ namespace danek
         printf("]\n");
     }
 
-    void SchemaValidator::callCheckRule(const SchemaType* target, const Configuration* cfg,
-                                        const char* typeName, const StringVector& typeArgs, const char* rule, int indentLevel) const
+    void SchemaValidator::callCheckRule(const SchemaType* target, const Configuration* cfg, const char* typeName,
+                                        const StringVector& typeArgs, const char* rule, int indentLevel) const
     {
         try
         {
@@ -625,8 +621,8 @@ namespace danek
         }
     }
 
-    void SchemaValidator::callValidate(const SchemaType* target, const Configuration* cfg, const char* scope,
-                                       const char* name, const char* typeName, const char* origTypeName, const StringVector& typeArgs,
+    void SchemaValidator::callValidate(const SchemaType* target, const Configuration* cfg, const char* scope, const char* name,
+                                       const char* typeName, const char* origTypeName, const StringVector& typeArgs,
                                        int indentLevel) const
     {
         try
@@ -661,8 +657,8 @@ namespace danek
         }
     }
 
-    bool SchemaValidator::callIsA(const SchemaType* target, const Configuration* cfg, const char* value,
-                                  const char* typeName, const StringVector& typeArgs, int indentLevel, StringBuffer& errSuffix) const
+    bool SchemaValidator::callIsA(const SchemaType* target, const Configuration* cfg, const char* value, const char* typeName,
+                                  const StringVector& typeArgs, int indentLevel, StringBuffer& errSuffix) const
     {
         bool result;
 

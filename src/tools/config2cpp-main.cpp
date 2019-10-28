@@ -122,9 +122,8 @@ bool doesVectorcontainString(const StringVector& vec, const char* str)
     return false;
 }
 
-void calculateSchema(const Configuration* cfg, const StringVector& namesList,
-                     const StringVector& recipeUserTypes, const StringVector& wildcardedNamesAndTypes,
-                     const StringVector& recipeIgnoreRules, StringVector& schema)
+void calculateSchema(const Configuration* cfg, const StringVector& namesList, const StringVector& recipeUserTypes,
+                     const StringVector& wildcardedNamesAndTypes, const StringVector& recipeIgnoreRules, StringVector& schema)
 {
     StringBuffer rule;
     StringBuffer buf;
@@ -164,8 +163,7 @@ void calculateSchema(const Configuration* cfg, const StringVector& namesList,
     }
 }
 
-bool doesPatternMatchAnyUnexpandedNameInList(
-    const Configuration* cfg, const char* pattern, const StringVector& namesList)
+bool doesPatternMatchAnyUnexpandedNameInList(const Configuration* cfg, const char* pattern, const StringVector& namesList)
 {
     StringBuffer buf;
 
@@ -182,8 +180,7 @@ bool doesPatternMatchAnyUnexpandedNameInList(
 }
 
 void checkForUnmatchedPatterns(const Configuration* cfg, const StringVector& namesList,
-                               const StringVector& wildcardedNamesAndTypes,
-                               StringVector& unmatchedPatterns)
+                               const StringVector& wildcardedNamesAndTypes, StringVector& unmatchedPatterns)
 {
     unmatchedPatterns.clear();
     //--------
@@ -230,8 +227,7 @@ int main(int argc, char** argv)
             if (util.schemaOverrideCfg() != nullptr)
             {
                 const char* overrideSchema[] = {
-                    "@typedef keyword = enum[\"@optional\", \"@required\"]",
-                    "user_types = list[string]",
+                    "@typedef keyword = enum[\"@optional\", \"@required\"]", "user_types = list[string]",
                     "wildcarded_names_and_types = table[keyword,keyword, "
                     "string,wildcarded-name, string,type]",
                     "ignore_rules = list[string]",
@@ -246,8 +242,7 @@ int main(int argc, char** argv)
                 schemaCfg->lookupList(scope, "wildcarded_names_and_types", wildcardedNamesAndTypes);
                 schemaCfg->lookupList(scope, "ignore_rules", recipeIgnoreRules);
             }
-            calculateSchema(
-                cfg, namesList, recipeUserTypes, wildcardedNamesAndTypes, recipeIgnoreRules, schema);
+            calculateSchema(cfg, namesList, recipeUserTypes, wildcardedNamesAndTypes, recipeIgnoreRules, schema);
             checkForUnmatchedPatterns(cfg, namesList, wildcardedNamesAndTypes, unmatchedPatterns);
         }
         catch (const ConfigurationException& ex)
@@ -258,10 +253,7 @@ int main(int argc, char** argv)
         int len = unmatchedPatterns.size();
         if (len != 0)
         {
-            fprintf(stderr,
-                    "%s %s\n",
-                    "Error: the following patterns in the schema",
-                    "recipe did not match anything");
+            fprintf(stderr, "%s %s\n", "Error: the following patterns in the schema", "recipe did not match anything");
             for (int i = 0; i < len; i++)
             {
                 fprintf(stderr, "\t'%s'\n", unmatchedPatterns[i].c_str());

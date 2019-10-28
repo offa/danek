@@ -27,8 +27,8 @@
 
 namespace danek
 {
-    void SchemaTypeTypedef::checkRule(const SchemaValidator* sv, const Configuration* cfg,
-                                      const char* typeName, const StringVector& typeArgs, const char* rule) const
+    void SchemaTypeTypedef::checkRule(const SchemaValidator* sv, const Configuration* cfg, const char* typeName,
+                                      const StringVector& typeArgs, const char* rule) const
 
     {
         unused(sv);
@@ -38,14 +38,13 @@ namespace danek
 
         if (typeArgs.size() != 0)
         {
-            msg << "you cannot specify arguments when using user-defined type '" << typeName << "' in '"
-                << rule << "'";
+            msg << "you cannot specify arguments when using user-defined type '" << typeName << "' in '" << rule << "'";
             throw ConfigurationException(msg.str());
         }
     }
 
-    void SchemaTypeTypedef::validate(const SchemaValidator* sv, const Configuration* cfg, const char* scope,
-                                     const char* name, const char* typeName, const char* origTypeName, const StringVector& typeArgs,
+    void SchemaTypeTypedef::validate(const SchemaValidator* sv, const Configuration* cfg, const char* scope, const char* name,
+                                     const char* typeName, const char* origTypeName, const StringVector& typeArgs,
                                      int indentLevel) const
     {
         unused(typeName);
@@ -57,12 +56,11 @@ namespace danek
         compat::checkAssertion(typeArgs.size() == 0);
         baseTypeName = m_baseTypeName.str().c_str();
         baseTypeDef = findType(sv, baseTypeName);
-        callValidate(
-            baseTypeDef, sv, cfg, scope, name, baseTypeName, origTypeName, m_baseTypeArgs, indentLevel + 1);
+        callValidate(baseTypeDef, sv, cfg, scope, name, baseTypeName, origTypeName, m_baseTypeArgs, indentLevel + 1);
     }
 
-    bool SchemaTypeTypedef::isA(const SchemaValidator* sv, const Configuration* cfg, const char* value,
-                                const char* typeName, const StringVector& typeArgs, int indentLevel, StringBuffer& errSuffix) const
+    bool SchemaTypeTypedef::isA(const SchemaValidator* sv, const Configuration* cfg, const char* value, const char* typeName,
+                                const StringVector& typeArgs, int indentLevel, StringBuffer& errSuffix) const
     {
         unused(value);
         unused(typeName);
@@ -72,8 +70,7 @@ namespace danek
         const char* baseTypeName = m_baseTypeName.str().c_str();
         SchemaType* baseTypeDef = findType(sv, baseTypeName);
         compat::checkAssertion(baseTypeDef != nullptr);
-        bool result =
-            callIsA(baseTypeDef, sv, cfg, value, baseTypeName, m_baseTypeArgs, indentLevel + 1, errSuffix);
+        bool result = callIsA(baseTypeDef, sv, cfg, value, baseTypeName, m_baseTypeArgs, indentLevel + 1, errSuffix);
         return result;
     }
 }

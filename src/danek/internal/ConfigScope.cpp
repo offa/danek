@@ -33,8 +33,7 @@
 namespace danek
 {
 
-    ConfigScope::ConfigScope(ConfigScope* parentScope, const std::string& name)
-        : m_parentScope(parentScope)
+    ConfigScope::ConfigScope(ConfigScope* parentScope, const std::string& name) : m_parentScope(parentScope)
     {
         if (m_parentScope == nullptr)
         {
@@ -169,7 +168,8 @@ namespace danek
 
     bool ConfigScope::contains(const std::string& name) const
     {
-        return std::find_if(m_table.cbegin(), m_table.cend(), [&name](const auto& v) { return v->name() == name; }) != m_table.cend();
+        return std::find_if(m_table.cbegin(), m_table.cend(), [&name](const auto& v) { return v->name() == name; }) !=
+               m_table.cend();
     }
 
     std::vector<std::string> ConfigScope::listFullyScopedNames(ConfType typeMask, bool recursive) const
@@ -177,42 +177,47 @@ namespace danek
         return listScopedNamesHelper(m_scopedName, typeMask, recursive, {});
     }
 
-    std::vector<std::string> ConfigScope::listFullyScopedNames(ConfType typeMask, bool recursive, const std::vector<std::string>& filterPatterns) const
+    std::vector<std::string> ConfigScope::listFullyScopedNames(ConfType typeMask, bool recursive,
+                                                               const std::vector<std::string>& filterPatterns) const
     {
         return listScopedNamesHelper(m_scopedName, typeMask, recursive, filterPatterns);
     }
 
-    std::vector<std::string> ConfigScope::listLocallyScopedNames(ConfType typeMask, bool recursive, const std::vector<std::string>& filterPatterns) const
+    std::vector<std::string> ConfigScope::listLocallyScopedNames(ConfType typeMask, bool recursive,
+                                                                 const std::vector<std::string>& filterPatterns) const
     {
         return listScopedNamesHelper("", typeMask, recursive, filterPatterns);
     }
 
-    std::vector<std::string> ConfigScope::listScopedNamesHelper(const std::string& prefix, ConfType typeMask, bool recursive, const std::vector<std::string>& filterPatterns) const
+    std::vector<std::string> ConfigScope::listScopedNamesHelper(const std::string& prefix, ConfType typeMask, bool recursive,
+                                                                const std::vector<std::string>& filterPatterns) const
     {
         std::vector<std::string> vec;
         vec.reserve(m_table.size());
 
-        std::for_each(m_table.cbegin(), m_table.cend(), [this, typeMask, &filterPatterns, &prefix, &vec, recursive](const auto& v) {
-            std::stringstream scopedName;
-            scopedName << prefix;
+        std::for_each(
+            m_table.cbegin(), m_table.cend(), [this, typeMask, &filterPatterns, &prefix, &vec, recursive](const auto& v) {
+                std::stringstream scopedName;
+                scopedName << prefix;
 
-            if (prefix.empty() == false)
-            {
-                scopedName << ".";
-            }
-            scopedName << v->name();
+                if (prefix.empty() == false)
+                {
+                    scopedName << ".";
+                }
+                scopedName << v->name();
 
-            if ((static_cast<int>(v->type()) & static_cast<int>(typeMask)) && this->listFilter(scopedName.str(), filterPatterns))
-            {
-                vec.push_back(scopedName.str());
-            }
+                if ((static_cast<int>(v->type()) & static_cast<int>(typeMask)) &&
+                    this->listFilter(scopedName.str(), filterPatterns))
+                {
+                    vec.push_back(scopedName.str());
+                }
 
-            if (recursive && v->type() == ConfType::Scope)
-            {
-                const auto result = v->scopeVal()->listScopedNamesHelper(scopedName.str(), typeMask, true, filterPatterns);
-                vec.insert(vec.cend(), result.cbegin(), result.cend());
-            }
-        });
+                if (recursive && v->type() == ConfType::Scope)
+                {
+                    const auto result = v->scopeVal()->listScopedNamesHelper(scopedName.str(), typeMask, true, filterPatterns);
+                    vec.insert(vec.cend(), result.cbegin(), result.cend());
+                }
+            });
 
         return vec;
     }

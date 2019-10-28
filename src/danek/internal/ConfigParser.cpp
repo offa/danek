@@ -99,9 +99,8 @@ namespace danek
     // Description:	Initialise instance variables and do actual parsing.
     //----------------------------------------------------------------------
 
-    ConfigParser::ConfigParser(Configuration::SourceType sourceType, const char* source,
-                               const char* trustedCmdLine, const char* sourceDescription, ConfigurationImpl* config,
-                               bool ifExistsIsSpecified)
+    ConfigParser::ConfigParser(Configuration::SourceType sourceType, const char* source, const char* trustedCmdLine,
+                               const char* sourceDescription, ConfigurationImpl* config, bool ifExistsIsSpecified)
     {
         StringBuffer msg;
 
@@ -223,7 +222,9 @@ namespace danek
 
     void ConfigParser::parseStmtList()
     {
-        while (m_token.type() == lex::LEX_IDENT_SYM || m_token.type() == ConfigLex::LEX_INCLUDE_SYM || m_token.type() == ConfigLex::LEX_IF_SYM || m_token.type() == ConfigLex::LEX_REMOVE_SYM || m_token.type() == ConfigLex::LEX_ERROR_SYM || m_token.type() == ConfigLex::LEX_COPY_FROM_SYM)
+        while (m_token.type() == lex::LEX_IDENT_SYM || m_token.type() == ConfigLex::LEX_INCLUDE_SYM ||
+               m_token.type() == ConfigLex::LEX_IF_SYM || m_token.type() == ConfigLex::LEX_REMOVE_SYM ||
+               m_token.type() == ConfigLex::LEX_ERROR_SYM || m_token.type() == ConfigLex::LEX_COPY_FROM_SYM)
         {
             parseStmt();
         }
@@ -382,30 +383,18 @@ namespace danek
         {
             if (startsWith(source.str().c_str(), "exec#"))
             {
-                ConfigParser tmp(Configuration::SourceType::Exec,
-                                 execSource,
-                                 trustedCmdLine.str().c_str(),
-                                 "",
-                                 m_config,
+                ConfigParser tmp(Configuration::SourceType::Exec, execSource, trustedCmdLine.str().c_str(), "", m_config,
                                  ifExistsIsSpecified);
             }
             else if (startsWith(source.str().c_str(), "file#"))
             {
-                ConfigParser tmp(Configuration::SourceType::File,
-                                 source.str().c_str() + strlen("file#"),
-                                 trustedCmdLine.str().c_str(),
-                                 "",
-                                 m_config,
-                                 ifExistsIsSpecified);
+                ConfigParser tmp(Configuration::SourceType::File, source.str().c_str() + strlen("file#"),
+                                 trustedCmdLine.str().c_str(), "", m_config, ifExistsIsSpecified);
             }
             else
             {
-                ConfigParser tmp(Configuration::SourceType::File,
-                                 source.str().c_str(),
-                                 trustedCmdLine.str().c_str(),
-                                 "",
-                                 m_config,
-                                 ifExistsIsSpecified);
+                ConfigParser tmp(Configuration::SourceType::File, source.str().c_str(), trustedCmdLine.str().c_str(), "",
+                                 m_config, ifExistsIsSpecified);
             }
         }
         catch (const ConfigurationException& ex)

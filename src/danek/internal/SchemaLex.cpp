@@ -46,8 +46,7 @@ namespace danek
 
     const static int keywordInfoArraySize = sizeof(keywordInfoArray) / sizeof(keywordInfoArray[0]);
 
-    SchemaLex::SchemaLex(const char* str)
-        : LexBase(str)
+    SchemaLex::SchemaLex(const char* str) : LexBase(str)
     {
         m_keywordInfoArray = keywordInfoArray;
         m_keywordInfoArraySize = keywordInfoArraySize;

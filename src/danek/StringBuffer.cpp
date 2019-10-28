@@ -28,13 +28,11 @@
 
 namespace danek
 {
-    StringBuffer::StringBuffer()
-        : m_string()
+    StringBuffer::StringBuffer() : m_string()
     {
     }
 
-    StringBuffer::StringBuffer(const std::string& str)
-        : m_string(str)
+    StringBuffer::StringBuffer(const std::string& str) : m_string(str)
     {
     }
 

@@ -30,8 +30,7 @@ namespace danek
     class SchemaTypeList : public SchemaType
     {
     public:
-        SchemaTypeList()
-            : SchemaType("list", "danek::SchemaTypeList", ConfType::String)
+        SchemaTypeList() : SchemaType("list", "danek::SchemaTypeList", ConfType::String)
         {
         }
         virtual ~SchemaTypeList()
@@ -42,8 +41,8 @@ namespace danek
         virtual void checkRule(const SchemaValidator* sv, const Configuration* cfg, const char* typeName,
                                const StringVector& typeArgs, const char* rule) const;
 
-        virtual void validate(const SchemaValidator* sv, const Configuration* cfg, const char* scope,
-                              const char* name, const char* typeName, const char* origTypeName, const StringVector& typeArgs,
+        virtual void validate(const SchemaValidator* sv, const Configuration* cfg, const char* scope, const char* name,
+                              const char* typeName, const char* origTypeName, const StringVector& typeArgs,
                               int indentLevel) const;
     };
 }

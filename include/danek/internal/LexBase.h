@@ -54,8 +54,7 @@ namespace danek
 
     protected:
         // Constructors and destructor
-        LexBase(Configuration::SourceType sourceType, const char* source,
-                UidIdentifierProcessor* uidIdentifierProcessor);
+        LexBase(Configuration::SourceType sourceType, const char* source, UidIdentifierProcessor* uidIdentifierProcessor);
         explicit LexBase(const char* str);
         virtual ~LexBase();
 

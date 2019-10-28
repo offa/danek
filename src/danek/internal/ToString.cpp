@@ -34,10 +34,8 @@ namespace danek
 
     namespace
     {
-        const std::array<std::pair<std::string, std::string>, 4> escapeSequences{{{"%", "%%"},
-                                                                                  {"\t", "%t"},
-                                                                                  {"\n", "%n"},
-                                                                                  {"\"", "%\""}}};
+        const std::array<std::pair<std::string, std::string>, 4> escapeSequences{
+            {{"%", "%%"}, {"\t", "%t"}, {"\n", "%n"}, {"\"", "%\""}}};
 
         std::string indent(std::size_t level)
         {
@@ -65,9 +63,8 @@ namespace danek
         {
             auto output = str;
 
-            std::for_each(escapeSequences.cbegin(), escapeSequences.cend(), [&output](const auto& v) {
-                replaceInplace(output, v.first, v.second);
-            });
+            std::for_each(escapeSequences.cbegin(), escapeSequences.cend(),
+                          [&output](const auto& v) { replaceInplace(output, v.first, v.second); });
 
             return "\"" + output + "\"";
         }
@@ -83,7 +80,8 @@ namespace danek
             return name;
         }
 
-        void appendConfType(std::stringstream& stream, const ConfigScope& scope, ConfType type, bool expandUid, std::size_t indentLevel)
+        void appendConfType(std::stringstream& stream, const ConfigScope& scope, ConfType type, bool expandUid,
+                            std::size_t indentLevel)
         {
             auto names = scope.listLocallyScopedNames(type, false, {});
             std::sort(names.begin(), names.end());
@@ -126,8 +124,7 @@ namespace danek
             case ConfType::Scope:
             {
                 os << nameStr << " {\n"
-                   << toString(*(item.scopeVal()), expandUidNames, indentLevel + 1)
-                   << indent(indentLevel) << "}\n";
+                   << toString(*(item.scopeVal()), expandUidNames, indentLevel + 1) << indent(indentLevel) << "}\n";
             }
             break;
             default:

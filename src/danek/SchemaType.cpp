@@ -30,9 +30,7 @@ namespace danek
     class SchemaValidator;
 
     SchemaType::SchemaType(const char* typeName, const char* className, ConfType cfgType)
-        : m_typeName(typeName),
-          m_className(className),
-          m_cfgType(cfgType)
+        : m_typeName(typeName), m_className(className), m_cfgType(cfgType)
     {
     }
 
@@ -40,9 +38,8 @@ namespace danek
     {
     }
 
-    void SchemaType::validate(const SchemaValidator* sv, const Configuration* cfg, const char* scope,
-                              const char* name, const char* typeName, const char* origTypeName, const StringVector& typeArgs,
-                              int indentLevel) const
+    void SchemaType::validate(const SchemaValidator* sv, const Configuration* cfg, const char* scope, const char* name,
+                              const char* typeName, const char* origTypeName, const StringVector& typeArgs, int indentLevel) const
     {
         unused(origTypeName);
 
@@ -64,14 +61,14 @@ namespace danek
             {
                 sep = "; ";
             }
-            msg << cfg->fileName() << ": bad " << typeName << " value ('" << value << "') for '"
-                << fullyScopedName << "'" << sep << errSuffix;
+            msg << cfg->fileName() << ": bad " << typeName << " value ('" << value << "') for '" << fullyScopedName << "'" << sep
+                << errSuffix;
             throw ConfigurationException(msg.str());
         }
     }
 
-    bool SchemaType::isA(const SchemaValidator* sv, const Configuration* cfg, const char* value,
-                         const char* typeName, const StringVector& typeArgs, int indentLevel, StringBuffer& errSuffix) const
+    bool SchemaType::isA(const SchemaValidator* sv, const Configuration* cfg, const char* value, const char* typeName,
+                         const StringVector& typeArgs, int indentLevel, StringBuffer& errSuffix) const
     {
         unused(sv);
         unused(cfg);
@@ -89,17 +86,16 @@ namespace danek
         return sv->findType(name);
     }
 
-    void SchemaType::callValidate(const SchemaType* target, const SchemaValidator* sv,
-                                  const Configuration* cfg, const char* scope, const char* name, const char* typeName,
-                                  const char* origTypeName, const StringVector& typeArgs, int indentLevel) const
+    void SchemaType::callValidate(const SchemaType* target, const SchemaValidator* sv, const Configuration* cfg,
+                                  const char* scope, const char* name, const char* typeName, const char* origTypeName,
+                                  const StringVector& typeArgs, int indentLevel) const
 
     {
         sv->callValidate(target, cfg, scope, name, typeName, origTypeName, typeArgs, indentLevel);
     }
 
-    bool SchemaType::callIsA(const SchemaType* target, const SchemaValidator* sv, const Configuration* cfg,
-                             const char* value, const char* typeName, const StringVector& typeArgs, int indentLevel,
-                             StringBuffer& errSuffix) const
+    bool SchemaType::callIsA(const SchemaType* target, const SchemaValidator* sv, const Configuration* cfg, const char* value,
+                             const char* typeName, const StringVector& typeArgs, int indentLevel, StringBuffer& errSuffix) const
     {
         return sv->callIsA(target, cfg, value, typeName, typeArgs, indentLevel, errSuffix);
     }

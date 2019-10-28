@@ -68,8 +68,7 @@ namespace danek
         //--------
         // Constructors and destructor
         //--------
-        ConfigLex(Configuration::SourceType sourceType, const char* source,
-                  UidIdentifierProcessor* uidIdentifierProcessor);
+        ConfigLex(Configuration::SourceType sourceType, const char* source, UidIdentifierProcessor* uidIdentifierProcessor);
         virtual ~ConfigLex();
 
     private:

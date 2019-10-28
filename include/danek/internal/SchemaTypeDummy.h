@@ -31,8 +31,7 @@ namespace danek
     class SchemaTypeDummy : public SchemaType
     {
     public:
-        explicit SchemaTypeDummy(const char* name)
-            : SchemaType(name, "danek::SchemaTypeDummy", ConfType::String)
+        explicit SchemaTypeDummy(const char* name) : SchemaType(name, "danek::SchemaTypeDummy", ConfType::String)
         {
         }
         virtual ~SchemaTypeDummy()

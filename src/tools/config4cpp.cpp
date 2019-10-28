@@ -38,11 +38,10 @@ using danek::StringVector;
 
 static void usage(const char* optMsg);
 
-static void parseCmdLineArgs(int argc, char** argv, const char*& cmd, bool& isRecursive,
-                             bool& wantExpandedUidNames, StringVector& filterPatterns, const char*& scope, const char*& name,
-                             const char*& cfgSource, const char*& secSource, const char*& secScope, const char*& schemaSource,
-                             const char*& schemaName, SchemaValidator::ForceMode& forceMode, bool& wantDiagnostics,
-                             ConfType& types, Configuration* cfg);
+static void parseCmdLineArgs(int argc, char** argv, const char*& cmd, bool& isRecursive, bool& wantExpandedUidNames,
+                             StringVector& filterPatterns, const char*& scope, const char*& name, const char*& cfgSource,
+                             const char*& secSource, const char*& secScope, const char*& schemaSource, const char*& schemaName,
+                             SchemaValidator::ForceMode& forceMode, bool& wantDiagnostics, ConfType& types, Configuration* cfg);
 
 static ConfType stringToTypes(const char* str);
 
@@ -78,23 +77,8 @@ int main(int argc, char** argv)
     Configuration* secCfg = Configuration::create();
     Configuration* schemaCfg = Configuration::create();
 
-    parseCmdLineArgs(argc,
-                     argv,
-                     cmd,
-                     isRecursive,
-                     wantExpandedUidNames,
-                     filterPatterns,
-                     scope,
-                     name,
-                     cfgSource,
-                     secSource,
-                     secScope,
-                     schemaSource,
-                     schemaName,
-                     forceMode,
-                     wantDiagnostics,
-                     types,
-                     cfg);
+    parseCmdLineArgs(argc, argv, cmd, isRecursive, wantExpandedUidNames, filterPatterns, scope, name, cfgSource, secSource,
+                     secScope, schemaSource, schemaName, forceMode, wantDiagnostics, types, cfg);
 
     try
     {
@@ -275,11 +259,10 @@ int main(int argc, char** argv)
     return 0;
 }
 
-static void parseCmdLineArgs(int argc, char** argv, const char*& cmd, bool& isRecursive,
-                             bool& wantExpandedUidNames, StringVector& filterPatterns, const char*& scope, const char*& name,
-                             const char*& cfgSource, const char*& secSource, const char*& secScope, const char*& schemaSource,
-                             const char*& schemaName, SchemaValidator::ForceMode& forceMode, bool& wantDiagnostics,
-                             ConfType& types, Configuration* cfg)
+static void parseCmdLineArgs(int argc, char** argv, const char*& cmd, bool& isRecursive, bool& wantExpandedUidNames,
+                             StringVector& filterPatterns, const char*& scope, const char*& name, const char*& cfgSource,
+                             const char*& secSource, const char*& secScope, const char*& schemaSource, const char*& schemaName,
+                             SchemaValidator::ForceMode& forceMode, bool& wantDiagnostics, ConfType& types, Configuration* cfg)
 {
     int i;
     StringBuffer msg;

@@ -30,7 +30,8 @@ namespace danek
 {
     namespace
     {
-        bool patternMatchInternal(const wchar_t* wStr, int wStrIndex, int wStrLen, const wchar_t* wPattern, int wPatternIndex, int wPatternLen)
+        bool patternMatchInternal(const wchar_t* wStr, int wStrIndex, int wStrLen, const wchar_t* wPattern, int wPatternIndex,
+                                  int wPatternLen)
         {
             while (wPatternIndex < wPatternLen)
             {

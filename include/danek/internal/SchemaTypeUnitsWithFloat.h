@@ -30,8 +30,7 @@ namespace danek
     class SchemaTypeUnitsWithFloat : public SchemaType
     {
     public:
-        SchemaTypeUnitsWithFloat()
-            : SchemaType("units_with_float", "danek::SchemaTypeUnitsWithFloat", ConfType::String)
+        SchemaTypeUnitsWithFloat() : SchemaType("units_with_float", "danek::SchemaTypeUnitsWithFloat", ConfType::String)
         {
         }
         virtual ~SchemaTypeUnitsWithFloat()
@@ -42,8 +41,7 @@ namespace danek
         virtual void checkRule(const SchemaValidator* sv, const Configuration* cfg, const char* typeName,
                                const StringVector& typeArgs, const char* rule) const;
 
-        virtual bool isA(const SchemaValidator* sv, const Configuration* cfg, const char* value,
-                         const char* typeName, const StringVector& typeArgs, int indentLevel,
-                         StringBuffer& errSuffix) const;
+        virtual bool isA(const SchemaValidator* sv, const Configuration* cfg, const char* value, const char* typeName,
+                         const StringVector& typeArgs, int indentLevel, StringBuffer& errSuffix) const;
     };
 }

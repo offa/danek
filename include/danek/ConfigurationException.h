@@ -31,8 +31,7 @@ namespace danek
     class ConfigurationException : public std::exception
     {
     public:
-        explicit ConfigurationException(const std::string& msg)
-            : m_msg(msg)
+        explicit ConfigurationException(const std::string& msg) : m_msg(msg)
         {
         }
 

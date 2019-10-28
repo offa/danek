@@ -52,11 +52,8 @@ namespace danek
             found = false;
             return;
         }
-        result = static_cast<LexBase::KeywordInfo*>(bsearch(&searchItem,
-                                                            m_keywordInfoArray,
-                                                            m_keywordInfoArraySize,
-                                                            sizeof(searchItem),
-                                                            danek_keywordInfoCmp));
+        result = static_cast<LexBase::KeywordInfo*>(
+            bsearch(&searchItem, m_keywordInfoArray, m_keywordInfoArraySize, sizeof(searchItem), danek_keywordInfoCmp));
         if (result == nullptr)
         {
             found = false;
@@ -85,8 +82,8 @@ namespace danek
             return;
         }
         searchItem.m_spelling = spelling;
-        FuncInfo* result = static_cast<FuncInfo*>(bsearch(
-            &searchItem, m_funcInfoArray, m_funcInfoArraySize, sizeof(searchItem), danek_funcInfoCmp_c));
+        FuncInfo* result = static_cast<FuncInfo*>(
+            bsearch(&searchItem, m_funcInfoArray, m_funcInfoArraySize, sizeof(searchItem), danek_funcInfoCmp_c));
         if (result == nullptr)
         {
             found = false;
@@ -99,8 +96,7 @@ namespace danek
         }
     }
 
-    LexBase::LexBase(Configuration::SourceType sourceType, const char* source,
-                     UidIdentifierProcessor* uidIdentifierProcessor)
+    LexBase::LexBase(Configuration::SourceType sourceType, const char* source, UidIdentifierProcessor* uidIdentifierProcessor)
     {
         StringBuffer msg;
 
@@ -661,8 +657,7 @@ namespace danek
                             spelling << '"';
                             break;
                         default:
-                            msg << "Invalid escape sequence (%" << m_ch.c_str()[0] << ") in string on line "
-                                << m_lineNum;
+                            msg << "Invalid escape sequence (%" << m_ch.c_str()[0] << ") in string on line " << m_lineNum;
                             throw ConfigurationException(msg.str());
                     }
                     break;

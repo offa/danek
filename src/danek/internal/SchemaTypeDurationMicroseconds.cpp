@@ -27,8 +27,8 @@
 
 namespace danek
 {
-    void SchemaTypeDurationMicroseconds::checkRule(const SchemaValidator* sv, const Configuration* cfg,
-                                                   const char* typeName, const StringVector& typeArgs, const char* rule) const
+    void SchemaTypeDurationMicroseconds::checkRule(const SchemaValidator* sv, const Configuration* cfg, const char* typeName,
+                                                   const StringVector& typeArgs, const char* rule) const
 
     {
         unused(sv);
@@ -94,8 +94,8 @@ namespace danek
         }
     }
 
-    bool SchemaTypeDurationMicroseconds::isA(const SchemaValidator* sv, const Configuration* cfg,
-                                             const char* value, const char* typeName, const StringVector& typeArgs, int indentLevel,
+    bool SchemaTypeDurationMicroseconds::isA(const SchemaValidator* sv, const Configuration* cfg, const char* value,
+                                             const char* typeName, const StringVector& typeArgs, int indentLevel,
                                              StringBuffer& errSuffix) const
     {
         unused(sv);

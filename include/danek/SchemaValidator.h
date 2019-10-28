@@ -63,12 +63,14 @@ namespace danek
         void parseSchema(const char** schema, int schemaSize);
         void parseSchema(const char** nullTerminatedSchema);
 
-        void validate(const Configuration* cfg, const char* scope, const char* localName, ForceMode forceMode = ForceMode::None) const
+        void validate(const Configuration* cfg, const char* scope, const char* localName,
+                      ForceMode forceMode = ForceMode::None) const
         {
             validate(cfg, scope, localName, true, ConfType::ScopesAndVars, forceMode);
         }
 
-        void validate(const Configuration* cfg, const char* scope, const char* localName, bool recurseIntoSubscopes, ConfType typeMask, ForceMode forceMode = ForceMode::None) const;
+        void validate(const Configuration* cfg, const char* scope, const char* localName, bool recurseIntoSubscopes,
+                      ConfType typeMask, ForceMode forceMode = ForceMode::None) const;
 
 
         SchemaValidator& operator=(const SchemaValidator&) = delete;
@@ -88,15 +90,19 @@ namespace danek
         // Helper operations.
         SchemaType* findType(const char* name) const;
 
-        void validate(const Configuration* cfg, const char* scope, const char* localName, const StringVector& itemNames, ForceMode forceMode) const;
+        void validate(const Configuration* cfg, const char* scope, const char* localName, const StringVector& itemNames,
+                      ForceMode forceMode) const;
         void validateForceMode(const Configuration* cfg, const char* scope, const char* localName, ForceMode forceMode) const;
         void validateRequiredUidEntry(const Configuration* cfg, const char* fullScope, SchemaIdRuleInfo* idRule) const;
 
-        void callCheckRule(const SchemaType* target, const Configuration* cfg, const char* typeName, const StringVector& typeArgs, const char* rule, int indentLevel) const;
+        void callCheckRule(const SchemaType* target, const Configuration* cfg, const char* typeName, const StringVector& typeArgs,
+                           const char* rule, int indentLevel) const;
 
-        void callValidate(const SchemaType* target, const Configuration* cfg, const char* scope, const char* localName, const char* typeName, const char* origTypeName, const StringVector& typeArgs, int indentLevel) const;
+        void callValidate(const SchemaType* target, const Configuration* cfg, const char* scope, const char* localName,
+                          const char* typeName, const char* origTypeName, const StringVector& typeArgs, int indentLevel) const;
 
-        bool callIsA(const SchemaType* target, const Configuration* cfg, const char* value, const char* typeName, const StringVector& typeArgs, int indentLevel, StringBuffer& errSuffix) const;
+        bool callIsA(const SchemaType* target, const Configuration* cfg, const char* value, const char* typeName,
+                     const StringVector& typeArgs, int indentLevel, StringBuffer& errSuffix) const;
 
         void printTypeArgs(const StringVector& typeArgs, int indentLevel) const;
         void printTypeNameAndArgs(const char* typeName, const StringVector& typeArgs, int indentLevel) const;
@@ -109,11 +115,11 @@ namespace danek
         void ensureSpaceInTypesArray();
 
         void registerTypedef( // called by the SchemaParser class
-            const char* typeName, ConfType cfgType, const char* baseTypeName,
-            const StringVector& baseTypeArgs);
+            const char* typeName, ConfType cfgType, const char* baseTypeName, const StringVector& baseTypeArgs);
 
         SchemaIdRuleInfo* findIdRule(const char* name) const;
-        bool shouldIgnore(const Configuration* cfg, const char* scope, const char* expandedName, const char* unexpandedName) const;
+        bool shouldIgnore(const Configuration* cfg, const char* scope, const char* expandedName,
+                          const char* unexpandedName) const;
 
         // Instance variables are NOT visible to subclasses.
         SchemaIdRuleInfo** m_idRules;

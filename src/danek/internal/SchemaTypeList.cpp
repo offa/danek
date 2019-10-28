@@ -64,20 +64,19 @@ namespace danek
             case ConfType::String:
                 break;
             case ConfType::List:
-                msg << "you cannot embed a list type ('" << listElementTypeName
-                    << "') inside another list in rule '" << rule << "'";
+                msg << "you cannot embed a list type ('" << listElementTypeName << "') inside another list in rule '" << rule
+                    << "'";
                 throw ConfigurationException(msg.str());
             case ConfType::Scope:
-                msg << "you cannot embed a scope type ('" << listElementTypeName
-                    << "') inside a list in rule '" << rule << "'";
+                msg << "you cannot embed a scope type ('" << listElementTypeName << "') inside a list in rule '" << rule << "'";
                 throw ConfigurationException(msg.str());
             default:
                 throw std::exception{}; // Bug!
         }
     }
 
-    void SchemaTypeList::validate(const SchemaValidator* sv, const Configuration* cfg, const char* scope,
-                                  const char* name, const char* typeName, const char* origTypeName, const StringVector& typeArgs,
+    void SchemaTypeList::validate(const SchemaValidator* sv, const Configuration* cfg, const char* scope, const char* name,
+                                  const char* typeName, const char* origTypeName, const StringVector& typeArgs,
                                   int indentLevel) const
     {
         unused(typeName);
@@ -98,8 +97,7 @@ namespace danek
         for (std::size_t i = 0; i < data.size(); i++)
         {
             const char* elemValue = data[i].c_str();
-            bool ok =
-                callIsA(elemTypeDef, sv, cfg, elemValue, elemTypeName, emptyArgs, indentLevel + 1, errSuffix);
+            bool ok = callIsA(elemTypeDef, sv, cfg, elemValue, elemTypeName, emptyArgs, indentLevel + 1, errSuffix);
             if (!ok)
             {
                 const char* sep;
@@ -112,8 +110,8 @@ namespace danek
                     sep = "; ";
                 }
                 cfg->mergeNames(scope, name, fullyScopedName);
-                msg << cfg->fileName() << ": bad " << elemTypeName << " value ('" << elemValue << "') for '"
-                    << fullyScopedName << "[" << static_cast<int>(i) << "]'" << sep << errSuffix;
+                msg << cfg->fileName() << ": bad " << elemTypeName << " value ('" << elemValue << "') for '" << fullyScopedName
+                    << "[" << static_cast<int>(i) << "]'" << sep << errSuffix;
                 throw ConfigurationException(msg.str());
             }
         }

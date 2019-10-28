@@ -31,8 +31,7 @@ namespace danek
     {
     public:
         SchemaTypeDurationMicroseconds()
-            : SchemaType(
-                  "durationMicroseconds", "danek::SchemaTypeDurationMicroseconds", ConfType::String)
+            : SchemaType("durationMicroseconds", "danek::SchemaTypeDurationMicroseconds", ConfType::String)
         {
         }
         virtual ~SchemaTypeDurationMicroseconds()
@@ -43,8 +42,7 @@ namespace danek
         virtual void checkRule(const SchemaValidator* sv, const Configuration* cfg, const char* typeName,
                                const StringVector& typeArgs, const char* rule) const;
 
-        virtual bool isA(const SchemaValidator* sv, const Configuration* cfg, const char* value,
-                         const char* typeName, const StringVector& typeArgs, int indentLevel,
-                         StringBuffer& errSuffix) const;
+        virtual bool isA(const SchemaValidator* sv, const Configuration* cfg, const char* value, const char* typeName,
+                         const StringVector& typeArgs, int indentLevel, StringBuffer& errSuffix) const;
     };
 }

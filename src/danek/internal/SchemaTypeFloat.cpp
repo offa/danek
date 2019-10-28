@@ -75,8 +75,8 @@ namespace danek
         }
     }
 
-    bool SchemaTypeFloat::isA(const SchemaValidator* sv, const Configuration* cfg, const char* value,
-                              const char* typeName, const StringVector& typeArgs, int indentLevel, StringBuffer& errSuffix) const
+    bool SchemaTypeFloat::isA(const SchemaValidator* sv, const Configuration* cfg, const char* value, const char* typeName,
+                              const StringVector& typeArgs, int indentLevel, StringBuffer& errSuffix) const
     {
         unused(sv);
         unused(typeName);

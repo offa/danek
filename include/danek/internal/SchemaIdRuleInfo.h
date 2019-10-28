@@ -30,8 +30,7 @@ namespace danek
     class SchemaIdRuleInfo
     {
     public:
-        SchemaIdRuleInfo()
-            : m_locallyScopedName(), m_typeName(), m_arguments(), m_isOptional(false)
+        SchemaIdRuleInfo() : m_locallyScopedName(), m_typeName(), m_arguments(), m_isOptional(false)
         {
         }
 
