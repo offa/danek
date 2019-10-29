@@ -1458,14 +1458,25 @@ namespace danek
     }
 
     static SpellingAndValue durationMicrosecondsUnitsInfo[] = {
-        {"microsecond", 1},      {"microseconds", 1},      {"millisecond", 1000},        {"milliseconds", 1000},
-        {"second", 1000 * 1000}, {"seconds", 1000 * 1000}, {"minute", 1000 * 1000 * 60}, {"minutes", 1000 * 1000 * 60},
+        {"microsecond", 1},
+        {"microseconds", 1},
+        {"millisecond", 1000},
+        {"milliseconds", 1000},
+        {"second", 1000 * 1000},
+        {"seconds", 1000 * 1000},
+        {"minute", 1000 * 1000 * 60},
+        {"minutes", 1000 * 1000 * 60},
     };
     static const int countDurationMicrosecondsInfo =
         sizeof(durationMicrosecondsUnitsInfo) / sizeof(durationMicrosecondsUnitsInfo[0]);
 
     static const char* allowedDurationMicrosecondsUnits[] = {
-        "millisecond", "milliseconds", "second", "seconds", "minute", "minutes",
+        "millisecond",
+        "milliseconds",
+        "second",
+        "seconds",
+        "minute",
+        "minutes",
     };
     static const int countAllowedDurationMicrosecondsUnits =
         sizeof(allowedDurationMicrosecondsUnits) / sizeof(allowedDurationMicrosecondsUnits[0]);
@@ -1507,7 +1518,7 @@ namespace danek
     static const int countDurationSecondsInfo = sizeof(durationSecondsUnitsInfo) / sizeof(durationSecondsUnitsInfo[0]);
 
     static const char* allowedDurationSecondsUnits[] = {"second", "seconds", "minute", "minutes", "hour",
-                                                        "hours",  "day",     "days",   "week",    "weeks"};
+                                                        "hours", "day", "days", "week", "weeks"};
     static const int countAllowedDurationSecondsUnits =
         sizeof(allowedDurationSecondsUnits) / sizeof(allowedDurationSecondsUnits[0]);
 
@@ -1539,7 +1550,11 @@ namespace danek
     }
 
     static SpellingAndValue MemorySizeBytesUnitsInfo[] = {
-        {"byte", 1}, {"bytes", 1}, {"KB", 1024}, {"MB", 1024 * 1024}, {"GB", 1024 * 1024 * 1024},
+        {"byte", 1},
+        {"bytes", 1},
+        {"KB", 1024},
+        {"MB", 1024 * 1024},
+        {"GB", 1024 * 1024 * 1024},
     };
 
     static SpellingAndValue MemorySizeKBUnitsInfo[] = {

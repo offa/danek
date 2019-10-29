@@ -41,7 +41,8 @@
 namespace danek
 {
 
-    UidIdentifierProcessor::UidIdentifierProcessor() : m_count(0), m_uidToken("uid-")
+    UidIdentifierProcessor::UidIdentifierProcessor()
+        : m_count(0), m_uidToken("uid-")
     {
     }
 

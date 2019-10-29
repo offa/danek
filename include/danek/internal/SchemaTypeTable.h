@@ -30,7 +30,8 @@ namespace danek
     class SchemaTypeTable : public SchemaType
     {
     public:
-        SchemaTypeTable() : SchemaType("table", "danek::SchemaTypeTable", ConfType::String)
+        SchemaTypeTable()
+            : SchemaType("table", "danek::SchemaTypeTable", ConfType::String)
         {
         }
         virtual ~SchemaTypeTable()

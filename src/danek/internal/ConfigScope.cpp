@@ -33,7 +33,8 @@
 namespace danek
 {
 
-    ConfigScope::ConfigScope(ConfigScope* parentScope, const std::string& name) : m_parentScope(parentScope)
+    ConfigScope::ConfigScope(ConfigScope* parentScope, const std::string& name)
+        : m_parentScope(parentScope)
     {
         if (m_parentScope == nullptr)
         {

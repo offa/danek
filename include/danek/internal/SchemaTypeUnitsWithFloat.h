@@ -30,7 +30,8 @@ namespace danek
     class SchemaTypeUnitsWithFloat : public SchemaType
     {
     public:
-        SchemaTypeUnitsWithFloat() : SchemaType("units_with_float", "danek::SchemaTypeUnitsWithFloat", ConfType::String)
+        SchemaTypeUnitsWithFloat()
+            : SchemaType("units_with_float", "danek::SchemaTypeUnitsWithFloat", ConfType::String)
         {
         }
         virtual ~SchemaTypeUnitsWithFloat()

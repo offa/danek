@@ -30,7 +30,8 @@ namespace danek
     class SchemaTypeDurationSeconds : public SchemaType
     {
     public:
-        SchemaTypeDurationSeconds() : SchemaType("durationSeconds", "danek::SchemaTypeDurationSeconds", ConfType::String)
+        SchemaTypeDurationSeconds()
+            : SchemaType("durationSeconds", "danek::SchemaTypeDurationSeconds", ConfType::String)
         {
         }
         virtual ~SchemaTypeDurationSeconds()

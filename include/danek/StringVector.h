@@ -40,7 +40,8 @@ namespace danek
             m_data.reserve(initialCapacity);
         }
 
-        explicit StringVector(const std::vector<std::string>& data) : m_data(data)
+        explicit StringVector(const std::vector<std::string>& data)
+            : m_data(data)
         {
         }
 

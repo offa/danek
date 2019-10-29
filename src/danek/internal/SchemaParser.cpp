@@ -36,7 +36,8 @@ namespace danek
     extern "C" int danek_compareSchemaIdRuleInfo_c(const void* p1, const void* p2);
 
 
-    SchemaParser::SchemaParser(SchemaValidator* sv) : m_lex(), m_sv(sv), m_cfg(Configuration::create())
+    SchemaParser::SchemaParser(SchemaValidator* sv)
+        : m_lex(), m_sv(sv), m_cfg(Configuration::create())
     {
     }
 
