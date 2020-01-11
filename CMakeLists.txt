@@ -8,7 +8,6 @@ include(Options)
 include(GNUInstallDirs)
 include(Compiler)
 include(ClangFormat)
-include(Templates)
 
 if( COVERAGE )
     include(Coverage)
@@ -36,8 +35,9 @@ add_compile_options_if_supported(-Wduplicated-cond
                                 -Wuseless-cast
                                 )
 
-include_directories("include")
+include(Templates)
 
+include_directories("include")
 add_subdirectory(src)
 
 
