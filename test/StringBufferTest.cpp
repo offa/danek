@@ -1,4 +1,4 @@
-// Copyright (c) 2017-2019 offa
+// Copyright (c) 2017-2020 offa
 // Copyright 2011 Ciaran McHale.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
