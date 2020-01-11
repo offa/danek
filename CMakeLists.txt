@@ -7,7 +7,6 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 include(Options)
 include(GNUInstallDirs)
 include(Compiler)
-include(CppStd)
 include(ClangFormat)
 include(Templates)
 
@@ -19,6 +18,9 @@ if( ENABLE_CPPCHECK )
     include(CppCheck)
 endif()
 
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_compile_options(-Wall
                     -Wextra
