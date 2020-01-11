@@ -23,7 +23,13 @@ macro(add_cxx_flag)
     endforeach()
 endmacro()
 
+# @deprecated - use add_common_flags() instead
 macro(add_compiler_flag)
+    message(DEPRECATION "add_compiler_flag() is deprecated, use add_common_flags() instead")
+    add_common_flags(${ARGN})
+endmacro()
+
+macro(add_common_flags)
     foreach(flag ${ARGN})
         add_c_flag(${flag})
         add_cxx_flag(${flag})
