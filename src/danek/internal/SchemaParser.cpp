@@ -109,9 +109,9 @@ namespace danek
         //--------
         for (int i = 0; i < m_sv->m_idRulesCurrSize - 1; ++i)
         {
-            const char* s1 = m_sv->m_idRules[i]->locallyScopedName().c_str();
-            const char* s2 = m_sv->m_idRules[i + 1]->locallyScopedName().c_str();
-            if (strcmp(s1, s2) == 0)
+            const auto s1 = m_sv->m_idRules[i]->locallyScopedName();
+            const auto s2 = m_sv->m_idRules[i + 1]->locallyScopedName();
+            if (s1 == s2)
             {
                 std::stringstream msg;
                 msg << "There are multiple rules for '" << s1 << "'";
@@ -164,11 +164,11 @@ namespace danek
         //--------
         if (!isOptional)
         {
-            const char* name = ruleInfo->locallyScopedName().c_str();
-            const char* ptr = strrchr(name, '.');
+            const auto name = ruleInfo->locallyScopedName();
+            const char* ptr = strrchr(name.c_str(), '.');
             if (ptr == nullptr)
             {
-                ptr = name;
+                ptr = name.c_str();
             }
             else
             {
