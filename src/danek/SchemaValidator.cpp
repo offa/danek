@@ -470,9 +470,9 @@ namespace danek
         {
             // Does unexpandedName start with rule.m_locallyScopedName
             // followed by "."?
-            const char* name = m_ignoreRules[i]->locallyScopedName().c_str();
-            const auto len = strlen(name);
-            if (strncmp(unexpandedName, name, len) != 0)
+            const auto name = m_ignoreRules[i]->locallyScopedName();
+            const auto len = name.size();
+            if (strncmp(unexpandedName, name.c_str(), len) != 0)
             {
                 continue;
             }
