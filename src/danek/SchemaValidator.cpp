@@ -403,16 +403,16 @@ namespace danek
             {
                 continue;
             }
-            const char* nameInRule = idRule->locallyScopedName().c_str();
-            if (strstr(nameInRule, "uid-") != nullptr)
+            const auto nameInRule = idRule->locallyScopedName();
+            if (strstr(nameInRule.c_str(), "uid-") != nullptr)
             {
                 validateRequiredUidEntry(cfg, fullyScopedName.str().c_str(), idRule);
             }
             else
             {
-                if (cfg->type(fullyScopedName.str().c_str(), nameInRule) == ConfType::NoValue)
+                if (cfg->type(fullyScopedName.str().c_str(), nameInRule.c_str()) == ConfType::NoValue)
                 {
-                    cfg->mergeNames(fullyScopedName.str().c_str(), nameInRule, nameOfMissingEntry);
+                    cfg->mergeNames(fullyScopedName.str().c_str(), nameInRule.c_str(), nameOfMissingEntry);
                     const auto typeName = idRule->typeName();
                     msg << cfg->fileName() << ": the " << typeName << " '" << nameOfMissingEntry << "' does not exist";
                     throw ConfigurationException(msg.str());
@@ -431,9 +431,9 @@ namespace danek
         StringVector parentScopes;
         const char* ptr;
 
-        const char* nameInRule = idRule->locallyScopedName().c_str();
-        compat::checkAssertion(strstr(nameInRule, "uid-") != nullptr);
-        lastDot = strrchr(nameInRule, '.');
+        const auto nameInRule = idRule->locallyScopedName();
+        compat::checkAssertion(strstr(nameInRule.c_str(), "uid-") != nullptr);
+        lastDot = strrchr(nameInRule.c_str(), '.');
         if (lastDot == nullptr || strstr(lastDot + 1, "uid-") != nullptr)
         {
             return;
@@ -443,7 +443,7 @@ namespace danek
         {
             parentScopePattern.append('.');
         }
-        for (ptr = nameInRule; ptr != lastDot; ptr++)
+        for (ptr = nameInRule.c_str(); ptr != lastDot; ptr++)
         {
             parentScopePattern.append(*ptr);
         }
