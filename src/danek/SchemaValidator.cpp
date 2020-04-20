@@ -357,12 +357,12 @@ namespace danek
 
             // There is an idRule for the entry. Look up the idRule's
             // type, and invoke its validate() operation.
-            const char* typeName = idRule->typeName().c_str();
-            SchemaType* typeDef = findType(typeName);
+            const auto typeName = idRule->typeName();
+            SchemaType* typeDef = findType(typeName.c_str());
             compat::checkAssertion(typeDef != nullptr);
             try
             {
-                callValidate(typeDef, cfg, fullyScopedName.str().c_str(), iName, typeName, typeName, StringVector(idRule->args()),
+                callValidate(typeDef, cfg, fullyScopedName.str().c_str(), iName, typeName.c_str(), typeName.c_str(), StringVector(idRule->args()),
                              1);
             }
             catch (const ConfigurationException& ex)
