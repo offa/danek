@@ -21,9 +21,6 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//--------
-// #include's
-//--------
 #include "danek/internal/MBChar.h"
 #include <ctype.h>
 #include <wchar.h>
@@ -34,11 +31,6 @@ namespace danek
     MBChar::MBChar()
     {
         reset();
-    }
-
-    MBChar::~MBChar()
-    {
-        // Nothing to do
     }
 
     bool MBChar::operator==(const MBChar& other) const

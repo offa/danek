@@ -23,10 +23,6 @@
 
 #pragma once
 
-//--------
-// #include's
-//--------
-
 #include "danek/ConfType.h"
 #include "danek/ConfigurationException.h"
 #include "danek/StringBuffer.h"
@@ -42,9 +38,6 @@ namespace danek
         int value;
     };
 
-    //--------
-    // Class Configuration
-    //--------
 
     class Configuration
     {
@@ -55,6 +48,10 @@ namespace danek
             String,
             Exec
         };
+
+        Configuration(const Configuration& ex) = delete;
+        Configuration& operator=(const Configuration& ex) = delete;
+
 
         static Configuration* create();
         virtual void destroy();
@@ -98,11 +95,7 @@ namespace danek
         virtual void expandUid(StringBuffer& spelling) = 0;
         virtual std::string unexpandUid(const char* spelling, StringBuffer& buf) const = 0;
 
-        //--------
-        // Dump part or all of the configuration
-        //--------
         virtual void dump(StringBuffer& buf, bool wantExpandedUidNames) const = 0;
-
         virtual void dump(StringBuffer& buf, bool wantExpandedUidNames, const char* scope, const char* localName) const = 0;
 
         virtual bool isBoolean(const char* str) const = 0;
@@ -145,9 +138,6 @@ namespace danek
                                           const char** allowedUnits, int allowedUnitsSize, int& intResult,
                                           const char*& unitsResult) const = 0;
 
-        //--------
-        // lookup<Type>() operations, with and without default values.
-        //--------
         virtual const char* lookupString(const char* scope, const char* localName, const char* defaultVal) const = 0;
         virtual const char* lookupString(const char* scope, const char* localName) const = 0;
 
@@ -219,34 +209,17 @@ namespace danek
 
         virtual void lookupScope(const char* scope, const char* localName) const = 0;
 
-        //--------
-        // Update operations
-        //--------
         virtual void insertString(const char* scope, const char* localName, const char* strValue) = 0;
-
         virtual void insertList(const char* scope, const char* localName, std::vector<std::string> data) = 0;
-
         virtual void insertList(const char* scope, const char* localName, const StringVector& vec) = 0;
-
         virtual void ensureScopeExists(const char* scope, const char* localName) = 0;
-
         virtual void remove(const char* scope, const char* localName) = 0;
 
         virtual void empty() = 0;
 
     protected:
-        //--------
-        // Available only to the implementation subclass
-        //--------
-        Configuration();
-        virtual ~Configuration();
-
-    private:
-        //--------
-        // Not implemented
-        //--------
-        Configuration(const Configuration& ex);
-        Configuration& operator=(const Configuration& ex);
+        Configuration() = default;
+        virtual ~Configuration() = default;
     };
 
     inline void Configuration::parse(const char* str)

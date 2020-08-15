@@ -32,33 +32,23 @@ namespace danek
     public:
         enum SchemaLexSymbols
         {
-            //--------
             // Constants for lexical symbols.
             // Keywords
-            //--------
             LEX_IGNORE_EVERYTHING_IN_SYM = 101,
             LEX_IGNORE_SCOPES_IN_SYM = 102,
             LEX_IGNORE_VARIABLES_IN_SYM = 103,
             LEX_TYPEDEF_SYM = 104,
             LEX_OPTIONAL_SYM = 105,
             LEX_REQUIRED_SYM = 106
-            //--------
             // There are no functions in the schema language
-            //--------
         };
 
-        //--------
-        // Constructors and destructor
-        //--------
+        SchemaLex() = delete;
         explicit SchemaLex(const char* str);
-        virtual ~SchemaLex();
+        virtual ~SchemaLex() = default;
+        SchemaLex(const SchemaLex&) = delete;
 
-    private:
-        //--------
-        // Unsupported constructors and assignment operators
-        //--------
-        SchemaLex();
-        SchemaLex(const SchemaLex&);
-        SchemaLex& operator=(const SchemaLex&);
+        SchemaLex& operator=(const SchemaLex&) = delete;
+
     };
 }

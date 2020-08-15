@@ -34,16 +34,18 @@ namespace danek
     {
     public:
         SchemaType(const char* typeName, const char* className, ConfType cfgType);
-        virtual ~SchemaType();
+        virtual ~SchemaType() = default;
 
         const char* typeName() const
         {
             return m_typeName.str().c_str();
         }
+
         const char* className() const
         {
             return m_className.str().c_str();
         }
+
         ConfType cfgType() const
         {
             return m_cfgType;

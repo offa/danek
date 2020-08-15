@@ -33,15 +33,10 @@ namespace danek
     class MBChar
     {
     public:
-        //--------
-        // Constructors and destructor
-        //--------
         MBChar();
-        ~MBChar();
+        ~MBChar() = default;
+        MBChar(const MBChar&) = delete;
 
-        //--------
-        // Public operations
-        //--------
         inline bool add(char ch);
         inline const char* c_str() const;
         inline int length() const;
@@ -63,22 +58,10 @@ namespace danek
         inline bool operator!=(char ch) const;
 
     private:
-        //--------
-        // Instance variables
-        //--------
         char m_mbChar[MB_LEN_MAX + 1];
         short m_mbCharLen;
         wchar_t m_wChar;
-
-        //--------
-        // Unsupported constructors and assignment operators
-        //--------
-        MBChar(const MBChar&);
     };
-
-    //--------
-    // Inline implementation of operations.
-    //--------
 
     inline MBChar& MBChar::operator=(const MBChar& other)
     {

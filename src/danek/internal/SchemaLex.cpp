@@ -21,17 +21,11 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//--------
-// #include's
-//--------
-
 #include "danek/internal/SchemaLex.h"
 
 namespace danek
 {
-    //--------
     // This array must be kept sorted becaue we do a binary search on it.
-    //--------
     static LexBase::KeywordInfo keywordInfoArray[] = {
         //----------------------------------------------------------------------
         // spelling               symbol
@@ -51,9 +45,5 @@ namespace danek
     {
         m_keywordInfoArray = keywordInfoArray;
         m_keywordInfoArraySize = keywordInfoArraySize;
-    }
-
-    SchemaLex::~SchemaLex()
-    {
     }
 }

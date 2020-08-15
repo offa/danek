@@ -32,10 +32,8 @@ namespace danek
     public:
         enum ConfigLexSymbols
         {
-            //--------
             // Constants for lexical symbols.
             // First, keywords
-            //--------
             LEX_COPY_FROM_SYM = 101,
             LEX_ELSE_SYM = 102,
             LEX_ELSE_IF_SYM = 103,
@@ -46,9 +44,8 @@ namespace danek
             LEX_INCLUDE_SYM = 108,
             LEX_MATCHES_SYM = 109,
             LEX_REMOVE_SYM = 110,
-            //--------
+
             // Now, functions
-            //--------
             LEX_FUNC_CONFIG_FILE_SYM = 201,
             LEX_FUNC_CONFIG_TYPE_SYM = 202,
             LEX_FUNC_EXEC_SYM = 203,
@@ -65,18 +62,11 @@ namespace danek
             LEX_FUNC_SPLIT_SYM = 214
         };
 
-        //--------
-        // Constructors and destructor
-        //--------
         ConfigLex(Configuration::SourceType sourceType, const char* source, UidIdentifierProcessor* uidIdentifierProcessor);
-        virtual ~ConfigLex();
+        ConfigLex() = delete;
+        virtual ~ConfigLex() = default;
+        ConfigLex(const ConfigLex&) = delete;
 
-    private:
-        //--------
-        // Not implemented.
-        //--------
-        ConfigLex();
-        ConfigLex(const ConfigLex&);
-        ConfigLex& operator=(const ConfigLex&);
+        ConfigLex& operator=(const ConfigLex&) = delete;
     };
 }

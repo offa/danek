@@ -34,10 +34,6 @@ namespace danek
     {
     }
 
-    SchemaType::~SchemaType()
-    {
-    }
-
     void SchemaType::validate(const SchemaValidator* sv, const Configuration* cfg, const char* scope, const char* name,
                               const char* typeName, const char* origTypeName, const StringVector& typeArgs, int indentLevel) const
     {

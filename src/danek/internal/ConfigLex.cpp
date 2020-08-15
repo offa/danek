@@ -21,16 +21,11 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//--------
-// #include's
-//--------
 #include "danek/internal/ConfigLex.h"
 
 namespace danek
 {
-    //--------
     // This array must be kept sorted becaue we do a binary search on it.
-    //--------
     static LexBase::KeywordInfo keywordInfoArray[] = {
         //----------------------------------------------------------------------
         // spelling      symbol
@@ -49,9 +44,7 @@ namespace danek
 
     const static int keywordInfoArraySize = sizeof(keywordInfoArray) / sizeof(keywordInfoArray[0]);
 
-    //--------
     // This array must be kept sorted becaue we do a binary search on it.
-    //--------
     static LexBase::FuncInfo funcInfoArray[] = {
         //----------------------------------------------------------------------
         // spelling            type             symbol
@@ -81,10 +74,5 @@ namespace danek
         m_keywordInfoArraySize = keywordInfoArraySize;
         m_funcInfoArray = funcInfoArray;
         m_funcInfoArraySize = funcInfoArraySize;
-    }
-
-    ConfigLex::~ConfigLex()
-    {
-        // Nothing to do
     }
 }

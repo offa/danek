@@ -30,13 +30,6 @@
 
 namespace danek
 {
-    Configuration::Configuration()
-    {
-    }
-    Configuration::~Configuration()
-    {
-    }
-
     Configuration* Configuration::create()
     {
         return new ConfigurationImpl();
