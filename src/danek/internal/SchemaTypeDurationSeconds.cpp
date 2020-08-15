@@ -34,11 +34,10 @@ namespace danek
         unused(sv);
 
         StringBuffer msg;
-        int len;
         int min;
         int max;
 
-        len = typeArgs.size();
+        const auto len = typeArgs.size();
         if (len == 0)
         {
             return;
@@ -155,8 +154,7 @@ namespace danek
         }
         if (!ok)
         {
-            errSuffix << "the value is outside the permitted range [" << typeArgs[0].c_str() << ", " << typeArgs[1].c_str()
-                      << "]";
+            errSuffix << "the value is outside the permitted range [" << typeArgs[0].c_str() << ", " << typeArgs[1] << "]";
             return false;
         }
         return true;
