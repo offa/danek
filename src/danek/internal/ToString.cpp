@@ -109,7 +109,7 @@ namespace danek
             case ConfType::List:
             {
                 os << nameStr << " = [";
-                const auto values = item.listVal();
+                const auto& values = item.listVal();
 
                 if (values.empty() == false)
                 {

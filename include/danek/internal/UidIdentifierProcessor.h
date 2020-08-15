@@ -56,7 +56,7 @@ namespace danek
                 return false;
             }
             const auto itr = std::next(begin);
-            return (std::distance(itr, end) > 0) && (*itr != '-') && (std::isdigit(*itr) == false);
+            return (std::distance(itr, end) > 0) && (*itr != '-') && (std::isdigit(*itr) == 0);
         }
 
         std::string formatExpanded(const std::string& suffix);
