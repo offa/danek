@@ -233,14 +233,8 @@ namespace danek
         UidIdentifierProcessor uidProc;
         const auto unexpandedName = uidProc.unexpand(name);
 
-        for (std::size_t i = 0; i < filterPatterns.size(); ++i)
-        {
-            const char* pattern = filterPatterns[i].c_str();
-            if (patternMatch(unexpandedName.c_str(), pattern))
-            {
-                return true;
-            }
-        }
-        return false;
+        return std::any_of(filterPatterns.cbegin(), filterPatterns.cend(), [&unexpandedName](const auto& value) {
+            return patternMatch(unexpandedName.c_str(), value.c_str());
+        });
     }
 }
