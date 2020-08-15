@@ -59,21 +59,21 @@ namespace danek
             buffer.push_back(&str.front());
         }
 
-        bool result = cfg->isUnitsWithFloat(value, buffer.data(), buffer.size());
+        const bool result = cfg->isUnitsWithFloat(value, buffer.data(), buffer.size());
         if (result == false)
         {
             errSuffix << "the value should be in the format '<units> <float>' "
                       << "where <units> is one of:";
-            int len = typeArgs.size();
-            for (int i = 0; i < len; i++)
+            const auto len = typeArgs.size();
+            for (std::size_t i = 0; i < len; i++)
             {
                 if (i < len - 1)
                 {
-                    errSuffix << " '" << typeArgs[i].c_str() << "',";
+                    errSuffix << " '" << typeArgs[i] << "',";
                 }
                 else
                 {
-                    errSuffix << " '" << typeArgs[i].c_str() << "'";
+                    errSuffix << " '" << typeArgs[i] << "'";
                 }
             }
         }
