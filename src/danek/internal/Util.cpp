@@ -23,30 +23,26 @@
 #include "danek/internal/Util.h"
 #include <sstream>
 
-namespace danek
+namespace danek::util
 {
-    namespace util
+    std::vector<std::string> splitScopes(const std::string& input)
     {
+        constexpr char delim{'.'};
 
-        std::vector<std::string> splitScopes(const std::string& input)
+        if (input.empty() == true || input.find(delim) == std::string::npos)
         {
-            constexpr char delim{'.'};
-
-            if (input.empty() == true || input.find(delim) == false)
-            {
-                return {input};
-            }
-
-            std::vector<std::string> tokens;
-            std::stringstream ss{input};
-            std::string token;
-
-            while (std::getline(ss, token, delim))
-            {
-                tokens.push_back(token);
-            }
-
-            return tokens;
+            return {input};
         }
+
+        std::vector<std::string> tokens;
+        std::stringstream ss{input};
+        std::string token;
+
+        while (std::getline(ss, token, delim))
+        {
+            tokens.push_back(token);
+        }
+
+        return tokens;
     }
 }

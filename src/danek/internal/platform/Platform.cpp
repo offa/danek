@@ -26,34 +26,30 @@
 #include <sstream>
 #include <system_error>
 
-namespace danek
+namespace danek::platform
 {
-    namespace platform
+    std::string execCmd(const std::string& cmd)
     {
+        constexpr std::size_t bufferSize{128};
+        std::array<char, bufferSize> buffer;
+        std::ostringstream output;
+        const std::string cmdStr = cmd + " 2>&1";
+        std::shared_ptr<FILE> pipe(popen(cmdStr.c_str(), "r"), pclose);
 
-        std::string execCmd(const std::string& cmd)
+        if (!pipe)
         {
-            constexpr std::size_t bufferSize{128};
-            std::array<char, bufferSize> buffer;
-            std::ostringstream output;
-            const std::string cmdStr = cmd + " 2>&1";
-            std::shared_ptr<FILE> pipe(popen(cmdStr.c_str(), "r"), pclose);
-
-            if (!pipe)
-            {
-                const auto errorCode = errno;
-                throw std::system_error{errorCode, std::system_category()};
-            }
-
-            while (!std::feof(pipe.get()))
-            {
-                if (std::fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr)
-                {
-                    output << buffer.data();
-                }
-            }
-
-            return output.str();
+            const auto errorCode = errno;
+            throw std::system_error{errorCode, std::system_category()};
         }
+
+        while (!std::feof(pipe.get()))
+        {
+            if (std::fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr)
+            {
+                output << buffer.data();
+            }
+        }
+
+        return output.str();
     }
 }
