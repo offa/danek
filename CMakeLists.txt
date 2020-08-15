@@ -34,6 +34,7 @@ add_compile_options_if_supported(-Wduplicated-cond
                                 -Wuseless-cast
                                 )
 
+include("${CMAKE_BINARY_DIR}/conan_paths.cmake" OPTIONAL)
 include(Templates)
 
 include_directories("include")

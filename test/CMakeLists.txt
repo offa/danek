@@ -5,10 +5,10 @@ find_package(GTest REQUIRED)
 function(add_test_suite name)
     add_test(${name} ${name})
     target_link_libraries(${name} PRIVATE
-                            GTest::GTest
-                            GTest::Main
-                            GTest::Mock
-                            )
+        GTest::GTest
+        GTest::Mock
+        GTest::Main
+        )
 endfunction()
 
 
@@ -112,4 +112,3 @@ add_custom_target(unittest PublicMiscTests
                         COMMENT "Running unittests\n\n"
                         VERBATIM
                         )
-

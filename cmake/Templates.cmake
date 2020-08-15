@@ -1,8 +1,8 @@
 
-set(TEMPLATE_DIR "${CMAKE_MODULE_PATH}/template")
+set(TEMPLATE_DIR "${CMAKE_SOURCE_DIR}/cmake/template")
 set(GENERATED_DIR "${CMAKE_BINARY_DIR}/generated")
 
-file(READ ${CMAKE_MODULE_PATH}/DefaultSecurity.cfg DEFAULT_SECURITY_CONTENT)
+file(READ ${CMAKE_SOURCE_DIR}/cmake/DefaultSecurity.cfg DEFAULT_SECURITY_CONTENT)
 
 configure_file(${TEMPLATE_DIR}/DefaultSecurity.cpp.in
                 ${GENERATED_DIR}/DefaultSecurity.cpp
