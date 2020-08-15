@@ -20,7 +20,6 @@ Please see [Contributing](CONTRIBUTING.md) for how to contribute to this project
 
 ## Requirements
 
-- [**CMake**](http://www.cmake.org/)
 - [**GTest**](https://github.com/google/googletest) (*Optional*)
 
 
@@ -42,4 +41,3 @@ Alternatively execute CTest: `make test` or `ctest`.
 ## License
 
 [**MIT License**](LICENSE)
-
