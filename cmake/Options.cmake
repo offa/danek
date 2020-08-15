@@ -29,6 +29,3 @@ print_option(BUILD_DEMOS "Build Demos")
 
 option(BUILD_SHARED_LIBS "Build Shared Library" OFF)
 print_option(BUILD_SHARED_LIBS "Build shared library")
-
-option(ENABLE_CPPCHECK "Enables CppCheck (Requires Compile Commands)" OFF)
-print_option(ENABLE_CPPCHECK "Enable CppCheck")
