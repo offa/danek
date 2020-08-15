@@ -20,14 +20,17 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 add_compile_options(-Wall
                     -Wextra
                     -pedantic
+                    -pedantic-errors
                     -Werror
                     -Wshadow
                     -Wold-style-cast
+                    -Wnull-dereference
+                    -Wnon-virtual-dtor
+                    -Woverloaded-virtual
                     )
 add_compile_options_if_supported(-Wduplicated-cond
                                 -Wduplicated-branches
                                 -Wlogical-op
-                                -Wnull-dereference
                                 -Wuseless-cast
                                 )
 
