@@ -21,13 +21,11 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//--------
-// #include's
-//--------
 #include "Config2Cpp.h"
 #include "danek/Configuration.h"
 #include "danek/PatternMatch.h"
 #include "danek/SchemaValidator.h"
+#include <algorithm>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -165,18 +163,12 @@ void calculateSchema(const Configuration* cfg, const StringVector& namesList, co
 
 bool doesPatternMatchAnyUnexpandedNameInList(const Configuration* cfg, const char* pattern, const StringVector& namesList)
 {
-    StringBuffer buf;
-
-    int len = namesList.size();
-    for (int i = 0; i < len; ++i)
-    {
-        const auto uName = cfg->unexpandUid(namesList[i].c_str(), buf);
-        if (patternMatch(uName.c_str(), pattern))
-        {
-            return true;
-        }
-    }
-    return false;
+    const auto itr = std::find_if(std::begin(namesList), std::end(namesList), [&cfg, &pattern](const auto& element) {
+        StringBuffer buf;
+        const auto uName = cfg->unexpandUid(element.c_str(), buf);
+        return patternMatch(uName.c_str(), pattern);
+    });
+    return itr != std::end(namesList);
 }
 
 void checkForUnmatchedPatterns(const Configuration* cfg, const StringVector& namesList,
