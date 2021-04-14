@@ -30,19 +30,9 @@ namespace danek
     namespace
     {
 
-        std::string stringConcat(const std::string& s1, const std::string& s2, const std::string& s3 = "")
-        {
-            return s1 + s2 + s3;
-        }
-
-        std::string stringCopy(const std::string& s1)
-        {
-            return stringConcat(s1, "");
-        }
-
         void fail(const std::string& filename)
         {
-            const auto msg = stringConcat("cannot open '", filename, "'");
+            const auto msg = "cannot open '" + filename + "'";
             perror(msg.c_str());
         }
     }
@@ -99,7 +89,7 @@ namespace danek
                     usage("");
                     return false;
                 }
-                m_cfgFileName = stringCopy(argv[i + 1]);
+                m_cfgFileName = argv[i + 1];
                 ++i;
             }
             else if (strcmp(argv[i], "-noschema") == 0)
@@ -153,7 +143,7 @@ namespace danek
                     usage("");
                     return false;
                 }
-                m_hExt = stringCopy(argv[i + 1]);
+                m_hExt = argv[i + 1];
                 ++i;
             }
             else if (strcmp(argv[i], "-namespace") == 0)
