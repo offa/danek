@@ -30,8 +30,7 @@ namespace danek::platform
 {
     std::string execCmd(const std::string& cmd)
     {
-        constexpr std::size_t bufferSize{128};
-        std::array<char, bufferSize> buffer;
+        std::array<char, 128> buffer;
         std::ostringstream output;
         const std::string cmdStr = cmd + " 2>&1";
         std::shared_ptr<FILE> pipe(popen(cmdStr.c_str(), "r"), pclose);
