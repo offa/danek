@@ -23,6 +23,7 @@
 
 #pragma once
 
+#include <string>
 #include <stdio.h>
 
 namespace danek
@@ -30,9 +31,6 @@ namespace danek
     class Config2Cpp
     {
     public:
-        //--------
-        // Constructor and destructor
-        //--------
         explicit Config2Cpp(const char* progName);
         ~Config2Cpp();
 
@@ -76,7 +74,7 @@ namespace danek
         void output(FILE* file, int ch);
         void usage(const char* unknownArg);
 
-        char* m_progName;
+        std::string m_progName;
         char* m_cfgFileName;
         char* m_schemaOverrideCfg;
         char* m_schemaOverrideScope;
