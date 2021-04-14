@@ -1992,7 +1992,7 @@ namespace danek
     {
         char defaultStrVal[64]; // Big enough
 
-        sprintf(defaultStrVal, "%f", defaultVal);
+        sprintf(defaultStrVal, "%g", defaultVal);
         const char* strValue = lookupString(scope, localName, defaultStrVal);
         const float result = stringToFloat(scope, localName, strValue);
         return result;
