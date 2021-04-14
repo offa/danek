@@ -21,25 +21,30 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//--------
-// #include's
-//--------
 #include "Config2Cpp.h"
+#include <string>
 #include <string.h>
 
 namespace danek
 {
-    //--------
-    // Forward declarations of static functions
-    //--------
-    static char* stringConcat(const char* s1, const char* s2, const char* s3 = "");
-
-    //--------
-    // Inline functions
-    //--------
-    inline char* stringCopy(const char* s1)
+    namespace
     {
-        return stringConcat(s1, "");
+
+        std::string stringConcat(const std::string& s1, const std::string& s2, const std::string& s3 = "")
+        {
+            return s1 + s2 + s3;
+        }
+
+        std::string stringCopy(const std::string& s1)
+        {
+            return stringConcat(s1, "");
+        }
+
+        void fail(const std::string& filename)
+        {
+            const auto msg = stringConcat("cannot open '", filename, "'");
+            perror(msg.c_str());
+        }
     }
 
     //----------------------------------------------------------------------
@@ -49,18 +54,17 @@ namespace danek
     //----------------------------------------------------------------------
 
     Config2Cpp::Config2Cpp(const char* progName)
+        : m_progName(progName),
+          m_cfgFileName(),
+          m_schemaOverrideCfg(),
+          m_schemaOverrideScope(),
+          m_cppExt(),
+          m_hExt(),
+          m_wantSingleton(),
+          m_wantSchema(),
+          m_namespaceArraySize(),
+          m_namespaceArray()
     {
-        m_progName = stringCopy(progName);
-        m_cfgFileName = nullptr;
-        m_schemaOverrideCfg = nullptr;
-        m_schemaOverrideScope = stringCopy("");
-        m_className = nullptr;
-        m_cppExt = nullptr;
-        m_hExt = nullptr;
-        m_wantSingleton = false;
-        m_wantSchema = true;
-        m_namespaceArraySize = 0;
-        m_namespaceArray = nullptr;
     }
 
     //----------------------------------------------------------------------
@@ -71,16 +75,7 @@ namespace danek
 
     Config2Cpp::~Config2Cpp()
     {
-        int i;
-
-        delete[] m_progName;
-        delete[] m_cfgFileName;
-        delete[] m_schemaOverrideCfg;
-        delete[] m_schemaOverrideScope;
-        delete[] m_className;
-        delete[] m_cppExt;
-        delete[] m_hExt;
-        for (i = 0; i < m_namespaceArraySize; i++)
+        for (int i = 0; i < m_namespaceArraySize; i++)
         {
             delete[] m_namespaceArray[i];
         }
@@ -95,9 +90,7 @@ namespace danek
 
     bool Config2Cpp::parseCmdLineArgs(int argc, char** argv)
     {
-        int i;
-
-        for (i = 1; i < argc; i++)
+        for (int i = 1; i < argc; ++i)
         {
             if (strcmp(argv[i], "-cfg") == 0)
             {
@@ -107,7 +100,7 @@ namespace danek
                     return false;
                 }
                 m_cfgFileName = stringCopy(argv[i + 1]);
-                i++;
+                ++i;
             }
             else if (strcmp(argv[i], "-noschema") == 0)
             {
@@ -120,8 +113,8 @@ namespace danek
                     usage("");
                     return false;
                 }
-                m_className = stringCopy(argv[i + 1]);
-                i++;
+                m_className = argv[i + 1];
+                ++i;
             }
             else if (strcmp(argv[i], "-schemaOverrideCfg") == 0)
             {
@@ -130,8 +123,8 @@ namespace danek
                     usage("");
                     return false;
                 }
-                m_schemaOverrideCfg = stringCopy(argv[i + 1]);
-                i++;
+                m_schemaOverrideCfg = argv[i + 1];
+                ++i;
             }
             else if (strcmp(argv[i], "-schemaOverrideScope") == 0)
             {
@@ -140,8 +133,8 @@ namespace danek
                     usage("");
                     return false;
                 }
-                m_schemaOverrideScope = stringCopy(argv[i + 1]);
-                i++;
+                m_schemaOverrideScope = argv[i + 1];
+                ++i;
             }
             else if (strcmp(argv[i], "-cpp") == 0)
             {
@@ -150,8 +143,8 @@ namespace danek
                     usage("");
                     return false;
                 }
-                m_cppExt = stringCopy(argv[i + 1]);
-                i++;
+                m_cppExt = argv[i + 1];
+                ++i;
             }
             else if (strcmp(argv[i], "-h") == 0)
             {
@@ -161,7 +154,7 @@ namespace danek
                     return false;
                 }
                 m_hExt = stringCopy(argv[i + 1]);
-                i++;
+                ++i;
             }
             else if (strcmp(argv[i], "-namespace") == 0)
             {
@@ -174,7 +167,7 @@ namespace danek
                 {
                     return false;
                 }
-                i++;
+                ++i;
             }
             else if (strcmp(argv[i], "-singleton") == 0)
             {
@@ -186,19 +179,19 @@ namespace danek
                 return false;
             }
         }
-        if (m_className == nullptr || m_cfgFileName == nullptr)
+        if (m_className.empty() || m_cfgFileName.empty())
         {
             usage("");
             return false;
         }
 
-        if (m_cppExt == nullptr)
+        if (m_cppExt.empty())
         {
-            m_cppExt = stringCopy(".cpp");
+            m_cppExt = ".cpp";
         }
-        if (m_hExt == nullptr)
+        if (m_hExt.empty())
         {
-            m_hExt = stringCopy(".h");
+            m_hExt = ".h";
         }
         return true;
     }
@@ -211,48 +204,29 @@ namespace danek
 
     bool Config2Cpp::generateFiles(const char* const* schema, int schemaSize)
     {
-        char* msg;
-        char* cppFileName;
-        char* hFileName;
-        FILE* cfgFile;
-        FILE* cppFile;
-        FILE* hFile;
-
-        cppFileName = stringConcat(m_className, m_cppExt);
-        hFileName = stringConcat(m_className, m_hExt);
+        auto cppFileName = m_className + m_cppExt;
+        auto hFileName = m_className + m_hExt;
 
         //--------
         // Open all the files
         //--------
-        cfgFile = fopen(m_cfgFileName, "r");
+        FILE* cfgFile = fopen(m_cfgFileName.c_str(), "r");
         if (cfgFile == nullptr)
         {
-            msg = stringConcat("cannot open '", m_cfgFileName, "'");
-            perror(msg);
-            delete[] msg;
-            delete[] cppFileName;
-            delete[] hFileName;
+            fail(m_cfgFileName);
             return false;
         }
-        cppFile = fopen(cppFileName, "w");
+        FILE* cppFile = fopen(cppFileName.c_str(), "w");
         if (cppFile == nullptr)
         {
-            msg = stringConcat("cannot open '", cppFileName, "'");
-            perror(msg);
-            delete[] msg;
-            delete[] cppFileName;
-            delete[] hFileName;
+            fail(cppFileName);
             fclose(cfgFile);
             return false;
         }
-        hFile = fopen(hFileName, "w");
+        FILE* hFile = fopen(hFileName.c_str(), "w");
         if (hFile == nullptr)
         {
-            msg = stringConcat("cannot open '", hFileName, "'");
-            perror(msg);
-            delete[] msg;
-            delete[] cppFileName;
-            delete[] hFileName;
+            fail(hFileName);
             fclose(cfgFile);
             fclose(cppFile);
             return false;
@@ -267,8 +241,6 @@ namespace danek
         //--------
         // Tidy up
         //--------
-        delete[] cppFileName;
-        delete[] hFileName;
         fclose(cfgFile);
         fclose(cppFile);
         fclose(hFile);
@@ -379,7 +351,7 @@ namespace danek
         {
             fprintf(stderr, "unknown argument '%s'\n", unknownArg);
         }
-        fprintf(stderr, "usage: %s -cfg <file.cfg> -class <class>\n", m_progName);
+        fprintf(stderr, "usage: %s -cfg <file.cfg> -class <class>\n", m_progName.c_str());
         fprintf(stderr, "options are:\n");
         fprintf(stderr, "\t-noschema            Do not generate a schema\n");
         fprintf(stderr, "\t-schemaOverrideCfg   <file.cfg>   \n");
@@ -401,13 +373,13 @@ namespace danek
         int i;
 
         fprintf(file, "//%s%s\n", "-----------------------------------", "-----------------------------------");
-        fprintf(file, "// WARNING: This file was generated by %s. %s\n", m_progName, "Do not edit.");
+        fprintf(file, "// WARNING: This file was generated by %s. %s\n", m_progName.c_str(), "Do not edit.");
         fprintf(file, "//\n");
         fprintf(file, "// Description: a class providing %s\n", "access to an embedded");
         fprintf(file, "//              configuration string.\n");
         fprintf(file, "//%s%s\n", "-----------------------------------", "-----------------------------------");
-        fprintf(file, "#ifndef %s_h\n", m_className);
-        fprintf(file, "#define %s_h\n", m_className);
+        fprintf(file, "#ifndef %s_h\n", m_className.c_str());
+        fprintf(file, "#define %s_h\n", m_className.c_str());
         fprintf(file, "\n");
         fprintf(file, "#include \"danek/Configuration.h\"\n");
         fprintf(file, "\n");
@@ -421,7 +393,7 @@ namespace danek
             fprintf(file, "\n");
             fprintf(file, "\n");
         }
-        fprintf(file, "class %s\n", m_className);
+        fprintf(file, "class %s\n", m_className.c_str());
         fprintf(file, "{\n");
         fprintf(file, "public:\n");
         fprintf(file, "\t//--------\n");
@@ -435,8 +407,8 @@ namespace danek
             fprintf(file, "\t// Constructor and destructor.\n");
         }
         fprintf(file, "\t//--------\n");
-        fprintf(file, "\t%s();\n", m_className);
-        fprintf(file, "\t~%s();\n", m_className);
+        fprintf(file, "\t%s();\n", m_className.c_str());
+        fprintf(file, "\t~%s();\n", m_className.c_str());
         fprintf(file, "\n");
         if (m_wantSingleton)
         {
@@ -502,14 +474,14 @@ namespace danek
         }
         if (m_wantSingleton)
         {
-            fprintf(file, "\tstatic %s s_singleton;\n", m_className);
+            fprintf(file, "\tstatic %s s_singleton;\n", m_className.c_str());
         }
         fprintf(file, "\n");
         fprintf(file, "\t//--------\n");
         fprintf(file, "\t// The following are not implemented\n");
         fprintf(file, "\t//--------\n");
-        fprintf(file, "\t%s & operator=(const %s &);\n", m_className, m_className);
-        fprintf(file, "\t%s(const %s &);\n", m_className, m_className);
+        fprintf(file, "\t%s & operator=(const %s &);\n", m_className.c_str(), m_className.c_str());
+        fprintf(file, "\t%s(const %s &);\n", m_className.c_str(), m_className.c_str());
         fprintf(file, "};\n");
         fprintf(file, "\n");
         fprintf(file, "\n");
@@ -538,10 +510,10 @@ namespace danek
         int count;
 
         fprintf(file, "//%s%s\n", "-----------------------------------", "-----------------------------------");
-        fprintf(file, "// WARNING: This file was generated by %s. %s\n", m_progName, "Do not edit.");
+        fprintf(file, "// WARNING: This file was generated by %s. %s\n", m_progName.c_str(), "Do not edit.");
         fprintf(file, "//%s%s\n", "-----------------------------------", "-----------------------------------");
         fprintf(file, "\n");
-        fprintf(file, "#include \"%s%s\"\n", m_className, m_hExt);
+        fprintf(file, "#include \"%s%s\"\n", m_className.c_str(), m_hExt.c_str());
         fprintf(file, "\n\n\n\n\n");
         if (m_namespaceArraySize != 0)
         {
@@ -557,10 +529,10 @@ namespace danek
             fprintf(file, "//--------\n");
             fprintf(file, "// Define the singleton object\n");
             fprintf(file, "//--------\n");
-            fprintf(file, "%s %s::s_singleton;\n", m_className, m_className);
+            fprintf(file, "%s %s::s_singleton;\n", m_className.c_str(), m_className.c_str());
             fprintf(file, "\n\n");
         }
-        fprintf(file, "%s::%s()\n", m_className, m_className);
+        fprintf(file, "%s::%s()\n", m_className.c_str(), m_className.c_str());
         fprintf(file, "{\n");
         if (schemaSize > 0)
         {
@@ -592,7 +564,7 @@ namespace danek
         fprintf(file, "\";\n");
         fprintf(file, "}\n");
         fprintf(file, "\n\n\n\n\n");
-        fprintf(file, "%s::~%s()\n", m_className, m_className);
+        fprintf(file, "%s::~%s()\n", m_className.c_str(), m_className.c_str());
         fprintf(file, "{\n");
         fprintf(file, "\t// Nothing to do\n");
         fprintf(file, "}\n");
@@ -635,22 +607,5 @@ namespace danek
                 fputc(ch, file);
                 break;
         }
-    }
-
-    //----------------------------------------------------------------------
-    // Function:	stringConcat()
-    //
-    // Description:	Concatenate strings.
-    //----------------------------------------------------------------------
-
-    static char* stringConcat(const char* s1, const char* s2, const char* s3)
-    {
-        char* result;
-        int len;
-
-        len = strlen(s1) + strlen(s2) + strlen(s3);
-        result = new char[len + 1];
-        sprintf(result, "%s%s%s", s1, s2, s3);
-        return result;
     }
 }

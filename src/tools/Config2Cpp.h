@@ -23,10 +23,7 @@
 
 #pragma once
 
-//--------
-// #include's
-//--------
-
+#include <string>
 #include <stdio.h>
 
 namespace danek
@@ -45,27 +42,27 @@ namespace danek
 
         const char* cfgFileName()
         {
-            return m_cfgFileName;
+            return m_cfgFileName.c_str();
         }
         const char* schemaOverrideCfg()
         {
-            return m_schemaOverrideCfg;
+            return m_schemaOverrideCfg.c_str();
         }
         const char* schemaOverrideScope()
         {
-            return m_schemaOverrideScope;
+            return m_schemaOverrideScope.c_str();
         }
         const char* className()
         {
-            return m_className;
+            return m_className.c_str();
         }
         const char* cppExt()
         {
-            return m_cppExt;
+            return m_cppExt.c_str();
         }
         const char* hExt()
         {
-            return m_hExt;
+            return m_hExt.c_str();
         }
         bool wantSchema()
         {
@@ -73,9 +70,6 @@ namespace danek
         }
 
     private:
-        //--------
-        // Helper functions
-        //--------
         bool parseNamespace(const char* str);
         void reportInvalidNamespace(const char* ns);
         void printToHeaderFile(FILE* file, int namesArraySize);
@@ -83,16 +77,13 @@ namespace danek
         void output(FILE* file, int ch);
         void usage(const char* unknownArg);
 
-        //--------
-        // Instance variables
-        //--------
-        char* m_progName;
-        char* m_cfgFileName;
-        char* m_schemaOverrideCfg;
-        char* m_schemaOverrideScope;
-        char* m_className;
-        char* m_cppExt;
-        char* m_hExt;
+        std::string m_progName;
+        std::string m_cfgFileName;
+        std::string m_schemaOverrideCfg;
+        std::string m_schemaOverrideScope;
+        std::string m_className;
+        std::string m_cppExt;
+        std::string m_hExt;
         bool m_wantSingleton;
         bool m_wantSchema;
         int m_namespaceArraySize;
