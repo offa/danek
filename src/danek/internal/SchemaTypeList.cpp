@@ -91,6 +91,7 @@ namespace danek
         compat::checkAssertion(typeArgs.size() == 1);
         const char* elemTypeName = typeArgs[0].c_str();
         SchemaType* elemTypeDef = findType(sv, elemTypeName);
+        compat::checkAssertion(elemTypeDef != nullptr);
         compat::checkAssertion(elemTypeDef->cfgType() == ConfType::String);
 
         cfg->lookupList(scope, name, data);
