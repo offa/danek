@@ -23,10 +23,6 @@
 
 #pragma once
 
-//--------
-// #include's
-//--------
-
 #include <stdio.h>
 
 namespace danek

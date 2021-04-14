@@ -27,19 +27,27 @@
 
 namespace danek
 {
-    static char* stringConcat(const char* s1, const char* s2, const char* s3 = "");
-
-    inline char* stringCopy(const char* s1)
+    namespace
     {
-        return stringConcat(s1, "");
-    }
+        static char* stringConcat(const char* s1, const char* s2, const char* s3 = "")
+        {
+            const auto len = strlen(s1) + strlen(s2) + strlen(s3);
+            char* result = new char[len + 1];
+            sprintf(result, "%s%s%s", s1, s2, s3);
+            return result;
+        }
 
-    void fail(const std::string& filename)
-    {
-        const auto msg = "cannot open '" + filename + "'";
-        perror(msg.c_str());
-    }
+        char* stringCopy(const char* s1)
+        {
+            return stringConcat(s1, "");
+        }
 
+        void fail(const std::string& filename)
+        {
+            const auto msg = "cannot open '" + filename + "'";
+            perror(msg.c_str());
+        }
+    }
 
     //----------------------------------------------------------------------
     // Function:	Constructor
@@ -210,57 +218,37 @@ namespace danek
 
     bool Config2Cpp::generateFiles(const char* const* schema, int schemaSize)
     {
-        char* cppFileName;
-        char* hFileName;
-        FILE* cfgFile;
-        FILE* cppFile;
-        FILE* hFile;
-
-        cppFileName = stringConcat(m_className, m_cppExt);
-        hFileName = stringConcat(m_className, m_hExt);
+        const std::string cppFileName = std::string{m_className} + m_cppExt;
+        const std::string hFileName = std::string{m_className} + m_hExt;
 
         //--------
         // Open all the files
         //--------
-        cfgFile = fopen(m_cfgFileName, "r");
+        FILE* cfgFile = fopen(m_cfgFileName, "r");
         if (cfgFile == nullptr)
         {
             fail(m_cfgFileName);
-            delete[] cppFileName;
-            delete[] hFileName;
             return false;
         }
-        cppFile = fopen(cppFileName, "w");
+        FILE* cppFile = fopen(cppFileName.c_str(), "w");
         if (cppFile == nullptr)
         {
             fail(cppFileName);
-            delete[] cppFileName;
-            delete[] hFileName;
             fclose(cfgFile);
             return false;
         }
-        hFile = fopen(hFileName, "w");
+        FILE* hFile = fopen(hFileName.c_str(), "w");
         if (hFile == nullptr)
         {
             fail(hFileName);
-            delete[] cppFileName;
-            delete[] hFileName;
             fclose(cfgFile);
             fclose(cppFile);
             return false;
         }
 
-        //--------
-        // Generate the ".h" and ".cpp" files.
-        //--------
         printToHeaderFile(hFile, schemaSize);
         printToCppFile(cfgFile, cppFile, schema, schemaSize);
 
-        //--------
-        // Tidy up
-        //--------
-        delete[] cppFileName;
-        delete[] hFileName;
         fclose(cfgFile);
         fclose(cppFile);
         fclose(hFile);
@@ -629,20 +617,4 @@ namespace danek
         }
     }
 
-    //----------------------------------------------------------------------
-    // Function:	stringConcat()
-    //
-    // Description:	Concatenate strings.
-    //----------------------------------------------------------------------
-
-    static char* stringConcat(const char* s1, const char* s2, const char* s3)
-    {
-        char* result;
-        int len;
-
-        len = strlen(s1) + strlen(s2) + strlen(s3);
-        result = new char[len + 1];
-        sprintf(result, "%s%s%s", s1, s2, s3);
-        return result;
-    }
 }
