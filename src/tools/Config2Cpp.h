@@ -23,7 +23,10 @@
 
 #pragma once
 
-#include <string>
+//--------
+// #include's
+//--------
+
 #include <stdio.h>
 
 namespace danek
@@ -42,27 +45,27 @@ namespace danek
 
         const char* cfgFileName()
         {
-            return m_cfgFileName.c_str();
+            return m_cfgFileName;
         }
         const char* schemaOverrideCfg()
         {
-            return m_schemaOverrideCfg.c_str();
+            return m_schemaOverrideCfg;
         }
         const char* schemaOverrideScope()
         {
-            return m_schemaOverrideScope.c_str();
+            return m_schemaOverrideScope;
         }
         const char* className()
         {
-            return m_className.c_str();
+            return m_className;
         }
         const char* cppExt()
         {
-            return m_cppExt.c_str();
+            return m_cppExt;
         }
         const char* hExt()
         {
-            return m_hExt.c_str();
+            return m_hExt;
         }
         bool wantSchema()
         {
@@ -77,13 +80,13 @@ namespace danek
         void output(FILE* file, int ch);
         void usage(const char* unknownArg);
 
-        std::string m_progName;
-        std::string m_cfgFileName;
-        std::string m_schemaOverrideCfg;
-        std::string m_schemaOverrideScope;
-        std::string m_className;
-        std::string m_cppExt;
-        std::string m_hExt;
+        char* m_progName;
+        char* m_cfgFileName;
+        char* m_schemaOverrideCfg;
+        char* m_schemaOverrideScope;
+        char* m_className;
+        char* m_cppExt;
+        char* m_hExt;
         bool m_wantSingleton;
         bool m_wantSchema;
         int m_namespaceArraySize;
