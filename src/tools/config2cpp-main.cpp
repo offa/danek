@@ -250,14 +250,12 @@ int main(int argc, char** argv)
             fprintf(stderr, "%s\n", ex.what());
             ok = false;
         }
-        int len = unmatchedPatterns.size();
-        if (len != 0)
+        if (const auto len = unmatchedPatterns.size(); len != 0)
         {
             fprintf(stderr, "%s %s\n", "Error: the following patterns in the schema", "recipe did not match anything");
-            for (int i = 0; i < len; i++)
-            {
-                fprintf(stderr, "\t'%s'\n", unmatchedPatterns[i].c_str());
-            }
+            std::for_each(std::begin(unmatchedPatterns), std::end(unmatchedPatterns), [](const auto& element) {
+                fprintf(stderr, "\t'%s'\n", element.c_str());
+            });
             ok = false;
         }
     }
