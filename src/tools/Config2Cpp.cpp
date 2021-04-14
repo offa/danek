@@ -33,6 +33,7 @@ namespace danek
     {
         return stringConcat(s1, "");
     }
+
     void fail(const std::string& filename)
     {
         const auto msg = "cannot open '" + filename + "'";
@@ -209,7 +210,6 @@ namespace danek
 
     bool Config2Cpp::generateFiles(const char* const* schema, int schemaSize)
     {
-        char* msg;
         char* cppFileName;
         char* hFileName;
         FILE* cfgFile;
@@ -225,9 +225,7 @@ namespace danek
         cfgFile = fopen(m_cfgFileName, "r");
         if (cfgFile == nullptr)
         {
-            msg = stringConcat("cannot open '", m_cfgFileName, "'");
-            perror(msg);
-            delete[] msg;
+            fail(m_cfgFileName);
             delete[] cppFileName;
             delete[] hFileName;
             return false;
@@ -235,9 +233,7 @@ namespace danek
         cppFile = fopen(cppFileName, "w");
         if (cppFile == nullptr)
         {
-            msg = stringConcat("cannot open '", cppFileName, "'");
-            perror(msg);
-            delete[] msg;
+            fail(cppFileName);
             delete[] cppFileName;
             delete[] hFileName;
             fclose(cfgFile);
@@ -246,9 +242,7 @@ namespace danek
         hFile = fopen(hFileName, "w");
         if (hFile == nullptr)
         {
-            msg = stringConcat("cannot open '", hFileName, "'");
-            perror(msg);
-            delete[] msg;
+            fail(hFileName);
             delete[] cppFileName;
             delete[] hFileName;
             fclose(cfgFile);
