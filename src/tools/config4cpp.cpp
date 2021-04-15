@@ -56,7 +56,6 @@ static ConfType stringToTypes(const char* str);
 
 int main(int argc, char** argv)
 {
-    const char* cmd;
     bool isRecursive;
     bool wantExpandedUidNames;
     StringVector filterPatterns;
@@ -84,8 +83,12 @@ int main(int argc, char** argv)
     Configuration* secCfg = Configuration::create();
     Configuration* schemaCfg = Configuration::create();
 
-    parseCmdLineArgs(argc, argv, cmd, isRecursive, wantExpandedUidNames, filterPatterns, scope, name, cfgSource, secSource,
-                     secScope, schemaSource, schemaName, forceMode, wantDiagnostics, types, cfg);
+    const std::string cmd = [&] {
+        const char* cmdStr;
+        parseCmdLineArgs(argc, argv, cmdStr, isRecursive, wantExpandedUidNames, filterPatterns, scope, name, cfgSource, secSource,
+                         secScope, schemaSource, schemaName, forceMode, wantDiagnostics, types, cfg);
+        return std::string{cmdStr};
+    }();
 
     try
     {
@@ -103,13 +106,13 @@ int main(int argc, char** argv)
     }
     cfg->mergeNames(scope, name, fullyScopedName);
 
-    if (strcmp(cmd, "parse") == 0)
+    if (cmd == "parse")
     {
         //--------
         // Nothing else to do
         //--------
     }
-    else if (strcmp(cmd, "validate") == 0)
+    else if (cmd == "validate")
     {
         try
         {
@@ -134,7 +137,7 @@ int main(int argc, char** argv)
             std::cerr << ex.what() << "\n";
         }
     }
-    else if (strcmp(cmd, "slist") == 0)
+    else if (cmd == "slist")
     {
         try
         {
@@ -146,7 +149,7 @@ int main(int argc, char** argv)
             std::cerr << ex.what() << "\n";
         }
     }
-    else if (strcmp(cmd, "llist") == 0)
+    else if (cmd == "llist")
     {
         try
         {
@@ -158,7 +161,7 @@ int main(int argc, char** argv)
             std::cerr << ex.what() << "\n";
         }
     }
-    else if (strcmp(cmd, "type") == 0)
+    else if (cmd == "type")
     {
         switch (cfg->type(scope, name))
         {
@@ -179,7 +182,7 @@ int main(int argc, char** argv)
                 break;
         }
     }
-    else if (strcmp(cmd, "print") == 0)
+    else if (cmd == "print")
     {
         try
         {
@@ -212,7 +215,7 @@ int main(int argc, char** argv)
             std::cerr << ex.what() << "\n";
         }
     }
-    else if (strcmp(cmd, "dumpSec") == 0)
+    else if (cmd == "dumpSec")
     {
         try
         {
@@ -229,7 +232,7 @@ int main(int argc, char** argv)
             std::cerr << ex.what() << "\n";
         }
     }
-    else if (strcmp(cmd, "dump") == 0)
+    else if (cmd == "dump")
     {
         try
         {
@@ -246,9 +249,6 @@ int main(int argc, char** argv)
         throw std::exception{}; // Bug!
     }
 
-    //--------
-    // Terminate gracefully
-    //--------
     cfg->destroy();
     secCfg->destroy();
     schemaCfg->destroy();
