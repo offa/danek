@@ -44,9 +44,11 @@ struct Options
 {
     std::string cmd;
     std::vector<std::string> filterPatterns;
+    bool isRecursive{true};
+    bool wantExpandedUidNames{true};
 };
 
-static Options parseCmdLineArgs(int argc, char** argv, bool& isRecursive, bool& wantExpandedUidNames,
+static Options parseCmdLineArgs(int argc, char** argv,
                                 const char*& scope, const char*& name, const char*& cfgSource,
                                 const char*& secSource, const char*& secScope, const char*& schemaSource, const char*& schemaName,
                                 SchemaValidator::ForceMode& forceMode, bool& wantDiagnostics, ConfType& types, Configuration* cfg);
@@ -90,8 +92,6 @@ namespace
 
 int main(int argc, char** argv)
 {
-    bool isRecursive;
-    bool wantExpandedUidNames;
     const char* scope;
     const char* name;
     const char* cfgSource;
@@ -116,7 +116,7 @@ int main(int argc, char** argv)
     Configuration* secCfg = Configuration::create();
     Configuration* schemaCfg = Configuration::create();
 
-    const auto options = parseCmdLineArgs(argc, argv, isRecursive, wantExpandedUidNames, scope, name, cfgSource, secSource,
+    const auto options = parseCmdLineArgs(argc, argv, scope, name, cfgSource, secSource,
                                           secScope, schemaSource, schemaName, forceMode, wantDiagnostics, types, cfg);
 
     try
@@ -159,7 +159,7 @@ int main(int argc, char** argv)
             }
 
             sv.parseSchema(schemaVec.data(), schemaVec.size());
-            sv.validate(cfg, scope, name, isRecursive, types, forceMode);
+            sv.validate(cfg, scope, name, options.isRecursive, types, forceMode);
         }
         catch (const ConfigurationException& ex)
         {
@@ -171,7 +171,7 @@ int main(int argc, char** argv)
         try
         {
             StringVector adapter{options.filterPatterns};
-            cfg->listFullyScopedNames(scope, name, types, isRecursive, adapter, names);
+            cfg->listFullyScopedNames(scope, name, types, options.isRecursive, adapter, names);
             printElements(names);
         }
         catch (const ConfigurationException& ex)
@@ -184,7 +184,7 @@ int main(int argc, char** argv)
         try
         {
             StringVector adapter{options.filterPatterns};
-            cfg->listLocallyScopedNames(scope, name, types, isRecursive, adapter, names);
+            cfg->listLocallyScopedNames(scope, name, types, options.isRecursive, adapter, names);
             printElements(names);
         }
         catch (const ConfigurationException& ex)
@@ -251,11 +251,11 @@ int main(int argc, char** argv)
         try
         {
             cfg->getSecurityConfiguration(secDumpCfg, secDumpScope);
-            secDumpCfg->dump(buf, wantExpandedUidNames, secDumpScope, "allow_patterns");
+            secDumpCfg->dump(buf, options.wantExpandedUidNames, secDumpScope, "allow_patterns");
             std::cout << buf.str();
-            secDumpCfg->dump(buf, wantExpandedUidNames, secDumpScope, "deny_patterns");
+            secDumpCfg->dump(buf, options.wantExpandedUidNames, secDumpScope, "deny_patterns");
             std::cout << buf.str();
-            secDumpCfg->dump(buf, wantExpandedUidNames, secDumpScope, "trusted_directories");
+            secDumpCfg->dump(buf, options.wantExpandedUidNames, secDumpScope, "trusted_directories");
             std::cout << buf.str();
         }
         catch (const ConfigurationException& ex)
@@ -267,7 +267,7 @@ int main(int argc, char** argv)
     {
         try
         {
-            cfg->dump(buf, wantExpandedUidNames, scope, name);
+            cfg->dump(buf, options.wantExpandedUidNames, scope, name);
             std::cout << buf.str();
         }
         catch (const ConfigurationException& ex)
@@ -286,13 +286,11 @@ int main(int argc, char** argv)
     return 0;
 }
 
-static Options parseCmdLineArgs(int argc, char** argv, bool& isRecursive, bool& wantExpandedUidNames,
-                                const char*& scope, const char*& name, const char*& cfgSource,
+static Options parseCmdLineArgs(int argc, char** argv, const char*& scope, const char*& name, const char*& cfgSource,
                                 const char*& secSource, const char*& secScope, const char*& schemaSource, const char*& schemaName,
                                 SchemaValidator::ForceMode& forceMode, bool& wantDiagnostics, ConfType& types, Configuration* cfg)
 {
     Options options{};
-    wantExpandedUidNames = true;
     scope = "";
     name = "";
     cfgSource = nullptr;
@@ -302,7 +300,6 @@ static Options parseCmdLineArgs(int argc, char** argv, bool& isRecursive, bool& 
     schemaName = nullptr;
     wantDiagnostics = false;
     forceMode = SchemaValidator::ForceMode::None;
-    isRecursive = true;
     types = ConfType::ScopesAndVars;
 
     for (int i = 1; i < argc; i++)
@@ -457,19 +454,19 @@ static Options parseCmdLineArgs(int argc, char** argv, bool& isRecursive, bool& 
         }
         else if (strcmp(argv[i], "-recursive") == 0)
         {
-            isRecursive = true;
+            options.isRecursive = true;
         }
         else if (strcmp(argv[i], "-norecursive") == 0)
         {
-            isRecursive = false;
+            options.isRecursive = false;
         }
         else if (strcmp(argv[i], "-expandUid") == 0)
         {
-            wantExpandedUidNames = true;
+            options.wantExpandedUidNames = true;
         }
         else if (strcmp(argv[i], "-unexpandUid") == 0)
         {
-            wantExpandedUidNames = false;
+            options.wantExpandedUidNames = false;
         }
         else
         {
