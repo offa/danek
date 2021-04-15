@@ -45,6 +45,8 @@ struct Options
 {
     std::string cmd;
     std::vector<std::string> filterPatterns;
+    std::string name{""};
+    std::string cfgSource;
     bool isRecursive{true};
     bool wantExpandedUidNames{true};
     bool wantDiagnostics{false};
@@ -53,8 +55,7 @@ struct Options
 };
 
 static Options parseCmdLineArgs(int argc, char** argv,
-                                const char*& scope, const char*& name, const char*& cfgSource,
-                                const char*& secSource, const char*& secScope, const char*& schemaSource, const char*& schemaName,
+                                const char*& scope, const char*& secSource, const char*& secScope, const char*& schemaSource, const char*& schemaName,
                                 Configuration* cfg);
 
 namespace
@@ -97,8 +98,6 @@ namespace
 int main(int argc, char** argv)
 {
     const char* scope;
-    const char* name;
-    const char* cfgSource;
     const char* secSource;
     const char* secScope;
     const char* schemaSource;
@@ -117,7 +116,7 @@ int main(int argc, char** argv)
     Configuration* secCfg = Configuration::create();
     Configuration* schemaCfg = Configuration::create();
 
-    const auto options = parseCmdLineArgs(argc, argv, scope, name, cfgSource, secSource, secScope, schemaSource, schemaName, cfg);
+    const auto options = parseCmdLineArgs(argc, argv, scope, secSource, secScope, schemaSource, schemaName, cfg);
 
     try
     {
@@ -126,14 +125,14 @@ int main(int argc, char** argv)
             secCfg->parse(secSource);
             cfg->setSecurityConfiguration(secCfg, secScope);
         }
-        cfg->parse(cfgSource);
+        cfg->parse(options.cfgSource.c_str());
     }
     catch (const ConfigurationException& ex)
     {
         std::cerr << ex.what() << "\n";
         throw;
     }
-    cfg->mergeNames(scope, name, fullyScopedName);
+    cfg->mergeNames(scope, options.name.c_str(), fullyScopedName);
 
     if (options.cmd == "parse")
     {
@@ -159,7 +158,7 @@ int main(int argc, char** argv)
             }
 
             sv.parseSchema(schemaVec.data(), schemaVec.size());
-            sv.validate(cfg, scope, name, options.isRecursive, options.types, options.forceMode);
+            sv.validate(cfg, scope, options.name.c_str(), options.isRecursive, options.types, options.forceMode);
         }
         catch (const ConfigurationException& ex)
         {
@@ -171,7 +170,7 @@ int main(int argc, char** argv)
         try
         {
             StringVector adapter{options.filterPatterns};
-            cfg->listFullyScopedNames(scope, name, options.types, options.isRecursive, adapter, names);
+            cfg->listFullyScopedNames(scope, options.name.c_str(), options.types, options.isRecursive, adapter, names);
             printElements(names);
         }
         catch (const ConfigurationException& ex)
@@ -184,7 +183,7 @@ int main(int argc, char** argv)
         try
         {
             StringVector adapter{options.filterPatterns};
-            cfg->listLocallyScopedNames(scope, name, options.types, options.isRecursive, adapter, names);
+            cfg->listLocallyScopedNames(scope, options.name.c_str(), options.types, options.isRecursive, adapter, names);
             printElements(names);
         }
         catch (const ConfigurationException& ex)
@@ -194,7 +193,7 @@ int main(int argc, char** argv)
     }
     else if (options.cmd == "type")
     {
-        switch (cfg->type(scope, name))
+        switch (cfg->type(scope, options.name.c_str()))
         {
             case ConfType::String:
                 std::cout << "string\n";
@@ -217,16 +216,16 @@ int main(int argc, char** argv)
     {
         try
         {
-            switch (cfg->type(scope, name))
+            switch (cfg->type(scope, options.name.c_str()))
             {
                 case ConfType::String:
-                    str = cfg->lookupString(scope, name);
+                    str = cfg->lookupString(scope, options.name.c_str());
                     std::cout << str << "\n";
                     break;
                 case ConfType::List:
                 {
                     std::vector<std::string> vec;
-                    cfg->lookupList(scope, name, vec);
+                    cfg->lookupList(scope, options.name.c_str(), vec);
                     printElements(vec);
                 }
                 break;
@@ -267,7 +266,7 @@ int main(int argc, char** argv)
     {
         try
         {
-            cfg->dump(buf, options.wantExpandedUidNames, scope, name);
+            cfg->dump(buf, options.wantExpandedUidNames, scope, options.name.c_str());
             std::cout << buf.str();
         }
         catch (const ConfigurationException& ex)
@@ -286,14 +285,12 @@ int main(int argc, char** argv)
     return 0;
 }
 
-static Options parseCmdLineArgs(int argc, char** argv, const char*& scope, const char*& name, const char*& cfgSource,
+static Options parseCmdLineArgs(int argc, char** argv, const char*& scope,
                                 const char*& secSource, const char*& secScope, const char*& schemaSource, const char*& schemaName,
                                 Configuration* cfg)
 {
     Options options{};
     scope = "";
-    name = "";
-    cfgSource = nullptr;
     secSource = nullptr;
     secScope = "";
     schemaSource = nullptr;
@@ -320,7 +317,7 @@ static Options parseCmdLineArgs(int argc, char** argv, const char*& scope, const
             {
                 usage("");
             }
-            cfgSource = argv[i + 1];
+            options.cfgSource = argv[i + 1];
             i++;
         }
         else if (strcmp(argv[i], "-secCfg") == 0)
@@ -446,7 +443,7 @@ static Options parseCmdLineArgs(int argc, char** argv, const char*& scope, const
             {
                 usage("");
             }
-            name = argv[i + 1];
+            options.name = argv[i + 1];
             i++;
         }
         else if (strcmp(argv[i], "-recursive") == 0)
@@ -470,7 +467,7 @@ static Options parseCmdLineArgs(int argc, char** argv, const char*& scope, const
             usage(argv[i]);
         }
     }
-    if (cfgSource == nullptr)
+    if (options.cfgSource.empty())
     {
         std::cerr << "\nYou must specify -cfg <source>\n\n";
         usage("");
