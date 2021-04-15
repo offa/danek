@@ -24,6 +24,7 @@
 #include "danek/Configuration.h"
 #include "danek/SchemaValidator.h"
 #include "danek/StringBuffer.h"
+#include "danek/StringVector.h"
 #include <algorithm>
 #include <iostream>
 #include <locale.h>
@@ -38,10 +39,17 @@ using danek::StringBuffer;
 using danek::StringVector;
 
 static void usage(const std::string& optMsg);
-static void parseCmdLineArgs(int argc, char** argv, const char*& cmd, bool& isRecursive, bool& wantExpandedUidNames,
-                             StringVector& filterPatterns, const char*& scope, const char*& name, const char*& cfgSource,
-                             const char*& secSource, const char*& secScope, const char*& schemaSource, const char*& schemaName,
-                             SchemaValidator::ForceMode& forceMode, bool& wantDiagnostics, ConfType& types, Configuration* cfg);
+
+struct Options
+{
+    std::string cmd;
+    std::vector<std::string> filterPatterns;
+};
+
+static Options parseCmdLineArgs(int argc, char** argv, bool& isRecursive, bool& wantExpandedUidNames,
+                                const char*& scope, const char*& name, const char*& cfgSource,
+                                const char*& secSource, const char*& secScope, const char*& schemaSource, const char*& schemaName,
+                                SchemaValidator::ForceMode& forceMode, bool& wantDiagnostics, ConfType& types, Configuration* cfg);
 
 namespace
 {
@@ -84,7 +92,6 @@ int main(int argc, char** argv)
 {
     bool isRecursive;
     bool wantExpandedUidNames;
-    StringVector filterPatterns;
     const char* scope;
     const char* name;
     const char* cfgSource;
@@ -109,12 +116,8 @@ int main(int argc, char** argv)
     Configuration* secCfg = Configuration::create();
     Configuration* schemaCfg = Configuration::create();
 
-    const std::string cmd = [&] {
-        const char* cmdStr;
-        parseCmdLineArgs(argc, argv, cmdStr, isRecursive, wantExpandedUidNames, filterPatterns, scope, name, cfgSource, secSource,
-                         secScope, schemaSource, schemaName, forceMode, wantDiagnostics, types, cfg);
-        return std::string{cmdStr};
-    }();
+    const auto options = parseCmdLineArgs(argc, argv, isRecursive, wantExpandedUidNames, scope, name, cfgSource, secSource,
+                                          secScope, schemaSource, schemaName, forceMode, wantDiagnostics, types, cfg);
 
     try
     {
@@ -132,13 +135,13 @@ int main(int argc, char** argv)
     }
     cfg->mergeNames(scope, name, fullyScopedName);
 
-    if (cmd == "parse")
+    if (options.cmd == "parse")
     {
         //--------
         // Nothing else to do
         //--------
     }
-    else if (cmd == "validate")
+    else if (options.cmd == "validate")
     {
         try
         {
@@ -163,11 +166,12 @@ int main(int argc, char** argv)
             std::cerr << ex.what() << "\n";
         }
     }
-    else if (cmd == "slist")
+    else if (options.cmd == "slist")
     {
         try
         {
-            cfg->listFullyScopedNames(scope, name, types, isRecursive, filterPatterns, names);
+            StringVector adapter{options.filterPatterns};
+            cfg->listFullyScopedNames(scope, name, types, isRecursive, adapter, names);
             printElements(names);
         }
         catch (const ConfigurationException& ex)
@@ -175,11 +179,12 @@ int main(int argc, char** argv)
             std::cerr << ex.what() << "\n";
         }
     }
-    else if (cmd == "llist")
+    else if (options.cmd == "llist")
     {
         try
         {
-            cfg->listLocallyScopedNames(scope, name, types, isRecursive, filterPatterns, names);
+            StringVector adapter{options.filterPatterns};
+            cfg->listLocallyScopedNames(scope, name, types, isRecursive, adapter, names);
             printElements(names);
         }
         catch (const ConfigurationException& ex)
@@ -187,7 +192,7 @@ int main(int argc, char** argv)
             std::cerr << ex.what() << "\n";
         }
     }
-    else if (cmd == "type")
+    else if (options.cmd == "type")
     {
         switch (cfg->type(scope, name))
         {
@@ -208,7 +213,7 @@ int main(int argc, char** argv)
                 break;
         }
     }
-    else if (cmd == "print")
+    else if (options.cmd == "print")
     {
         try
         {
@@ -241,7 +246,7 @@ int main(int argc, char** argv)
             std::cerr << ex.what() << "\n";
         }
     }
-    else if (cmd == "dumpSec")
+    else if (options.cmd == "dumpSec")
     {
         try
         {
@@ -258,7 +263,7 @@ int main(int argc, char** argv)
             std::cerr << ex.what() << "\n";
         }
     }
-    else if (cmd == "dump")
+    else if (options.cmd == "dump")
     {
         try
         {
@@ -281,15 +286,12 @@ int main(int argc, char** argv)
     return 0;
 }
 
-static void parseCmdLineArgs(int argc, char** argv, const char*& cmd, bool& isRecursive, bool& wantExpandedUidNames,
-                             StringVector& filterPatterns, const char*& scope, const char*& name, const char*& cfgSource,
-                             const char*& secSource, const char*& secScope, const char*& schemaSource, const char*& schemaName,
-                             SchemaValidator::ForceMode& forceMode, bool& wantDiagnostics, ConfType& types, Configuration* cfg)
+static Options parseCmdLineArgs(int argc, char** argv, bool& isRecursive, bool& wantExpandedUidNames,
+                                const char*& scope, const char*& name, const char*& cfgSource,
+                                const char*& secSource, const char*& secScope, const char*& schemaSource, const char*& schemaName,
+                                SchemaValidator::ForceMode& forceMode, bool& wantDiagnostics, ConfType& types, Configuration* cfg)
 {
-    int i;
-    StringBuffer msg;
-
-    cmd = nullptr;
+    Options options{};
     wantExpandedUidNames = true;
     scope = "";
     name = "";
@@ -302,9 +304,8 @@ static void parseCmdLineArgs(int argc, char** argv, const char*& cmd, bool& isRe
     forceMode = SchemaValidator::ForceMode::None;
     isRecursive = true;
     types = ConfType::ScopesAndVars;
-    filterPatterns.clear();
 
-    for (i = 1; i < argc; i++)
+    for (int i = 1; i < argc; i++)
     {
         if (strcmp(argv[i], "-h") == 0)
         {
@@ -394,35 +395,35 @@ static void parseCmdLineArgs(int argc, char** argv, const char*& cmd, bool& isRe
         }
         else if (strcmp(argv[i], "parse") == 0)
         {
-            cmd = argv[i];
+            options.cmd = argv[i];
         }
         else if (strcmp(argv[i], "slist") == 0)
         {
-            cmd = argv[i];
+            options.cmd = argv[i];
         }
         else if (strcmp(argv[i], "llist") == 0)
         {
-            cmd = argv[i];
+            options.cmd = argv[i];
         }
         else if (strcmp(argv[i], "dump") == 0)
         {
-            cmd = argv[i];
+            options.cmd = argv[i];
         }
         else if (strcmp(argv[i], "dumpSec") == 0)
         {
-            cmd = argv[i];
+            options.cmd = argv[i];
         }
         else if (strcmp(argv[i], "type") == 0)
         {
-            cmd = argv[i];
+            options.cmd = argv[i];
         }
         else if (strcmp(argv[i], "print") == 0)
         {
-            cmd = argv[i];
+            options.cmd = argv[i];
         }
         else if (strcmp(argv[i], "validate") == 0)
         {
-            cmd = argv[i];
+            options.cmd = argv[i];
             //--------
             // Arguments to commands
             //--------
@@ -442,7 +443,7 @@ static void parseCmdLineArgs(int argc, char** argv, const char*& cmd, bool& isRe
             {
                 usage("");
             }
-            filterPatterns.push_back(argv[i + 1]);
+            options.filterPatterns.push_back(argv[i + 1]);
             i++;
         }
         else if (strcmp(argv[i], "-name") == 0)
@@ -480,12 +481,12 @@ static void parseCmdLineArgs(int argc, char** argv, const char*& cmd, bool& isRe
         std::cerr << "\nYou must specify -cfg <source>\n\n";
         usage("");
     }
-    if (cmd == nullptr)
+    if (options.cmd.empty())
     {
         std::cerr << "\nYou must specify a command\n\n";
         usage("");
     }
-    if (strcmp(cmd, "validate") == 0)
+    if (options.cmd == "validate")
     {
         if (schemaSource == nullptr)
         {
@@ -498,6 +499,7 @@ static void parseCmdLineArgs(int argc, char** argv, const char*& cmd, bool& isRe
             usage("");
         }
     }
+    return options;
 }
 
 static void usage(const std::string& optMsg)
