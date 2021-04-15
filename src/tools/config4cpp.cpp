@@ -37,6 +37,12 @@ using danek::SchemaValidator;
 using danek::StringBuffer;
 using danek::StringVector;
 
+static void usage(const std::string& optMsg);
+static void parseCmdLineArgs(int argc, char** argv, const char*& cmd, bool& isRecursive, bool& wantExpandedUidNames,
+                             StringVector& filterPatterns, const char*& scope, const char*& name, const char*& cfgSource,
+                             const char*& secSource, const char*& secScope, const char*& schemaSource, const char*& schemaName,
+                             SchemaValidator::ForceMode& forceMode, bool& wantDiagnostics, ConfType& types, Configuration* cfg);
+
 namespace
 {
     template <class Container>
@@ -44,16 +50,37 @@ namespace
     {
         std::for_each(std::cbegin(c), std::cend(c), [](const auto& element) { std::cout << element << "\n"; });
     }
+
+    ConfType stringToTypes(const std::string& str)
+    {
+        if (str == "string")
+        {
+            return ConfType::String;
+        }
+        if (str == "list")
+        {
+            return ConfType::List;
+        }
+        if (str == "scope")
+        {
+            return ConfType::Scope;
+        }
+        if (str == "variables")
+        {
+            return ConfType::Variables;
+        }
+        if (str == "scope_and_vars")
+        {
+            return ConfType::ScopesAndVars;
+        }
+        usage("Invalid value for '-types <...>'");
+        return ConfType::String; // Not reached; keep compiler happy
+    }
+
 }
 
-static void usage(const std::string& optMsg);
 
-static void parseCmdLineArgs(int argc, char** argv, const char*& cmd, bool& isRecursive, bool& wantExpandedUidNames,
-                             StringVector& filterPatterns, const char*& scope, const char*& name, const char*& cfgSource,
-                             const char*& secSource, const char*& secScope, const char*& schemaSource, const char*& schemaName,
-                             SchemaValidator::ForceMode& forceMode, bool& wantDiagnostics, ConfType& types, Configuration* cfg);
 
-static ConfType stringToTypes(const char* str);
 
 int main(int argc, char** argv)
 {
@@ -473,32 +500,6 @@ static void parseCmdLineArgs(int argc, char** argv, const char*& cmd, bool& isRe
             usage("");
         }
     }
-}
-
-static ConfType stringToTypes(const char* str)
-{
-    if (strcmp(str, "string") == 0)
-    {
-        return ConfType::String;
-    }
-    else if (strcmp(str, "list") == 0)
-    {
-        return ConfType::List;
-    }
-    else if (strcmp(str, "scope") == 0)
-    {
-        return ConfType::Scope;
-    }
-    else if (strcmp(str, "variables") == 0)
-    {
-        return ConfType::Variables;
-    }
-    else if (strcmp(str, "scope_and_vars") == 0)
-    {
-        return ConfType::ScopesAndVars;
-    }
-    usage("Invalid value for '-types <...>'");
-    return ConfType::String; // Not reached; keep compiler happy
 }
 
 static void usage(const std::string& optMsg)
