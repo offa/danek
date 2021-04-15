@@ -29,7 +29,7 @@ namespace danek::util
     {
         constexpr char delim{'.'};
 
-        if (input.empty() == true || input.find(delim) == std::string::npos)
+        if (input.empty() || input.find(delim) == std::string::npos)
         {
             return {input};
         }

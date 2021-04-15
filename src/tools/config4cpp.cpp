@@ -62,9 +62,7 @@ int main(int argc, char** argv)
     const char* str;
     const Configuration* secDumpCfg;
     const char* secDumpScope;
-    std::size_t len;
     SchemaValidator::ForceMode forceMode;
-    std::size_t i;
     StringBuffer buf;
     StringVector names;
     StringBuffer fullyScopedName;
@@ -132,11 +130,7 @@ int main(int argc, char** argv)
         try
         {
             cfg->listFullyScopedNames(scope, name, types, isRecursive, filterPatterns, names);
-            len = names.size();
-            for (i = 0; i < len; i++)
-            {
-                std::cout << names[i].c_str() << "\n";
-            }
+            std::for_each(names.cbegin(), names.cend(), [](const auto& n) { std::cout << n << "\n"; });
         }
         catch (const ConfigurationException& ex)
         {
@@ -148,11 +142,7 @@ int main(int argc, char** argv)
         try
         {
             cfg->listLocallyScopedNames(scope, name, types, isRecursive, filterPatterns, names);
-            len = names.size();
-            for (i = 0; i < len; i++)
-            {
-                std::cout << names[i].c_str() << "\n";
-            }
+            std::for_each(names.cbegin(), names.cend(), [](const auto& n) { std::cout << n << "\n"; });
         }
         catch (const ConfigurationException& ex)
         {
@@ -194,10 +184,7 @@ int main(int argc, char** argv)
                 {
                     std::vector<std::string> vec;
                     cfg->lookupList(scope, name, vec);
-                    for (i = 0; i < vec.size(); i++)
-                    {
-                        std::cout << vec[i] << "\n";
-                    }
+                    std::for_each(vec.cbegin(), vec.cend(), [](const auto& e) { std::cout << e << "\n"; });
                 }
                 break;
                 case ConfType::Scope:
