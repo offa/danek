@@ -36,6 +36,15 @@ using danek::SchemaValidator;
 using danek::StringBuffer;
 using danek::StringVector;
 
+namespace
+{
+    template <class Container>
+    void printElements(const Container& c)
+    {
+        std::for_each(std::cbegin(c), std::cend(c), [](const auto& element) { std::cout << element << "\n"; });
+    }
+}
+
 static void usage(const char* optMsg);
 
 static void parseCmdLineArgs(int argc, char** argv, const char*& cmd, bool& isRecursive, bool& wantExpandedUidNames,
@@ -130,7 +139,7 @@ int main(int argc, char** argv)
         try
         {
             cfg->listFullyScopedNames(scope, name, types, isRecursive, filterPatterns, names);
-            std::for_each(names.cbegin(), names.cend(), [](const auto& n) { std::cout << n << "\n"; });
+            printElements(names);
         }
         catch (const ConfigurationException& ex)
         {
@@ -142,7 +151,7 @@ int main(int argc, char** argv)
         try
         {
             cfg->listLocallyScopedNames(scope, name, types, isRecursive, filterPatterns, names);
-            std::for_each(names.cbegin(), names.cend(), [](const auto& n) { std::cout << n << "\n"; });
+            printElements(names);
         }
         catch (const ConfigurationException& ex)
         {
@@ -184,7 +193,7 @@ int main(int argc, char** argv)
                 {
                     std::vector<std::string> vec;
                     cfg->lookupList(scope, name, vec);
-                    std::for_each(vec.cbegin(), vec.cend(), [](const auto& e) { std::cout << e << "\n"; });
+                    printElements(vec);
                 }
                 break;
                 case ConfType::Scope:
