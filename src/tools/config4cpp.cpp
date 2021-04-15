@@ -46,12 +46,13 @@ struct Options
     std::vector<std::string> filterPatterns;
     bool isRecursive{true};
     bool wantExpandedUidNames{true};
+    bool wantDiagnostics{false};
 };
 
 static Options parseCmdLineArgs(int argc, char** argv,
                                 const char*& scope, const char*& name, const char*& cfgSource,
                                 const char*& secSource, const char*& secScope, const char*& schemaSource, const char*& schemaName,
-                                SchemaValidator::ForceMode& forceMode, bool& wantDiagnostics, ConfType& types, Configuration* cfg);
+                                SchemaValidator::ForceMode& forceMode, ConfType& types, Configuration* cfg);
 
 namespace
 {
@@ -99,7 +100,6 @@ int main(int argc, char** argv)
     const char* secScope;
     const char* schemaSource;
     const char* schemaName;
-    bool wantDiagnostics;
     const char* str;
     const Configuration* secDumpCfg;
     const char* secDumpScope;
@@ -117,7 +117,7 @@ int main(int argc, char** argv)
     Configuration* schemaCfg = Configuration::create();
 
     const auto options = parseCmdLineArgs(argc, argv, scope, name, cfgSource, secSource,
-                                          secScope, schemaSource, schemaName, forceMode, wantDiagnostics, types, cfg);
+                                          secScope, schemaSource, schemaName, forceMode, types, cfg);
 
     try
     {
@@ -149,7 +149,7 @@ int main(int argc, char** argv)
             schemaCfg->parse(schemaSource);
             std::vector<std::string> outputData;
             schemaCfg->lookupList(schemaName, "", outputData);
-            sv.wantDiagnostics(wantDiagnostics);
+            sv.wantDiagnostics(options.wantDiagnostics);
 
             std::vector<const char*> schemaVec; // Deprecated conversion; kept for compatibility
 
@@ -288,7 +288,7 @@ int main(int argc, char** argv)
 
 static Options parseCmdLineArgs(int argc, char** argv, const char*& scope, const char*& name, const char*& cfgSource,
                                 const char*& secSource, const char*& secScope, const char*& schemaSource, const char*& schemaName,
-                                SchemaValidator::ForceMode& forceMode, bool& wantDiagnostics, ConfType& types, Configuration* cfg)
+                                SchemaValidator::ForceMode& forceMode, ConfType& types, Configuration* cfg)
 {
     Options options{};
     scope = "";
@@ -298,7 +298,6 @@ static Options parseCmdLineArgs(int argc, char** argv, const char*& scope, const
     secScope = "";
     schemaSource = nullptr;
     schemaName = nullptr;
-    wantDiagnostics = false;
     forceMode = SchemaValidator::ForceMode::None;
     types = ConfType::ScopesAndVars;
 
@@ -364,7 +363,7 @@ static Options parseCmdLineArgs(int argc, char** argv, const char*& scope, const
         }
         else if (strcmp(argv[i], "-diagnostics") == 0)
         {
-            wantDiagnostics = true;
+            options.wantDiagnostics = true;
         }
         else if (strcmp(argv[i], "-force_optional") == 0)
         {
@@ -376,7 +375,7 @@ static Options parseCmdLineArgs(int argc, char** argv, const char*& scope, const
         }
         else if (strcmp(argv[i], "-nodiagnostics") == 0)
         {
-            wantDiagnostics = true;
+            options.wantDiagnostics = true;
         }
         else if (strcmp(argv[i], "-types") == 0)
         {
