@@ -61,6 +61,11 @@ namespace danek
             return m_data.begin();
         }
 
+        auto cbegin() const
+        {
+            return m_data.cbegin();
+        }
+
         auto end()
         {
             return m_data.end();
@@ -69,6 +74,11 @@ namespace danek
         auto end() const
         {
             return m_data.end();
+        }
+
+        auto cend() const
+        {
+            return m_data.cend();
         }
 
         std::size_t size() const
