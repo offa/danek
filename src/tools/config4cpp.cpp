@@ -24,6 +24,7 @@
 #include "danek/Configuration.h"
 #include "danek/SchemaValidator.h"
 #include "danek/StringBuffer.h"
+#include <algorithm>
 #include <iostream>
 #include <locale.h>
 #include <stdlib.h>
