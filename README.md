@@ -3,11 +3,11 @@
 [![CI](https://github.com/offa/danek/workflows/ci/badge.svg)](https://github.com/offa/danek/actions)
 [![GitHub release](https://img.shields.io/github/release/offa/danek.svg)](https://github.com/offa/danek/releases)
 [![License](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
-![C++](https://img.shields.io/badge/c++-17-green.svg)
+![C++](https://img.shields.io/badge/c++-20-green.svg)
 
 A configuration library for C++. This is a fork of [**config4cpp**](https://github.com/config4star/config4cpp) which aims to modernization and quality improvements.
 
-Please see [Contributing](CONTRIBUTING.md) for how to contribute to this project. For a ready to use version of *config4cpp* with *CMake* support, visit [here](https://github.com/offa/config4cpp).
+Please see [Contributing](CONTRIBUTING.md) for how to contribute to this project.
 
 ## Goals
 
