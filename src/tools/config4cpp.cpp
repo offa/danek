@@ -21,6 +21,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+#include "danek/ConfType.h"
 #include "danek/Configuration.h"
 #include "danek/SchemaValidator.h"
 #include "danek/StringBuffer.h"
@@ -47,12 +48,14 @@ struct Options
     bool isRecursive{true};
     bool wantExpandedUidNames{true};
     bool wantDiagnostics{false};
+    SchemaValidator::ForceMode forceMode{SchemaValidator::ForceMode::None};
+    ConfType types{ConfType::ScopesAndVars};
 };
 
 static Options parseCmdLineArgs(int argc, char** argv,
                                 const char*& scope, const char*& name, const char*& cfgSource,
                                 const char*& secSource, const char*& secScope, const char*& schemaSource, const char*& schemaName,
-                                SchemaValidator::ForceMode& forceMode, ConfType& types, Configuration* cfg);
+                                Configuration* cfg);
 
 namespace
 {
@@ -103,11 +106,9 @@ int main(int argc, char** argv)
     const char* str;
     const Configuration* secDumpCfg;
     const char* secDumpScope;
-    SchemaValidator::ForceMode forceMode;
     StringBuffer buf;
     StringVector names;
     StringBuffer fullyScopedName;
-    ConfType types;
     SchemaValidator sv;
 
     setlocale(LC_ALL, "");
@@ -116,8 +117,7 @@ int main(int argc, char** argv)
     Configuration* secCfg = Configuration::create();
     Configuration* schemaCfg = Configuration::create();
 
-    const auto options = parseCmdLineArgs(argc, argv, scope, name, cfgSource, secSource,
-                                          secScope, schemaSource, schemaName, forceMode, types, cfg);
+    const auto options = parseCmdLineArgs(argc, argv, scope, name, cfgSource, secSource, secScope, schemaSource, schemaName, cfg);
 
     try
     {
@@ -159,7 +159,7 @@ int main(int argc, char** argv)
             }
 
             sv.parseSchema(schemaVec.data(), schemaVec.size());
-            sv.validate(cfg, scope, name, options.isRecursive, types, forceMode);
+            sv.validate(cfg, scope, name, options.isRecursive, options.types, options.forceMode);
         }
         catch (const ConfigurationException& ex)
         {
@@ -171,7 +171,7 @@ int main(int argc, char** argv)
         try
         {
             StringVector adapter{options.filterPatterns};
-            cfg->listFullyScopedNames(scope, name, types, options.isRecursive, adapter, names);
+            cfg->listFullyScopedNames(scope, name, options.types, options.isRecursive, adapter, names);
             printElements(names);
         }
         catch (const ConfigurationException& ex)
@@ -184,7 +184,7 @@ int main(int argc, char** argv)
         try
         {
             StringVector adapter{options.filterPatterns};
-            cfg->listLocallyScopedNames(scope, name, types, options.isRecursive, adapter, names);
+            cfg->listLocallyScopedNames(scope, name, options.types, options.isRecursive, adapter, names);
             printElements(names);
         }
         catch (const ConfigurationException& ex)
@@ -288,7 +288,7 @@ int main(int argc, char** argv)
 
 static Options parseCmdLineArgs(int argc, char** argv, const char*& scope, const char*& name, const char*& cfgSource,
                                 const char*& secSource, const char*& secScope, const char*& schemaSource, const char*& schemaName,
-                                SchemaValidator::ForceMode& forceMode, ConfType& types, Configuration* cfg)
+                                Configuration* cfg)
 {
     Options options{};
     scope = "";
@@ -298,8 +298,6 @@ static Options parseCmdLineArgs(int argc, char** argv, const char*& scope, const
     secScope = "";
     schemaSource = nullptr;
     schemaName = nullptr;
-    forceMode = SchemaValidator::ForceMode::None;
-    types = ConfType::ScopesAndVars;
 
     for (int i = 1; i < argc; i++)
     {
@@ -367,11 +365,11 @@ static Options parseCmdLineArgs(int argc, char** argv, const char*& scope, const
         }
         else if (strcmp(argv[i], "-force_optional") == 0)
         {
-            forceMode = SchemaValidator::ForceMode::Optional;
+            options.forceMode = SchemaValidator::ForceMode::Optional;
         }
         else if (strcmp(argv[i], "-force_required") == 0)
         {
-            forceMode = SchemaValidator::ForceMode::Required;
+            options.forceMode = SchemaValidator::ForceMode::Required;
         }
         else if (strcmp(argv[i], "-nodiagnostics") == 0)
         {
@@ -383,7 +381,7 @@ static Options parseCmdLineArgs(int argc, char** argv, const char*& scope, const
             {
                 usage("");
             }
-            types = stringToTypes(argv[i + 1]);
+            options.types = stringToTypes(argv[i + 1]);
             i++;
             //--------
             // Commands
