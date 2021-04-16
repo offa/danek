@@ -52,11 +52,15 @@ struct Options
     bool wantDiagnostics{false};
     SchemaValidator::ForceMode forceMode{SchemaValidator::ForceMode::None};
     ConfType types{ConfType::ScopesAndVars};
+    std::string scope{""};
+    std::string secSource;
+    std::string secScope{""};
+    std::string schemaSource;
+    std::string schemaName;
+    Configuration* cfg;
 };
 
-static Options parseCmdLineArgs(int argc, char** argv,
-                                const char*& scope, const char*& secSource, const char*& secScope, const char*& schemaSource, const char*& schemaName,
-                                Configuration* cfg);
+static Options parseCmdLineArgs(int argc, char** argv);
 
 namespace
 {
@@ -97,11 +101,6 @@ namespace
 
 int main(int argc, char** argv)
 {
-    const char* scope;
-    const char* secSource;
-    const char* secScope;
-    const char* schemaSource;
-    const char* schemaName;
     const char* str;
     const Configuration* secDumpCfg;
     const char* secDumpScope;
@@ -112,27 +111,26 @@ int main(int argc, char** argv)
 
     setlocale(LC_ALL, "");
 
-    Configuration* cfg = Configuration::create();
     Configuration* secCfg = Configuration::create();
     Configuration* schemaCfg = Configuration::create();
 
-    const auto options = parseCmdLineArgs(argc, argv, scope, secSource, secScope, schemaSource, schemaName, cfg);
+    const auto options = parseCmdLineArgs(argc, argv);
 
     try
     {
-        if (secSource != nullptr)
+        if (!options.secSource.empty())
         {
-            secCfg->parse(secSource);
-            cfg->setSecurityConfiguration(secCfg, secScope);
+            secCfg->parse(options.secSource.c_str());
+            options.cfg->setSecurityConfiguration(secCfg, options.secScope.c_str());
         }
-        cfg->parse(options.cfgSource.c_str());
+        options.cfg->parse(options.cfgSource.c_str());
     }
     catch (const ConfigurationException& ex)
     {
         std::cerr << ex.what() << "\n";
         throw;
     }
-    cfg->mergeNames(scope, options.name.c_str(), fullyScopedName);
+    options.cfg->mergeNames(options.scope.c_str(), options.name.c_str(), fullyScopedName);
 
     if (options.cmd == "parse")
     {
@@ -145,9 +143,9 @@ int main(int argc, char** argv)
         try
         {
 
-            schemaCfg->parse(schemaSource);
+            schemaCfg->parse(options.schemaSource.c_str());
             std::vector<std::string> outputData;
-            schemaCfg->lookupList(schemaName, "", outputData);
+            schemaCfg->lookupList(options.schemaName.c_str(), "", outputData);
             sv.wantDiagnostics(options.wantDiagnostics);
 
             std::vector<const char*> schemaVec; // Deprecated conversion; kept for compatibility
@@ -158,7 +156,7 @@ int main(int argc, char** argv)
             }
 
             sv.parseSchema(schemaVec.data(), schemaVec.size());
-            sv.validate(cfg, scope, options.name.c_str(), options.isRecursive, options.types, options.forceMode);
+            sv.validate(options.cfg, options.scope.c_str(), options.name.c_str(), options.isRecursive, options.types, options.forceMode);
         }
         catch (const ConfigurationException& ex)
         {
@@ -170,7 +168,7 @@ int main(int argc, char** argv)
         try
         {
             StringVector adapter{options.filterPatterns};
-            cfg->listFullyScopedNames(scope, options.name.c_str(), options.types, options.isRecursive, adapter, names);
+            options.cfg->listFullyScopedNames(options.scope.c_str(), options.name.c_str(), options.types, options.isRecursive, adapter, names);
             printElements(names);
         }
         catch (const ConfigurationException& ex)
@@ -183,7 +181,7 @@ int main(int argc, char** argv)
         try
         {
             StringVector adapter{options.filterPatterns};
-            cfg->listLocallyScopedNames(scope, options.name.c_str(), options.types, options.isRecursive, adapter, names);
+            options.cfg->listLocallyScopedNames(options.scope.c_str(), options.name.c_str(), options.types, options.isRecursive, adapter, names);
             printElements(names);
         }
         catch (const ConfigurationException& ex)
@@ -193,7 +191,7 @@ int main(int argc, char** argv)
     }
     else if (options.cmd == "type")
     {
-        switch (cfg->type(scope, options.name.c_str()))
+        switch (options.cfg->type(options.scope.c_str(), options.name.c_str()))
         {
             case ConfType::String:
                 std::cout << "string\n";
@@ -216,16 +214,16 @@ int main(int argc, char** argv)
     {
         try
         {
-            switch (cfg->type(scope, options.name.c_str()))
+            switch (options.cfg->type(options.scope.c_str(), options.name.c_str()))
             {
                 case ConfType::String:
-                    str = cfg->lookupString(scope, options.name.c_str());
+                    str = options.cfg->lookupString(options.scope.c_str(), options.name.c_str());
                     std::cout << str << "\n";
                     break;
                 case ConfType::List:
                 {
                     std::vector<std::string> vec;
-                    cfg->lookupList(scope, options.name.c_str(), vec);
+                    options.cfg->lookupList(options.scope.c_str(), options.name.c_str(), vec);
                     printElements(vec);
                 }
                 break;
@@ -249,7 +247,7 @@ int main(int argc, char** argv)
     {
         try
         {
-            cfg->getSecurityConfiguration(secDumpCfg, secDumpScope);
+            options.cfg->getSecurityConfiguration(secDumpCfg, secDumpScope);
             secDumpCfg->dump(buf, options.wantExpandedUidNames, secDumpScope, "allow_patterns");
             std::cout << buf.str();
             secDumpCfg->dump(buf, options.wantExpandedUidNames, secDumpScope, "deny_patterns");
@@ -266,7 +264,7 @@ int main(int argc, char** argv)
     {
         try
         {
-            cfg->dump(buf, options.wantExpandedUidNames, scope, options.name.c_str());
+            options.cfg->dump(buf, options.wantExpandedUidNames, options.scope.c_str(), options.name.c_str());
             std::cout << buf.str();
         }
         catch (const ConfigurationException& ex)
@@ -279,22 +277,17 @@ int main(int argc, char** argv)
         throw std::exception{}; // Bug!
     }
 
-    cfg->destroy();
+    options.cfg->destroy();
     secCfg->destroy();
     schemaCfg->destroy();
     return 0;
 }
 
-static Options parseCmdLineArgs(int argc, char** argv, const char*& scope,
-                                const char*& secSource, const char*& secScope, const char*& schemaSource, const char*& schemaName,
-                                Configuration* cfg)
+static Options parseCmdLineArgs(int argc, char** argv)
 {
     Options options{};
-    scope = "";
-    secSource = nullptr;
-    secScope = "";
-    schemaSource = nullptr;
-    schemaName = nullptr;
+    options.cfg = Configuration::create();
+
 
     for (int i = 1; i < argc; i++)
     {
@@ -308,7 +301,7 @@ static Options parseCmdLineArgs(int argc, char** argv, const char*& scope,
             {
                 usage("");
             }
-            cfg->insertString("", argv[i + 1], argv[i + 2]);
+            options.cfg->insertString("", argv[i + 1], argv[i + 2]);
             i += 2;
         }
         else if (strcmp(argv[i], "-cfg") == 0)
@@ -326,7 +319,7 @@ static Options parseCmdLineArgs(int argc, char** argv, const char*& scope,
             {
                 usage("");
             }
-            secSource = argv[i + 1];
+            options.secSource = argv[i + 1];
             i++;
         }
         else if (strcmp(argv[i], "-secScope") == 0)
@@ -335,7 +328,7 @@ static Options parseCmdLineArgs(int argc, char** argv, const char*& scope,
             {
                 usage("");
             }
-            secScope = argv[i + 1];
+            options.secScope = argv[i + 1];
             i++;
         }
         else if (strcmp(argv[i], "-schemaCfg") == 0)
@@ -344,7 +337,7 @@ static Options parseCmdLineArgs(int argc, char** argv, const char*& scope,
             {
                 usage("");
             }
-            schemaSource = argv[i + 1];
+            options.schemaSource = argv[i + 1];
             i++;
         }
         else if (strcmp(argv[i], "-schema") == 0)
@@ -353,7 +346,7 @@ static Options parseCmdLineArgs(int argc, char** argv, const char*& scope,
             {
                 usage("");
             }
-            schemaName = argv[i + 1];
+            options.schemaName = argv[i + 1];
             i++;
         }
         else if (strcmp(argv[i], "-diagnostics") == 0)
@@ -425,7 +418,7 @@ static Options parseCmdLineArgs(int argc, char** argv, const char*& scope,
             {
                 usage("");
             }
-            scope = argv[i + 1];
+            options.scope = argv[i + 1];
             i++;
         }
         else if (strcmp(argv[i], "-filter") == 0)
@@ -479,12 +472,12 @@ static Options parseCmdLineArgs(int argc, char** argv, const char*& scope,
     }
     if (options.cmd == "validate")
     {
-        if (schemaSource == nullptr)
+        if (options.schemaSource.empty())
         {
             std::cerr << "\nThe validate command requires -schemaCfg <source>\n\n";
             usage("");
         }
-        if (schemaName == nullptr)
+        if (options.schemaName.empty())
         {
             std::cerr << "\nThe validate command requires -schema <full.name>\n\n";
             usage("");
