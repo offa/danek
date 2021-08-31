@@ -22,6 +22,6 @@ jobs:
       image: "registry.gitlab.com/offa/docker-images/${{ matrix.compiler }}:stable"
     name: "${{ matrix.compiler }}"
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@main
       - name: Build
         run: script/ci_build.sh
