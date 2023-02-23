@@ -4,11 +4,7 @@ find_package(GTest REQUIRED)
 
 function(add_test_suite name)
     add_test(${name} ${name})
-    target_link_libraries(${name} PRIVATE
-        GTest::GTest
-        GTest::Mock
-        GTest::Main
-        )
+    target_link_libraries(${name} PRIVATE GTest::gmock_main)
 endfunction()
 
 
